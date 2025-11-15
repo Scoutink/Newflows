@@ -2058,7 +2058,7 @@ textarea.form-input {
    ============================================================================ */
 
 .dynamic-list-container {
-    background: var(--card-bg);
+    background: var(--bg-primary);
     border-bottom: 1px solid var(--border-color);
     transition: all 0.3s ease;
 }
@@ -2072,7 +2072,7 @@ textarea.form-input {
     justify-content: space-between;
     align-items: center;
     padding: 15px 20px;
-    background: var(--secondary-bg);
+    background: var(--bg-secondary);
     border-bottom: 1px solid var(--border-color);
 }
 
@@ -2085,7 +2085,7 @@ textarea.form-input {
 }
 
 .dynamic-list-title i {
-    color: var(--primary-color);
+    color: var(--primary);
 }
 
 .dynamic-list-actions {
@@ -2112,15 +2112,15 @@ textarea.form-input {
     padding: 6px 12px;
     border: 2px solid var(--border-color);
     border-radius: 6px;
-    background: var(--card-bg);
-    color: var(--text-color);
+    background: var(--bg-primary);
+    color: var(--text-primary);
     cursor: pointer;
     transition: all 0.2s;
     font-size: 0.9em;
 }
 
 .btn-mode:hover {
-    border-color: var(--primary-color);
+    border-color: var(--primary);
     background: var(--primary-hover);
 }
 
@@ -2162,12 +2162,12 @@ textarea.form-input {
 }
 
 .tree-node:hover .node-content {
-    background: var(--hover-bg);
+    background: var(--bg-tertiary);
 }
 
 .tree-node.node-filtered .node-content {
     background: var(--primary-hover);
-    border-left: 3px solid var(--primary-color);
+    border-left: 3px solid var(--primary);
 }
 
 .node-toggle {
@@ -2184,7 +2184,7 @@ textarea.form-input {
 }
 
 .node-toggle:hover {
-    color: var(--text-color);
+    color: var(--text-primary);
 }
 
 .node-spacer {
@@ -2198,7 +2198,7 @@ textarea.form-input {
 }
 
 .node-connection .node-icon {
-    color: var(--primary-color);
+    color: var(--primary);
 }
 
 .node-task .node-icon {
@@ -2215,11 +2215,11 @@ textarea.form-input {
 }
 
 .node-title:hover {
-    color: var(--primary-color);
+    color: var(--primary);
 }
 
 .task-count-badge {
-    background: var(--primary-color);
+    background: var(--primary);
     color: white;
     padding: 2px 8px;
     border-radius: 12px;
@@ -2241,8 +2241,8 @@ textarea.form-input {
 .btn-icon-sm {
     padding: 4px 8px;
     border: none;
-    background: var(--secondary-bg);
-    color: var(--text-color);
+    background: var(--bg-secondary);
+    color: var(--text-primary);
     border-radius: 4px;
     cursor: pointer;
     transition: all 0.2s;
@@ -2250,7 +2250,7 @@ textarea.form-input {
 }
 
 .btn-icon-sm:hover {
-    background: var(--primary-color);
+    background: var(--primary);
     color: white;
 }
 
@@ -2295,7 +2295,7 @@ textarea.form-input {
 }
 
 .task-link-item:hover {
-    background: var(--hover-bg);
+    background: var(--bg-tertiary);
 }
 
 /* Form hints */
@@ -2333,7 +2333,7 @@ textarea.form-input {
     border: 1px solid var(--border-color);
     border-radius: 6px;
     padding: 10px;
-    background: var(--secondary-bg);
+    background: var(--bg-secondary);
 }
 
 .dynamic-list-connections .checkbox-label {
@@ -2346,7 +2346,7 @@ textarea.form-input {
 }
 
 .dynamic-list-connections .checkbox-label:hover {
-    background: var(--hover-bg);
+    background: var(--bg-tertiary);
 }
 
 .dynamic-list-connections input[type="checkbox"] {
@@ -2478,7 +2478,7 @@ textarea.form-input {
 .btn-attachment {
     background: var(--bg-secondary);
     border: 1px solid var(--border-color);
-    color: var(--text-color);
+    color: var(--text-primary);
     padding: 8px 12px;
     border-radius: 6px;
     cursor: pointer;
@@ -2490,9 +2490,9 @@ textarea.form-input {
 }
 
 .btn-attachment:hover {
-    background: var(--hover-color);
-    border-color: var(--primary-color);
-    color: var(--primary-color);
+    background: var(--primary-hover);
+    border-color: var(--primary);
+    color: var(--primary);
 }
 
 .btn-attachment i {
@@ -2545,7 +2545,7 @@ textarea.form-input {
 
 .thread-item:hover {
     box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    border-color: var(--primary-color-light);
+    border-color: var(--primary-hover);
 }
 
 /* Thread item icon */
@@ -2599,7 +2599,7 @@ textarea.form-input {
 
 .thread-item-author {
     font-weight: 600;
-    color: var(--text-color);
+    color: var(--text-primary);
 }
 
 .thread-item-time {
@@ -2656,14 +2656,14 @@ textarea.form-input {
 .thread-note-title {
     display: block;
     margin-bottom: 8px;
-    color: var(--text-color);
+    color: var(--text-primary);
     font-size: 1em;
     font-weight: 600;
 }
 
 .thread-note-content {
     margin: 0;
-    color: var(--text-color);
+    color: var(--text-primary);
     line-height: 1.6;
 }
 
@@ -2717,15 +2717,15 @@ textarea.form-input {
     background: var(--bg-secondary);
     border: 1px solid var(--border-color);
     border-radius: 6px;
-    color: var(--primary-color);
+    color: var(--primary);
     text-decoration: none;
     transition: all 0.2s;
     word-break: break-all;
 }
 
 .thread-link:hover {
-    background: var(--primary-color-light);
-    border-color: var(--primary-color);
+    background: var(--primary-hover);
+    border-color: var(--primary);
     text-decoration: none;
 }
 
@@ -2743,7 +2743,7 @@ textarea.form-input {
 .thread-image-title {
     margin: 0 0 8px 0;
     font-weight: 500;
-    color: var(--text-color);
+    color: var(--text-primary);
     font-size: 0.95em;
 }
 
@@ -2799,7 +2799,7 @@ textarea.form-input {
     display: block;
     margin-bottom: 0.5rem;
     font-weight: 500;
-    color: var(--text-color);
+    color: var(--text-primary);
 }
 
 .inline-note-editor input[type="text"] {
