@@ -1467,24 +1467,24 @@ document.addEventListener('DOMContentLoaded', () => {
             <form id="add-link-form" class="modal-form">
                 <label for="link-text">Link Text</label>
                 <input type="text" id="link-text" required autofocus placeholder="e.g., Policy Document">
-                
+
                 <label for="link-url">URL</label>
-                <input type="url" id="link-url" required placeholder="https://example.com/document.pdf">
-                
+                <input type="text" id="link-url" required placeholder="example.com/document.pdf or https://example.com">
+
                 <div style="margin-top: 1.5rem; display: flex; gap: 0.75rem; justify-content: flex-end;">
                     <button type="button" class="btn-secondary" onclick="closeModal()">Cancel</button>
                     <button type="submit" class="btn-primary">Add Link</button>
                 </div>
             </form>
         `;
-        
+
         openModal('Add Link', html, () => {
             const form = document.getElementById('add-link-form');
             form.addEventListener('submit', (e) => {
                 e.preventDefault();
                 const text = document.getElementById('link-text').value.trim();
-                const url = document.getElementById('link-url').value.trim();
-                
+                const url = getAbsoluteUrl(document.getElementById('link-url').value.trim());
+
                 const flow = getCurrentFlow();
                 const unit = getObjectByPath(path, flow);
                 if (unit) {
@@ -1511,21 +1511,21 @@ document.addEventListener('DOMContentLoaded', () => {
         const html = `
             <form id="add-image-form" class="modal-form">
                 <label for="image-url">Image URL</label>
-                <input type="url" id="image-url" required autofocus placeholder="https://example.com/image.png">
-                
+                <input type="text" id="image-url" required autofocus placeholder="example.com/image.png or https://example.com">
+
                 <div style="margin-top: 1.5rem; display: flex; gap: 0.75rem; justify-content: flex-end;">
                     <button type="button" class="btn-secondary" onclick="closeModal()">Cancel</button>
                     <button type="submit" class="btn-primary">Add Image</button>
                 </div>
             </form>
         `;
-        
+
         openModal('Add Image', html, () => {
             const form = document.getElementById('add-image-form');
             form.addEventListener('submit', (e) => {
                 e.preventDefault();
-                const url = document.getElementById('image-url').value.trim();
-                
+                const url = getAbsoluteUrl(document.getElementById('image-url').value.trim());
+
                 const flow = getCurrentFlow();
                 const unit = getObjectByPath(path, flow);
                 if (unit) {
