@@ -3273,7 +3273,7 @@ PPM.dynamicList = {
                 console.error('Board not found in dynamicList.init()');
                 return;
             }
-            
+
             if (!board.dynamicList) {
                 board.dynamicList = {
                     isActive: false,
@@ -3281,7 +3281,16 @@ PPM.dynamicList = {
                 };
                 PPM.saveBoards();
             }
-            
+
+            // Restore overlay state from localStorage
+            const wasVisible = localStorage.getItem('dynamicListOverlayVisible') === 'true';
+            if (wasVisible) {
+                const overlay = document.getElementById('dynamic-list-overlay');
+                if (overlay) {
+                    overlay.classList.add('active');
+                }
+            }
+
             this.render();
             this.setupEventListeners();
         } catch (err) {
@@ -3291,19 +3300,50 @@ PPM.dynamicList = {
     
     // Setup event listeners
     setupEventListeners: function() {
-        const toggleBtn = document.getElementById('toggle-dynamic-list');
-        if (toggleBtn) {
-            toggleBtn.addEventListener('click', () => this.toggleCollapse());
+        // Toggle overlay from navbar
+        const overlayToggleBtn = document.getElementById('dynamic-list-toggle');
+        if (overlayToggleBtn) {
+            overlayToggleBtn.addEventListener('click', () => this.toggleOverlay());
+        }
+
+        // Close overlay when clicking backdrop
+        const backdrop = document.querySelector('.dynamic-list-backdrop');
+        if (backdrop) {
+            backdrop.addEventListener('click', () => this.toggleOverlay());
+        }
+
+        // Close overlay on ESC key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                const overlay = document.getElementById('dynamic-list-overlay');
+                if (overlay && overlay.classList.contains('active')) {
+                    this.toggleOverlay();
+                }
+            }
+        });
+    },
+
+    // Toggle overlay (slide in/out)
+    toggleOverlay: function() {
+        const overlay = document.getElementById('dynamic-list-overlay');
+        if (overlay) {
+            const isActive = overlay.classList.toggle('active');
+            // Save state to localStorage
+            localStorage.setItem('dynamicListOverlayVisible', isActive);
         }
     },
-    
-    // Toggle collapse/expand
+
+    // Toggle collapse/expand (deprecated - now using overlay)
     toggleCollapse: function() {
         const container = document.getElementById('dynamic-list-container');
         const icon = document.querySelector('#toggle-dynamic-list i');
-        container.classList.toggle('collapsed');
-        icon.classList.toggle('fa-chevron-up');
-        icon.classList.toggle('fa-chevron-down');
+        if (container) {
+            container.classList.toggle('collapsed');
+        }
+        if (icon) {
+            icon.classList.toggle('fa-chevron-up');
+            icon.classList.toggle('fa-chevron-down');
+        }
     },
     
     // Toggle mode (Creation/Active)
