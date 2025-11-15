@@ -705,24 +705,33 @@ const executeWorkflowExport = async (flow, template, config) => {
             let shouldCreateCard = false;
             let columnId = null;
 
-            // RULE 1: Reference level always gets a card in References column
-            if (config.exportReference && depth === config.referenceLevel) {
-                shouldCreateCard = true;
-                columnId = referenceColumnId;
-            }
-            // RULE 2: If dynamic list NOT enabled, all nodes become cards in To Do
-            else if (!config.exportDynamicList) {
-                shouldCreateCard = true;
-                columnId = defaultColumnId; // To Do
-            }
-            // RULE 3: If dynamic list IS enabled, check user's column assignment
-            else if (config.exportDynamicList) {
+            // RULE 1: If dynamic list enabled, check user's explicit column assignment (HIGHEST PRIORITY)
+            if (config.exportDynamicList) {
                 const targetColumn = config.boardColumnAssignments?.[node.id];
                 if (targetColumn) {
+                    // User explicitly selected a column for this node
                     shouldCreateCard = true;
                     columnId = getColumnIdByName(board, targetColumn);
                 }
-                // else: No column selected (or "None") → no card created
+                // If no column selected but node is at reference level, use References as default
+                else if (config.exportReference && depth === config.referenceLevel) {
+                    shouldCreateCard = true;
+                    columnId = referenceColumnId;
+                }
+                // else: No column selected and not reference level → no card created
+            }
+            // RULE 2: Dynamic list NOT enabled - traditional export behavior
+            else {
+                // If reference level exists, use it
+                if (config.exportReference && depth === config.referenceLevel) {
+                    shouldCreateCard = true;
+                    columnId = referenceColumnId;
+                }
+                // Otherwise all nodes go to To Do
+                else {
+                    shouldCreateCard = true;
+                    columnId = defaultColumnId; // To Do
+                }
             }
 
             // Skip card creation if not needed
