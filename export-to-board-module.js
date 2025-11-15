@@ -698,47 +698,10 @@ const executeWorkflowExport = async (flow, template, config) => {
         
         // Convert nodes to cards
         let cardOrder = 0;
-        const cardIdMap = new Map(); // workflow node id -> board card id
-        
-        nodesToExport.forEach(({ node, depth, level }) => {
-            // Determine if this node should become a card and which column
-            let shouldCreateCard = false;
-            let columnId = null;
+        const cardIdMap = new Map(); // workflow node id -> array of board card IDs
 
-            // RULE 1: If dynamic list enabled, check user's explicit column assignment (HIGHEST PRIORITY)
-            if (config.exportDynamicList) {
-                const targetColumn = config.boardColumnAssignments?.[node.id];
-                if (targetColumn) {
-                    // User explicitly selected a column for this node
-                    shouldCreateCard = true;
-                    columnId = getColumnIdByName(board, targetColumn);
-                }
-                // If no column selected but node is at reference level, use References as default
-                else if (config.exportReference && depth === config.referenceLevel) {
-                    shouldCreateCard = true;
-                    columnId = referenceColumnId;
-                }
-                // else: No column selected and not reference level → no card created
-            }
-            // RULE 2: Dynamic list NOT enabled - traditional export behavior
-            else {
-                // If reference level exists, use it
-                if (config.exportReference && depth === config.referenceLevel) {
-                    shouldCreateCard = true;
-                    columnId = referenceColumnId;
-                }
-                // Otherwise all nodes go to To Do
-                else {
-                    shouldCreateCard = true;
-                    columnId = defaultColumnId; // To Do
-                }
-            }
-
-            // Skip card creation if not needed
-            if (!shouldCreateCard) {
-                return;
-            }
-
+        // Helper function to create a card for a node
+        const createCardForNode = (node, depth, level, columnId) => {
             const card = {
                 id: generateId('card'),
                 boardId: board.id,
@@ -872,11 +835,59 @@ const executeWorkflowExport = async (flow, template, config) => {
                     card.labels.push(tag);
                 });
             }
-            
-            board.cards.push(card);
-            cardIdMap.set(node.id, card.id);
+
+            return card;
+        };
+
+        // Create cards for nodes - may create multiple cards per node
+        nodesToExport.forEach(({ node, depth, level }) => {
+            const cardsToCreate = [];
+
+            // 1. Check if node should have a REFERENCE card (independent of other choices)
+            if (config.exportReference && depth === config.referenceLevel) {
+                cardsToCreate.push({
+                    columnId: referenceColumnId,
+                    reason: 'reference'
+                });
+            }
+
+            // 2. Check if node should have a DYNAMIC LIST board card (independent of reference)
+            if (config.exportDynamicList) {
+                const targetColumn = config.boardColumnAssignments?.[node.id];
+                if (targetColumn) {
+                    // User explicitly selected a board column for this node
+                    cardsToCreate.push({
+                        columnId: getColumnIdByName(board, targetColumn),
+                        reason: 'dynamic-list-selection'
+                    });
+                }
+            }
+            // 3. If NOT using dynamic list, create default cards for all non-reference nodes
+            else {
+                // Only create default card if we haven't already created a reference card
+                const alreadyHasReferenceCard = cardsToCreate.some(c => c.reason === 'reference');
+                if (!alreadyHasReferenceCard) {
+                    cardsToCreate.push({
+                        columnId: defaultColumnId,
+                        reason: 'default'
+                    });
+                }
+            }
+
+            // Create all cards for this node
+            if (cardsToCreate.length > 0) {
+                const cardIds = [];
+                cardsToCreate.forEach(({ columnId }) => {
+                    const card = createCardForNode(node, depth, level, columnId);
+                    board.cards.push(card);
+                    cardIds.push(card.id);
+                });
+
+                // Store all card IDs for this node
+                cardIdMap.set(node.id, cardIds);
+            }
         });
-        
+
         // Build dynamic list if enabled
         if (config.exportDynamicList) {
             let nodeOrder = 0;
@@ -895,8 +906,14 @@ const executeWorkflowExport = async (flow, template, config) => {
                         return;
                     }
 
-                    // Check if node has a board card (may or may not, depending on user choice)
-                    const cardId = cardIdMap.get(node.id);
+                    // Check if node has board cards (may have 0, 1, or 2 cards)
+                    const cardIds = cardIdMap.get(node.id) || [];
+
+                    // Determine which card to link in dynamic list:
+                    // - If 2 cards exist (reference + dynamic list), use the 2nd one (dynamic list card)
+                    // - If 1 card exists, use it
+                    // - If 0 cards, no linking
+                    const cardIdToLink = cardIds.length > 1 ? cardIds[1] : (cardIds.length === 1 ? cardIds[0] : null);
 
                     const dynamicNode = {
                         id: generateId('dyn-node'),
@@ -910,8 +927,8 @@ const executeWorkflowExport = async (flow, template, config) => {
 
                     if (nodeType === 'connection') {
                         // Connection node: may or may not have board card
-                        if (cardId) {
-                            dynamicNode.linkedTaskIds = [cardId];
+                        if (cardIdToLink) {
+                            dynamicNode.linkedTaskIds = [cardIdToLink];
                         } else {
                             // Connection exists only in dynamic list (no board card)
                             dynamicNode.linkedTaskIds = [];
@@ -926,8 +943,8 @@ const executeWorkflowExport = async (flow, template, config) => {
                         };
 
                         // Optional: link to board card if user created one
-                        if (cardId) {
-                            dynamicNode.linkedTaskIds = [cardId];
+                        if (cardIdToLink) {
+                            dynamicNode.linkedTaskIds = [cardIdToLink];
                         } else {
                             // Task exists only in dynamic list (no board card)
                             dynamicNode.linkedTaskIds = [];
