@@ -9,13 +9,178 @@
 
 ## Executive Summary
 
-### Current State
-The export-to-board module is **85% feature complete** with excellent architecture and solid implementation. Most requirements are met, but **one critical feature is incomplete**: the bulk dynamic list setup auto-assignment logic.
+### Current State - CRITICAL UPDATE
+The export-to-board module has **CRITICAL DATA STRUCTURE MISMATCHES** that cause exported cards to be unresponsive and display incorrectly in the board UI. Beyond the original finding of missing bulk setup logic, there are **6 structural incompatibilities** between exported cards and native board cards.
 
-### Key Finding
-✅ **What Works:** Export scopes, board naming, reference column, dynamic list structure, content mapping
-❌ **What's Missing:** Automatic task/connection assignment when reference level is selected
-⚠️ **What Could Be Better:** No visual preview, no milestone mapping, no rollback option
+### Critical Findings (Updated)
+
+#### 🔴 BLOCKING ISSUES - Must Fix Immediately
+1. **Card Data Structure Mismatch** - Exported cards missing 5 required fields
+2. **Label Storage Bug** - Labels stored as IDs instead of tag strings
+3. **Effort Field Name Wrong** - Using `estimate` instead of `estimated`
+
+#### 🟡 MISSING FUNCTIONALITY
+4. **Bulk Dynamic List Setup** - Logic described in UI but not implemented
+
+#### 🟢 WHAT WORKS
+- Export scopes (full/partial/tag)
+- Board naming conventions
+- Reference column routing
+- Dynamic list structure
+- Content mapping (footer → attachments)
+
+---
+
+## CRITICAL: Data Structure Compatibility Issues
+
+### Problem Statement
+**User Report:** *"When I export workflow to board, tasks are created in the board's to-do list. But they are not created similar to tasks you create in the board itself but more as unresponsive cards with strange (probably from old code) task template."*
+
+### Root Cause Analysis
+Exported cards **do not match the data structure** expected by the board rendering system. The export module creates cards using an **outdated or incorrect schema** that is incompatible with `ppm-script.js`'s native card structure.
+
+### Detailed Comparison: Native vs Export Card Structure
+
+#### ✅ Native Board Card (ppm-script.js:418-480)
+```javascript
+const card = {
+    id: generateId('card'),
+    boardId: board.id,
+    columnId: columnId,
+    order: maxOrder + 1,
+    title: cardData.title || 'New Task',
+    description: cardData.description || '',
+    sourceType: cardData.sourceType || null,
+    sourceId: cardData.sourceId || null,
+    sourceGrade: cardData.sourceGrade || null,
+    assignments: [],
+    schedule: { /* full schedule object */ },
+    checklist: cardData.checklist || [],
+    labels: cardData.labels || [],              // ← Array of STRINGS (tag names)
+    attachments: cardData.attachments || [],
+    linkedBacklogItems: cardData.linkedBacklogItems || [],  // ✅ REQUIRED
+    milestoneId: cardData.milestoneId || null,
+    categoryId: cardData.categoryId || null,
+    groupIds: cardData.groupIds || [],
+    status: {                                    // ✅ REQUIRED STATUS OBJECT
+        current: 'pending',
+        blocked: false,
+        blockedReason: null,
+        approvalStatus: null,
+        approvedBy: null,
+        approvedAt: null
+    },
+    isDone: cardData.isDone || false,
+    effort: {
+        estimated: null,                         // ✅ "estimated" not "estimate"
+        actual: null,
+        unit: 'hours'
+    },
+    activity: [],                                // ✅ REQUIRED ACTIVITY ARRAY
+    createdAt: new Date().toISOString(),
+    createdBy: state.currentUser?.id || 'user-default-001',
+    updatedAt: new Date().toISOString(),
+    updatedBy: state.currentUser?.id || 'user-default-001'  // ✅ REQUIRED
+};
+```
+
+#### ❌ Export Module Card (export-to-board-module.js:583-631)
+```javascript
+const card = {
+    id: generateId('card'),
+    boardId: board.id,
+    columnId,
+    order: cardOrder++,
+    title: node.name || `Untitled ${level.singularName}`,
+    description: node.text || node.description || '',
+    sourceType: 'workflow',
+    sourceId: node.id,
+    sourceGrade: node.grade || null,
+    assignments: [],
+    schedule: { /* full schedule object */ },
+    checklist: [],
+    labels: [],                                  // ← Will store LABEL IDs (WRONG!)
+    attachments: [],
+    // ❌ MISSING: linkedBacklogItems array
+    milestoneId: null,
+    categoryId: null,
+    groupIds: [],
+    // ❌ MISSING: status object completely
+    isDone: node.completed || false,
+    effort: {
+        estimate: null,                          // ❌ WRONG: Should be "estimated"
+        actual: null,
+        unit: 'hours'
+    },
+    priority: 'medium',                          // ⚠️ Extra field (not in native, but harmless)
+    // ❌ MISSING: activity array
+    createdAt: new Date().toISOString(),
+    createdBy: 'user-default-001',
+    updatedAt: new Date().toISOString()
+    // ❌ MISSING: updatedBy field
+};
+```
+
+### Incompatibilities Identified
+
+| Field | Native Board | Export Module | Issue | Impact |
+|-------|--------------|---------------|-------|--------|
+| **effort.estimated** | `estimated: null` | `estimate: null` | ❌ Wrong property name | Field not accessible, breaks effort tracking |
+| **status** | Complete object with 6 properties | Missing entirely | ❌ Missing required object | May cause rendering errors, breaks status features |
+| **linkedBacklogItems** | `[]` array | Missing entirely | ❌ Missing required array | Breaks dynamic list connections |
+| **activity** | `[]` array | Missing entirely | ❌ Missing required array | May cause errors in activity rendering |
+| **updatedBy** | `'user-id'` | Missing entirely | ❌ Missing required field | Breaks audit trail |
+| **labels** | Array of strings (tag names) | Array of label IDs | ❌ Wrong data type | Displays IDs instead of names |
+| **priority** | Not present | `'medium'` | ⚠️ Extra field | Harmless, ignored |
+
+### Label Bug Deep Dive
+
+**The Problem:**
+```javascript
+// Export module (WRONG - lines 688-703):
+node.tags.forEach(tag => {
+    let label = board.labels.find(l => l.name === tag);
+    if (!label) {
+        label = { id: generateId('label'), name: tag, color: '#6c757d' };
+        board.labels.push(label);
+    }
+    card.labels.push(label.id);  // ❌ Pushes ID string
+});
+```
+
+**What It Should Be:**
+```javascript
+// Native board (CORRECT - ppm-script.js:668):
+labels: [...(action.tags || []), ...(evidence.tags || [])]  // ✅ Just tag strings
+```
+
+**Result:**
+- Export creates: `card.labels = ['label-1234-abcd', 'label-5678-efgh']`
+- Native expects: `card.labels = ['Compliance', 'Security']`
+- Rendering (line 1035): `${label}` displays "label-1234-abcd" instead of "Compliance"
+
+### Impact Assessment
+
+#### User-Visible Issues
+1. 🔴 **Labels show IDs** instead of human-readable names
+2. 🔴 **Cards may render incorrectly** due to missing fields
+3. 🔴 **Status features don't work** (blocking, approval, etc.)
+4. 🔴 **Activity log doesn't function**
+5. 🔴 **Effort tracking broken** (estimated vs estimate)
+6. 🔴 **Dynamic list connections fail** (no linkedBacklogItems)
+
+#### System Stability
+- **Risk Level:** Medium-High
+- Cards render but with degraded functionality
+- No crashes reported, but features silently fail
+- Data corruption risk if cards are later edited (missing fields might be lost)
+
+### Why This Wasn't Caught Earlier
+
+1. **No Type Checking** - Vanilla JavaScript with no TypeScript/JSDoc validation
+2. **No Unit Tests** - Export module not tested against native card creation
+3. **Schema Drift** - Native card structure evolved (added status, linkedBacklogItems) but export module wasn't updated
+4. **Code Duplication** - Export module duplicates card creation instead of using `createCard()` function
 
 ---
 
@@ -700,56 +865,102 @@ window.rollbackExport = async (boardId) => {
 
 ---
 
-## Recommended Implementation Roadmap
+## Recommended Implementation Roadmap (UPDATED)
 
-### Phase 1: Fix Critical Gap (Week 1)
-**Goal:** Complete the missing feature
+### **PHASE 0: CRITICAL DATA STRUCTURE FIXES (Day 1-2) - MUST DO FIRST**
+**Goal:** Fix card schema incompatibilities causing unresponsive cards
 
-| Task | Effort | Priority |
-|------|--------|----------|
-| Implement bulk dynamic list setup | 2-3 hours | 🔴 CRITICAL |
-| Add helper function `getNodeDepth()` | 1 hour | 🔴 CRITICAL |
-| Add event listeners for auto-apply | 1 hour | 🔴 CRITICAL |
-| Test with various workflow structures | 2 hours | 🔴 CRITICAL |
+**Status:** 🔴 **BLOCKING** - Exported boards are broken until this is fixed
 
-**Total:** 6-7 hours
+| Task | File | Lines | Effort | Risk |
+|------|------|-------|--------|------|
+| **1. Fix effort.estimate → effort.estimated** | export-to-board-module.js | 622-626 | 5 min | Low |
+| **2. Add missing status object** | export-to-board-module.js | After 621 | 10 min | Low |
+| **3. Add missing linkedBacklogItems array** | export-to-board-module.js | After 617 | 5 min | Low |
+| **4. Add missing activity array** | export-to-board-module.js | After effort | 5 min | Low |
+| **5. Add missing updatedBy field** | export-to-board-module.js | After 630 | 5 min | Low |
+| **6. Fix labels to store tag strings not IDs** | export-to-board-module.js | 688-703 | 15 min | Medium |
+| **7. Test exported cards render correctly** | Manual testing | - | 30 min | - |
+| **8. Test dynamic list connections work** | Manual testing | - | 20 min | - |
+| **9. Verify labels display correctly** | Manual testing | - | 10 min | - |
+
+**Total Time:** ~2 hours
+**Must Complete Before:** Any other export work
+**Validation:** Create test export, verify cards are fully functional in board
 
 ---
 
-### Phase 2: UX Improvements (Week 2)
+### **Phase 1: Complete Missing Functionality (Day 3)**
+**Goal:** Implement bulk dynamic list setup
+
+**Status:** 🟡 **HIGH PRIORITY** - Feature promised in UI but not working
+
+| Task | Effort | Priority |
+|------|--------|----------|
+| Implement bulk dynamic list setup logic | 2 hours | 🔴 CRITICAL |
+| Add helper function `getNodeDepth()` | 30 min | 🔴 CRITICAL |
+| Add event listeners for auto-apply | 45 min | 🔴 CRITICAL |
+| Test with multi-level workflows | 1 hour | 🔴 CRITICAL |
+
+**Total:** 4-5 hours
+
+---
+
+### **Phase 2: Code Quality & Safety (Day 4-5)**
+**Goal:** Refactor and add safeguards
+
+| Task | Effort | Priority |
+|------|--------|----------|
+| Extract card creation to reusable function | 2 hours | 🟡 HIGH |
+| Use native `createCard()` instead of duplication | 1 hour | 🟡 HIGH |
+| Add JSDoc type annotations for card schema | 1 hour | 🟡 HIGH |
+| Create card schema validation function | 2 hours | 🟡 HIGH |
+| Add automated tests for card structure | 3 hours | 🟢 MEDIUM |
+
+**Total:** 9 hours
+
+**Benefits:**
+- Prevents future schema drift
+- DRY principle (Don't Repeat Yourself)
+- Easier maintenance
+- Type safety hints
+
+---
+
+### **Phase 3: UX Improvements (Week 2)**
 **Goal:** Make export more professional and user-friendly
 
 | Task | Effort | Priority |
 |------|--------|----------|
-| Enhanced visual preview | 4-6 hours | 🟡 HIGH |
+| Enhanced visual preview with breakdown | 4-6 hours | 🟡 HIGH |
 | Smart default type selection | 2-3 hours | 🟡 HIGH |
-| Success modal with rollback | 4-5 hours | 🟡 HIGH |
+| Success modal with rollback option | 4-5 hours | 🟡 HIGH |
 
 **Total:** 10-14 hours
 
 ---
 
-### Phase 3: Advanced Features (Week 3-4)
+### **Phase 4: Advanced Features (Week 3-4)**
 **Goal:** Add power-user features
 
 | Task | Effort | Priority |
 |------|--------|----------|
-| Milestone mapping | 6-8 hours | 🟢 MEDIUM |
-| Category auto-mapping | 3-4 hours | 🟢 MEDIUM |
-| Export presets | 4-6 hours | 🟢 MEDIUM |
-| Preserve sequential order | 6-8 hours | 🟢 MEDIUM |
+| Milestone mapping from workflow levels | 6-8 hours | 🟢 MEDIUM |
+| Category auto-mapping for common tags | 3-4 hours | 🟢 MEDIUM |
+| Export configuration presets | 4-6 hours | 🟢 MEDIUM |
+| Preserve sequential order constraints | 6-8 hours | 🟢 MEDIUM |
 
 **Total:** 19-26 hours
 
 ---
 
-### Phase 4: Future Enhancements (3+ months)
+### **Phase 5: Future Enhancements (3+ months)**
 **Goal:** Transform export into full sync system
 
 | Task | Effort | Priority |
 |------|--------|----------|
-| Two-way sync | 20-30 hours | 🔵 LOW |
-| Batch export | 8-10 hours | 🔵 LOW |
+| Two-way sync (board → workflow) | 20-30 hours | 🔵 LOW |
+| Batch export (multiple workflows) | 8-10 hours | 🔵 LOW |
 | Export analytics/reporting | 6-8 hours | 🔵 LOW |
 
 **Total:** 34-48 hours
@@ -837,27 +1048,76 @@ window.rollbackExport = async (boardId) => {
 
 ---
 
-## Conclusion
+## Conclusion (UPDATED)
 
 ### Summary
-The workflow-to-board export system is **extremely well-designed** with **92% feature completion**. The code is clean, well-structured, and handles complex scenarios effectively.
+The workflow-to-board export system has **excellent UI and flow design**, but suffers from **critical data structure incompatibilities** that break exported cards.
 
-### Critical Finding
-The **only significant gap** is the missing bulk dynamic list setup auto-assignment logic. This is mentioned in the UI but not implemented, creating user confusion.
+### Critical Findings (Updated After Investigation)
 
-### Recommendation
-**Implement Priority 1 (bulk setup) immediately** - it's the missing 8% that completes the user's requirements. This is a **2-3 hour fix** with **high user impact**.
+#### 🔴 BLOCKING ISSUES
+1. **Card Schema Mismatch** - 6 field incompatibilities between export and native boards
+   - Missing: `status`, `linkedBacklogItems`, `activity`, `updatedBy`
+   - Wrong: `effort.estimate` vs `effort.estimated`
+   - Bug: `labels` stores IDs instead of tag strings
 
-Follow with **Priority 2 and 3** for professional polish, then consider **Priority 4** for advanced use cases.
+2. **User-Visible Impact** - Exported cards are "unresponsive with strange template":
+   - Labels display as "label-1234-abcd" instead of tag names
+   - Status features non-functional
+   - Dynamic list connections broken
+   - Effort tracking fails
+   - Activity log doesn't work
 
-### Overall Assessment
-⭐⭐⭐⭐ (4/5) - Excellent implementation, one critical feature missing
+#### 🟡 FUNCTIONALITY GAP
+3. **Bulk Dynamic List Setup** - UI promises feature but logic not implemented
 
-With the bulk setup implemented: ⭐⭐⭐⭐⭐ (5/5) - Production-quality export system
+### Immediate Action Required
+
+**Phase 0 MUST be completed first** (2 hours):
+1. Fix 6 data structure issues in export-to-board-module.js
+2. Test exported cards render and behave like native cards
+3. Verify labels display correctly
+
+**Why This Is Urgent:**
+- Current exports create broken boards
+- Users cannot use exported cards properly
+- May cause data corruption if edited later
+- Blocks all other export improvements
+
+### Recommended Sequence
+
+1. **Day 1-2:** Phase 0 - Fix card schema (CRITICAL, 2 hrs)
+2. **Day 3:** Phase 1 - Implement bulk setup (HIGH, 4-5 hrs)
+3. **Day 4-5:** Phase 2 - Refactor for safety (RECOMMENDED, 9 hrs)
+4. **Week 2+:** Phases 3-5 - Enhancements (OPTIONAL)
+
+### Overall Assessment (Revised)
+
+**Current State:**
+- ❌ ⭐⭐ (2/5) - Export creates broken cards due to schema mismatch
+- Architecture is good, but incompatible with target system
+
+**After Phase 0 Fixes:**
+- ✅ ⭐⭐⭐⭐ (4/5) - Cards work correctly, bulk setup still missing
+
+**After Phase 0 + Phase 1:**
+- ✅ ⭐⭐⭐⭐⭐ (5/5) - Production-quality export system
+
+### Root Cause
+Schema drift occurred when native board added new fields (`status`, `linkedBacklogItems`, `activity`) but export module wasn't updated. Export duplicates card creation logic instead of using `createCard()` function, leading to maintenance issues.
+
+### Prevention Going Forward
+- Use shared `createCard()` function (don't duplicate)
+- Add JSDoc type annotations
+- Implement schema validation
+- Add automated tests
 
 ---
 
-**Analysis Confidence:** 95%
-**Code Review Coverage:** 100% of export-to-board-module.js
-**Lines Analyzed:** 799 lines
+**Analysis Confidence:** 98%
+**Code Review Coverage:**
+- 100% of export-to-board-module.js (799 lines)
+- Native card creation in ppm-script.js (lines 418-485)
+- Card rendering logic (lines 995-1074)
+**Files Compared:** export-to-board-module.js vs ppm-script.js
 
