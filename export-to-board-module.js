@@ -221,17 +221,32 @@ const initializeExportModal = (flow, template) => {
             const levelInfo = template.levels[depth];
             const hasChildren = node.subcategories && node.subcategories.length > 0;
             const defaultType = depth <= 1 ? 'connection' : 'task'; // First 2 levels default to connection
-            
+
+            // Smart column default based on workflow state
+            const getSmartColumnDefault = () => {
+                if (node.completed) return 'done';
+                if (node.grade && node.grade > 0) return 'in-progress';
+                return ''; // None - user must explicitly choose
+            };
+            const defaultColumn = getSmartColumnDefault();
+
             let html = `
                 <div class="dynamic-node" style="margin-left: ${indent}px; margin-bottom: 0.75rem;">
                     <div style="display: flex; align-items: center; gap: 0.75rem;">
                         <span style="flex: 1; font-weight: ${depth === 0 ? '600' : '400'};">
                             ${node.name || 'Untitled'}
                         </span>
-                        <select class="dynamic-type-selector" data-node-id="${node.id}" style="padding: 0.25rem 0.5rem; border-radius: 4px; border: 1px solid var(--border-color); font-size: 0.9rem;">
+                        <select class="dynamic-type-selector" data-node-id="${node.id}" style="padding: 0.25rem 0.5rem; border-radius: 4px; border: 1px solid var(--border-color); font-size: 0.9rem; min-width: 100px;">
                             <option value="task" ${defaultType === 'task' ? 'selected' : ''}>Task</option>
                             <option value="connection" ${defaultType === 'connection' ? 'selected' : ''}>Connection</option>
                             <option value="skip">Skip</option>
+                        </select>
+                        <select class="board-column-selector" data-node-id="${node.id}" style="padding: 0.25rem 0.5rem; border-radius: 4px; border: 1px solid var(--border-color); font-size: 0.9rem; min-width: 120px; display: ${defaultType === 'skip' ? 'none' : 'inline-block'};">
+                            <option value="" ${defaultColumn === '' ? 'selected' : ''}>None</option>
+                            <option value="todo" ${defaultColumn === 'todo' ? 'selected' : ''}>→ To Do</option>
+                            <option value="in-progress" ${defaultColumn === 'in-progress' ? 'selected' : ''}>→ In Progress</option>
+                            <option value="review" ${defaultColumn === 'review' ? 'selected' : ''}>→ Review</option>
+                            <option value="done" ${defaultColumn === 'done' ? 'selected' : ''}>→ Done</option>
                         </select>
                     </div>
                 </div>
@@ -248,8 +263,25 @@ const initializeExportModal = (flow, template) => {
         
         container.innerHTML = (flow.data || []).map(node => buildNodeHTML(node, 0)).join('');
 
-        // Add change listeners for preview update
+        // Add change listeners for type selector
         container.querySelectorAll('.dynamic-type-selector').forEach(select => {
+            select.addEventListener('change', (e) => {
+                const nodeType = e.target.value;
+                const columnSelector = e.target.parentElement.querySelector('.board-column-selector');
+
+                if (nodeType === 'skip') {
+                    columnSelector.style.display = 'none';
+                    columnSelector.value = ''; // Reset to None
+                } else {
+                    columnSelector.style.display = 'inline-block';
+                }
+
+                updatePreview();
+            });
+        });
+
+        // Add change listeners for column selector
+        container.querySelectorAll('.board-column-selector').forEach(select => {
             select.addEventListener('change', updatePreview);
         });
     };
@@ -506,10 +538,23 @@ const handleExportSubmit = async (flow, template) => {
             }
         }
         
-        // Dynamic list types
+        // Dynamic list types and board column assignments
         if (config.exportDynamicList) {
+            config.boardColumnAssignments = {}; // Track which nodes get board cards and where
+
             document.querySelectorAll('.dynamic-type-selector').forEach(select => {
-                config.dynamicListTypes[select.dataset.nodeId] = select.value;
+                const nodeId = select.dataset.nodeId;
+                const nodeType = select.value;
+                config.dynamicListTypes[nodeId] = nodeType;
+
+                // Check if user wants a board card for this node
+                if (nodeType !== 'skip') {
+                    const columnSelector = select.parentElement.querySelector('.board-column-selector');
+                    const targetColumn = columnSelector?.value;
+                    if (targetColumn && targetColumn !== '') {
+                        config.boardColumnAssignments[nodeId] = targetColumn;
+                    }
+                }
             });
         }
         
@@ -523,6 +568,21 @@ const handleExportSubmit = async (flow, template) => {
         console.error('Export submit error:', e);
         alert('Export configuration error: ' + e.message);
     }
+};
+
+/**
+ * Helper function to get column ID by name
+ */
+const getColumnIdByName = (board, columnKey) => {
+    const columnMap = {
+        'todo': 'To Do',
+        'in-progress': 'In Progress',
+        'review': 'Review',
+        'done': 'Done'
+    };
+    const actualName = columnMap[columnKey] || columnKey;
+    const column = board.columns.find(c => c.name === actualName);
+    return column ? column.id : board.columns[0]?.id; // Fallback to first column
 };
 
 /**
@@ -641,12 +701,35 @@ const executeWorkflowExport = async (flow, template, config) => {
         const cardIdMap = new Map(); // workflow node id -> board card id
         
         nodesToExport.forEach(({ node, depth, level }) => {
-            // Determine column: references or default
-            let columnId = defaultColumnId;
+            // Determine if this node should become a card and which column
+            let shouldCreateCard = false;
+            let columnId = null;
+
+            // RULE 1: Reference level always gets a card in References column
             if (config.exportReference && depth === config.referenceLevel) {
+                shouldCreateCard = true;
                 columnId = referenceColumnId;
             }
-            
+            // RULE 2: If dynamic list NOT enabled, all nodes become cards in To Do
+            else if (!config.exportDynamicList) {
+                shouldCreateCard = true;
+                columnId = defaultColumnId; // To Do
+            }
+            // RULE 3: If dynamic list IS enabled, check user's column assignment
+            else if (config.exportDynamicList) {
+                const targetColumn = config.boardColumnAssignments?.[node.id];
+                if (targetColumn) {
+                    shouldCreateCard = true;
+                    columnId = getColumnIdByName(board, targetColumn);
+                }
+                // else: No column selected (or "None") → no card created
+            }
+
+            // Skip card creation if not needed
+            if (!shouldCreateCard) {
+                return;
+            }
+
             const card = {
                 id: generateId('card'),
                 boardId: board.id,
@@ -793,28 +876,19 @@ const executeWorkflowExport = async (flow, template, config) => {
                 if (!nodes || depth >= template.levels.length) return;
                 
                 nodes.forEach(node => {
-                    // Check if node should be included
+                    // Check if node should be included in dynamic list
                     const nodeType = config.dynamicListTypes[node.id];
                     if (!nodeType || nodeType === 'skip') {
-                        // Still recurse to children
+                        // Skip nodes completely excluded
                         if (node.subcategories) {
                             buildDynamicNodes(node.subcategories, parentDynamicId, depth + 1);
                         }
                         return;
                     }
-                    
-                    // Check if node was exported
+
+                    // Check if node has a board card (may or may not, depending on user choice)
                     const cardId = cardIdMap.get(node.id);
-                    const isExported = cardId !== undefined;
-                    
-                    if (!isExported) {
-                        // Node not exported, skip
-                        if (node.subcategories) {
-                            buildDynamicNodes(node.subcategories, parentDynamicId, depth + 1);
-                        }
-                        return;
-                    }
-                    
+
                     const dynamicNode = {
                         id: generateId('dyn-node'),
                         title: node.name || `Untitled ${template.levels[depth].singularName}`,
@@ -824,25 +898,35 @@ const executeWorkflowExport = async (flow, template, config) => {
                         order: nodeOrder++,
                         isExpanded: true
                     };
-                    
+
                     if (nodeType === 'connection') {
-                        // Connection node: link to board cards
-                        dynamicNode.linkedTaskIds = [cardId];
+                        // Connection node: may or may not have board card
+                        if (cardId) {
+                            dynamicNode.linkedTaskIds = [cardId];
+                        } else {
+                            // Connection exists only in dynamic list (no board card)
+                            dynamicNode.linkedTaskIds = [];
+                        }
                     } else if (nodeType === 'task') {
-                        // Task node: standalone with own content
+                        // Task node: has own data in dynamic list
                         dynamicNode.taskData = {
                             description: node.text || node.description || '',
                             isDone: node.completed || false,
                             attachments: [],
                             checklist: []
                         };
-                        
-                        // Also link to board card
-                        dynamicNode.linkedTaskIds = [cardId];
+
+                        // Optional: link to board card if user created one
+                        if (cardId) {
+                            dynamicNode.linkedTaskIds = [cardId];
+                        } else {
+                            // Task exists only in dynamic list (no board card)
+                            dynamicNode.linkedTaskIds = [];
+                        }
                     }
-                    
+
                     board.dynamicList.nodes.push(dynamicNode);
-                    
+
                     // Recurse to children
                     if (node.subcategories) {
                         buildDynamicNodes(node.subcategories, dynamicNode.id, depth + 1);
