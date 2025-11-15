@@ -1,0 +1,249 @@
+/**
+ * Newflows Design System
+ * Shared CSS Variables for consistent theming across all pages
+ *
+ * This file consolidates design tokens from both workflow and board pages
+ * to ensure consistent branding, spacing, and visual design.
+ */
+
+/* =============================================================================
+   COLOR PALETTE - Light Mode
+   ========================================================================== */
+:root {
+    /* Brand Colors */
+    --color-primary: #4a6cf7;
+    --color-primary-hover: #3b5dd6;
+    --color-primary-light: #e0e7ff;
+
+    /* Semantic Colors */
+    --color-success: #10b981;
+    --color-success-light: #d1fae5;
+    --color-warning: #f59e0b;
+    --color-warning-light: #fef3c7;
+    --color-danger: #ef4444;
+    --color-danger-light: #fee2e2;
+    --color-info: #3b82f6;
+    --color-info-light: #dbeafe;
+
+    /* Accent Colors */
+    --color-accent: #6366f1;
+    --color-accent-hover: #818cf8;
+    --color-secondary: #6c757d;
+
+    /* Background Colors */
+    --bg-primary: #ffffff;
+    --bg-secondary: #f8f9fa;
+    --bg-tertiary: #e9ecef;
+    --bg-surface: #ffffff;
+    --bg-surface-alt: #f1f5f9;
+    --bg-page: #f8fafc;
+    --bg-overlay: rgba(0, 0, 0, 0.5);
+
+    /* Special Purpose Backgrounds */
+    --bg-locked: #f8f9fa;
+    --bg-hover: #f1f5f9;
+    --bg-selected: #e0e7ff;
+
+    /* Text Colors */
+    --text-primary: #1e293b;
+    --text-secondary: #64748b;
+    --text-tertiary: #94a3b8;
+    --text-muted: #adb5bd;
+    --text-disabled: #cbd5e1;
+    --text-inverted: #ffffff;
+
+    /* Border Colors */
+    --border-color: #dee2e6;
+    --border-light: #e2e8f0;
+    --border-dark: #cbd5e1;
+    --border-locked: #adb5bd;
+    --border-focus: var(--color-primary);
+
+    /* Shadows */
+    --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.05);
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.12);
+    --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.15);
+    --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.2);
+
+    /* Border Radius */
+    --radius-xs: 2px;
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --radius-xl: 16px;
+    --radius-full: 9999px;
+
+    /* Spacing Scale (based on 4px grid) */
+    --space-0: 0;
+    --space-1: 0.25rem;    /* 4px */
+    --space-2: 0.5rem;     /* 8px */
+    --space-3: 0.75rem;    /* 12px */
+    --space-4: 1rem;       /* 16px */
+    --space-5: 1.25rem;    /* 20px */
+    --space-6: 1.5rem;     /* 24px */
+    --space-8: 2rem;       /* 32px */
+    --space-10: 2.5rem;    /* 40px */
+    --space-12: 3rem;      /* 48px */
+    --space-16: 4rem;      /* 64px */
+    --space-20: 5rem;      /* 80px */
+
+    /* Typography */
+    --font-family-base: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    --font-family-mono: 'Courier New', Courier, monospace;
+
+    --font-size-xs: 0.75rem;     /* 12px */
+    --font-size-sm: 0.875rem;    /* 14px */
+    --font-size-base: 1rem;      /* 16px */
+    --font-size-lg: 1.125rem;    /* 18px */
+    --font-size-xl: 1.25rem;     /* 20px */
+    --font-size-2xl: 1.5rem;     /* 24px */
+    --font-size-3xl: 1.875rem;   /* 30px */
+    --font-size-4xl: 2.25rem;    /* 36px */
+
+    --font-weight-normal: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+
+    --line-height-tight: 1.25;
+    --line-height-normal: 1.5;
+    --line-height-relaxed: 1.75;
+
+    /* Transitions */
+    --transition-fast: 150ms ease;
+    --transition-base: 300ms ease;
+    --transition-slow: 500ms ease;
+
+    /* Z-Index Scale */
+    --z-dropdown: 100;
+    --z-sticky: 200;
+    --z-fixed: 300;
+    --z-overlay: 500;
+    --z-modal: 1000;
+    --z-popover: 1500;
+    --z-toast: 9999;
+
+    /* Component Specific */
+    --navbar-height: 80px;
+    --sidebar-width: 280px;
+    --card-padding: var(--space-4);
+    --modal-max-width: 600px;
+
+    /* Animation Easings */
+    --ease-in: cubic-bezier(0.4, 0, 1, 1);
+    --ease-out: cubic-bezier(0, 0, 0.2, 1);
+    --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* =============================================================================
+   COLOR PALETTE - Dark Mode
+   ========================================================================== */
+[data-theme="dark"] {
+    /* Brand Colors - adjusted for dark mode */
+    --color-primary: #6366f1;
+    --color-primary-hover: #818cf8;
+    --color-primary-light: #312e81;
+
+    /* Semantic Colors */
+    --color-success: #10b981;
+    --color-success-light: #064e3b;
+    --color-warning: #f59e0b;
+    --color-warning-light: #78350f;
+    --color-danger: #ef4444;
+    --color-danger-light: #7f1d1d;
+    --color-info: #60a5fa;
+    --color-info-light: #1e3a8a;
+
+    /* Accent Colors */
+    --color-accent: #818cf8;
+    --color-accent-hover: #a5b4fc;
+    --color-secondary: #94a3b8;
+
+    /* Background Colors */
+    --bg-primary: #1e2124;
+    --bg-secondary: #282b30;
+    --bg-tertiary: #36393e;
+    --bg-surface: #1e293b;
+    --bg-surface-alt: #334155;
+    --bg-page: #0f172a;
+    --bg-overlay: rgba(0, 0, 0, 0.7);
+
+    /* Special Purpose Backgrounds */
+    --bg-locked: #2d3748;
+    --bg-hover: #334155;
+    --bg-selected: #312e81;
+
+    /* Text Colors */
+    --text-primary: #e0e0e0;
+    --text-secondary: #94a3b8;
+    --text-tertiary: #64748b;
+    --text-muted: #72767d;
+    --text-disabled: #475569;
+    --text-inverted: #1e293b;
+
+    /* Border Colors */
+    --border-color: #404347;
+    --border-light: #334155;
+    --border-dark: #1e293b;
+    --border-locked: #4a5568;
+    --border-focus: var(--color-primary);
+
+    /* Shadows - adjusted for dark backgrounds */
+    --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.3);
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.5);
+    --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.6);
+}
+
+/* =============================================================================
+   LEGACY VARIABLE MAPPINGS
+
+   These provide backward compatibility with existing code.
+   Gradually migrate to the new naming convention above.
+   ========================================================================== */
+
+:root {
+    /* Workflow page legacy variables */
+    --primary-color: var(--color-primary);
+    --success-color: var(--color-success);
+    --warning-color: var(--color-warning);
+    --danger-color: var(--color-danger);
+    --info-color: var(--color-info);
+    --accent-color: var(--color-accent);
+    --bg-color: var(--bg-page);
+    --surface-color: var(--bg-surface);
+    --surface-alt-color: var(--bg-surface-alt);
+    --text-color: var(--text-primary);
+    --text-muted-color: var(--text-muted);
+    --border-radius: var(--radius-lg);
+    --box-shadow: var(--shadow-md);
+    --transition: var(--transition-base);
+
+    /* Board page legacy variables */
+    --primary: var(--color-primary);
+    --primary-hover: var(--color-primary-hover);
+    --secondary: var(--color-secondary);
+    --success: var(--color-success);
+    --danger: var(--color-danger);
+    --warning: var(--color-warning);
+    --info: var(--color-info);
+    --locked-bg: var(--bg-locked);
+    --locked-border: var(--border-locked);
+}
+
+[data-theme="dark"] {
+    /* Legacy dark mode mappings */
+    --primary-color: var(--color-primary);
+    --success-color: var(--color-success);
+    --warning-color: var(--color-warning);
+    --danger-color: var(--color-danger);
+    --info-color: var(--color-info);
+    --accent-color: var(--color-accent);
+    --bg-color: var(--bg-page);
+    --surface-color: var(--bg-surface);
+    --surface-alt-color: var(--bg-surface-alt);
+    --text-color: var(--text-primary);
+    --text-muted-color: var(--text-muted);
+}

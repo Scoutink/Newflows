@@ -1,40 +1,7 @@
-/* --- THEME DEFINITIONS --- */
-:root {
-    --primary-color: #4a6cf7;
-    --success-color: #10b981;
-    --warning-color: #f59e0b;
-    --danger-color: #ef4444;
-    --info-color: #3b82f6;
-    --accent-color: #6366f1;
-    --bg-color: #f8fafc;
-    --surface-color: #ffffff;
-    --surface-alt-color: #f1f5f9;
-    --border-color: #e2e8f0;
-    --text-color: #1e293b;
-    --text-secondary: #64748b;
-    --text-tertiary: #94a3b8;
-    --text-muted-color: #64748b;
-    --border-radius: 12px;
-    --box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-    --transition: all 0.3s ease;
-}
+/* Import Shared Design System */
+@import url('shared-variables.css');
 
-body.dark-theme {
-    --primary-color: #6366f1;
-    --success-color: #10b981;
-    --warning-color: #f59e0b;
-    --danger-color: #ef4444;
-    --info-color: #60a5fa;
-    --accent-color: #818cf8;
-    --bg-color: #0f172a;
-    --surface-color: #1e293b;
-    --surface-alt-color: #334155;
-    --border-color: #475569;
-    --text-color: #e0e0e0;
-    --text-secondary: #94a3b8;
-    --text-tertiary: #64748b;
-    --text-muted-color: #94a3b8;
-}
+/* --- WORKFLOW PAGE STYLES --- */
 
 /* PPM Export Button */
 .btn-export-board {
