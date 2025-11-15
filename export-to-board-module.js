@@ -209,21 +209,96 @@ const initializeExportModal = (flow, template) => {
         };
         
         container.innerHTML = (flow.data || []).map(node => buildNodeHTML(node, template.levels[0], 0)).join('');
+
+        // Helper to get all child checkboxes of a node
+        const getChildCheckboxes = (nodeId) => {
+            const childIds = [];
+            const findChildren = (nodes, parentId, depth = 0) => {
+                nodes.forEach(node => {
+                    if (node.id === parentId) {
+                        // Found the parent, now collect all descendants
+                        const collectDescendants = (n) => {
+                            if (n.subcategories) {
+                                n.subcategories.forEach(child => {
+                                    childIds.push(child.id);
+                                    collectDescendants(child);
+                                });
+                            }
+                        };
+                        collectDescendants(node);
+                    } else if (node.subcategories) {
+                        findChildren(node.subcategories, parentId, depth + 1);
+                    }
+                });
+            };
+            findChildren(flow.data || [], nodeId);
+            return childIds.map(id => document.querySelector(`.partial-checkbox[data-node-id="${id}"]`)).filter(Boolean);
+        };
+
+        // Add change listeners to partial checkboxes
+        container.querySelectorAll('.partial-checkbox').forEach(checkbox => {
+            checkbox.addEventListener('change', (e) => {
+                const nodeId = e.target.dataset.nodeId;
+                const isChecked = e.target.checked;
+
+                // Auto-select/deselect all children
+                if (isChecked) {
+                    const childCheckboxes = getChildCheckboxes(nodeId);
+                    childCheckboxes.forEach(child => {
+                        child.checked = true;
+                    });
+                }
+
+                // Rebuild dynamic list tree to update skip defaults
+                const dynamicListEnabled = document.getElementById('export-dynamic-list')?.checked;
+                if (dynamicListEnabled) {
+                    buildDynamicListTree();
+                }
+
+                updatePreview();
+            });
+        });
     };
     
+    // Helper to check if node should be exported based on current scope
+    const shouldNodeBeExported = (node) => {
+        const scope = document.querySelector('input[name="export-scope"]:checked')?.value || 'full';
+
+        if (scope === 'full') {
+            return true;
+        } else if (scope === 'partial') {
+            // Check if this node is selected in partial tree
+            const checkbox = document.querySelector(`.partial-checkbox[data-node-id="${node.id}"]`);
+            return checkbox?.checked || false;
+        } else if (scope === 'tag') {
+            // Check if node has the selected tag
+            const selectedTag = document.getElementById('tag-select')?.value;
+            if (!selectedTag) return false;
+            return nodeHasTag(node, selectedTag);
+        }
+
+        return false;
+    };
+
     // Build dynamic list tree with type selectors
     const buildDynamicListTree = () => {
         const container = document.getElementById('dynamic-list-tree');
         if (!container) return;
-        
+
         const buildNodeHTML = (node, depth = 0) => {
             const indent = depth * 20;
             const levelInfo = template.levels[depth];
             const hasChildren = node.subcategories && node.subcategories.length > 0;
-            const defaultType = depth <= 1 ? 'connection' : 'task'; // First 2 levels default to connection
 
-            // Smart column default based on workflow state
+            // Determine if this node will be exported
+            const willBeExported = shouldNodeBeExported(node);
+
+            // Default type: skip if not exported, otherwise use depth-based default
+            const defaultType = !willBeExported ? 'skip' : (depth <= 1 ? 'connection' : 'task');
+
+            // Smart column default based on workflow state (only if node will be exported)
             const getSmartColumnDefault = () => {
+                if (!willBeExported) return '';
                 if (node.completed) return 'done';
                 if (node.grade && node.grade > 0) return 'in-progress';
                 return ''; // None - user must explicitly choose
@@ -233,13 +308,13 @@ const initializeExportModal = (flow, template) => {
             let html = `
                 <div class="dynamic-node" style="margin-left: ${indent}px; margin-bottom: 0.75rem;">
                     <div style="display: flex; align-items: center; gap: 0.75rem;">
-                        <span style="flex: 1; font-weight: ${depth === 0 ? '600' : '400'};">
-                            ${node.name || 'Untitled'}
+                        <span style="flex: 1; font-weight: ${depth === 0 ? '600' : '400'}; ${!willBeExported ? 'color: var(--text-muted); font-style: italic;' : ''}">
+                            ${node.name || 'Untitled'} ${!willBeExported ? '(not in export)' : ''}
                         </span>
                         <select class="dynamic-type-selector" data-node-id="${node.id}" style="padding: 0.25rem 0.5rem; border-radius: 4px; border: 1px solid var(--border-color); font-size: 0.9rem; min-width: 100px;">
                             <option value="task" ${defaultType === 'task' ? 'selected' : ''}>Task</option>
                             <option value="connection" ${defaultType === 'connection' ? 'selected' : ''}>Connection</option>
-                            <option value="skip">Skip</option>
+                            <option value="skip" ${defaultType === 'skip' ? 'selected' : ''}>Skip</option>
                         </select>
                         <select class="board-column-selector" data-node-id="${node.id}" style="padding: 0.25rem 0.5rem; border-radius: 4px; border: 1px solid var(--border-color); font-size: 0.9rem; min-width: 120px; display: ${defaultType === 'skip' ? 'none' : 'inline-block'};">
                             <option value="" ${defaultColumn === '' ? 'selected' : ''}>None</option>
@@ -251,16 +326,16 @@ const initializeExportModal = (flow, template) => {
                     </div>
                 </div>
             `;
-            
+
             if (hasChildren && depth < template.levels.length - 1) {
                 node.subcategories.forEach(child => {
                     html += buildNodeHTML(child, depth + 1);
                 });
             }
-            
+
             return html;
         };
-        
+
         container.innerHTML = (flow.data || []).map(node => buildNodeHTML(node, 0)).join('');
 
         // Add change listeners for type selector
@@ -441,6 +516,13 @@ const initializeExportModal = (flow, template) => {
     if (tagSelect) {
         tagSelect.addEventListener('change', () => {
             updateBoardName();
+
+            // Rebuild dynamic list tree to update skip defaults for tag-filtered export
+            const dynamicListEnabled = document.getElementById('export-dynamic-list')?.checked;
+            if (dynamicListEnabled) {
+                buildDynamicListTree();
+            }
+
             updatePreview();
         });
     }
