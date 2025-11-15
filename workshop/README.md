@@ -33,6 +33,7 @@ This directory contains **comprehensive forensic analysis** of the Newflows code
 | **05_dependencies_and_relationships.md** | Module interactions, data flow, coupling analysis | 90% |
 | **06_bugs_and_issues.md** | Known bugs, potential issues, risks | 85% |
 | **07_enhancement_roadmap.md** | Recommendations for improvements | 90% |
+| **08_export_workflow_to_board_analysis.md** | Export feature optimization analysis with enhancement proposals | 95% |
 | **README.md** | This file - workshop index and summary | 100% |
 
 ---
@@ -56,6 +57,12 @@ This directory contains **comprehensive forensic analysis** of the Newflows code
 1. Use **05_dependencies_and_relationships.md** - Understand data flow
 2. Check **06_bugs_and_issues.md** - Known issues
 3. Use module analysis files for detailed function documentation
+
+### If you're working on export functionality:
+1. Read **08_export_workflow_to_board_analysis.md** - Comprehensive export analysis
+2. Review requirements vs implementation comparison
+3. Follow optimization roadmap for implementation priorities
+4. Consider enhancement proposals for advanced features
 
 ---
 
