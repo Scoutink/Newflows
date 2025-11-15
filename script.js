@@ -40,7 +40,10 @@ document.addEventListener('DOMContentLoaded', () => {
         currentFlowId: null,
         selectedActionPaths: {},
         expandedTextAreas: new Set(),
-        activeTag: null
+        activeTag: null,
+        hasUnsavedChanges: false,
+        autoSaveTimer: null,
+        isSaving: false
     };
 
     let quillEditor = null;
@@ -63,6 +66,58 @@ document.addEventListener('DOMContentLoaded', () => {
     const nodeHasTag = (node, tag) => (node.tags || []).includes(tag);
 
     const deepCopy = (obj) => JSON.parse(JSON.stringify(obj));
+
+    // ===== AUTO-SAVE & SAVE INDICATOR =====
+    const updateSaveIndicator = (state) => {
+        const indicator = document.getElementById('save-indicator');
+        if (!indicator) return;
+
+        const icon = indicator.querySelector('i');
+        const text = indicator.querySelector('span');
+
+        // Remove all state classes
+        indicator.classList.remove('unsaved', 'saving');
+
+        if (state === 'saving') {
+            indicator.style.display = 'inline-flex';
+            indicator.classList.add('saving');
+            icon.className = 'spinner';
+            text.textContent = 'Saving...';
+        } else if (state === 'unsaved') {
+            indicator.style.display = 'inline-flex';
+            indicator.classList.add('unsaved');
+            icon.className = 'fa-solid fa-circle-notch fa-spin';
+            text.textContent = 'Unsaved changes';
+        } else { // saved
+            indicator.style.display = 'inline-flex';
+            icon.className = 'fa-solid fa-circle-check';
+            text.textContent = 'All changes saved';
+
+            // Auto-hide after 3 seconds
+            setTimeout(() => {
+                indicator.style.display = 'none';
+            }, 3000);
+        }
+    };
+
+    const markAsChanged = () => {
+        if (appState.isSaving) return;
+
+        appState.hasUnsavedChanges = true;
+        updateSaveIndicator('unsaved');
+
+        // Clear existing timer
+        if (appState.autoSaveTimer) {
+            clearTimeout(appState.autoSaveTimer);
+        }
+
+        // Set new timer for auto-save (2 seconds after last change)
+        appState.autoSaveTimer = setTimeout(async () => {
+            if (appState.hasUnsavedChanges) {
+                await saveWorkflow();
+            }
+        }, 2000);
+    };
 
     // ===== THEME / MODE =====
     const applyTheme = (theme) => {
@@ -163,13 +218,16 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    const saveWorkflow = async () => {
+    const saveWorkflow = async (silent = false) => {
         try {
+            appState.isSaving = true;
+            updateSaveIndicator('saving');
+
             // Propagate changes to linked workflows
             if (appState.currentMode === 'creation') {
                 propagateToLinkedWorkflows(appState.currentFlowId);
             }
-            
+
             const res = await fetch('save_workflow.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -177,10 +235,23 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             const json = await res.json();
             if (json.status !== 'success') throw new Error(json.message);
-            showToast('Structure saved successfully', 'success', 2000);
+
+            // Mark as saved
+            appState.hasUnsavedChanges = false;
+            appState.isSaving = false;
+            updateSaveIndicator('saved');
+
+            // Show toast only if not silent auto-save
+            if (!silent) {
+                showToast('Structure saved successfully', 'success', 2000);
+            }
+
             return true;
         } catch (e) {
             console.error('Save workflow error:', e);
+            appState.isSaving = false;
+            appState.hasUnsavedChanges = true;
+            updateSaveIndicator('unsaved');
             showToast('Failed to save: ' + e.message, 'error', 5000);
             return false;
         }
@@ -791,6 +862,11 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!flow) {
             workflowRoot.innerHTML = '<div class="loading-state">Select or create a workflow</div>';
             return;
+        }
+
+        // Mark as changed when rendering (data might have been modified)
+        if (appState.currentFlowId) {
+            markAsChanged();
         }
 
         const template = getTemplate(flow);
