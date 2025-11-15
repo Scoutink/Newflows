@@ -74,6 +74,61 @@ const PPM = (() => {
         return cards.sort((a, b) => a.order - b.order);
     };
 
+    // Toast notification system
+    const showToast = (message, type = 'info', duration = 3000) => {
+        // Ensure toast container exists
+        let container = document.querySelector('.toast-container');
+        if (!container) {
+            container = document.createElement('div');
+            container.className = 'toast-container';
+            document.body.appendChild(container);
+        }
+
+        // Icon mapping
+        const iconMap = {
+            success: 'fa-circle-check',
+            error: 'fa-circle-exclamation',
+            warning: 'fa-triangle-exclamation',
+            info: 'fa-circle-info'
+        };
+
+        // Create toast element
+        const toast = document.createElement('div');
+        toast.className = `toast toast-${type}`;
+        toast.innerHTML = `
+            <div class="toast-icon">
+                <i class="fa-solid ${iconMap[type] || iconMap.info}"></i>
+            </div>
+            <div class="toast-content">
+                <div class="toast-message">${message}</div>
+            </div>
+            <button class="toast-close" aria-label="Close">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        `;
+
+        // Add to container
+        container.appendChild(toast);
+
+        // Close button handler
+        const closeBtn = toast.querySelector('.toast-close');
+        const closeToast = () => {
+            toast.classList.remove('toast-show');
+            setTimeout(() => toast.remove(), 300);
+        };
+        closeBtn.addEventListener('click', closeToast);
+
+        // Trigger animation
+        requestAnimationFrame(() => {
+            toast.classList.add('toast-show');
+        });
+
+        // Auto-dismiss
+        if (duration > 0) {
+            setTimeout(closeToast, duration);
+        }
+    };
+
     // ===== DATA LAYER =====
     const loadBoards = async () => {
         try {
@@ -83,7 +138,7 @@ const PPM = (() => {
             state.boards = data.boards || [];
         } catch (e) {
             console.error('Load boards error:', e);
-            alert('Failed to load boards. Please refresh the page.');
+            showToast('Failed to load boards. Please refresh the page.', 'error', 6000);
             state.boards = [];
         }
     };
@@ -98,7 +153,7 @@ const PPM = (() => {
             state.currentUser = state.users[0] || null;
         } catch (e) {
             console.error('Load users error:', e);
-            alert('Failed to load users. Please refresh the page.');
+            showToast('Failed to load users. Please refresh the page.', 'error', 6000);
             state.users = [];
         }
     };
@@ -115,7 +170,7 @@ const PPM = (() => {
             return true;
         } catch (e) {
             console.error('Save boards error:', e);
-            alert('Failed to save boards: ' + e.message);
+            showToast('Failed to save boards: ' + e.message, 'error', 5000);
             return false;
         }
     };
@@ -1101,7 +1156,7 @@ const PPM = (() => {
         const column = board.columns.find(col => col.id === card.columnId);
         if (column && column.locked) {
             e.preventDefault();
-            alert('Cards in the References column are locked and cannot be moved.');
+            showToast('Cards in the References column are locked and cannot be moved.', 'warning', 4000);
             return;
         }
         
@@ -1144,7 +1199,7 @@ const PPM = (() => {
         // Check if target column is locked
         const toColumn = board.columns.find(col => col.id === toColumnId);
         if (toColumn && toColumn.locked) {
-            alert('Cannot drop cards into the References column (it is locked).');
+            showToast('Cannot drop cards into the References column (it is locked).', 'warning', 4000);
             return;
         }
         
@@ -1520,7 +1575,7 @@ const PPM = (() => {
             const board = getCurrentBoard();
             const group = getGroupById(board, groupId);
             if (!group || group.linkedCards.length === 0) {
-                alert('No cards in this group for bulk actions.');
+                showToast('No cards in this group for bulk actions.', 'warning', 4000);
                 return;
             }
             
@@ -1669,8 +1724,8 @@ const PPM = (() => {
                 closeModal();
                 renderGroups(board);
                 renderColumns(board);
-                
-                alert('All cards deleted successfully.');
+
+                showToast('All cards deleted successfully', 'success', 3000);
             }
         },
         
@@ -1678,9 +1733,9 @@ const PPM = (() => {
             const board = getCurrentBoard();
             const group = getGroupById(board, groupId);
             const milestoneId = document.getElementById('bulk-milestone-select')?.value;
-            
+
             if (!group || !milestoneId) {
-                alert('Please select a milestone first.');
+                showToast('Please select a milestone first', 'warning', 3000);
                 return;
             }
             
@@ -1712,8 +1767,8 @@ const PPM = (() => {
             await saveBoards();
             renderMilestones(board);
             renderColumns(board);
-            
-            alert(`${count} card(s) added to milestone "${milestone.name}".`);
+
+            showToast(`${count} card(s) added to milestone "${milestone.name}"`, 'success', 3000);
         },
         
         bulkRemoveMilestone: async (groupId) => {
@@ -1739,17 +1794,17 @@ const PPM = (() => {
             await saveBoards();
             renderMilestones(board);
             renderColumns(board);
-            
-            alert(`${count} card(s) removed from their milestones.`);
+
+            showToast(`${count} card(s) removed from their milestones`, 'success', 3000);
         },
         
         bulkAddCategory: async (groupId) => {
             const board = getCurrentBoard();
             const group = getGroupById(board, groupId);
             const categoryId = document.getElementById('bulk-category-select')?.value;
-            
+
             if (!group || !categoryId) {
-                alert('Please select a category first.');
+                showToast('Please select a category first', 'warning', 3000);
                 return;
             }
             
@@ -1768,8 +1823,8 @@ const PPM = (() => {
             await saveBoards();
             renderCategories(board);
             renderColumns(board);
-            
-            alert(`${count} card(s) added to category "${category.name}".`);
+
+            showToast(`${count} card(s) added to category "${category.name}"`, 'success', 3000);
         },
         
         bulkRemoveCategory: async (groupId) => {
@@ -1789,17 +1844,17 @@ const PPM = (() => {
             await saveBoards();
             renderCategories(board);
             renderColumns(board);
-            
-            alert(`${count} card(s) removed from their categories.`);
+
+            showToast(`${count} card(s) removed from their categories`, 'success', 3000);
         },
         
         bulkAddNode: async (groupId) => {
             const board = getCurrentBoard();
             const group = getGroupById(board, groupId);
             const nodeId = document.getElementById('bulk-node-select')?.value;
-            
+
             if (!group || !nodeId) {
-                alert('Please select a node first.');
+                showToast('Please select a node first', 'warning', 3000);
                 return;
             }
             
@@ -1823,17 +1878,17 @@ const PPM = (() => {
             
             await saveBoards();
             renderColumns(board);
-            
-            alert(`${count} card(s) linked to node "${node.title}".`);
+
+            showToast(`${count} card(s) linked to node "${node.title}"`, 'success', 3000);
         },
         
         bulkRemoveNode: async (groupId) => {
             const board = getCurrentBoard();
             const group = getGroupById(board, groupId);
             const nodeId = document.getElementById('bulk-node-select')?.value;
-            
+
             if (!group || !nodeId) {
-                alert('Please select a node first.');
+                showToast('Please select a node first', 'warning', 3000);
                 return;
             }
             
@@ -1852,8 +1907,8 @@ const PPM = (() => {
             
             await saveBoards();
             renderColumns(board);
-            
-            alert(`${count} card(s) unlinked from node "${node.title}".`);
+
+            showToast(`${count} card(s) unlinked from node "${node.title}"`, 'success', 3000);
         },
         
         bulkAssignUser: async (groupId) => {
@@ -1861,9 +1916,9 @@ const PPM = (() => {
             const group = getGroupById(board, groupId);
             const userId = document.getElementById('bulk-assign-user')?.value;
             const role = document.getElementById('bulk-assign-role')?.value;
-            
+
             if (!group || !userId || !role) {
-                alert('Please select a user and role first.');
+                showToast('Please select a user and role first', 'warning', 3000);
                 return;
             }
             
@@ -1890,8 +1945,8 @@ const PPM = (() => {
             
             await saveBoards();
             renderColumns(board);
-            
-            alert(`${count} card(s) assigned to ${user.name} as ${role}.`);
+
+            showToast(`${count} card(s) assigned to ${user.name} as ${role}`, 'success', 3000);
         },
         
         bulkMarkDone: async (groupId, isDone) => {
@@ -1923,17 +1978,17 @@ const PPM = (() => {
             await saveBoards();
             renderMilestones(board);
             renderColumns(board);
-            
-            alert(`${count} card(s) marked as ${isDone ? 'done' : 'undone'}.`);
+
+            showToast(`${count} card(s) marked as ${isDone ? 'done' : 'undone'}`, 'success', 3000);
         },
         
         bulkSetDueDate: async (groupId) => {
             const board = getCurrentBoard();
             const group = getGroupById(board, groupId);
             const dueDate = document.getElementById('bulk-due-date')?.value;
-            
+
             if (!group || !dueDate) {
-                alert('Please select a due date first.');
+                showToast('Please select a due date first', 'warning', 3000);
                 return;
             }
             
@@ -1973,8 +2028,8 @@ const PPM = (() => {
             
             await saveBoards();
             renderColumns(board);
-            
-            alert(`Due date set for ${count} card(s).`);
+
+            showToast(`Due date set for ${count} card(s)`, 'success', 3000);
         },
         
         bulkClearDueDate: async (groupId) => {
@@ -1993,8 +2048,8 @@ const PPM = (() => {
             
             await saveBoards();
             renderColumns(board);
-            
-            alert(`Due date cleared for ${count} card(s).`);
+
+            showToast(`Due date cleared for ${count} card(s)`, 'success', 3000);
         },
 
         deleteGroupConfirm: async (groupId) => {
@@ -2194,7 +2249,7 @@ const PPM = (() => {
             const availableUsers = state.users.filter(u => !currentMemberIds.includes(u.id));
             
             if (availableUsers.length === 0) {
-                alert(`All ${state.users.length} users are already members of this board.\n\nCurrent members:\n${board.members.map(m => `• ${m.name}`).join('\n')}`);
+                showToast(`All ${state.users.length} users are already members of this board.`, 'info', 5000);
                 return;
             }
             
@@ -2732,7 +2787,7 @@ const PPM = (() => {
             console.log(`${checked ? 'Linked' : 'Unlinked'} card ${cardId} ${checked ? 'to' : 'from'} node ${nodeId}`);
         } catch (err) {
             console.error('toggleNodeConnection error:', err);
-            alert('Failed to update node connection: ' + err.message);
+            showToast('Failed to update node connection: ' + err.message, 'error', 5000);
         }
     };
     
@@ -2770,7 +2825,7 @@ const PPM = (() => {
             ).length;
             
             if (linkedCount === 0) {
-                alert(`No tasks are linked to this backlog item yet.\n\nTo link tasks:\n1. Open any task outside the Backlog column\n2. Click "Link to Backlog" in the task details\n3. Select this backlog item\n\nOr when creating a new task, select backlog items to link.`);
+                showToast('No tasks are linked to this backlog item yet. Open any task and use "Link to Backlog" to connect tasks.', 'info', 6000);
                 state.backlogFilter = null;
                 return;
             }
@@ -2892,14 +2947,14 @@ const PPM = (() => {
         
         const editor = document.getElementById(`inline-note-editor-${cardId}`);
         const title = document.getElementById(`inline-note-title-${cardId}`).value.trim();
-        
+
         if (!title) {
-            alert('Please enter a note title');
+            showToast('Please enter a note title', 'warning', 3000);
             return;
         }
-        
+
         if (!editor.quillInstance) {
-            alert('Editor not initialized');
+            showToast('Editor not initialized', 'error', 4000);
             return;
         }
         
@@ -2991,7 +3046,7 @@ const PPM = (() => {
         const backlogCards = board.cards.filter(c => c.columnId === backlogColumnId).sort((a, b) => a.order - b.order);
         
         if (backlogCards.length === 0) {
-            alert('No backlog items available to link.');
+            showToast('No backlog items available to link', 'warning', 4000);
             return;
         }
         
@@ -3107,9 +3162,9 @@ const PPM = (() => {
             const name = document.getElementById('new-board-name').value.trim();
             const description = document.getElementById('new-board-description').value.trim();
             const includeReferences = document.getElementById('include-references-column').checked;
-            
+
             if (!name) {
-                alert('Please enter a board name');
+                showToast('Please enter a board name', 'warning', 3000);
                 return;
             }
             
@@ -3251,7 +3306,8 @@ const PPM = (() => {
         convertControlToBoard,
         saveBoards,
         createBoard,
-        getCurrentBoard
+        getCurrentBoard,
+        showToast
     };
 })();
 
@@ -3360,7 +3416,7 @@ PPM.dynamicList = {
             this.updateModeUI();
         } catch (err) {
             console.error('toggleMode error:', err);
-            alert('Failed to toggle mode: ' + err.message);
+            showToast('Failed to toggle mode: ' + err.message, 'error', 5000);
         }
     },
     
@@ -3570,10 +3626,10 @@ PPM.dynamicList = {
             const node = board.dynamicList.nodes.find(n => n.id === nodeId);
             
             if (!node) {
-                alert('Node not found');
+                showToast('Node not found', 'error', 4000);
                 return;
             }
-            
+
             // Initialize task data if doesn't exist
             if (!node.taskData) {
                 node.taskData = {
@@ -3597,7 +3653,7 @@ PPM.dynamicList = {
             
         } catch (err) {
             console.error('openTaskModal error:', err);
-            alert('Failed to open task modal: ' + err.message);
+            showToast('Failed to open task modal: ' + err.message, 'error', 5000);
         }
     },
     
@@ -3753,10 +3809,10 @@ PPM.dynamicList = {
             const node = board.dynamicList.nodes.find(n => n.id === nodeId);
             
             if (!node) {
-                alert('Node not found');
+                showToast('Node not found', 'error', 4000);
                 return;
             }
-            
+
             // Get values from form
             const titleEl = document.getElementById('node-task-title');
             const descEl = document.getElementById('node-task-desc');
@@ -3764,7 +3820,7 @@ PPM.dynamicList = {
             const tagsEl = document.getElementById('node-task-tags');
             
             if (!titleEl || !descEl || !priorityEl || !tagsEl) {
-                alert('Form elements not found. Please try closing and reopening the task.');
+                showToast('Form elements not found. Please try closing and reopening the task.', 'error', 5000);
                 console.error('Missing elements:', {titleEl, descEl, priorityEl, tagsEl});
                 return;
             }
@@ -3773,9 +3829,9 @@ PPM.dynamicList = {
             const description = descEl.value.trim();
             const priority = priorityEl.value;
             const tagsStr = tagsEl.value.trim();
-            
+
             if (!title) {
-                alert('Title is required');
+                showToast('Title is required', 'warning', 3000);
                 return;
             }
             
@@ -3793,12 +3849,12 @@ PPM.dynamicList = {
             
             await PPM.saveBoards();
             this.render();
-            
-            alert('Task saved successfully!');
+
+            // Silent save - no intrusive notification needed
             console.log('Node task saved:', nodeId);
         } catch (err) {
             console.error('saveNodeTaskFromModal error:', err);
-            alert('Failed to save task: ' + err.message);
+            PPM.showToast('Failed to save task: ' + err.message, 'error', 5000);
         }
     },
     
@@ -3832,7 +3888,7 @@ PPM.dynamicList = {
             
             const text = input.value.trim();
             if (!text) {
-                alert('Please enter checklist item text');
+                showToast('Please enter checklist item text', 'warning', 3000);
                 return;
             }
             
@@ -3853,7 +3909,7 @@ PPM.dynamicList = {
             }, 100);
         } catch (err) {
             console.error('addNodeChecklistItem error:', err);
-            alert('Failed to add checklist item: ' + err.message);
+            showToast('Failed to add checklist item: ' + err.message, 'error', 5000);
         }
     },
     
@@ -3876,7 +3932,7 @@ PPM.dynamicList = {
             }
         } catch (err) {
             console.error('removeNodeChecklistItem error:', err);
-            alert('Failed to remove checklist item: ' + err.message);
+            showToast('Failed to remove checklist item: ' + err.message, 'error', 5000);
         }
     },
     
@@ -3907,7 +3963,7 @@ PPM.dynamicList = {
             setTimeout(() => { this.openTaskModal(nodeId); }, 100);
         } catch (err) {
             console.error('showAddCommentDialog error:', err);
-            alert('Failed to add comment: ' + err.message);
+            showToast('Failed to add comment: ' + err.message, 'error', 5000);
         }
     },
     
@@ -3976,14 +4032,14 @@ PPM.dynamicList = {
             
             const editor = document.getElementById(`inline-note-editor-node-${nodeId}`);
             const title = document.getElementById(`inline-note-title-node-${nodeId}`).value.trim();
-            
+
             if (!title) {
-                alert('Please enter a note title');
+                showToast('Please enter a note title', 'warning', 3000);
                 return;
             }
-            
+
             if (!editor.quillInstance) {
-                alert('Editor not initialized');
+                showToast('Editor not initialized', 'error', 4000);
                 return;
             }
             
@@ -4008,7 +4064,7 @@ PPM.dynamicList = {
             setTimeout(() => { this.openTaskModal(nodeId); }, 100);
         } catch (err) {
             console.error('saveInlineNote error:', err);
-            alert('Failed to save note: ' + err.message);
+            showToast('Failed to save note: ' + err.message, 'error', 5000);
         }
     },
     
@@ -4040,7 +4096,7 @@ PPM.dynamicList = {
             setTimeout(() => { this.openTaskModal(nodeId); }, 100);
         } catch (err) {
             console.error('showAddLinkDialog error:', err);
-            alert('Failed to add link: ' + err.message);
+            showToast('Failed to add link: ' + err.message, 'error', 5000);
         }
     },
     
@@ -4072,7 +4128,7 @@ PPM.dynamicList = {
             setTimeout(() => { this.openTaskModal(nodeId); }, 100);
         } catch (err) {
             console.error('showAddImageDialog error:', err);
-            alert('Failed to add image: ' + err.message);
+            showToast('Failed to add image: ' + err.message, 'error', 5000);
         }
     },
     
@@ -4091,7 +4147,7 @@ PPM.dynamicList = {
             }
         } catch (err) {
             console.error('removeNodeAttachment error:', err);
-            alert('Failed to remove attachment: ' + err.message);
+            showToast('Failed to remove attachment: ' + err.message, 'error', 5000);
         }
     },
     
@@ -4241,7 +4297,7 @@ PPM.dynamicList = {
             console.log(`Found ${cards.length} cards in DOM`);
             
             if (cards.length === 0) {
-                alert('No cards found on board to filter');
+                showToast('No cards found on board to filter', 'warning', 4000);
                 return;
             }
             
@@ -4275,11 +4331,11 @@ PPM.dynamicList = {
             
             // Show user feedback
             if (taskIds.size === 0) {
-                alert(`No tasks linked to "${node.title}"\n\nLink tasks by opening a task card and checking this node in the "Dynamic List Connections" section.`);
+                showToast(`No tasks linked to "${node.title}". Link tasks by opening a task card and checking this node.`, 'info', 6000);
             }
         } catch (err) {
             console.error('filterByNode error:', err);
-            alert('Failed to filter board: ' + err.message);
+            showToast('Failed to filter board: ' + err.message, 'error', 5000);
         }
     },
     
@@ -4308,7 +4364,7 @@ PPM.dynamicList = {
             console.log('Filter cleared, all cards visible');
         } catch (err) {
             console.error('clearFilter error:', err);
-            alert('Failed to clear filter: ' + err.message);
+            showToast('Failed to clear filter: ' + err.message, 'error', 5000);
         }
     },
     
@@ -4410,7 +4466,7 @@ PPM.dynamicList = {
         try {
             const board = PPM.getCurrentBoard();
             if (!board) {
-                alert('Board not found');
+                showToast('Board not found', 'error', 4000);
                 return;
             }
             
@@ -4427,7 +4483,7 @@ PPM.dynamicList = {
             const editIdEl = document.getElementById('node-edit-id');
             
             if (!titleEl || !typeEl || !parentEl || !editIdEl) {
-                alert('Form elements not found. Please try again.');
+                showToast('Form elements not found. Please try again.', 'error', 5000);
                 console.error('Missing form elements:', {titleEl, typeEl, parentEl, editIdEl});
                 return;
             }
@@ -4436,9 +4492,9 @@ PPM.dynamicList = {
             const type = typeEl.value;
             const parentId = parentEl.value || null;
             const editId = editIdEl.value;
-            
+
             if (!title) {
-                alert('Please enter a title');
+                showToast('Please enter a title', 'warning', 3000);
                 return;
             }
             
@@ -4452,7 +4508,7 @@ PPM.dynamicList = {
             }
             
             if (level > 9) {
-                alert('Maximum level depth (10) reached');
+                showToast('Maximum level depth (10) reached', 'warning', 4000);
                 return;
             }
             
@@ -4497,7 +4553,7 @@ PPM.dynamicList = {
             }, 50);
         } catch (err) {
             console.error('saveNode error:', err);
-            alert('Failed to save node: ' + err.message);
+            showToast('Failed to save node: ' + err.message, 'error', 5000);
         }
     },
     
@@ -4506,13 +4562,13 @@ PPM.dynamicList = {
         try {
             const board = PPM.getCurrentBoard();
             if (!board || !board.dynamicList) {
-                alert('Board not found');
+                showToast('Board not found', 'error', 4000);
                 return;
             }
-            
+
             const node = board.dynamicList.nodes.find(n => n.id === nodeId);
             if (!node) {
-                alert('Node not found');
+                showToast('Node not found', 'error', 4000);
                 return;
             }
             
@@ -4545,7 +4601,7 @@ PPM.dynamicList = {
             console.log('Node deleted successfully:', nodeId);
         } catch (err) {
             console.error('deleteNode error:', err);
-            alert('Failed to delete node: ' + err.message);
+            showToast('Failed to delete node: ' + err.message, 'error', 5000);
         }
     },
     
@@ -4565,7 +4621,7 @@ PPM.dynamicList = {
     
     // DEPRECATED: Task linking now done through card modal
     showTaskLinkDialog: function(nodeId) {
-        alert('Task linking has been moved to the card modal.\n\nOpen any task and look for the "Dynamic List Connections" section to link it to connection nodes.');
+        showToast('Task linking has been moved to the card modal. Open any task and look for the "Dynamic List Connections" section.', 'info', 6000);
     },
     
     // OLD VERSION - KEPT FOR REFERENCE

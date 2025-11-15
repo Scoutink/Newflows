@@ -83,6 +83,61 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
+    // Toast notification system
+    const showToast = (message, type = 'info', duration = 3000) => {
+        // Ensure toast container exists
+        let container = document.querySelector('.toast-container');
+        if (!container) {
+            container = document.createElement('div');
+            container.className = 'toast-container';
+            document.body.appendChild(container);
+        }
+
+        // Icon mapping
+        const iconMap = {
+            success: 'fa-circle-check',
+            error: 'fa-circle-exclamation',
+            warning: 'fa-triangle-exclamation',
+            info: 'fa-circle-info'
+        };
+
+        // Create toast element
+        const toast = document.createElement('div');
+        toast.className = `toast toast-${type}`;
+        toast.innerHTML = `
+            <div class="toast-icon">
+                <i class="fa-solid ${iconMap[type] || iconMap.info}"></i>
+            </div>
+            <div class="toast-content">
+                <div class="toast-message">${message}</div>
+            </div>
+            <button class="toast-close" aria-label="Close">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        `;
+
+        // Add to container
+        container.appendChild(toast);
+
+        // Close button handler
+        const closeBtn = toast.querySelector('.toast-close');
+        const closeToast = () => {
+            toast.classList.remove('toast-show');
+            setTimeout(() => toast.remove(), 300);
+        };
+        closeBtn.addEventListener('click', closeToast);
+
+        // Trigger animation
+        requestAnimationFrame(() => {
+            toast.classList.add('toast-show');
+        });
+
+        // Auto-dismiss
+        if (duration > 0) {
+            setTimeout(closeToast, duration);
+        }
+    };
+
     // ===== DATA LAYER =====
     const loadTemplates = async () => {
         try {
@@ -122,11 +177,11 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             const json = await res.json();
             if (json.status !== 'success') throw new Error(json.message);
-            alert('Structure saved successfully!');
+            showToast('Structure saved successfully', 'success', 2000);
             return true;
         } catch (e) {
             console.error('Save workflow error:', e);
-            alert('Failed to save: ' + e.message);
+            showToast('Failed to save: ' + e.message, 'error', 5000);
             return false;
         }
     };
@@ -152,11 +207,11 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             const json = await res.json();
             if (json.status !== 'success') throw new Error(json.message);
-            alert('Execution state saved!');
+            showToast('Execution state saved', 'success', 2000);
             return true;
         } catch (e) {
             console.error('Save executions error:', e);
-            alert('Failed to save executions: ' + e.message);
+            showToast('Failed to save executions: ' + e.message, 'error', 5000);
             return false;
         }
     };
@@ -396,7 +451,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const createFlowFromTemplate = async (name, templateId, providedTemplate = null) => {
         const template = providedTemplate || appState.templates.find(t => t.id === templateId);
         if (!template) {
-            alert('Template not found!');
+            showToast('Template not found', 'error', 4000);
             return;
         }
 
@@ -429,7 +484,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const showCreateFlowDialog = async () => {
         if (appState.templates.length === 0) {
-            alert('No templates available. Please create a template first in Template Builder.');
+            showToast('No templates available. Please create a template first in Template Builder.', 'warning', 5000);
             return;
         }
 
@@ -532,42 +587,42 @@ document.addEventListener('DOMContentLoaded', () => {
                         const name = document.getElementById('flow-name').value.trim();
                         const templateId = document.getElementById('flow-template').value;
                         if (!name) {
-                            alert('Please enter a workflow name');
+                            showToast('Please enter a workflow name', 'warning', 3000);
                             return;
                         }
                         if (!templateId) {
-                            alert('Please select a template');
+                            showToast('Please select a template', 'warning', 3000);
                             return;
                         }
                         await createFlowFromTemplate(name, templateId);
                     } else if (mode === 'empty') {
                         const name = document.getElementById('empty-name').value.trim();
                         if (!name) {
-                            alert('Please enter a workflow name');
+                            showToast('Please enter a workflow name', 'warning', 3000);
                             return;
                         }
                         await createEmptyWorkflow(name);
                     } else if (mode === 'copy') {
                         const name = document.getElementById('copy-name').value.trim();
                         if (!name) {
-                            alert('Please enter a workflow name');
+                            showToast('Please enter a workflow name', 'warning', 3000);
                             return;
                         }
                         const sourceId = document.getElementById('copy-source').value;
                         if (!sourceId) {
-                            alert('Please select a source workflow');
+                            showToast('Please select a source workflow', 'warning', 3000);
                             return;
                         }
                         await copyWorkflow(name, sourceId);
                     } else if (mode === 'linked') {
                         const name = document.getElementById('linked-name').value.trim();
                         if (!name) {
-                            alert('Please enter a workflow name');
+                            showToast('Please enter a workflow name', 'warning', 3000);
                             return;
                         }
                         const sourceId = document.getElementById('linked-source').value;
                         if (!sourceId) {
-                            alert('Please select a source workflow');
+                            showToast('Please select a source workflow', 'warning', 3000);
                             return;
                         }
                         await createLinkedWorkflow(name, sourceId);
@@ -575,7 +630,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     closeModal();
                 } catch (error) {
                     console.error('Workflow creation error:', error);
-                    alert('Failed to create workflow: ' + error.message);
+                    showToast('Failed to create workflow: ' + error.message, 'error', 5000);
                 }
             });
         });
@@ -584,7 +639,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const copyWorkflow = async (newName, sourceFlowId) => {
         const sourceFlow = appState.workflow.flows.find(f => f.id === sourceFlowId);
         if (!sourceFlow) {
-            alert('Source workflow not found!');
+            showToast('Source workflow not found', 'error', 4000);
             return;
         }
 
@@ -677,7 +732,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const createLinkedWorkflow = async (name, sourceFlowId) => {
         const sourceFlow = appState.workflow.flows.find(f => f.id === sourceFlowId);
         if (!sourceFlow) {
-            alert('Source workflow not found!');
+            showToast('Source workflow not found', 'error', 4000);
             return;
         }
 
@@ -1826,7 +1881,7 @@ document.addEventListener('DOMContentLoaded', () => {
             addCategoryBtn.addEventListener('click', () => {
                 const flow = getCurrentFlow();
                 if (!flow) {
-                    alert('No workflow selected. Please create a workflow first.');
+                    showToast('No workflow selected. Please create a workflow first.', 'warning', 4000);
                     return;
                 }
                 // For root level (depth 0), parentPath is not used
@@ -2003,13 +2058,13 @@ document.addEventListener('DOMContentLoaded', () => {
             
             const result = await saveRes.json();
             if (result.status !== 'success') throw new Error(result.message);
-            
-            alert(`Board "${board.name}" created successfully with ${board.cards.length} tasks!`);
+
+            showToast(`Board "${board.name}" created successfully with ${board.cards.length} tasks!`, 'success', 4000);
             window.open(`board.html?id=${board.id}`, '_blank');
-            
+
         } catch (e) {
             console.error('Export to board error:', e);
-            alert('Failed to export to board: ' + e.message);
+            showToast('Failed to export to board: ' + e.message, 'error', 5000);
         }
     };
 
@@ -2083,9 +2138,9 @@ document.addEventListener('DOMContentLoaded', () => {
             };
             
             collectTaggedUnits(flow.data, 0);
-            
+
             if (board.cards.length === 0) {
-                alert(`No units found with tag "#${tag}"`);
+                showToast(`No units found with tag "#${tag}"`, 'warning', 4000);
                 return;
             }
             
@@ -2099,13 +2154,13 @@ document.addEventListener('DOMContentLoaded', () => {
             
             const result = await saveRes.json();
             if (result.status !== 'success') throw new Error(result.message);
-            
-            alert(`Board "#${tag}" created successfully with ${board.cards.length} tasks!`);
+
+            showToast(`Board "#${tag}" created successfully with ${board.cards.length} tasks!`, 'success', 4000);
             window.open(`board.html?id=${board.id}`, '_blank');
-            
+
         } catch (e) {
             console.error('Export tag to board error:', e);
-            alert('Failed to create board from tag: ' + e.message);
+            showToast('Failed to create board from tag: ' + e.message, 'error', 5000);
         }
     };
 
@@ -2118,7 +2173,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (typeof window.openExportToBoardModal === 'function') {
                     window.openExportToBoardModal();
                 } else {
-                    alert('Export module not loaded');
+                    showToast('Export module not loaded', 'error', 4000);
                 }
             });
         }
