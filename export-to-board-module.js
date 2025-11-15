@@ -388,18 +388,40 @@ const initializeExportModal = (flow, template) => {
 
         const referenceLevel = parseInt(referenceLevelSelect?.value || '0');
 
+        // Helper to find node by ID in workflow tree
+        const findNodeById = (nodes, targetId) => {
+            for (const node of nodes) {
+                if (node.id === targetId) return node;
+                if (node.subcategories) {
+                    const found = findNodeById(node.subcategories, targetId);
+                    if (found) return found;
+                }
+            }
+            return null;
+        };
+
         // Get all dynamic list type selectors
         const selectors = document.querySelectorAll('.dynamic-type-selector');
 
         selectors.forEach(select => {
             const nodeId = select.dataset.nodeId;
 
+            // Find the actual node object
+            const node = findNodeById(flow.data, nodeId);
+            if (!node) return;
+
+            // IMPORTANT: Only apply bulk setup to nodes that will be exported
+            // Non-exported nodes should remain as 'skip'
+            if (!shouldNodeBeExported(node)) {
+                return; // Skip this node, leave it as 'skip'
+            }
+
             // Find node depth in workflow tree
             const nodeDepth = getNodeDepth(flow.data, nodeId);
 
             if (nodeDepth === null) return;
 
-            // Apply bulk logic:
+            // Apply bulk logic (only for exported nodes):
             // - Ancestors (above reference level) → connection
             // - Reference level → connection (going to References column)
             // - Descendants (below reference level) → task
