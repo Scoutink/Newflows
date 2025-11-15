@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // ===== STATE =====
     let appState = {
         theme: 'light',
-        currentMode: 'execution',
+        currentMode: 'creation',  // Default to creation mode (matches unchecked checkbox)
         workflow: {
             settings: { enforceSequence: true },
             flows: []
@@ -1734,7 +1734,13 @@ document.addEventListener('DOMContentLoaded', () => {
         if (savedTheme) {
             applyTheme(savedTheme);
         }
-        
+
+        // Load mode
+        const savedMode = localStorage.getItem('workflowMode');
+        if (savedMode && (savedMode === 'creation' || savedMode === 'execution')) {
+            appState.currentMode = savedMode;
+        }
+
         // Load data
         await Promise.all([
             loadTemplates().then(templates => appState.templates = templates),
@@ -1756,8 +1762,14 @@ document.addEventListener('DOMContentLoaded', () => {
         if (themeToggleBtn) themeToggleBtn.addEventListener('click', toggleTheme);
         
         if (modeSwitch) {
+            // Initialize checkbox state to match current mode
+            modeSwitch.checked = (appState.currentMode === 'execution');
+
+            // Listen for mode changes and persist
             modeSwitch.addEventListener('change', (e) => {
-                appState.currentMode = e.target.checked ? 'execution' : 'creation';
+                const newMode = e.target.checked ? 'execution' : 'creation';
+                appState.currentMode = newMode;
+                localStorage.setItem('workflowMode', newMode);
                 render();
             });
         }
