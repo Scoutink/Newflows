@@ -247,13 +247,68 @@ const initializeExportModal = (flow, template) => {
         };
         
         container.innerHTML = (flow.data || []).map(node => buildNodeHTML(node, 0)).join('');
-        
+
         // Add change listeners for preview update
         container.querySelectorAll('.dynamic-type-selector').forEach(select => {
             select.addEventListener('change', updatePreview);
         });
     };
-    
+
+    // Helper function to find node depth in workflow tree
+    const getNodeDepth = (nodes, targetId, currentDepth = 0) => {
+        for (const node of nodes) {
+            if (node.id === targetId) {
+                return currentDepth;
+            }
+            if (node.subcategories) {
+                const found = getNodeDepth(node.subcategories, targetId, currentDepth + 1);
+                if (found !== null) return found;
+            }
+        }
+        return null;
+    };
+
+    // Apply bulk dynamic list setup based on reference level
+    const applyBulkDynamicSetup = () => {
+        const exportReferenceCheckbox = document.getElementById('export-reference');
+        const exportDynamicListCheckbox = document.getElementById('export-dynamic-list');
+        const referenceLevelSelect = document.getElementById('reference-level');
+
+        // Only apply if both reference and dynamic list are enabled
+        if (!exportReferenceCheckbox?.checked || !exportDynamicListCheckbox?.checked) {
+            return;
+        }
+
+        const referenceLevel = parseInt(referenceLevelSelect?.value || '0');
+
+        // Get all dynamic list type selectors
+        const selectors = document.querySelectorAll('.dynamic-type-selector');
+
+        selectors.forEach(select => {
+            const nodeId = select.dataset.nodeId;
+
+            // Find node depth in workflow tree
+            const nodeDepth = getNodeDepth(flow.data, nodeId);
+
+            if (nodeDepth === null) return;
+
+            // Apply bulk logic:
+            // - Ancestors (above reference level) → connection
+            // - Reference level → connection (going to References column)
+            // - Descendants (below reference level) → task
+            if (nodeDepth < referenceLevel) {
+                select.value = 'connection';
+            } else if (nodeDepth === referenceLevel) {
+                select.value = 'connection';
+            } else {
+                select.value = 'task';
+            }
+        });
+
+        // Update preview after bulk changes
+        updatePreview();
+    };
+
     // Update preview counts
     const updatePreview = () => {
         const scope = document.querySelector('input[name="export-scope"]:checked')?.value;
@@ -364,13 +419,21 @@ const initializeExportModal = (flow, template) => {
         exportReferenceCheckbox.addEventListener('change', (e) => {
             document.getElementById('reference-options').style.display = e.target.checked ? 'block' : 'none';
             updatePreview();
+            // Apply bulk setup if both reference and dynamic list are enabled
+            if (e.target.checked) {
+                applyBulkDynamicSetup();
+            }
         });
     }
     
     // Reference level change
     const referenceLevelSelect = document.getElementById('reference-level');
     if (referenceLevelSelect) {
-        referenceLevelSelect.addEventListener('change', updatePreview);
+        referenceLevelSelect.addEventListener('change', () => {
+            updatePreview();
+            // Apply bulk setup when reference level changes
+            applyBulkDynamicSetup();
+        });
     }
     
     // Dynamic list toggle handler
@@ -379,7 +442,11 @@ const initializeExportModal = (flow, template) => {
         exportDynamicListCheckbox.addEventListener('change', (e) => {
             const container = document.getElementById('dynamic-list-tree-container');
             container.style.display = e.target.checked ? 'block' : 'none';
-            if (e.target.checked) buildDynamicListTree();
+            if (e.target.checked) {
+                buildDynamicListTree();
+                // Apply bulk setup if reference is also enabled
+                applyBulkDynamicSetup();
+            }
             updatePreview();
         });
     }
@@ -615,19 +682,30 @@ const executeWorkflowExport = async (flow, template, config) => {
                 checklist: [],
                 labels: [],
                 attachments: [],
+                linkedBacklogItems: [],
                 milestoneId: null,
                 categoryId: null,
                 groupIds: [],
+                status: {
+                    current: 'pending',
+                    blocked: false,
+                    blockedReason: null,
+                    approvalStatus: null,
+                    approvedBy: null,
+                    approvedAt: null
+                },
                 isDone: node.completed || false,
                 effort: {
-                    estimate: null,
+                    estimated: null,
                     actual: null,
                     unit: 'hours'
                 },
+                activity: [],
                 priority: 'medium',
                 createdAt: new Date().toISOString(),
                 createdBy: 'user-default-001',
-                updatedAt: new Date().toISOString()
+                updatedAt: new Date().toISOString(),
+                updatedBy: 'user-default-001'
             };
             
             // Map footer content to attachments
@@ -688,7 +766,7 @@ const executeWorkflowExport = async (flow, template, config) => {
             // Map tags to labels
             if (node.tags && Array.isArray(node.tags)) {
                 node.tags.forEach(tag => {
-                    // Find or create label
+                    // Find or create label in board's label palette
                     let label = board.labels.find(l => l.name === tag);
                     if (!label) {
                         label = {
@@ -698,7 +776,8 @@ const executeWorkflowExport = async (flow, template, config) => {
                         };
                         board.labels.push(label);
                     }
-                    card.labels.push(label.id);
+                    // Store tag string in card (not label ID)
+                    card.labels.push(tag);
                 });
             }
             
