@@ -1869,8 +1869,8 @@ Parent grade = (80 + 90 + 55) / 3 = 75</pre>
             </ul>
 
             <div class="important">
-                <p><i class="fas fa-database"></i> <strong>Backup Recommendation:</strong> The system saves to JSON files 
-                in the data/ folder. Periodically backup these files to prevent data loss.</p>
+                <p><i class="fas fa-database"></i> <strong>Backup Recommendation:</strong> Periodically backup your workflows 
+                to prevent data loss. Use the export features or contact your administrator for backup procedures.</p>
             </div>
 
             <h3>Performance Tips</h3>
@@ -1977,30 +1977,18 @@ Parent grade = (80 + 90 + 55) / 3 = 75</pre>
             <h3>Data Questions</h3>
 
             <div class="example-box">
-                <h4>Q: Where is my workflow data stored?</h4>
-                <p><strong>A:</strong> Data is stored in JSON files in the <code>data/</code> folder:</p>
-                <ul>
-                    <li><code>workflows.json</code> - Workflow structures</li>
-                    <li><code>executions.json</code> - Completion states</li>
-                    <li><code>templates.json</code> - Templates</li>
-                    <li><code>workflow-links.json</code> - Link relationships</li>
-                </ul>
-            </div>
-
-            <div class="example-box">
                 <h4>Q: How do I backup my workflows?</h4>
-                <p><strong>A:</strong> Copy the entire <code>data/</code> folder to a backup location. These JSON files 
-                contain all your workflow, template, and execution data.</p>
+                <p><strong>A:</strong> Contact your system administrator for backup procedures. You can also export 
+                workflows individually for personal backups.</p>
             </div>
 
             <div class="example-box">
                 <h4>Q: Can multiple users work on the same workflow?</h4>
-                <p><strong>A:</strong> The system saves to files, so concurrent editing can cause conflicts. For multi-user 
-                scenarios:</p>
+                <p><strong>A:</strong> For multi-user scenarios, it's recommended to:</p>
                 <ul>
                     <li>Use linked workflows (one per user/team)</li>
                     <li>Coordinate edit times to avoid conflicts</li>
-                    <li>Consider implementing a backend database in production</li>
+                    <li>Work with your administrator to set up proper access controls</li>
                 </ul>
             </div>
 
@@ -2092,9 +2080,9 @@ Parent grade = (80 + 90 + 55) / 3 = 75</pre>
             <div class="tip">
                 <p><strong>Data Recovery:</strong> If workflows become corrupted:</p>
                 <ul>
-                    <li>Check the <code>data/</code> folder for JSON files</li>
                     <li>Restore from backup if available</li>
-                    <li>Edit JSON files manually if needed (advanced users)</li>
+                    <li>Contact your system administrator for assistance</li>
+                    <li>Recreate workflows from templates if necessary</li>
                 </ul>
             </div>
         </section>
