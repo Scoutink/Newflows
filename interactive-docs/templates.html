@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Templates Manual - Newflows Platform Documentation</title>
+    <meta name="description" content="Learn to create and configure workflow templates for the Newflows platform">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Prism.js -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/3d-scene.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/content.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="main-nav" id="main-nav">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <a href="index.html" class="brand-link">
+                    <i class="fas fa-cube"></i>
+                    <span>Newflows</span>
+                </a>
+            </div>
+            
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="index.html" class="nav-link">Overview</a></li>
+                <li><a href="templates.html" class="nav-link active">Templates</a></li>
+                <li><a href="workflows.html" class="nav-link">Workflows</a></li>
+                <li><a href="boards.html" class="nav-link">Boards</a></li>
+                <li><a href="use-cases.html" class="nav-link">Use Cases</a></li>
+                <li><a href="quick-start.html" class="nav-link">Quick Start</a></li>
+            </ul>
+            
+            <div class="nav-actions">
+                <button class="btn-icon" id="search-toggle" title="Search">
+                    <i class="fas fa-search"></i>
+                </button>
+                <button class="btn-icon" id="theme-toggle" title="Toggle theme">
+                    <i class="fas fa-circle-half-stroke"></i>
+                </button>
+                <button class="btn-icon" id="menu-toggle" title="Menu">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Search Overlay -->
+    <div class="search-overlay" id="search-overlay">
+        <div class="search-container">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="search-input" placeholder="Search documentation..." autocomplete="off">
+                <button class="btn-icon" id="search-close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="search-results" id="search-results"></div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- 3D Scene Container -->
+        <div class="scene-container" id="scene-container">
+            <canvas id="three-canvas"></canvas>
+            <div class="scene-controls">
+                <button class="btn-scene" id="reset-camera" title="Reset View">
+                    <i class="fas fa-home"></i>
+                </button>
+                <button class="btn-scene" id="toggle-animation" title="Toggle Animation">
+                    <i class="fas fa-pause"></i>
+                </button>
+                <button class="btn-scene" id="fullscreen" title="Fullscreen">
+                    <i class="fas fa-expand"></i>
+                </button>
+            </div>
+            <div class="scene-info">
+                <h3>Templates Layer</h3>
+                <p>Reusable structures that define workflow capabilities</p>
+            </div>
+        </div>
+
+        <!-- Content Area -->
+        <div class="content-area">
+            <!-- Hero Section -->
+            <section class="hero-section">
+                <div class="hero-content">
+                    <h1 class="hero-title">
+                        <i class="fas fa-layer-group"></i> Templates Manual
+                    </h1>
+                    <p class="hero-subtitle">
+                        Learn to create and configure workflow templates with custom levels, properties, 
+                        and validation rules. Templates are the foundation of the Newflows platform.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Table of Contents -->
+            <section class="content-section">
+                <div class="toc-container">
+                    <h2>Table of Contents</h2>
+                    <nav class="toc-nav">
+                        <ul>
+                            <li><a href="#introduction">Introduction to Templates</a></li>
+                            <li><a href="#interface">Template Builder Interface</a></li>
+                            <li><a href="#creating">Creating Your First Template</a></li>
+                            <li><a href="#levels">Designing Level Hierarchies</a></li>
+                            <li><a href="#properties">Configuring Properties</a></li>
+                            <li><a href="#patterns">Template Patterns</a></li>
+                            <li><a href="#best-practices">Best Practices</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </section>
+
+            <!-- Introduction Section -->
+            <section id="introduction" class="content-section">
+                <div class="section-header">
+                    <h2>Introduction to Templates</h2>
+                </div>
+
+                <div class="content-card">
+                    <h3>What are Templates?</h3>
+                    <p>
+                        Templates are reusable structures that define the capabilities and hierarchy of workflows. 
+                        They act as "vessels" that meet different requirements for creating workflows. Think of 
+                        templates as blueprints that ensure consistency across multiple workflows.
+                    </p>
+
+                    <div class="info-box">
+                        <i class="fas fa-info-circle"></i>
+                        <div>
+                            <strong>Key Concept:</strong> Templates create the structure, workflows populate 
+                            that structure with content, and boards execute the tasks.
+                        </div>
+                    </div>
+
+                    <h4>Template Features</h4>
+                    <ul class="feature-list">
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <strong>Up to 10 hierarchical levels</strong> - Define complex nested structures
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <strong>13 configurable property types</strong> - Customize what data each level can store
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <strong>Reusable across workflows</strong> - One template, many workflows
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <strong>Template validation</strong> - Ensure data integrity and consistency
+                        </li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Interface Section -->
+            <section id="interface" class="content-section">
+                <div class="section-header">
+                    <h2>Template Builder Interface</h2>
+                </div>
+
+                <div class="content-card">
+                    <h3>Getting Started</h3>
+                    <p>
+                        The Template Builder is your workspace for creating and managing templates. 
+                        Access it from the main navigation or workflow page.
+                    </p>
+
+                    <div class="interactive-demo">
+                        <div class="demo-placeholder">
+                            <i class="fas fa-layer-group"></i>
+                            <p>Template Builder Interface</p>
+                            <small>Interactive demo coming soon</small>
+                        </div>
+                    </div>
+
+                    <h4>Key Interface Elements</h4>
+                    <div class="feature-grid">
+                        <div class="feature-item">
+                            <i class="fas fa-sliders-h"></i>
+                            <h5>Level Configuration</h5>
+                            <p>Add, remove, and configure hierarchical levels</p>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-cog"></i>
+                            <h5>Property Settings</h5>
+                            <p>Enable or disable properties for each level</p>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check-double"></i>
+                            <h5>Validation Rules</h5>
+                            <p>Set up rules to ensure data integrity</p>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-save"></i>
+                            <h5>Save & Test</h5>
+                            <p>Save templates and test before use</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Creating Templates Section -->
+            <section id="creating" class="content-section">
+                <div class="section-header">
+                    <h2>Creating Your First Template</h2>
+                </div>
+
+                <div class="content-card">
+                    <h3>Step-by-Step Guide</h3>
+                    
+                    <div class="step-guide">
+                        <div class="step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h4>Open Template Builder</h4>
+                                <p>Navigate to the Template Builder from the main menu or workflow page.</p>
+                            </div>
+                        </div>
+
+                        <div class="step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h4>Click "Create New Template"</h4>
+                                <p>Start with a blank template or choose from existing templates to copy.</p>
+                            </div>
+                        </div>
+
+                        <div class="step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h4>Name Your Template</h4>
+                                <p>Give your template a descriptive name (e.g., "GDPR Compliance Template").</p>
+                            </div>
+                        </div>
+
+                        <div class="step">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <h4>Add Levels</h4>
+                                <p>Define your hierarchy by adding levels. Common patterns include:</p>
+                                <ul>
+                                    <li>Control Families → Controls → Requirements → Evidence</li>
+                                    <li>Functions → Categories → Subcategories → Actions</li>
+                                    <li>Phases → Tasks → Subtasks → Deliverables</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="step">
+                            <div class="step-number">5</div>
+                            <div class="step-content">
+                                <h4>Configure Properties</h4>
+                                <p>Enable the properties you need for each level (icons, descriptions, tags, etc.).</p>
+                            </div>
+                        </div>
+
+                        <div class="step">
+                            <div class="step-number">6</div>
+                            <div class="step-content">
+                                <h4>Save and Test</h4>
+                                <p>Save your template and test it by creating a sample workflow.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Levels Section -->
+            <section id="levels" class="content-section">
+                <div class="section-header">
+                    <h2>Designing Level Hierarchies</h2>
+                </div>
+
+                <div class="content-card">
+                    <h3>Understanding Levels</h3>
+                    <p>
+                        Levels represent the hierarchical structure of your workflow. Each level can have 
+                        child levels, creating a tree-like structure up to 10 levels deep.
+                    </p>
+
+                    <div class="hierarchy-visualization">
+                        <div class="hierarchy-item level-1">
+                            <i class="fas fa-folder"></i>
+                            <span>Level 1: Control Families</span>
+                        </div>
+                        <div class="hierarchy-children">
+                            <div class="hierarchy-item level-2">
+                                <i class="fas fa-file"></i>
+                                <span>Level 2: Controls</span>
+                            </div>
+                            <div class="hierarchy-children">
+                                <div class="hierarchy-item level-3">
+                                    <i class="fas fa-list"></i>
+                                    <span>Level 3: Requirements</span>
+                                </div>
+                                <div class="hierarchy-children">
+                                    <div class="hierarchy-item level-4">
+                                        <i class="fas fa-check"></i>
+                                        <span>Level 4: Evidence</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h4>Best Practices for Level Design</h4>
+                    <div class="best-practices">
+                        <div class="practice-item good">
+                            <i class="fas fa-check-circle"></i>
+                            <div>
+                                <strong>Do:</strong> Use clear, descriptive level names that match your domain
+                            </div>
+                        </div>
+                        <div class="practice-item bad">
+                            <i class="fas fa-times-circle"></i>
+                            <div>
+                                <strong>Don't:</strong> Use generic names like "Level 1", "Level 2"
+                            </div>
+                        </div>
+                        <div class="practice-item good">
+                            <i class="fas fa-check-circle"></i>
+                            <div>
+                                <strong>Do:</strong> Keep levels logically related (parent-child relationships make sense)
+                            </div>
+                        </div>
+                        <div class="practice-item bad">
+                            <i class="fas fa-times-circle"></i>
+                            <div>
+                                <strong>Don't:</strong> Create too many levels (3-5 is usually optimal)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Properties Section -->
+            <section id="properties" class="content-section">
+                <div class="section-header">
+                    <h2>Configuring Properties</h2>
+                </div>
+
+                <div class="content-card">
+                    <h3>The 13 Property Types</h3>
+                    <p>
+                        Each level in your template can have different properties enabled. Here are the 
+                        13 available property types:
+                    </p>
+
+                    <div class="properties-grid">
+                        <div class="property-card">
+                            <i class="fas fa-icons"></i>
+                            <h5>Icons</h5>
+                            <p>Visual icons for units</p>
+                        </div>
+                        <div class="property-card">
+                            <i class="fas fa-tag"></i>
+                            <h5>Tags</h5>
+                            <p>Categorization labels</p>
+                        </div>
+                        <div class="property-card">
+                            <i class="fas fa-check-square"></i>
+                            <h5>Done Checkbox</h5>
+                            <p>Completion tracking</p>
+                        </div>
+                        <div class="property-card">
+                            <i class="fas fa-star"></i>
+                            <h5>Grades</h5>
+                            <p>Numeric scoring</p>
+                        </div>
+                        <div class="property-card">
+                            <i class="fas fa-link"></i>
+                            <h5>Links</h5>
+                            <p>External references</p>
+                        </div>
+                        <div class="property-card">
+                            <i class="fas fa-image"></i>
+                            <h5>Images</h5>
+                            <p>Visual attachments</p>
+                        </div>
+                        <div class="property-card">
+                            <i class="fas fa-sticky-note"></i>
+                            <h5>Notes</h5>
+                            <p>Rich text notes</p>
+                        </div>
+                        <div class="property-card">
+                            <i class="fas fa-comments"></i>
+                            <h5>Comments</h5>
+                            <p>Discussion threads</p>
+                        </div>
+                        <div class="property-card">
+                            <i class="fas fa-id-badge"></i>
+                            <h5>Unit ID</h5>
+                            <p>Unique identifiers</p>
+                        </div>
+                        <div class="property-card">
+                            <i class="fas fa-align-left"></i>
+                            <h5>Description</h5>
+                            <p>Detailed text</p>
+                        </div>
+                        <div class="property-card">
+                            <i class="fas fa-chart-line"></i>
+                            <h5>Progress</h5>
+                            <p>Completion tracking</p>
+                        </div>
+                        <div class="property-card">
+                            <i class="fas fa-sort-numeric-down"></i>
+                            <h5>Cumulative Grade</h5>
+                            <p>Auto-calculated scores</p>
+                        </div>
+                        <div class="property-card">
+                            <i class="fas fa-sitemap"></i>
+                            <h5>Hierarchy</h5>
+                            <p>Parent-child relationships</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Patterns Section -->
+            <section id="patterns" class="content-section">
+                <div class="section-header">
+                    <h2>Template Patterns</h2>
+                </div>
+
+                <div class="content-card">
+                    <h3>Common Compliance Patterns</h3>
+                    <p>
+                        Here are some proven template patterns for common compliance frameworks:
+                    </p>
+
+                    <div class="pattern-cards">
+                        <div class="pattern-card">
+                            <h4><i class="fas fa-shield-alt"></i> GDPR Template</h4>
+                            <div class="pattern-structure">
+                                <div>Articles → Requirements → Controls → Evidence</div>
+                            </div>
+                            <p>4-level structure for GDPR compliance tracking</p>
+                        </div>
+
+                        <div class="pattern-card">
+                            <h4><i class="fas fa-lock"></i> ISO 27001 Template</h4>
+                            <div class="pattern-structure">
+                                <div>Domains → Controls → Objectives → Evidence</div>
+                            </div>
+                            <p>Information security management system structure</p>
+                        </div>
+
+                        <div class="pattern-card">
+                            <h4><i class="fas fa-network-wired"></i> NIST CSF Template</h4>
+                            <div class="pattern-structure">
+                                <div>Functions → Categories → Subcategories → Implementation</div>
+                            </div>
+                            <p>Cybersecurity framework with 4 levels</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Best Practices Section -->
+            <section id="best-practices" class="content-section">
+                <div class="section-header">
+                    <h2>Best Practices</h2>
+                </div>
+
+                <div class="content-card">
+                    <h3>Template Design Guidelines</h3>
+                    
+                    <div class="tips-grid">
+                        <div class="tip-card">
+                            <i class="fas fa-lightbulb"></i>
+                            <h4>Start Simple</h4>
+                            <p>Begin with 2-3 levels and add complexity as needed</p>
+                        </div>
+                        <div class="tip-card">
+                            <i class="fas fa-users"></i>
+                            <h4>Think Reusability</h4>
+                            <p>Design templates that can be used across multiple workflows</p>
+                        </div>
+                        <div class="tip-card">
+                            <i class="fas fa-file-alt"></i>
+                            <h4>Document Purpose</h4>
+                            <p>Add clear descriptions explaining what the template is for</p>
+                        </div>
+                        <div class="tip-card">
+                            <i class="fas fa-check-double"></i>
+                            <h4>Test Before Use</h4>
+                            <p>Create a test workflow to validate your template structure</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Next Steps -->
+            <section class="content-section">
+                <div class="next-steps">
+                    <h2>Next Steps</h2>
+                    <div class="next-steps-grid">
+                        <a href="workflows.html" class="next-step-card">
+                            <i class="fas fa-arrow-right"></i>
+                            <h3>Workflows Manual</h3>
+                            <p>Learn how to create workflows from templates</p>
+                        </a>
+                        <a href="use-cases.html" class="next-step-card">
+                            <i class="fas fa-lightbulb"></i>
+                            <h3>Use Cases</h3>
+                            <p>See real-world examples of template usage</p>
+                        </a>
+                        <a href="quick-start.html" class="next-step-card">
+                            <i class="fas fa-rocket"></i>
+                            <h3>Quick Start</h3>
+                            <p>Get hands-on with a guided tutorial</p>
+                        </a>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Documentation</h4>
+                <ul>
+                    <li><a href="templates.html">Templates</a></li>
+                    <li><a href="workflows.html">Workflows</a></li>
+                    <li><a href="boards.html">Boards</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Resources</h4>
+                <ul>
+                    <li><a href="use-cases.html">Use Cases</a></li>
+                    <li><a href="quick-start.html">Quick Start</a></li>
+                    <li><a href="../documentation/README.md">Full Docs</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Newflows Platform. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Import Maps -->
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+            "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+        }
+    }
+    </script>
+    
+    <!-- GSAP -->
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    
+    <!-- Scripts -->
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>

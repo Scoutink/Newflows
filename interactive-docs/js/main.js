@@ -4,6 +4,7 @@ import { initNavigation } from './navigation.js';
 import { initSearch } from './search.js';
 import { initScene } from './scene.js';
 import { initScrollAnimations } from './animations.js';
+import { processMarkdownContent, initCodeCopyButtons } from './markdown.js';
 
 // Initialize application when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
@@ -15,6 +16,10 @@ document.addEventListener('DOMContentLoaded', () => {
     initSearch();
     initScene();
     initScrollAnimations();
+    
+    // Process markdown content
+    processMarkdownContent();
+    initCodeCopyButtons();
     
     // Hide loading overlay
     const loadingOverlay = document.getElementById('loading-overlay');
