@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boards Manual - Newflows Platform Documentation</title>
+    <meta name="description" content="Learn to execute workflows on Kanban-style boards">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Prism.js -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/3d-scene.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/content.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="main-nav" id="main-nav">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <a href="index.html" class="brand-link">
+                    <i class="fas fa-cube"></i>
+                    <span>Newflows</span>
+                </a>
+            </div>
+            
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="index.html" class="nav-link">Overview</a></li>
+                <li><a href="templates.html" class="nav-link">Templates</a></li>
+                <li><a href="workflows.html" class="nav-link">Workflows</a></li>
+                <li><a href="boards.html" class="nav-link active">Boards</a></li>
+                <li><a href="use-cases.html" class="nav-link">Use Cases</a></li>
+                <li><a href="quick-start.html" class="nav-link">Quick Start</a></li>
+            </ul>
+            
+            <div class="nav-actions">
+                <button class="btn-icon" id="search-toggle" title="Search">
+                    <i class="fas fa-search"></i>
+                </button>
+                <button class="btn-icon" id="theme-toggle" title="Toggle theme">
+                    <i class="fas fa-circle-half-stroke"></i>
+                </button>
+                <button class="btn-icon" id="menu-toggle" title="Menu">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Search Overlay -->
+    <div class="search-overlay" id="search-overlay">
+        <div class="search-container">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="search-input" placeholder="Search documentation..." autocomplete="off">
+                <button class="btn-icon" id="search-close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="search-results" id="search-results"></div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- 3D Scene Container -->
+        <div class="scene-container" id="scene-container">
+            <canvas id="three-canvas"></canvas>
+            <div class="scene-controls">
+                <button class="btn-scene" id="reset-camera" title="Reset View">
+                    <i class="fas fa-home"></i>
+                </button>
+                <button class="btn-scene" id="toggle-animation" title="Toggle Animation">
+                    <i class="fas fa-pause"></i>
+                </button>
+                <button class="btn-scene" id="fullscreen" title="Fullscreen">
+                    <i class="fas fa-expand"></i>
+                </button>
+            </div>
+            <div class="scene-info">
+                <h3>Boards Layer</h3>
+                <p>Execution spaces for task management</p>
+            </div>
+        </div>
+
+        <!-- Content Area -->
+        <div class="content-area">
+            <!-- Hero Section -->
+            <section class="hero-section">
+                <div class="hero-content">
+                    <h1 class="hero-title">
+                        <i class="fas fa-diagram-project"></i> Boards Manual
+                    </h1>
+                    <p class="hero-subtitle">
+                        Master Kanban-style project boards for executing workflows. Learn to manage tasks, 
+                        track progress, and collaborate with your team.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Table of Contents -->
+            <section class="content-section">
+                <div class="toc-container">
+                    <h2>Table of Contents</h2>
+                    <nav class="toc-nav">
+                        <ul>
+                            <li><a href="#introduction">Introduction to Boards</a></li>
+                            <li><a href="#interface">Board Interface</a></li>
+                            <li><a href="#columns">Working with Columns</a></li>
+                            <li><a href="#cards">Managing Cards and Tasks</a></li>
+                            <li><a href="#milestones">Milestones</a></li>
+                            <li><a href="#categories">Categories</a></li>
+                            <li><a href="#dynamic-lists">Dynamic Lists</a></li>
+                            <li><a href="#collaboration">Collaboration</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </section>
+
+            <!-- Introduction Section -->
+            <section id="introduction" class="content-section">
+                <div class="section-header">
+                    <h2>Introduction to Boards</h2>
+                </div>
+
+                <div class="content-card">
+                    <h3>What are Boards?</h3>
+                    <p>
+                        Boards are micro-level execution spaces where workflows land for task management. 
+                        They provide a Kanban-style interface for organizing, tracking, and completing tasks 
+                        that originated from workflow structures.
+                    </p>
+
+                    <div class="info-box">
+                        <i class="fas fa-info-circle"></i>
+                        <div>
+                            <strong>Key Concept:</strong> Boards are where consultants maintain control over 
+                            dynamic lists and references, while clients manage the workspace for task execution.
+                        </div>
+                    </div>
+
+                    <h4>Board Features</h4>
+                    <ul class="feature-list">
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <strong>Kanban columns</strong> - Organize tasks by workflow stages
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <strong>Dynamic lists</strong> - Reference tree structures from workflows
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <strong>Milestones</strong> - Time-based or completion-based project phases
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <strong>Categories</strong> - Organizational buckets (departments, types)
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <strong>Groups</strong> - Cross-cutting collections for bulk operations
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <strong>Assignments</strong> - Task ownership and scheduling
+                        </li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Interface Section -->
+            <section id="interface" class="content-section">
+                <div class="section-header">
+                    <h2>Board Interface</h2>
+                </div>
+
+                <div class="content-card">
+                    <h3>Understanding the Board Layout</h3>
+                    <p>
+                        Boards use a familiar Kanban-style layout with columns representing different stages 
+                        of your workflow process.
+                    </p>
+
+                    <div class="interactive-demo">
+                        <div class="demo-placeholder">
+                            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                                <div style="background: #f59e0b; padding: 1rem; border-radius: 0.5rem; min-width: 150px;">
+                                    <h4 style="margin: 0 0 0.5rem 0; color: white;">To Do</h4>
+                                    <div style="background: white; padding: 0.5rem; border-radius: 0.25rem; margin-bottom: 0.5rem;">Task 1</div>
+                                    <div style="background: white; padding: 0.5rem; border-radius: 0.25rem;">Task 2</div>
+                                </div>
+                                <div style="background: #fbbf24; padding: 1rem; border-radius: 0.5rem; min-width: 150px;">
+                                    <h4 style="margin: 0 0 0.5rem 0; color: white;">In Progress</h4>
+                                    <div style="background: white; padding: 0.5rem; border-radius: 0.25rem;">Task 3</div>
+                                </div>
+                                <div style="background: #84cc16; padding: 1rem; border-radius: 0.5rem; min-width: 150px;">
+                                    <h4 style="margin: 0 0 0.5rem 0; color: white;">Done</h4>
+                                    <div style="background: white; padding: 0.5rem; border-radius: 0.25rem;">Task 4</div>
+                                </div>
+                            </div>
+                            <p style="margin-top: 1rem; color: #666;">Kanban Board Example</p>
+                        </div>
+                    </div>
+
+                    <h4>Key Interface Elements</h4>
+                    <div class="feature-grid">
+                        <div class="feature-item">
+                            <i class="fas fa-columns"></i>
+                            <h5>Columns</h5>
+                            <p>Workflow stages (To Do, In Progress, Done)</p>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-tasks"></i>
+                            <h5>Cards</h5>
+                            <p>Individual tasks and items</p>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-sitemap"></i>
+                            <h5>Dynamic Lists</h5>
+                            <p>Reference tree from workflow</p>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-filter"></i>
+                            <h5>Filters</h5>
+                            <p>Search and filter capabilities</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Columns Section -->
+            <section id="columns" class="content-section">
+                <div class="section-header">
+                    <h2>Working with Columns</h2>
+                </div>
+
+                <div class="content-card">
+                    <h3>Column Management</h3>
+                    <p>
+                        Columns represent the stages of your workflow. You can customize columns to match 
+                        your process, add new ones, reorder them, and configure their properties.
+                    </p>
+
+                    <div class="step-guide">
+                        <div class="step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h4>Default Columns</h4>
+                                <p>New boards start with standard columns: To Do, In Progress, Review, Done</p>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h4>Add Custom Columns</h4>
+                                <p>Click the "+" button to add columns that match your workflow</p>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h4>Reorder Columns</h4>
+                                <p>Drag and drop columns to reorder them</p>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <h4>Configure Properties</h4>
+                                <p>Set column colors, limits, and behaviors</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="info-box">
+                        <i class="fas fa-lightbulb"></i>
+                        <div>
+                            <strong>Tip:</strong> The "References" column is special - it displays the 
+                            dynamic list tree structure from the exported workflow. Consultants typically 
+                            manage this column.
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Cards Section -->
+            <section id="cards" class="content-section">
+                <div class="section-header">
+                    <h2>Managing Cards and Tasks</h2>
+                </div>
+
+                <div class="content-card">
+                    <h3>Creating and Managing Tasks</h3>
+                    <p>
+                        Cards represent individual tasks on your board. You can create cards, move them 
+                        between columns, assign them to team members, and track their progress.
+                    </p>
+
+                    <h4>Card Actions</h4>
+                    <div class="properties-grid">
+                        <div class="property-card">
+                            <i class="fas fa-plus"></i>
+                            <h5>Create Card</h5>
+                            <p>Add new tasks</p>
+                        </div>
+                        <div class="property-card">
+                            <i class="fas fa-arrows-alt"></i>
+                            <h5>Drag & Drop</h5>
+                            <p>Move between columns</p>
+                        </div>
+                        <div class="property-card">
+                            <i class="fas fa-user"></i>
+                            <h5>Assign</h5>
+                            <p>Set task owners</p>
+                        </div>
+                        <div class="property-card">
+                            <i class="fas fa-tag"></i>
+                            <h5>Categories</h5>
+                            <p>Organize tasks</p>
+                        </div>
+                        <div class="property-card">
+                            <i class="fas fa-calendar"></i>
+                            <h5>Due Dates</h5>
+                            <p>Set deadlines</p>
+                        </div>
+                        <div class="property-card">
+                            <i class="fas fa-comments"></i>
+                            <h5>Comments</h5>
+                            <p>Team discussion</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Milestones Section -->
+            <section id="milestones" class="content-section">
+                <div class="section-header">
+                    <h2>Milestones</h2>
+                </div>
+
+                <div class="content-card">
+                    <h3>Time-Based Tracking</h3>
+                    <p>
+                        Milestones help you organize tasks into time-based or completion-based phases. 
+                        They're perfect for sprints, project phases, or compliance deadlines.
+                    </p>
+
+                    <div class="pattern-cards">
+                        <div class="pattern-card">
+                            <h4><i class="fas fa-calendar-alt"></i> Time-Based Milestones</h4>
+                            <p>Organize tasks by dates (Q1 2025, Sprint 1, etc.)</p>
+                        </div>
+                        <div class="pattern-card">
+                            <h4><i class="fas fa-flag-checkered"></i> Goal-Based Milestones</h4>
+                            <p>Group tasks by completion goals (Phase 1, Phase 2)</p>
+                        </div>
+                    </div>
+
+                    <div class="info-box">
+                        <i class="fas fa-info-circle"></i>
+                        <div>
+                            <strong>Use Case:</strong> For compliance projects, create milestones for 
+                            each audit period or regulatory deadline.
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Categories Section -->
+            <section id="categories" class="content-section">
+                <div class="section-header">
+                    <h2>Categories</h2>
+                </div>
+
+                <div class="content-card">
+                    <h3>Organizational Grouping</h3>
+                    <p>
+                        Categories allow you to organize tasks by departments, types, or any other 
+                        organizational structure. They're perfect for filtering and reporting.
+                    </p>
+
+                    <h4>Common Category Types</h4>
+                    <ul class="feature-list">
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <strong>Departments</strong> - IT, Finance, Legal, HR
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <strong>Task Types</strong> - Technical, Administrative, Documentation
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <strong>Priority</strong> - Critical, High, Medium, Low
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <strong>Regulations</strong> - GDPR, ISO 27001, NIST CSF
+                        </li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Dynamic Lists Section -->
+            <section id="dynamic-lists" class="content-section">
+                <div class="section-header">
+                    <h2>Dynamic Lists</h2>
+                </div>
+
+                <div class="content-card">
+                    <h3>Reference Tree Structures</h3>
+                    <p>
+                        Dynamic lists display the hierarchical structure from your exported workflow. 
+                        They serve as reference material that consultants typically manage, while clients 
+                        use the workspace area for task execution.
+                    </p>
+
+                    <div class="warning-box">
+                        <strong>Important:</strong> Dynamic lists are typically locked for editing by 
+                        clients. Consultants maintain control over the reference structure to ensure 
+                        compliance requirements remain accurate.
+                    </div>
+
+                    <h4>Dynamic List Features</h4>
+                    <div class="feature-grid">
+                        <div class="feature-item">
+                            <i class="fas fa-tree"></i>
+                            <h5>Tree Structure</h5>
+                            <p>Hierarchical view of workflow</p>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-link"></i>
+                            <h5>Card Linking</h5>
+                            <p>Link tasks to reference items</p>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-eye"></i>
+                            <h5>Reference Mode</h5>
+                            <p>View-only for clients</p>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-edit"></i>
+                            <h5>Creation Mode</h5>
+                            <p>Editable by consultants</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Collaboration Section -->
+            <section id="collaboration" class="content-section">
+                <div class="section-header">
+                    <h2>Collaboration Features</h2>
+                </div>
+
+                <div class="content-card">
+                    <h3>Team Collaboration</h3>
+                    <p>
+                        Boards support multiple collaboration features to help teams work together 
+                        effectively on compliance and project tasks.
+                    </p>
+
+                    <div class="tips-grid">
+                        <div class="tip-card">
+                            <i class="fas fa-users"></i>
+                            <h4>Assignments</h4>
+                            <p>Assign tasks to team members with roles (Executor, Approver, Follower)</p>
+                        </div>
+                        <div class="tip-card">
+                            <i class="fas fa-comments"></i>
+                            <h4>Comments</h4>
+                            <p>Discuss tasks and share updates with your team</p>
+                        </div>
+                        <div class="tip-card">
+                            <i class="fas fa-bell"></i>
+                            <h4>Notifications</h4>
+                            <p>Get notified about task updates and assignments</p>
+                        </div>
+                        <div class="tip-card">
+                            <i class="fas fa-history"></i>
+                            <h4>Activity Log</h4>
+                            <p>Track all changes and updates to tasks</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Next Steps -->
+            <section class="content-section">
+                <div class="next-steps">
+                    <h2>Next Steps</h2>
+                    <div class="next-steps-grid">
+                        <a href="workflows.html" class="next-step-card">
+                            <i class="fas fa-arrow-left"></i>
+                            <h3>Workflows Manual</h3>
+                            <p>Learn how to export workflows to boards</p>
+                        </a>
+                        <a href="use-cases.html" class="next-step-card">
+                            <i class="fas fa-lightbulb"></i>
+                            <h3>Use Cases</h3>
+                            <p>See real-world board examples</p>
+                        </a>
+                        <a href="quick-start.html" class="next-step-card">
+                            <i class="fas fa-rocket"></i>
+                            <h3>Quick Start</h3>
+                            <p>Get hands-on with boards</p>
+                        </a>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Documentation</h4>
+                <ul>
+                    <li><a href="templates.html">Templates</a></li>
+                    <li><a href="workflows.html">Workflows</a></li>
+                    <li><a href="boards.html">Boards</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Newflows Platform. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Import Maps -->
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+            "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+        }
+    }
+    </script>
+    
+    <!-- GSAP -->
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    
+    <!-- Scripts -->
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>

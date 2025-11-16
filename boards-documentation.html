@@ -280,6 +280,10 @@
                 <li><a href="#team-assignments">Assigning Team Members</a></li>
                 <li><a href="#deadlines">Setting Deadlines & Schedules</a></li>
                 <li><a href="#columns">Customizing Columns</a></li>
+                <li><a href="#dynamic-lists">Dynamic Lists & References</a></li>
+                <li><a href="#categories">Categories</a></li>
+                <li><a href="#milestones">Milestones</a></li>
+                <li><a href="#groups">Groups</a></li>
                 <li><a href="#labels">Working with Labels</a></li>
                 <li><a href="#mobile">🆕 Using Boards on Mobile</a></li>
                 <li><a href="#tracking-progress">Tracking Progress</a></li>
@@ -1088,8 +1092,299 @@
             </div>
         </section>
 
+        <section id="dynamic-lists">
+            <h2>10. Dynamic Lists & References Column</h2>
+            
+            <h3>What are Dynamic Lists?</h3>
+            <p>Dynamic Lists display the hierarchical structure from your exported workflow as a reference tree. They appear in the <strong>References column</strong> (the first column, typically locked) and serve as reference material that consultants manage while clients execute tasks.</p>
+
+            <div class="feature">
+                <strong><i class="fa-solid fa-sitemap"></i> Key Concept:</strong> Dynamic Lists show the workflow structure (Controls → Actions → Evidence) as a tree. This helps team members understand the context and requirements behind each task without needing to go back to the workflow.
+            </div>
+
+            <h3>Understanding the References Column</h3>
+            <p>The References column is special:</p>
+            <ul>
+                <li><strong>Locked by default</strong> - Cards in this column are typically read-only</li>
+                <li><strong>Managed by consultants</strong> - Structure is maintained by those who exported the workflow</li>
+                <li><strong>Reference material</strong> - Provides context, not active tasks</li>
+                <li><strong>Tree structure</strong> - Shows parent-child relationships from the workflow</li>
+            </ul>
+
+            <h3>Dynamic List Node Types</h3>
+            <p>Each item in a dynamic list can be one of three types:</p>
+
+            <div class="role-grid">
+                <div class="role-card">
+                    <div class="role-icon">📋</div>
+                    <h4>Task Node</h4>
+                    <p>Represents an actual task or requirement. These are the actionable items.</p>
+                    <small><strong>Example:</strong> "Document access control procedures"</small>
+                </div>
+                
+                <div class="role-card">
+                    <div class="role-icon">🔗</div>
+                    <h4>Connection Node</h4>
+                    <p>Represents hierarchy or grouping. Shows relationships between items.</p>
+                    <small><strong>Example:</strong> "Access Control" (parent grouping)</small>
+                </div>
+                
+                <div class="role-card">
+                    <div class="role-icon">⏭️</div>
+                    <h4>Skipped</h4>
+                    <p>Items not included in the dynamic list. Only exported to board columns.</p>
+                    <small><strong>Example:</strong> Low-level details not needed for reference</small>
+                </div>
+            </div>
+
+            <h3>How Dynamic Lists are Created</h3>
+            <p>When exporting a workflow to a board, you can choose to include a dynamic list:</p>
+            <ol>
+                <li>In the export modal, check <strong>"Export workflow tree to Dynamic List"</strong></li>
+                <li>A tree view appears showing all workflow units</li>
+                <li>For each unit, select its type (Task, Connection, or Skip)</li>
+                <li>Optionally assign units to specific board columns</li>
+                <li>Click "Create Board" to export with the dynamic list</li>
+            </ol>
+
+            <div class="tip">
+                <strong><i class="fa-solid fa-lightbulb"></i> Smart Defaults:</strong> The system suggests types based on hierarchy depth. Typically, higher levels become connections (for structure) and lower levels become tasks (for action).
+            </div>
+
+            <h3>Viewing Dynamic Lists</h3>
+            <p>Dynamic lists appear in the References column as expandable tree structures:</p>
+            <ul>
+                <li><strong>Expand/Collapse:</strong> Click nodes to expand and see children</li>
+                <li><strong>Hierarchy:</strong> Indentation shows parent-child relationships</li>
+                <li><strong>Node Icons:</strong> Different icons for tasks vs connections</li>
+                <li><strong>Linking:</strong> Regular task cards can be linked to dynamic list nodes</li>
+            </ul>
+
+            <div class="example-box">
+                <h4>💡 Dynamic List Example</h4>
+                <p><strong>Workflow Structure:</strong></p>
+                <ul style="list-style-type: disc; padding-left: 20px;">
+                    <li>Control Family: Access Control (Connection)</li>
+                    <li>&nbsp;&nbsp;Control: AC-1 Access Control Policy (Connection)</li>
+                    <li>&nbsp;&nbsp;&nbsp;&nbsp;Requirement: Document procedures (Task)</li>
+                    <li>&nbsp;&nbsp;&nbsp;&nbsp;Requirement: Review annually (Task)</li>
+                </ul>
+                <p><strong>In Board:</strong> The References column shows this tree. Team members can expand to see the full context of what they're working on.</p>
+            </div>
+
+            <h3>Linking Tasks to Dynamic List Nodes</h3>
+            <p>You can link regular task cards to nodes in the dynamic list:</p>
+            <ol>
+                <li>Open a task card</li>
+                <li>Find the "Link to Dynamic List" section</li>
+                <li>Select which dynamic list node this task relates to</li>
+                <li>Save the link</li>
+            </ol>
+
+            <div class="tip">
+                <strong><i class="fa-solid fa-link"></i> Why Link:</strong> Linking helps maintain traceability. You can see which tasks relate to which requirements in the workflow structure.
+            </div>
+        </section>
+
+        <section id="categories">
+            <h2>11. Categories</h2>
+            
+            <h3>What are Categories?</h3>
+            <p>Categories are organizational buckets that help you group and filter tasks by department, type, or any other classification. They're perfect for organizing work across different teams or compliance areas.</p>
+
+            <div class="feature">
+                <strong><i class="fa-solid fa-folder"></i> Key Use:</strong> Create categories like "IT", "Finance", "Legal" or "Technical", "Administrative", "Documentation" to organize tasks and filter the board view.
+            </div>
+
+            <h3>Creating Categories</h3>
+            <ol>
+                <li>Click the <strong>Board Menu (⋯)</strong> next to the board name</li>
+                <li>Select <strong>"Manage Categories"</strong></li>
+                <li>Click <strong>"+ Add Category"</strong></li>
+                <li>Enter category name (e.g., "IT Department")</li>
+                <li>Choose a color for visual distinction</li>
+                <li>Click <strong>"Add"</strong></li>
+            </ol>
+
+            <h3>Assigning Categories to Tasks</h3>
+            <ol>
+                <li>Open a task card</li>
+                <li>Find the <strong>"Category"</strong> field</li>
+                <li>Select a category from the dropdown</li>
+                <li>Category is saved automatically</li>
+            </ol>
+
+            <h3>Filtering by Category</h3>
+            <p>Once tasks have categories, you can filter the board:</p>
+            <ol>
+                <li>Click the <strong>Filter button</strong> in the board header</li>
+                <li>Select a category from the filter options</li>
+                <li>The board shows only tasks with that category</li>
+                <li>Clear the filter to see all tasks again</li>
+            </ol>
+
+            <div class="example-box">
+                <h4>💡 Category Use Case</h4>
+                <p><strong>Board:</strong> "Q1 2025 Compliance Tasks"</p>
+                <p><strong>Categories:</strong> IT, Finance, HR, Legal</p>
+                <p><strong>Usage:</strong> Filter by "IT" to see only IT department tasks. Each department can focus on their work without seeing unrelated tasks.</p>
+            </div>
+
+            <h3>Managing Categories</h3>
+            <ul>
+                <li><strong>Edit:</strong> Board Menu → Manage Categories → Edit name or color</li>
+                <li><strong>Delete:</strong> Board Menu → Manage Categories → Delete (removes category from all tasks)</li>
+                <li><strong>Multiple Categories:</strong> Each task can have one category</li>
+            </ul>
+        </section>
+
+        <section id="milestones">
+            <h2>12. Milestones</h2>
+            
+            <h3>What are Milestones?</h3>
+            <p>Milestones are time-based or goal-based project phases. They help you organize tasks into logical groups and track progress toward specific objectives or deadlines.</p>
+
+            <div class="feature">
+                <strong><i class="fa-solid fa-flag-checkered"></i> Key Use:</strong> Create milestones for sprints (Sprint 1, Sprint 2), quarters (Q1, Q2), phases (Planning, Execution, Reporting), or any project phases you need to track.
+            </div>
+
+            <h3>Creating Milestones</h3>
+            <ol>
+                <li>Click the <strong>Board Menu (⋯)</strong> next to the board name</li>
+                <li>Select <strong>"Manage Milestones"</strong></li>
+                <li>Click <strong>"+ Add Milestone"</strong></li>
+                <li>Enter milestone name (e.g., "Q1 2025")</li>
+                <li>Add optional description</li>
+                <li>Choose a color for visual distinction</li>
+                <li>Click <strong>"Add"</strong></li>
+            </ol>
+
+            <h3>Linking Tasks to Milestones</h3>
+            <ol>
+                <li>Open a task card</li>
+                <li>Find the <strong>"Milestone"</strong> field</li>
+                <li>Select a milestone from the dropdown</li>
+                <li>Task is now linked to that milestone</li>
+            </ol>
+
+            <h3>Milestone Status</h3>
+            <p>Milestones automatically track their status:</p>
+            <ul>
+                <li><strong>In Progress:</strong> At least one linked task is not done</li>
+                <li><strong>Completed:</strong> All linked tasks are done</li>
+            </ul>
+
+            <div class="tip">
+                <strong><i class="fa-solid fa-magic"></i> Auto-Update:</strong> When you move the last task in a milestone to "Done", the milestone status automatically changes to "Completed". No manual tracking needed!
+            </div>
+
+            <h3>Viewing Milestone Progress</h3>
+            <p>To see which tasks belong to a milestone:</p>
+            <ol>
+                <li>Board Menu → <strong>"Manage Milestones"</strong></li>
+                <li>Find the milestone you want to check</li>
+                <li>View the linked tasks list</li>
+                <li>See completion status (e.g., "5/8 tasks done")</li>
+            </ol>
+
+            <div class="example-box">
+                <h4>💡 Milestone Example</h4>
+                <p><strong>Milestone:</strong> "Q1 2025 Compliance"</p>
+                <p><strong>Linked Tasks:</strong> 12 tasks across different columns</p>
+                <p><strong>Status:</strong> "In Progress" (8 done, 4 remaining)</p>
+                <p><strong>When all 12 are done:</strong> Milestone automatically becomes "Completed"</p>
+            </div>
+        </section>
+
+        <section id="groups">
+            <h2>13. Groups</h2>
+            
+            <h3>What are Groups?</h3>
+            <p>Groups are cross-cutting collections of tasks that allow you to perform bulk operations. Unlike categories (which are for filtering), groups are for organizing tasks that span multiple categories or milestones for specific actions.</p>
+
+            <div class="feature">
+                <strong><i class="fa-solid fa-layer-group"></i> Key Use:</strong> Create groups for sprints, initiatives, or any collection of tasks where you need to perform bulk changes (like moving multiple tasks to a column, assigning to a team, or setting deadlines).
+            </div>
+
+            <h3>Creating Groups</h3>
+            <ol>
+                <li>Click the <strong>Board Menu (⋯)</strong> next to the board name</li>
+                <li>Select <strong>"Manage Groups"</strong></li>
+                <li>Click <strong>"+ Add Group"</strong></li>
+                <li>Enter group name (e.g., "Sprint 1", "Firewall Initiative")</li>
+                <li>Choose a color</li>
+                <li>Click <strong>"Add"</strong></li>
+            </ol>
+
+            <h3>Adding Tasks to Groups</h3>
+            <ol>
+                <li>Open a task card</li>
+                <li>Find the <strong>"Groups"</strong> field</li>
+                <li>Select one or more groups from the dropdown</li>
+                <li>Task can belong to multiple groups</li>
+            </ol>
+
+            <h3>Bulk Operations with Groups</h3>
+            <p>Once tasks are in groups, you can perform bulk operations:</p>
+            <ul>
+                <li><strong>Bulk Move:</strong> Move all tasks in a group to a specific column</li>
+                <li><strong>Bulk Assign:</strong> Assign all tasks in a group to team members</li>
+                <li><strong>Bulk Deadline:</strong> Set the same due date for all group tasks</li>
+                <li><strong>Bulk Label:</strong> Add labels to all tasks in a group</li>
+            </ul>
+
+            <div class="example-box">
+                <h4>💡 Group Use Case</h4>
+                <p><strong>Scenario:</strong> You have 20 tasks across different categories. 8 of them are part of "Sprint 1".</p>
+                <p><strong>Action:</strong> Create "Sprint 1" group, add those 8 tasks to it.</p>
+                <p><strong>Benefit:</strong> You can now bulk-assign all Sprint 1 tasks to the sprint team, set a sprint deadline, or move them all to "In Progress" at once.</p>
+            </div>
+
+            <div class="tip">
+                <strong><i class="fa-solid fa-users"></i> Sprint Management:</strong> Groups are perfect for sprint planning. Create a group for each sprint, add tasks to it, then use bulk operations to manage the entire sprint efficiently.
+            </div>
+
+            <h3>Groups vs Categories vs Milestones</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Feature</th>
+                        <th>Categories</th>
+                        <th>Milestones</th>
+                        <th>Groups</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Purpose</strong></td>
+                        <td>Organizational filtering</td>
+                        <td>Time/goal-based phases</td>
+                        <td>Bulk operations</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Status Tracking</strong></td>
+                        <td>No</td>
+                        <td>Yes (auto-updates)</td>
+                        <td>No</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Multiple Assignment</strong></td>
+                        <td>No (one per task)</td>
+                        <td>No (one per task)</td>
+                        <td>Yes (multiple groups)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Best For</strong></td>
+                        <td>Departments, types</td>
+                        <td>Sprints, quarters, phases</td>
+                        <td>Initiatives, bulk changes</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
         <section id="labels">
-            <h2>10. Working with Labels</h2>
+            <h2>14. Working with Labels</h2>
             
             <h3>What Are Labels?</h3>
             <p>Labels are color-coded tags that help categorize and filter tasks. They're automatically imported from workflow tags when you export to a board.</p>
@@ -1126,7 +1421,7 @@
         </section>
 
         <section id="mobile">
-            <h2>11. Using Boards on Mobile <span class="new-badge">NEW!</span></h2>
+            <h2>15. Using Boards on Mobile <span class="new-badge">NEW!</span></h2>
             
             <div class="mobile-section">
                 <h3>📱 Mobile-Optimized Experience</h3>
@@ -1291,7 +1586,7 @@
         </section>
 
         <section id="tracking-progress">
-            <h2>12. Tracking Progress</h2>
+            <h2>16. Tracking Progress</h2>
             
             <h3>Board-Level Progress</h3>
             <p>Get an overview of your project health by looking at column distribution:</p>
@@ -1330,7 +1625,7 @@
         </section>
 
         <section id="collaboration">
-            <h2>13. Team Collaboration</h2>
+            <h2>17. Team Collaboration</h2>
             
             <h3>Real-Time Updates</h3>
             <p>Multiple team members can work on the same board:</p>
@@ -1380,7 +1675,7 @@
         </section>
 
         <section id="tips">
-            <h2>14. Tips & Best Practices</h2>
+            <h2>18. Tips & Best Practices</h2>
             
             <h3>Board Setup Tips</h3>
             <ul>

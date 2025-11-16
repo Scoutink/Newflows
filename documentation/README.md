@@ -280,6 +280,10 @@ Each outline will be expanded into full content with:
 - Searchable content
 - Progressive disclosure
 
+**📋 Planning Documents:**
+- **[VISION.md](VISION.md)** - Complete vision and design philosophy for the interactive 3D web manual
+- **[ROADMAP.md](ROADMAP.md)** - Detailed implementation roadmap from A to Z (8-week plan)
+
 ---
 
 ## 🛠 How to Use This Documentation
@@ -410,6 +414,11 @@ Each outline follows this structure:
 
 **Next Update:** Full content for all four manuals
 **Future Enhancement:** Interactive documentation with Three.js visualizations
+
+**📐 Interactive Documentation Planning:**
+- Vision document created ✓
+- Implementation roadmap created ✓
+- Ready for development phase
 
 ---
 

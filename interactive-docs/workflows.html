@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workflows Manual - Newflows Platform Documentation</title>
+    <meta name="description" content="Learn to create and manage workflows on the Newflows platform">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Prism.js -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/3d-scene.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/content.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="main-nav" id="main-nav">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <a href="index.html" class="brand-link">
+                    <i class="fas fa-cube"></i>
+                    <span>Newflows</span>
+                </a>
+            </div>
+            
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="index.html" class="nav-link">Overview</a></li>
+                <li><a href="templates.html" class="nav-link">Templates</a></li>
+                <li><a href="workflows.html" class="nav-link active">Workflows</a></li>
+                <li><a href="boards.html" class="nav-link">Boards</a></li>
+                <li><a href="use-cases.html" class="nav-link">Use Cases</a></li>
+                <li><a href="quick-start.html" class="nav-link">Quick Start</a></li>
+            </ul>
+            
+            <div class="nav-actions">
+                <button class="btn-icon" id="search-toggle" title="Search">
+                    <i class="fas fa-search"></i>
+                </button>
+                <button class="btn-icon" id="theme-toggle" title="Toggle theme">
+                    <i class="fas fa-circle-half-stroke"></i>
+                </button>
+                <button class="btn-icon" id="menu-toggle" title="Menu">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Search Overlay -->
+    <div class="search-overlay" id="search-overlay">
+        <div class="search-container">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="search-input" placeholder="Search documentation..." autocomplete="off">
+                <button class="btn-icon" id="search-close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="search-results" id="search-results"></div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- 3D Scene Container -->
+        <div class="scene-container" id="scene-container">
+            <canvas id="three-canvas"></canvas>
+            <div class="scene-controls">
+                <button class="btn-scene" id="reset-camera" title="Reset View">
+                    <i class="fas fa-home"></i>
+                </button>
+                <button class="btn-scene" id="toggle-animation" title="Toggle Animation">
+                    <i class="fas fa-pause"></i>
+                </button>
+                <button class="btn-scene" id="fullscreen" title="Fullscreen">
+                    <i class="fas fa-expand"></i>
+                </button>
+            </div>
+            <div class="scene-info">
+                <h3>Workflows Layer</h3>
+                <p>Strategic maps built on templates</p>
+            </div>
+        </div>
+
+        <!-- Content Area -->
+        <div class="content-area">
+            <!-- Hero Section -->
+            <section class="hero-section">
+                <div class="hero-content">
+                    <h1 class="hero-title">
+                        <i class="fas fa-sitemap"></i> Workflows Manual
+                    </h1>
+                    <p class="hero-subtitle">
+                        Master workflow creation, management, and execution. Learn how to build strategic 
+                        maps from templates and transform them into actionable boards.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Table of Contents -->
+            <section class="content-section">
+                <div class="toc-container">
+                    <h2>Table of Contents</h2>
+                    <nav class="toc-nav">
+                        <ul>
+                            <li><a href="#introduction">Introduction to Workflows</a></li>
+                            <li><a href="#creation-methods">Four Creation Methods</a></li>
+                            <li><a href="#modes">Creation vs Execution Modes</a></li>
+                            <li><a href="#building">Building Workflow Structure</a></li>
+                            <li><a href="#attachments">Attachments and Content</a></li>
+                            <li><a href="#linking">Workflow Linking</a></li>
+                            <li><a href="#export">Exporting to Boards</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </section>
+
+            <!-- Introduction Section -->
+            <section id="introduction" class="content-section">
+                <div class="section-header">
+                    <h2>Introduction to Workflows</h2>
+                </div>
+
+                <div class="content-card">
+                    <h3>What are Workflows?</h3>
+                    <p>
+                        Workflows are macro-level strategic maps that structure project management, strategies 
+                        (like marketing, development), manufacturing, and other pipelines. They are built on 
+                        top of templates and populated with actual content and requirements.
+                    </p>
+
+                    <div class="info-box">
+                        <i class="fas fa-info-circle"></i>
+                        <div>
+                            <strong>Key Concept:</strong> Workflows take the structure from templates and 
+                            fill it with real-world content, requirements, and data.
+                        </div>
+                    </div>
+
+                    <h4>Workflow Capabilities</h4>
+                    <ul class="feature-list">
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <strong>Four creation methods</strong> - From template, empty, copy, or linked
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <strong>Dual modes</strong> - Creation mode for building, Execution mode for tracking
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <strong>Rich attachments</strong> - Links, images, notes, and comments
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <strong>Workflow linking</strong> - Synchronize structure across multiple workflows
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <strong>Export to boards</strong> - Transform workflows into execution spaces
+                        </li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Creation Methods Section -->
+            <section id="creation-methods" class="content-section">
+                <div class="section-header">
+                    <h2>Four Creation Methods</h2>
+                </div>
+
+                <div class="content-card">
+                    <h3>Method 1: From Template</h3>
+                    <p>
+                        Create a workflow based on a predefined template structure. This is the recommended 
+                        method for structured workflows.
+                    </p>
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <p>Click "New" button and select "From Template"</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <p>Enter workflow name and select a template</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <p>Click "Create Workflow" to start building</p>
+                        </div>
+                    </div>
+
+                    <h3>Method 2: Empty Workflow</h3>
+                    <p>
+                        Create a simple 1-level workflow instantly without needing a template. Perfect for 
+                        quick checklists or simple tracking.
+                    </p>
+
+                    <h3>Method 3: Copy Existing</h3>
+                    <p>
+                        Duplicate an existing workflow with all its structure and content. Great for creating 
+                        variations of existing workflows.
+                    </p>
+
+                    <h3>Method 4: Linked Workflow</h3>
+                    <p>
+                        Create a workflow that synchronizes its structure with other workflows. Perfect for 
+                        tracking the same requirements across multiple teams or departments.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Modes Section -->
+            <section id="modes" class="content-section">
+                <div class="section-header">
+                    <h2>Creation vs Execution Modes</h2>
+                </div>
+
+                <div class="content-card">
+                    <h3>Understanding the Two Modes</h3>
+                    
+                    <div class="pattern-cards">
+                        <div class="pattern-card">
+                            <h4><i class="fas fa-hammer"></i> Creation Mode</h4>
+                            <p><strong>Purpose:</strong> Build and modify workflow structure</p>
+                            <ul>
+                                <li>Add/edit/delete units</li>
+                                <li>Change names and descriptions</li>
+                                <li>Modify structure</li>
+                                <li>Add attachments</li>
+                            </ul>
+                        </div>
+
+                        <div class="pattern-card">
+                            <h4><i class="fas fa-check-circle"></i> Execution Mode</h4>
+                            <p><strong>Purpose:</strong> Track progress and completion</p>
+                            <ul>
+                                <li>Check off "Done" checkboxes</li>
+                                <li>Enter/update grades</li>
+                                <li>View progress bars</li>
+                                <li>Filter by tags</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="info-box">
+                        <i class="fas fa-lightbulb"></i>
+                        <div>
+                            <strong>Tip:</strong> Always save your work before switching modes! 
+                            Changes in one mode don't automatically save to the other.
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Building Section -->
+            <section id="building" class="content-section">
+                <div class="section-header">
+                    <h2>Building Workflow Structure</h2>
+                </div>
+
+                <div class="content-card">
+                    <h3>Adding Units</h3>
+                    <p>
+                        In Creation mode, you can add units at any level of your workflow hierarchy. 
+                        The button name changes based on your template (e.g., "+ Add Rule", "+ Add Control").
+                    </p>
+
+                    <div class="step-guide">
+                        <div class="step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h4>Click the Add Button</h4>
+                                <p>Look for the "+ Add [Level Name]" button at the appropriate level</p>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h4>Fill in Details</h4>
+                                <p>Enter the unit name, description, and any other properties</p>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h4>Add Child Units</h4>
+                                <p>Click the + button on a parent unit to add children</p>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <h4>Save Structure</h4>
+                                <p>Click "Save Structure" to persist your changes</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Attachments Section -->
+            <section id="attachments" class="content-section">
+                <div class="section-header">
+                    <h2>Attachments and Content</h2>
+                </div>
+
+                <div class="content-card">
+                    <h3>Four Types of Attachments</h3>
+                    
+                    <div class="properties-grid">
+                        <div class="property-card">
+                            <i class="fas fa-link"></i>
+                            <h5>Links</h5>
+                            <p>External resources and documents</p>
+                        </div>
+                        <div class="property-card">
+                            <i class="fas fa-image"></i>
+                            <h5>Images</h5>
+                            <p>Screenshots and diagrams</p>
+                        </div>
+                        <div class="property-card">
+                            <i class="fas fa-sticky-note"></i>
+                            <h5>Notes</h5>
+                            <p>Rich text with formatting</p>
+                        </div>
+                        <div class="property-card">
+                            <i class="fas fa-comments"></i>
+                            <h5>Comments</h5>
+                            <p>Timestamped discussions</p>
+                        </div>
+                    </div>
+
+                    <div class="info-box">
+                        <i class="fas fa-save"></i>
+                        <div>
+                            <strong>Remember:</strong> Attachments are part of the workflow structure, 
+                            so click "Save Structure" after adding or modifying them!
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Linking Section -->
+            <section id="linking" class="content-section">
+                <div class="section-header">
+                    <h2>Workflow Linking</h2>
+                </div>
+
+                <div class="content-card">
+                    <h3>Synchronized Workflows</h3>
+                    <p>
+                        Linked workflows share the same structural changes. When you modify the structure 
+                        of one linked workflow, those changes automatically propagate to all other linked 
+                        workflows in the group.
+                    </p>
+
+                    <div class="warning-box">
+                        <strong>Important:</strong> Only structural changes are synchronized. Execution state 
+                        (checkmarks, grades) remains independent for each workflow.
+                    </div>
+
+                    <h4>Use Cases for Linking</h4>
+                    <ul class="feature-list">
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <strong>Multi-department compliance</strong> - Same requirements across departments
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <strong>Multi-region operations</strong> - Same structure, different regions
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <strong>Multi-team projects</strong> - Synchronized task lists
+                        </li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Export Section -->
+            <section id="export" class="content-section">
+                <div class="section-header">
+                    <h2>Exporting to Boards</h2>
+                </div>
+
+                <div class="content-card">
+                    <h3>Transform Workflows into Boards</h3>
+                    <p>
+                        Export workflows to boards to create execution spaces where teams can manage tasks, 
+                        track progress, and collaborate.
+                    </p>
+
+                    <div class="step-guide">
+                        <div class="step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h4>Select Export Option</h4>
+                                <p>In Execution mode, click "Export to Board" or use the board button on a unit</p>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h4>Choose Export Type</h4>
+                                <p>Export entire workflow, specific unit tree, or by tags</p>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h4>Configure Board</h4>
+                                <p>Set board name, columns, and initial settings</p>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <h4>Start Executing</h4>
+                                <p>Navigate to the board and start managing tasks</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Next Steps -->
+            <section class="content-section">
+                <div class="next-steps">
+                    <h2>Next Steps</h2>
+                    <div class="next-steps-grid">
+                        <a href="boards.html" class="next-step-card">
+                            <i class="fas fa-arrow-right"></i>
+                            <h3>Boards Manual</h3>
+                            <p>Learn how to execute workflows on boards</p>
+                        </a>
+                        <a href="templates.html" class="next-step-card">
+                            <i class="fas fa-layer-group"></i>
+                            <h3>Templates Manual</h3>
+                            <p>Understand template creation</p>
+                        </a>
+                        <a href="use-cases.html" class="next-step-card">
+                            <i class="fas fa-lightbulb"></i>
+                            <h3>Use Cases</h3>
+                            <p>See real-world workflow examples</p>
+                        </a>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Documentation</h4>
+                <ul>
+                    <li><a href="templates.html">Templates</a></li>
+                    <li><a href="workflows.html">Workflows</a></li>
+                    <li><a href="boards.html">Boards</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Newflows Platform. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Import Maps -->
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+            "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+        }
+    }
+    </script>
+    
+    <!-- GSAP -->
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    
+    <!-- Scripts -->
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>
