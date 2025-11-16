@@ -1,35 +1,68 @@
 // Main Application Entry Point
-import { initTheme } from './theme.js';
-import { initNavigation } from './navigation.js';
-import { initSearch } from './search.js';
-import { initScene } from './scene.js';
-import { initScrollAnimations } from './animations.js';
-import { processMarkdownContent, initCodeCopyButtons } from './markdown.js';
-
 // Initialize application when DOM is ready
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
     console.log('Initializing Interactive Documentation...');
     
-    // Initialize all modules
-    initTheme();
-    initNavigation();
-    initSearch();
-    initScene();
-    initScrollAnimations();
-    
-    // Process markdown content
-    processMarkdownContent();
-    initCodeCopyButtons();
-    
-    // Hide loading overlay
-    const loadingOverlay = document.getElementById('loading-overlay');
-    if (loadingOverlay) {
-        setTimeout(() => {
+    // Always hide loading overlay, even if there are errors
+    const hideLoading = () => {
+        const loadingOverlay = document.getElementById('loading-overlay');
+        if (loadingOverlay) {
             loadingOverlay.classList.add('hidden');
-        }, 500);
-    }
+        }
+    };
     
-    console.log('Interactive Documentation initialized!');
+    try {
+        // Initialize all modules with error handling
+        try {
+            const { initTheme } = await import('./theme.js');
+            initTheme();
+        } catch (e) {
+            console.warn('Theme module failed:', e);
+        }
+        
+        try {
+            const { initNavigation } = await import('./navigation.js');
+            initNavigation();
+        } catch (e) {
+            console.warn('Navigation module failed:', e);
+        }
+        
+        try {
+            const { initSearch } = await import('./search.js');
+            initSearch();
+        } catch (e) {
+            console.warn('Search module failed:', e);
+        }
+        
+        try {
+            const { initScene } = await import('./scene.js');
+            initScene();
+        } catch (e) {
+            console.warn('Scene module failed:', e);
+        }
+        
+        try {
+            const { initScrollAnimations } = await import('./animations.js');
+            initScrollAnimations();
+        } catch (e) {
+            console.warn('Animations module failed:', e);
+        }
+        
+        try {
+            const { processMarkdownContent, initCodeCopyButtons } = await import('./markdown.js');
+            processMarkdownContent();
+            initCodeCopyButtons();
+        } catch (e) {
+            console.warn('Markdown module failed:', e);
+        }
+        
+        console.log('Interactive Documentation initialized!');
+    } catch (error) {
+        console.error('Error initializing documentation:', error);
+    } finally {
+        // Always hide loading overlay
+        setTimeout(hideLoading, 100);
+    }
 });
 
 // Handle page visibility changes

@@ -1,59 +1,73 @@
 // Markdown Processing
-import { marked } from 'https://cdn.jsdelivr.net/npm/marked@11.1.1/lib/marked.esm.js';
+let marked = null;
+let renderer = null;
 
-// Configure marked
-marked.setOptions({
-    breaks: true,
-    gfm: true,
-    headerIds: true,
-    mangle: false,
-});
-
-// Custom renderer for enhanced markdown
-const renderer = new marked.Renderer();
-
-// Enhanced code blocks with syntax highlighting
-renderer.code = function(code, language) {
-    const lang = language || 'text';
-    const escapedCode = escapeHtml(code);
-    return `
-        <div class="code-block">
-            <div class="code-header">
-                <span class="code-language">${lang}</span>
-                <button class="btn-copy-code" data-code="${escapeHtml(code)}" title="Copy code">
-                    <i class="fas fa-copy"></i> Copy
-                </button>
-            </div>
-            <pre><code class="language-${lang}">${escapedCode}</code></pre>
-        </div>
-    `;
-};
-
-// Enhanced blockquotes
-renderer.blockquote = function(quote) {
-    return `<blockquote class="markdown-quote">${quote}</blockquote>`;
-};
-
-// Enhanced links
-renderer.link = function(href, title, text) {
-    const isExternal = href.startsWith('http');
-    const target = isExternal ? 'target="_blank" rel="noopener noreferrer"' : '';
-    return `<a href="${href}" ${target} class="markdown-link">${text}</a>`;
-};
-
-// Enhanced tables
-renderer.table = function(header, body) {
-    return `
-        <div class="table-wrapper">
-            <table class="markdown-table">
-                <thead>${header}</thead>
-                <tbody>${body}</tbody>
-            </table>
-        </div>
-    `;
-};
-
-marked.setOptions({ renderer });
+// Initialize marked and renderer
+(async () => {
+    try {
+        const markedModule = await import('https://cdn.jsdelivr.net/npm/marked@11.1.1/lib/marked.esm.js');
+        marked = markedModule.marked || markedModule.default || markedModule;
+        
+        if (marked) {
+            // Create custom renderer
+            renderer = new marked.Renderer();
+            
+            // Enhanced code blocks with syntax highlighting
+            renderer.code = function(code, language) {
+                const lang = language || 'text';
+                const escapedCode = escapeHtml(code);
+                return `
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-language">${lang}</span>
+                            <button class="btn-copy-code" data-code="${escapeHtml(code)}" title="Copy code">
+                                <i class="fas fa-copy"></i> Copy
+                            </button>
+                        </div>
+                        <pre><code class="language-${lang}">${escapedCode}</code></pre>
+                    </div>
+                `;
+            };
+            
+            // Enhanced blockquotes
+            renderer.blockquote = function(quote) {
+                return `<blockquote class="markdown-quote">${quote}</blockquote>`;
+            };
+            
+            // Enhanced links
+            renderer.link = function(href, title, text) {
+                const isExternal = href.startsWith('http');
+                const target = isExternal ? 'target="_blank" rel="noopener noreferrer"' : '';
+                return `<a href="${href}" ${target} class="markdown-link">${text}</a>`;
+            };
+            
+            // Enhanced tables
+            renderer.table = function(header, body) {
+                return `
+                    <div class="table-wrapper">
+                        <table class="markdown-table">
+                            <thead>${header}</thead>
+                            <tbody>${body}</tbody>
+                        </table>
+                    </div>
+                `;
+            };
+            
+            // Configure marked with renderer
+            if (marked.setOptions) {
+                marked.setOptions({
+                    breaks: true,
+                    gfm: true,
+                    headerIds: true,
+                    mangle: false,
+                    renderer: renderer
+                });
+            }
+        }
+    } catch (e) {
+        console.warn('Marked library not available, markdown processing disabled:', e);
+    }
+})();
 
 // Escape HTML
 function escapeHtml(text) {
@@ -64,6 +78,19 @@ function escapeHtml(text) {
 
 // Process markdown content
 export async function processMarkdown(markdownText) {
+    // Wait a bit for marked to load if it's still loading
+    if (!marked) {
+        // Wait up to 2 seconds for marked to load
+        for (let i = 0; i < 20 && !marked; i++) {
+            await new Promise(resolve => setTimeout(resolve, 100));
+        }
+    }
+    
+    if (!marked) {
+        // If marked is still not available, return plain text wrapped in paragraphs
+        return markdownText.split('\n').filter(line => line.trim()).map(line => `<p>${escapeHtml(line)}</p>`).join('');
+    }
+    
     try {
         const html = marked.parse(markdownText);
         return html;
