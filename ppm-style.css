@@ -1,43 +1,8 @@
+/* Import Shared Design System */
+@import url('shared-variables.css');
+
 /* PPM (Project Portfolio Management) Styles */
 /* Trello-like Kanban Board System */
-
-:root {
-    --primary: #4a6cf7;
-    --primary-hover: #3b5dd6;
-    --secondary: #6c757d;
-    --success: #198754;
-    --danger: #dc3545;
-    --warning: #ffc107;
-    --info: #0dcaf0;
-    --locked-bg: #f8f9fa;
-    --locked-border: #adb5bd;
-    
-    --bg-primary: #ffffff;
-    --bg-secondary: #f8f9fa;
-    --bg-tertiary: #e9ecef;
-    --text-primary: #212529;
-    --text-secondary: #6c757d;
-    --text-muted: #adb5bd;
-    
-    --border-color: #dee2e6;
-    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12);
-    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.12);
-    --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.15);
-    
-    --radius-sm: 4px;
-    --radius-md: 8px;
-    --radius-lg: 12px;
-}
-
-body.dark-theme {
-    --bg-primary: #1e2124;
-    --bg-secondary: #282b30;
-    --bg-tertiary: #36393e;
-    --text-primary: #ffffff;
-    --text-secondary: #b9bbbe;
-    --text-muted: #72767d;
-    --border-color: #404347;
-}
 
 * {
     margin: 0;
@@ -302,7 +267,9 @@ button {
 /* ===== BOARD VIEW ===== */
 .board-container {
     padding: 2rem;
-    height: calc(100vh - 80px);
+    /* Dynamic list is now overlay, so height calc is simpler */
+    /* Account for navbar (80px) + management bar (~100px) + margins */
+    height: calc(100vh - 200px);
     overflow-x: auto;
     overflow-y: hidden;
 }
@@ -2056,7 +2023,7 @@ textarea.form-input {
    ============================================================================ */
 
 .dynamic-list-container {
-    background: var(--card-bg);
+    background: var(--bg-primary);
     border-bottom: 1px solid var(--border-color);
     transition: all 0.3s ease;
 }
@@ -2070,7 +2037,7 @@ textarea.form-input {
     justify-content: space-between;
     align-items: center;
     padding: 15px 20px;
-    background: var(--secondary-bg);
+    background: var(--bg-secondary);
     border-bottom: 1px solid var(--border-color);
 }
 
@@ -2083,7 +2050,7 @@ textarea.form-input {
 }
 
 .dynamic-list-title i {
-    color: var(--primary-color);
+    color: var(--primary);
 }
 
 .dynamic-list-actions {
@@ -2110,15 +2077,15 @@ textarea.form-input {
     padding: 6px 12px;
     border: 2px solid var(--border-color);
     border-radius: 6px;
-    background: var(--card-bg);
-    color: var(--text-color);
+    background: var(--bg-primary);
+    color: var(--text-primary);
     cursor: pointer;
     transition: all 0.2s;
     font-size: 0.9em;
 }
 
 .btn-mode:hover {
-    border-color: var(--primary-color);
+    border-color: var(--primary);
     background: var(--primary-hover);
 }
 
@@ -2160,12 +2127,12 @@ textarea.form-input {
 }
 
 .tree-node:hover .node-content {
-    background: var(--hover-bg);
+    background: var(--bg-tertiary);
 }
 
 .tree-node.node-filtered .node-content {
     background: var(--primary-hover);
-    border-left: 3px solid var(--primary-color);
+    border-left: 3px solid var(--primary);
 }
 
 .node-toggle {
@@ -2182,7 +2149,7 @@ textarea.form-input {
 }
 
 .node-toggle:hover {
-    color: var(--text-color);
+    color: var(--text-primary);
 }
 
 .node-spacer {
@@ -2196,7 +2163,7 @@ textarea.form-input {
 }
 
 .node-connection .node-icon {
-    color: var(--primary-color);
+    color: var(--primary);
 }
 
 .node-task .node-icon {
@@ -2213,11 +2180,11 @@ textarea.form-input {
 }
 
 .node-title:hover {
-    color: var(--primary-color);
+    color: var(--primary);
 }
 
 .task-count-badge {
-    background: var(--primary-color);
+    background: var(--primary);
     color: white;
     padding: 2px 8px;
     border-radius: 12px;
@@ -2239,8 +2206,8 @@ textarea.form-input {
 .btn-icon-sm {
     padding: 4px 8px;
     border: none;
-    background: var(--secondary-bg);
-    color: var(--text-color);
+    background: var(--bg-secondary);
+    color: var(--text-primary);
     border-radius: 4px;
     cursor: pointer;
     transition: all 0.2s;
@@ -2248,7 +2215,7 @@ textarea.form-input {
 }
 
 .btn-icon-sm:hover {
-    background: var(--primary-color);
+    background: var(--primary);
     color: white;
 }
 
@@ -2293,7 +2260,7 @@ textarea.form-input {
 }
 
 .task-link-item:hover {
-    background: var(--hover-bg);
+    background: var(--bg-tertiary);
 }
 
 /* Form hints */
@@ -2331,7 +2298,7 @@ textarea.form-input {
     border: 1px solid var(--border-color);
     border-radius: 6px;
     padding: 10px;
-    background: var(--secondary-bg);
+    background: var(--bg-secondary);
 }
 
 .dynamic-list-connections .checkbox-label {
@@ -2344,7 +2311,7 @@ textarea.form-input {
 }
 
 .dynamic-list-connections .checkbox-label:hover {
-    background: var(--hover-bg);
+    background: var(--bg-tertiary);
 }
 
 .dynamic-list-connections input[type="checkbox"] {
@@ -2355,6 +2322,112 @@ textarea.form-input {
 .dynamic-list-connections .checkbox-label span {
     flex: 1;
     font-size: 0.95em;
+}
+
+/* ============================================================================
+   DYNAMIC LIST OVERLAY
+   ============================================================================ */
+
+.dynamic-list-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 500;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 300ms ease;
+}
+
+.dynamic-list-overlay.active {
+    pointer-events: all;
+    opacity: 1;
+}
+
+.dynamic-list-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    transition: opacity 300ms ease;
+}
+
+.dynamic-list-overlay.active .dynamic-list-backdrop {
+    opacity: 1;
+}
+
+.dynamic-list-panel {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    max-width: 500px;
+    height: 100%;
+    background: var(--bg-primary);
+    box-shadow: -4px 0 20px rgba(0, 0, 0, 0.3);
+    transform: translateX(100%);
+    transition: transform 300ms ease;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.dynamic-list-overlay.active .dynamic-list-panel {
+    transform: translateX(0);
+}
+
+/* Override dynamic list styles for overlay mode */
+.dynamic-list-overlay .dynamic-list-header {
+    flex-shrink: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem 1.5rem;
+    background: var(--bg-secondary);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.dynamic-list-overlay .dynamic-list-title {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.dynamic-list-overlay .dynamic-list-title i {
+    color: var(--primary);
+    font-size: 1.25rem;
+}
+
+.dynamic-list-overlay .dynamic-list-actions {
+    flex-shrink: 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 1.5rem;
+    background: var(--bg-primary);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.dynamic-list-overlay .dynamic-list-tree {
+    flex: 1;
+    padding: 1rem 1.5rem;
+    overflow-y: auto;
+    max-height: none;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+    .dynamic-list-panel {
+        max-width: 100%;
+    }
 }
 
 /* ===== THREAD-LIKE ACTIVITY FEED ===== */
@@ -2370,7 +2443,7 @@ textarea.form-input {
 .btn-attachment {
     background: var(--bg-secondary);
     border: 1px solid var(--border-color);
-    color: var(--text-color);
+    color: var(--text-primary);
     padding: 8px 12px;
     border-radius: 6px;
     cursor: pointer;
@@ -2382,9 +2455,9 @@ textarea.form-input {
 }
 
 .btn-attachment:hover {
-    background: var(--hover-color);
-    border-color: var(--primary-color);
-    color: var(--primary-color);
+    background: var(--primary-hover);
+    border-color: var(--primary);
+    color: var(--primary);
 }
 
 .btn-attachment i {
@@ -2437,7 +2510,7 @@ textarea.form-input {
 
 .thread-item:hover {
     box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    border-color: var(--primary-color-light);
+    border-color: var(--primary-hover);
 }
 
 /* Thread item icon */
@@ -2491,7 +2564,7 @@ textarea.form-input {
 
 .thread-item-author {
     font-weight: 600;
-    color: var(--text-color);
+    color: var(--text-primary);
 }
 
 .thread-item-time {
@@ -2548,14 +2621,14 @@ textarea.form-input {
 .thread-note-title {
     display: block;
     margin-bottom: 8px;
-    color: var(--text-color);
+    color: var(--text-primary);
     font-size: 1em;
     font-weight: 600;
 }
 
 .thread-note-content {
     margin: 0;
-    color: var(--text-color);
+    color: var(--text-primary);
     line-height: 1.6;
 }
 
@@ -2609,15 +2682,15 @@ textarea.form-input {
     background: var(--bg-secondary);
     border: 1px solid var(--border-color);
     border-radius: 6px;
-    color: var(--primary-color);
+    color: var(--primary);
     text-decoration: none;
     transition: all 0.2s;
     word-break: break-all;
 }
 
 .thread-link:hover {
-    background: var(--primary-color-light);
-    border-color: var(--primary-color);
+    background: var(--primary-hover);
+    border-color: var(--primary);
     text-decoration: none;
 }
 
@@ -2635,7 +2708,7 @@ textarea.form-input {
 .thread-image-title {
     margin: 0 0 8px 0;
     font-weight: 500;
-    color: var(--text-color);
+    color: var(--text-primary);
     font-size: 0.95em;
 }
 
@@ -2691,7 +2764,7 @@ textarea.form-input {
     display: block;
     margin-bottom: 0.5rem;
     font-weight: 500;
-    color: var(--text-color);
+    color: var(--text-primary);
 }
 
 .inline-note-editor input[type="text"] {
@@ -2713,4 +2786,136 @@ textarea.form-input {
     display: flex;
     gap: 8px;
     justify-content: flex-end;
+}
+
+/* ============================================================================
+   TOAST NOTIFICATIONS
+   ============================================================================ */
+
+.toast-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    pointer-events: none;
+}
+
+.toast {
+    background: var(--bg-primary);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+    padding: 1rem 1.25rem;
+    min-width: 300px;
+    max-width: 500px;
+    transform: translateX(400px);
+    opacity: 0;
+    transition: all 300ms ease;
+    pointer-events: all;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    border-left: 4px solid var(--primary);
+}
+
+.toast.toast-show {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+.toast-icon {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.125rem;
+}
+
+.toast-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.toast-title {
+    font-weight: 600;
+    font-size: 0.9375rem;
+    color: var(--text-primary);
+}
+
+.toast-message {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    line-height: 1.4;
+}
+
+.toast-close {
+    flex-shrink: 0;
+    background: none;
+    border: none;
+    padding: 0;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--text-muted);
+    transition: color 150ms ease;
+}
+
+.toast-close:hover {
+    color: var(--text-primary);
+}
+
+/* Toast variants */
+.toast-success {
+    border-left-color: var(--success);
+}
+
+.toast-success .toast-icon {
+    color: var(--success);
+}
+
+.toast-error {
+    border-left-color: var(--danger);
+}
+
+.toast-error .toast-icon {
+    color: var(--danger);
+}
+
+.toast-warning {
+    border-left-color: var(--warning);
+}
+
+.toast-warning .toast-icon {
+    color: var(--warning);
+}
+
+.toast-info {
+    border-left-color: var(--info);
+}
+
+.toast-info .toast-icon {
+    color: var(--info);
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+    .toast-container {
+        top: 10px;
+        right: 10px;
+        left: 10px;
+    }
+
+    .toast {
+        min-width: auto;
+        max-width: none;
+    }
 }

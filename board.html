@@ -30,6 +30,9 @@
             </button>
         </div>
         <div class="nav-right">
+            <button id="dynamic-list-toggle" class="btn-icon" title="Toggle Dynamic List">
+                <i class="fa-solid fa-sitemap"></i>
+            </button>
             <button id="filter-btn" class="btn-icon" title="Filter cards">
                 <i class="fa-solid fa-filter"></i>
             </button>
@@ -54,40 +57,7 @@
         </span>
     </div>
 
-    <!-- Dynamic List Tree -->
-    <div id="dynamic-list-container" class="dynamic-list-container">
-        <div class="dynamic-list-header">
-            <div class="dynamic-list-title">
-                <i class="fa-solid fa-sitemap"></i>
-                <span>Dynamic List</span>
-                <button id="toggle-dynamic-list" class="btn-icon btn-sm" title="Collapse/Expand">
-                    <i class="fa-solid fa-chevron-up"></i>
-                </button>
-            </div>
-            <div class="dynamic-list-actions">
-                <div class="mode-toggle">
-                    <span class="mode-label">Mode:</span>
-                    <button id="dynamic-list-mode-btn" class="btn-mode" onclick="PPM.dynamicList.toggleMode()">
-                        <i class="fa-solid fa-edit"></i>
-                        <span id="mode-text">Creation</span>
-                    </button>
-                </div>
-                <button id="add-root-node-btn" class="btn-primary btn-sm" onclick="PPM.dynamicList.showNodeDialog(null)">
-                    <i class="fa-solid fa-plus"></i> Add Root Node
-                </button>
-                <button id="clear-list-filter-btn" class="btn-secondary btn-sm hidden" onclick="PPM.dynamicList.clearFilter()">
-                    <i class="fa-solid fa-xmark"></i> Clear Filter
-                </button>
-            </div>
-        </div>
-        <div id="dynamic-list-tree" class="dynamic-list-tree">
-            <div class="tree-empty-state" id="tree-empty-state">
-                <i class="fa-solid fa-sitemap"></i>
-                <p>No nodes yet. Click "Add Root Node" to start building your dynamic list.</p>
-            </div>
-            <!-- Tree nodes will be rendered here -->
-        </div>
-    </div>
+    <!-- Dynamic List now rendered as overlay (see end of body) -->
 
     <!-- Board Management Bar -->
     <div class="board-management-bar">
@@ -257,6 +227,44 @@
             </div>
             <div class="modal-footer">
                 <button class="btn-secondary" onclick="PPM.dynamicList.closeTaskLinkDialog()">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dynamic List Overlay -->
+    <div id="dynamic-list-overlay" class="dynamic-list-overlay">
+        <div class="dynamic-list-backdrop"></div>
+        <div class="dynamic-list-panel">
+            <div class="dynamic-list-header">
+                <div class="dynamic-list-title">
+                    <i class="fa-solid fa-sitemap"></i>
+                    <span>Dynamic List</span>
+                </div>
+                <button class="btn-icon" title="Close" onclick="PPM.dynamicList.toggleOverlay()">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="dynamic-list-actions">
+                <div class="mode-toggle">
+                    <span class="mode-label">Mode:</span>
+                    <button id="dynamic-list-mode-btn" class="btn-mode" onclick="PPM.dynamicList.toggleMode()">
+                        <i class="fa-solid fa-edit"></i>
+                        <span id="mode-text">Creation</span>
+                    </button>
+                </div>
+                <button id="add-root-node-btn" class="btn-primary btn-sm" onclick="PPM.dynamicList.showNodeDialog(null)">
+                    <i class="fa-solid fa-plus"></i> Add Root Node
+                </button>
+                <button id="clear-list-filter-btn" class="btn-secondary btn-sm hidden" onclick="PPM.dynamicList.clearFilter()">
+                    <i class="fa-solid fa-xmark"></i> Clear Filter
+                </button>
+            </div>
+            <div id="dynamic-list-tree" class="dynamic-list-tree">
+                <div class="tree-empty-state" id="tree-empty-state">
+                    <i class="fa-solid fa-sitemap"></i>
+                    <p>No nodes yet. Click "Add Root Node" to start building your dynamic list.</p>
+                </div>
+                <!-- Tree nodes will be rendered here -->
             </div>
         </div>
     </div>
