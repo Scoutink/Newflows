@@ -1571,56 +1571,167 @@ Parent grade = (80 + 90 + 55) / 3 = 75</pre>
 
             <h3>Tag Filtering <i class="fas fa-filter"></i></h3>
             <p>
-                In Execution mode, you can filter workflows to show only units with specific tags.
+                In Execution mode, you can filter workflows to show only units with specific tags. This is powerful 
+                for focusing on specific priorities, phases, or categories across your entire workflow.
             </p>
 
             <div class="steps">
                 <ul>
-                    <li>Switch to Execution mode</li>
-                    <li>Find a unit with a tag you want to filter by</li>
-                    <li>Click on the tag badge</li>
-                    <li>The workflow filters to show only units with that tag</li>
-                    <li>A filter banner appears at the top</li>
-                    <li>Click "Clear" in the banner to remove the filter</li>
+                    <li>Switch to <strong>Execution mode</strong></li>
+                    <li>Find any unit with a tag you want to filter by</li>
+                    <li>Click on the <strong>tag badge</strong> (the colored label)</li>
+                    <li>The workflow immediately filters to show only units with that tag</li>
+                    <li>A filter banner appears at the top showing the active filter</li>
+                    <li>Click <strong>"Clear"</strong> in the banner to remove the filter and see all units again</li>
+                </ul>
+            </div>
+
+            <div class="feature">
+                <h4><i class="fas fa-magic"></i> Tag Filter Features</h4>
+                <ul>
+                    <li><strong>Hierarchical Filtering:</strong> Shows matching units at all levels, maintaining parent-child relationships</li>
+                    <li><strong>Export Ready:</strong> While filtered, you can export only the visible (tagged) items to a board</li>
+                    <li><strong>Visual Indicator:</strong> The filter banner clearly shows which tag is active</li>
+                    <li><strong>Quick Clear:</strong> One click to return to full view</li>
                 </ul>
             </div>
 
             <div class="example-box">
                 <h4><i class="fas fa-example"></i> Tag Filter Example</h4>
-                <p><strong>Scenario:</strong> You have 100 controls, and 15 are tagged "critical".</p>
-                <p><strong>Action:</strong> Click the "critical" tag.</p>
-                <p><strong>Result:</strong> Only those 15 critical controls are displayed, making it easy to focus on high-priority items.</p>
+                <p><strong>Scenario:</strong> You have a workflow with 100 controls across 10 different control families. 
+                15 controls are tagged "critical".</p>
+                <p><strong>Action:</strong> Click the "critical" tag on any of those 15 controls.</p>
+                <p><strong>Result:</strong> The workflow now shows only those 15 critical controls, making it easy to 
+                focus on high-priority items. All other controls are hidden.</p>
+                <p><strong>Next Step:</strong> Click "Create Board" in the filter banner to export just these 15 critical 
+                items to a new board for focused execution.</p>
+            </div>
+
+            <div class="tip">
+                <p><i class="fas fa-lightbulb"></i> <strong>Pro Tip:</strong> Use tags strategically for filtering. 
+                Tag items by priority (#critical, #high, #medium), by phase (#Q1-2025, #sprint-1), or by department 
+                (#IT, #finance). Then filter and export to create focused execution boards.</p>
             </div>
 
             <h3>Export to Project Boards <i class="fas fa-diagram-project"></i></h3>
             <p>
-                Convert workflow units into Kanban boards for project management.
+                Convert workflow units into Kanban boards for project management. The export system offers multiple 
+                options to customize exactly what gets exported and how it's organized.
             </p>
 
-            <h4>Export Entire Unit Tree</h4>
+            <h4>Opening the Export Dialog</h4>
             <div class="steps">
                 <ul>
-                    <li>In Execution mode, find a parent unit you want to export</li>
-                    <li>Click the "Board" button on that unit</li>
-                    <li>A new Kanban board is created</li>
-                    <li>All child units become tasks in the "To Do" column</li>
-                    <li>Navigate to the Boards section to view</li>
+                    <li>Make sure you're in <strong>Execution mode</strong></li>
+                    <li>Click the <strong>"Export to Board"</strong> button in the top navigation bar</li>
+                    <li>A comprehensive export modal opens with all export options</li>
                 </ul>
             </div>
 
-            <h4>Export by Tag</h4>
-            <div class="steps">
+            <h4>Export Scope Options</h4>
+            <p>The export modal offers three scope options:</p>
+
+            <div class="feature">
+                <h4><i class="fas fa-layer-group"></i> Full Workflow</h4>
+                <p>Export the entire workflow tree. All units from all levels are exported to the board.</p>
                 <ul>
-                    <li>Filter the workflow by a tag (click any tag)</li>
-                    <li>Click "Create Board" in the filter banner</li>
-                    <li>A new board is created with all tagged items</li>
-                    <li>Great for creating sprint boards or phase-specific boards</li>
+                    <li>Best for: Complete project execution</li>
+                    <li>Use when: You want everything in one board</li>
                 </ul>
             </div>
+
+            <div class="feature">
+                <h4><i class="fas fa-sitemap"></i> Partial Workflow</h4>
+                <p>Select specific sections to export. A tree view appears where you can check which units to include.</p>
+                <ul>
+                    <li>Best for: Exporting specific controls or sections</li>
+                    <li>Use when: You only need part of the workflow</li>
+                    <li>Tip: Checking a parent unit automatically selects all its children</li>
+                </ul>
+            </div>
+
+            <div class="feature">
+                <h4><i class="fas fa-tags"></i> Tag-Filtered Export</h4>
+                <p>Export only units that have a specific tag. Select a tag from the dropdown to export all matching items.</p>
+                <ul>
+                    <li>Best for: Creating thematic boards (e.g., all "high-priority" items)</li>
+                    <li>Use when: You want to collect tagged items from across multiple controls</li>
+                    <li>Powerful: Collects items from different parts of the workflow hierarchy</li>
+                </ul>
+            </div>
+
+            <h4>Board Configuration</h4>
+            <p>When exporting, you can configure:</p>
+            <ul>
+                <li><strong>Board Name:</strong> Automatically suggested based on workflow name and scope</li>
+                <li><strong>Description:</strong> Optional description for the board</li>
+            </ul>
+
+            <h4>Reference Column (Optional)</h4>
+            <p>You can export a specific level to the References column, which creates a dynamic list structure:</p>
+            <ul>
+                <li>Check "Export specific level to References column"</li>
+                <li>Select which level to export (e.g., Controls, Actions, Evidence)</li>
+                <li>The selected level becomes reference items in the board's References column</li>
+                <li>Descendants become task nodes, ancestors become connection nodes</li>
+            </ul>
 
             <div class="tip">
-                <p><i class="fas fa-exchange-alt"></i> <strong>Tip:</strong> Exported boards are independent - changes 
-                in the board don't affect the workflow and vice versa. They're snapshots for project management.</p>
+                <p><i class="fas fa-lightbulb"></i> <strong>Reference Column Use:</strong> This is typically managed by 
+                consultants to provide reference material while clients manage the execution workspace.</p>
+            </div>
+
+            <h4>Dynamic List (Optional)</h4>
+            <p>Export the workflow tree structure to a Dynamic List for reference:</p>
+            <ul>
+                <li>Check "Export workflow tree to Dynamic List"</li>
+                <li>A tree view appears showing all workflow units</li>
+                <li>For each unit, choose its type:
+                    <ul>
+                        <li><strong>Task:</strong> Appears as a task node in the dynamic list</li>
+                        <li><strong>Connection:</strong> Appears as a connection node (for hierarchy)</li>
+                        <li><strong>Skip:</strong> Not included in the dynamic list</li>
+                    </ul>
+                </li>
+                <li>You can also assign units to specific board columns (To Do, In Progress, etc.)</li>
+            </ul>
+
+            <h4>Export Preview</h4>
+            <p>The modal shows a live preview of what will be exported:</p>
+            <ul>
+                <li>Number of nodes being exported</li>
+                <li>How many go to References column (if enabled)</li>
+                <li>How many go to board columns</li>
+                <li>Dynamic list node counts (if enabled)</li>
+            </ul>
+
+            <h4>Quick Export Methods</h4>
+            <p>For faster exports, you can also use these methods:</p>
+
+            <div class="example-box">
+                <h4><i class="fas fa-rocket"></i> Export Single Unit</h4>
+                <ol>
+                    <li>In Execution mode, find a unit with children</li>
+                    <li>Click the <strong>"Board"</strong> button on that unit</li>
+                    <li>Confirm the export</li>
+                    <li>A board is created with that unit's children as tasks</li>
+                </ol>
+            </div>
+
+            <div class="example-box">
+                <h4><i class="fas fa-tags"></i> Export by Tag (Quick Method)</h4>
+                <ol>
+                    <li>In Execution mode, click any tag to filter</li>
+                    <li>The filter banner appears at the top</li>
+                    <li>Click <strong>"Create Board"</strong> in the filter banner</li>
+                    <li>All tagged items are exported to a new board</li>
+                </ol>
+            </div>
+
+            <div class="important">
+                <p><i class="fas fa-shield-alt"></i> <strong>Important:</strong> Exported boards are snapshots - changes 
+                in the board don't affect the workflow and vice versa. This protects your reusable workflow templates 
+                while allowing flexible project execution.</p>
             </div>
 
             <h3>Workflow Renaming</h3>
