@@ -3677,83 +3677,1685 @@ Progress: 450/750 = 60% complete (by story points)
 
 ---
 
-### CHAPTER 7: MANAGING ATTACHMENTS
+## CHAPTER 7: MANAGING ATTACHMENTS
 
-**7.1 Adding Links**
-- Click "Add Link" button
-- Modal form appears
-- Link text (display name)
-- URL (auto-formats to https://)
-- Saved to unit footer
+Attachments enrich units with external resources, evidence, and collaborative discussions.
 
-**7.2 Adding Images**
-- Click "Add Image" button
-- Modal prompts for URL
-- Image URL required
-- Displays as thumbnail
-- Click to enlarge
+### 7.1 Adding Links
 
-**7.3 Adding Notes**
-- Click "Add Note" button
-- Modal with rich text editor
-- Note title required
-- Formatted content (bold, italic, lists, links)
-- Saved as HTML
+**Purpose:** Reference external resources (policies, documents, websites, evidence)
 
-**7.4 Adding Comments**
-- Click "Add Comment" button
-- Modal with textarea
-- Plain text only
-- Discussion thread
-- Newest first display
+**When:** Both Creation and Execution Modes (collaboration-friendly)
 
-**7.5 Viewing Attachments**
-- Expandable section
-- Grouped by type
-- Icons indicate type
-- Click links to open
-- Click images to enlarge
-- Expand notes to read
+**Prerequisites:** Template must enable Links property for this level
 
-**7.6 Deleting Attachments**
-- Delete icon on each item
-- No confirmation (immediate)
-- Removed from footer
-- Updates display
+**Steps:**
+
+1. **Expand unit** to show body section
+2. **Scroll to Attachments area**
+3. **Click "+ Add Link" button**
+4. **Modal opens** with form
+5. **Fill in fields:**
+   - **Link Text:** Display name (e.g., "Access Control Policy v2.3")
+   - **URL:** Web address (e.g., "https://docs.acme.com/policies/ac-policy.pdf")
+6. **Click "Add"** or press Enter
+7. **Link appears** in unit's Links section
+8. **Auto-saves** to workflow
+
+**Add Link Modal:**
+
+```
+┌──────────────────────────────────────┐
+│  Add Link                         [×]│
+├──────────────────────────────────────┤
+│                                      │
+│  Link Text (Display Name):          │
+│  [Access Control Policy v2.3_____]  │
+│                                      │
+│  URL:                                │
+│  [https://docs.acme.com/policy.pdf] │
+│                                      │
+│  Tip: Link text is what users see   │
+│                                      │
+│         [Cancel]  [Add Link]         │
+└──────────────────────────────────────┘
+```
+
+**URL Auto-Formatting:**
+
+Most implementations auto-add `https://` if protocol is missing:
+
+```
+You type: docs.acme.com/policy.pdf
+System saves: https://docs.acme.com/policy.pdf
+```
+
+**Link Display:**
+
+```
+Unit: A.5.1 Information Security Policy
+
+Attachments:
+
+Links (3):
+├─ 📎 Access Control Policy v2.3
+│     [https://docs.acme.com/ac-policy.pdf]
+├─ 📎 ISO 27001:2022 A.5 Requirements
+│     [https://iso.org/27001/a5]
+└─ 📎 Implementation Guidance
+│     [https://sharepoint.acme.com/guides]
+```
+
+**Clicking Links:**
+
+- Click link text or URL
+- Opens in new tab/window
+- Original workflow remains open
+
+**Common Link Uses:**
+
+**Policy Documents:**
+```
+Link Text: "Information Security Policy v3.1"
+URL: https://policies.acme.com/infosec-v3.1.pdf
+```
+
+**Evidence Repositories:**
+```
+Link Text: "Q1 2024 Access Logs (SharePoint)"
+URL: https://sharepoint.acme.com/audit/logs-q1
+```
+
+**Regulatory References:**
+```
+Link Text: "GDPR Article 32 - Security of Processing"
+URL: https://gdpr-info.eu/art-32-gdpr/
+```
+
+**Implementation Guides:**
+```
+Link Text: "NIST 800-53 AC-2 Guidance"
+URL: https://nvlpubs.nist.gov/nistpubs/...
+```
+
+**Jira/Project Management:**
+```
+Link Text: "JIRA Ticket: PROJ-1234"
+URL: https://acme.atlassian.net/browse/PROJ-1234
+```
+
+**Google Drive/OneDrive:**
+```
+Link Text: "MFA Configuration Screenshots (Drive)"
+URL: https://drive.google.com/drive/folders/abc123
+```
+
+**Best Practices:**
+
+**Descriptive Link Text:**
+```
+✅ "Access Control Policy v2.3 (Approved March 2024)"
+❌ "Click here"
+❌ "Link"
+❌ "https://docs.acme.com/policy.pdf"
+```
+
+**Include Versions:**
+```
+✅ "Risk Assessment Template v1.5"
+❌ "Risk Assessment Template" (which version?)
+```
+
+**Indicate Content Type:**
+```
+✅ "Network Diagram (PDF)"
+✅ "Training Video (YouTube)"
+✅ "Evidence Folder (SharePoint)"
+```
+
+**Keep Links Current:**
+```
+✅ Periodically verify links still work
+✅ Update if document moves
+✅ Add "(Archived)" to old versions
+```
 
 ---
 
-### CHAPTER 8: ORGANIZING WITH TAGS
+### 7.2 Adding Images
 
-**8.1 Tag Strategy**
+**Purpose:** Attach visual evidence (screenshots, photos, diagrams)
+
+**When:** Both Creation and Execution Modes
+
+**Prerequisites:** Template must enable Images property for this level
+
+**Steps:**
+
+1. **Expand unit** to show body
+2. **Scroll to Attachments**
+3. **Click "+ Add Image" button**
+4. **Modal opens** prompting for image URL
+5. **Enter image URL**
+   - Direct image link (e.g., https://example.com/image.png)
+   - Hosted image URL (Imgur, cloud storage, etc.)
+6. **Click "Add"**
+7. **Image appears** as thumbnail
+8. **Auto-saves**
+
+**Add Image Modal:**
+
+```
+┌──────────────────────────────────────┐
+│  Add Image                        [×]│
+├──────────────────────────────────────┤
+│                                      │
+│  Image URL:                          │
+│  [https://i.imgur.com/abc123.png__] │
+│                                      │
+│  Supported formats:                  │
+│  • PNG, JPG, JPEG, GIF, WebP        │
+│                                      │
+│  Note: Image must be publicly        │
+│  accessible via URL                  │
+│                                      │
+│         [Cancel]  [Add Image]        │
+└──────────────────────────────────────┘
+```
+
+**Image Display:**
+
+```
+Unit: A.9.4.2 Multi-Factor Authentication
+
+Attachments:
+
+Images (3):
+├─ [Thumbnail] Duo MFA Configuration
+│   Click to enlarge
+├─ [Thumbnail] AWS Console MFA Settings
+│   Click to enlarge
+└─ [Thumbnail] User Enrollment Report
+   Click to enlarge
+```
+
+**Viewing Images:**
+
+**Thumbnail View:**
+- Small preview (e.g., 150x150px)
+- Shows in unit's attachments section
+
+**Full View:**
+- Click thumbnail
+- Modal/lightbox opens with full-size image
+- Click outside or [X] to close
+
+**Image Sources:**
+
+**Screenshot Tools:**
+```
+1. Take screenshot
+2. Upload to Imgur, Google Photos, or cloud storage
+3. Get public shareable link
+4. Paste link in Add Image modal
+```
+
+**Cloud Storage (Google Drive example):**
+```
+1. Upload image to Google Drive
+2. Right-click → Get link → Set to "Anyone with link can view"
+3. Use direct image link or Drive preview link
+4. Add to workflow
+```
+
+**Hosted Solutions:**
+```
+- Imgur: https://i.imgur.com/abc123.png
+- AWS S3: https://bucket.s3.amazonaws.com/image.png
+- Azure Blob: https://storage.blob.core.windows.net/image.jpg
+- Google Cloud: https://storage.googleapis.com/bucket/image.png
+```
+
+**Common Image Uses:**
+
+**Configuration Screenshots:**
+```
+Evidence: MFA enabled on AWS Console
+Image: Screenshot of AWS IAM MFA settings page
+```
+
+**Network Diagrams:**
+```
+Documentation: Network architecture
+Image: Visio diagram exported as PNG
+```
+
+**Physical Security:**
+```
+Evidence: Badge reader installed
+Image: Photo of access control system at entrance
+```
+
+**Compliance Evidence:**
+```
+Proof: Firewall rules configured correctly
+Image: Screenshot of firewall rules with highlights
+```
+
+**Before/After Comparisons:**
+```
+Improvement tracking:
+Image 1: Before - weak password policy
+Image 2: After - strong password policy with MFA
+```
+
+**Best Practices:**
+
+**Image Quality:**
+```
+✅ Clear, readable screenshots (1920x1080 or similar)
+✅ Highlight important areas (red boxes, arrows)
+✅ Crop unnecessary parts
+❌ Blurry or tiny images
+❌ Entire desktop screenshot (too much clutter)
+```
+
+**Privacy/Security:**
+```
+⚠️ Redact sensitive data (passwords, API keys, PII)
+⚠️ Check image metadata (location, etc.)
+⚠️ Ensure images don't leak confidential info
+✅ Use tools like Greenshot for annotation/redaction
+```
+
+**Naming:**
+```
+✅ Include context: "AWS-MFA-Config-March-2024.png"
+❌ Generic: "Screenshot_001.png"
+```
+
+**Storage:**
+```
+✅ Use reliable, long-term storage
+✅ Backup images separately
+❌ Temporary file-sharing links that expire
+❌ Personal Dropbox that might lose access
+```
+
+---
+
+### 7.3 Adding Notes
+
+**Purpose:** Create rich text documentation, implementation decisions, or guidance
+
+**When:** Both Creation and Execution Modes
+
+**Prerequisites:** Template must enable Notes property for this level
+
+**Steps:**
+
+1. **Expand unit**
+2. **Click "+ Add Note" button**
+3. **Modal opens** with rich text editor
+4. **Enter note title** (required)
+5. **Write note content** using rich text editor
+6. **Format text:**
+   - Bold, italic, underline
+   - Bullet lists, numbered lists
+   - Headings
+   - Hyperlinks (optional)
+7. **Click "Save"**
+8. **Note appears** in Attachments section
+
+**Add Note Modal:**
+
+```
+┌─────────────────────────────────────────────┐
+│  Add Note                                [×]│
+├─────────────────────────────────────────────┤
+│                                             │
+│  Note Title:                                │
+│  [Implementation Decision - March 2024___]  │
+│                                             │
+│  Content:                                   │
+│  ┌───────────────────────────────────────┐ │
+│  │ [B] [I] [U] [•] [1.] [🔗] ...        │ │
+│  ├───────────────────────────────────────┤ │
+│  │ We decided to use Duo for MFA after   │ │
+│  │ evaluating three options:             │ │
+│  │                                       │ │
+│  │ 1. Duo Security (selected)            │ │
+│  │ 2. Okta Verify                       │ │
+│  │ 3. Microsoft Authenticator           │ │
+│  │                                       │ │
+│  │ Reasons:                              │ │
+│  │ • Cost-effective for our size        │ │
+│  │ • Easy integration with VPN          │ │
+│  │ • Supports push notifications        │ │
+│  │                                       │ │
+│  └───────────────────────────────────────┘ │
+│                                             │
+│              [Cancel]  [Save Note]          │
+└─────────────────────────────────────────────┘
+```
+
+**Rich Text Editor Features:**
+
+**Text Formatting:**
+- **Bold:** Ctrl+B
+- *Italic:* Ctrl+I
+- <u>Underline:</u> Ctrl+U
+
+**Lists:**
+- Bullet points
+- Numbered lists
+- Nested lists
+
+**Headings:**
+- Heading 1, 2, 3 (organize long notes)
+
+**Hyperlinks:**
+- Add links within note text
+- Example: "See [NIST guidance](https://nvlpubs.nist.gov/...)"
+
+**Note Display:**
+
+```
+Unit: A.9.4.2 Multi-Factor Authentication
+
+Attachments:
+
+Notes (2):
+├─ 📝 Implementation Decision - March 2024
+│     [Expand to read]
+└─ 📝 Auditor Q&A - June 2024
+      [Expand to read]
+```
+
+**Expanded Note View:**
+
+```
+📝 Implementation Decision - March 2024
+
+We decided to use Duo for MFA after evaluating three options:
+
+1. Duo Security (selected)
+2. Okta Verify
+3. Microsoft Authenticator
+
+Reasons:
+• Cost-effective for our size ($3/user/month)
+• Easy integration with VPN and AWS Console
+• Supports push notifications (better UX than SMS)
+• Used by similar companies in our industry
+
+Decision made: March 15, 2024
+Approved by: CISO (Jane Doe), CFO (John Smith)
+Implementation target: June 30, 2024
+
+[Collapse]
+```
+
+**Common Note Uses:**
+
+**Implementation Decisions:**
+```
+Title: "MFA Solution Selection Decision"
+
+Content:
+Decision Date: March 15, 2024
+Decision Makers: CISO, CFO, IT Director
+
+Options Considered:
+1. Duo (selected) - $15,000/year
+2. Okta - $25,000/year
+3. Microsoft - $0 (included) but limited features
+
+Selection Rationale:
+• Balance of cost and features
+• Better than free option for security posture
+• Less expensive than enterprise solution
+
+Implementation Plan:
+• Q2: Pilot with IT team (April-May)
+• Q3: Roll out to all staff (June-August)
+• Q4: Enforce for all users (September)
+```
+
+**Auditor Q&A:**
+```
+Title: "External Audit Questions - SOC 2"
+
+Auditor Question:
+"How do you ensure MFA cannot be bypassed?"
+
+Our Response:
+We enforce MFA at multiple layers:
+1. VPN requires MFA (no bypass)
+2. AWS Console enforces MFA for IAM users
+3. O365 conditional access policies require MFA
+4. Service accounts use certificate-based auth (not MFA, but stronger)
+
+Evidence Provided:
+• VPN configuration screenshots
+• AWS IAM policy exports
+• O365 conditional access policy screenshots
+
+Follow-up Items:
+• None - auditor satisfied with response
+```
+
+**Compliance Guidance:**
+```
+Title: "How to Implement This Control"
+
+Step-by-Step Guide:
+
+1. Review Requirement
+   Read ISO 27001 A.9.4.2 and understand the "why"
+
+2. Choose Solution
+   Evaluate MFA options based on:
+   • Budget
+   • Technical stack
+   • User experience
+   • Compliance requirements
+
+3. Implement
+   • Deploy MFA solution
+   • Configure for all systems
+   • Test thoroughly
+
+4. Document Evidence
+   • Configuration screenshots
+   • Policy documents
+   • Testing results
+   • User training materials
+
+5. Ongoing Maintenance
+   • Quarterly access reviews
+   • Annual policy review
+   • Monitor MFA enrollment rate
+```
+
+**Risk Assessment Notes:**
+```
+Title: "Risk Analysis - MFA Implementation"
+
+Inherent Risk (Before MFA):
+• Threat: Password compromise
+• Impact: High (data breach, compliance failure)
+• Likelihood: High (phishing is common)
+• Risk Score: 9/10
+
+Residual Risk (After MFA):
+• Impact: High (still possible but harder)
+• Likelihood: Low (requires both password + MFA bypass)
+• Risk Score: 3/10
+
+Risk Treatment:
+Implement MFA to reduce likelihood from High to Low
+
+Acceptance:
+Residual risk of 3/10 accepted by CISO (signature on file)
+```
+
+**Best Practices:**
+
+**Note Titles:**
+```
+✅ Descriptive: "Implementation Decision - March 2024"
+✅ Include dates: "Auditor Q&A - Q2 2024"
+✅ Categorize: "[DECISION] MFA Solution Selection"
+❌ Generic: "Note 1", "Notes"
+```
+
+**Note Content:**
+```
+✅ Structured (use headings, lists)
+✅ Include dates and decision makers
+✅ Link to related documents
+✅ Update with follow-ups
+❌ Rambling paragraphs
+❌ Missing context
+```
+
+**When to Use Notes vs. Description:**
+
+**Use Description for:**
+- Permanent control/task information
+- Standard requirement text
+- Implementation guidance (applies to all)
+
+**Use Notes for:**
+- Client-specific decisions
+- Time-sensitive information
+- Discussion summaries
+- Evolving guidance
+
+---
+
+### 7.4 Adding Comments
+
+**Purpose:** Discussion threads, questions, and collaborative conversations
+
+**When:** Both Creation and Execution Modes (collaboration tool)
+
+**Prerequisites:** Template must enable Comments property for this level
+
+**Steps:**
+
+1. **Expand unit**
+2. **Click "+ Add Comment" button**
+3. **Modal opens** with textarea
+4. **Type comment** (plain text, no formatting)
+5. **Click "Add Comment"** or press Ctrl+Enter
+6. **Comment appears** in Attachments section with timestamp
+7. **Auto-saves**
+
+**Add Comment Modal:**
+
+```
+┌──────────────────────────────────────┐
+│  Add Comment                      [×]│
+├──────────────────────────────────────┤
+│                                      │
+│  Your Comment:                       │
+│  ┌────────────────────────────────┐ │
+│  │ Should we use Duo or Okta for  │ │
+│  │ our MFA solution? Duo is       │ │
+│  │ cheaper but Okta integrates    │ │
+│  │ better with our SSO.           │ │
+│  │                                │ │
+│  └────────────────────────────────┘ │
+│                                      │
+│  Plain text only (no formatting)     │
+│                                      │
+│         [Cancel]  [Add Comment]      │
+└──────────────────────────────────────┘
+```
+
+**Comment Display:**
+
+```
+Unit: A.9.4.2 Multi-Factor Authentication
+
+Attachments:
+
+Comments (4):
+├─ 💬 John Smith - May 10, 2024 at 2:30 PM
+│     "Should we use Duo or Okta for MFA? Duo is cheaper 
+│     but Okta integrates better with our SSO."
+│
+├─ 💬 Jane Doe (CISO) - May 10, 2024 at 3:15 PM
+│     "Good question. Let's evaluate both. Can you create 
+│     a comparison matrix by Friday?"
+│
+├─ 💬 John Smith - May 12, 2024 at 10:00 AM
+│     "Comparison done. Duo wins on cost ($15k vs $25k), 
+│     Okta wins on features. Recommendation: Start with Duo, 
+│     migrate to Okta later if needed."
+│
+└─ 💬 Jane Doe (CISO) - May 13, 2024 at 9:00 AM
+     "Approved. Go with Duo. Budget saved can fund other 
+     security initiatives."
+```
+
+**Comment Metadata:**
+
+Each comment shows:
+- **Author name** (from user profile or system)
+- **Timestamp** (date and time)
+- **Comment text**
+
+**Comment Ordering:**
+
+**Newest First (default):**
+```
+Most recent comment at top
+Oldest comment at bottom
+```
+
+**Or Chronological (implementation-dependent):**
+```
+Oldest comment at top
+Most recent at bottom
+```
+
+**Common Comment Uses:**
+
+**Questions:**
+```
+"Is this control required for SOC 2 or optional?"
+"What's the deadline for implementing this?"
+"Who is responsible for this task?"
+```
+
+**Answers:**
+```
+"Yes, this is required for CC6.1 (Trust Services Criteria)."
+"Deadline is June 30, 2024 per audit schedule."
+"IT Security Team owns this, with support from IT Ops."
+```
+
+**Status Updates:**
+```
+"MFA deployed to IT team for pilot testing."
+"Pilot successful, rolling out to all staff next week."
+"Rollout complete. 95% of users enrolled."
+```
+
+**Blockers/Issues:**
+```
+"Blocked: Need budget approval before purchasing Duo licenses."
+"Issue: Some users can't install Duo on personal phones. 
+Need to provide hardware tokens as alternative."
+```
+
+**Decisions:**
+```
+"Decision: Using Duo for MFA. See Implementation Decision 
+note for full rationale."
+```
+
+**Follow-ups:**
+```
+"@John can you provide the MFA enrollment report by EOD Friday?"
+"Reminder: Quarterly access review due next week."
+```
+
+**Best Practices:**
+
+**Be Specific:**
+```
+✅ "Need budget approval for Duo licenses ($15,000). 
+   Can we fast-track this through the CFO?"
+❌ "Need approval"
+```
+
+**Tag People (if supported):**
+```
+✅ "@Jane can you review the MFA policy draft?"
+✅ "Question for @IT-Team: ..."
+```
+
+**Include Context:**
+```
+✅ "Per the audit kickoff meeting on May 5, auditor 
+   requested this evidence by June 1."
+❌ "Auditor wants this"
+```
+
+**Date Important Items:**
+```
+✅ "Deadline: June 30, 2024"
+✅ "Follow-up scheduled for: May 20, 2024"
+```
+
+**Separate Concerns:**
+```
+Use multiple comments for different topics:
+Comment 1: Question about budget
+Comment 2: Separate question about timeline
+Comment 3: Status update
+
+Don't: One long comment mixing 5 different topics
+```
+
+**When to Use Comments vs. Notes:**
+
+**Use Comments for:**
+- Time-sensitive discussions
+- Questions and answers
+- Quick status updates
+- Back-and-forth conversations
+- @mentions and notifications
+
+**Use Notes for:**
+- Permanent documentation
+- Decisions that need structure
+- Implementation guidance
+- Formal documentation
+
+**Example:**
+
+```
+Comments (conversation):
+💬 "Should we use Duo or Okta?" - May 10
+💬 "Let's evaluate both" - May 10
+💬 "Comparison complete, recommend Duo" - May 12
+💬 "Approved, go with Duo" - May 13
+
+Note (permanent record):
+📝 Implementation Decision - May 2024
+   Decision: Use Duo for MFA
+   Rationale: Cost-effective, meets requirements
+   Approved by: CISO
+   [Full structured decision document]
+```
+
+---
+
+### 7.5 Viewing Attachments
+
+**Attachment Organization:**
+
+Attachments are grouped by type in the unit body:
+
+```
+Unit: A.9.4.2 Multi-Factor Authentication
+
+Attachments:
+
+Links (2):
+📎 Access Control Policy v2.3
+📎 NIST SP 800-53 AC-2 Guidance
+
+Images (3):
+🖼️ [Thumbnail] Duo Configuration
+🖼️ [Thumbnail] AWS MFA Settings
+🖼️ [Thumbnail] Enrollment Report
+
+Notes (1):
+📝 Implementation Decision - March 2024
+   [Expand to read]
+
+Comments (5):
+💬 John Smith - May 10: "Question about..."
+💬 Jane Doe - May 10: "Answer: ..."
+💬 John Smith - May 12: "Follow-up..."
+💬 [Show 2 more comments]
+```
+
+**Expanding/Collapsing:**
+
+**Links:**
+- Always visible (compact)
+- Click to open in new tab
+
+**Images:**
+- Show as thumbnails
+- Click to view full-size
+
+**Notes:**
+- Collapsed by default (title only)
+- Click "Expand" to read content
+- Click "Collapse" to hide
+
+**Comments:**
+- Show recent 3-5 by default
+- Click "Show all comments" to expand
+- Click "Hide older comments" to collapse
+
+**Icons:**
+
+Each attachment type has a distinct icon for quick identification:
+
+- 📎 Links
+- 🖼️ Images
+- 📝 Notes
+- 💬 Comments
+
+**Empty States:**
+
+When unit has no attachments:
+
+```
+Attachments:
+
+No attachments yet.
+
+[+ Add Link] [+ Add Image] [+ Add Note] [+ Add Comment]
+```
+
+---
+
+### 7.6 Deleting Attachments
+
+**Purpose:** Remove outdated or incorrect attachments
+
+**When:** Anytime (Creation or Execution Mode)
+
+**Steps:**
+
+1. **Locate attachment** in unit body
+2. **Click delete icon** (typically "×" or trash icon)
+3. **Attachment removes immediately** (no confirmation)
+4. **Auto-saves** change
+
+**Visual:**
+
+```
+Links:
+📎 Old Policy Document [×] ← Click to delete
+📎 Current Policy Document [×]
+
+After deletion:
+Links:
+📎 Current Policy Document [×]
+```
+
+**Deletion Behavior:**
+
+**No Confirmation:**
+- Deletion is immediate
+- No "Are you sure?" dialog
+- Intentional for quick cleanup
+
+**No Undo:**
+- Once deleted, attachment is gone
+- Cannot recover (unless you re-add)
+
+**Caution:**
+- Be careful when clicking delete icons
+- Consider archiving (renaming) instead of deleting important items
+
+**When to Delete:**
+
+**Outdated Information:**
+```
+Delete: Link to "MFA Policy v1.0"
+Keep: Link to "MFA Policy v2.0"
+```
+
+**Incorrect Attachments:**
+```
+Delete: Image attached to wrong control
+Re-add: To correct control
+```
+
+**Duplicate Attachments:**
+```
+Delete: Second copy of same link
+Keep: One copy only
+```
+
+**Completed Discussions:**
+```
+Keep: Comments (for audit trail)
+Optional: Delete very old comments if workflow becomes cluttered
+```
+
+**Best Practice - Archive Instead of Delete:**
+
+For important items, consider "archiving" instead:
+
+```
+Instead of deleting:
+📎 MFA Policy v1.0 [×]
+
+Rename to show it's archived:
+📎 [ARCHIVED] MFA Policy v1.0 - Replaced by v2.0 [×]
+```
+
+This preserves history while making clear it's not current.
+
+---
+
+---
+
+## CHAPTER 8: ORGANIZING WITH TAGS
+
+Tags provide powerful cross-cutting organization beyond the hierarchical structure.
+
+### 8.1 Tag Strategy
+
+**Why Tags Matter:**
+
+Workflows have hierarchical structure (Level 1 → Level 2 → Level 3), but work doesn't always follow hierarchy. Tags let you organize across the hierarchy:
+
+```
+Hierarchical View:
+▼ Access Control
+   └─ MFA Implementation
+▼ Network Security
+   └─ Firewall Configuration
+▼ Physical Security
+   └─ Badge System
+
+Tagged View (Q1-2024):
+- MFA Implementation [Q1-2024]
+- Firewall Configuration [Q1-2024]
+- Badge System [Q1-2024]
+
+All Q1 items, regardless of hierarchy location
+```
+
+---
+
+**Establishing Your Tag Taxonomy:**
+
+Before tagging, define your categories. Here are proven taxonomies:
+
 **Priority Levels:**
-- "critical", "high", "medium", "low"
+
+```
+Priority:Critical
+Priority:High
+Priority:Medium
+Priority:Low
+```
+
+**Use cases:**
+- Audit preparation: Critical items first
+- Resource allocation: High priority gets most resources
+- Risk management: Focus on critical gaps
+
+**Example:**
+```
+Unit: A.9.4.2 MFA Implementation
+Tags: [Priority:Critical]
+
+Why: SOC 2 audit in 60 days, MFA is mandatory control
+```
+
+---
 
 **Timeframes:**
-- "Q1-2024", "annual", "monthly"
+
+```
+Q1-2024
+Q2-2024
+Q3-2024
+Q4-2024
+
+January-2024
+February-2024
+...
+
+Annual-Review
+Quarterly-Check
+Monthly-Task
+Weekly-Standup
+```
+
+**Use cases:**
+- Sprint planning: Show only Q1 items
+- Timeline tracking: What's due this month?
+- Recurring tasks: Find all annual reviews
+
+**Example:**
+```
+Unit: Access Control Policy Review
+Tags: [Q1-2024] [Annual-Review]
+
+Due: March 31, 2024 (end of Q1)
+Frequency: Once per year
+```
+
+---
 
 **Audit Focus:**
-- "external-audit", "internal-review"
 
-**Departments:**
-- "IT", "HR", "Finance", "Legal"
+```
+External-Audit
+Internal-Review
+Spot-Check
+Pre-Audit-Prep
+Post-Audit-Followup
+Auditor-Request
+Evidence-Required
+Evidence-Collected
+```
 
-**Status:**
-- "in-progress", "blocked", "pending"
+**Use cases:**
+- Audit preparation: Filter to external-audit items
+- Evidence tracking: Find items needing evidence
+- Follow-up management: Track post-audit actions
 
-**8.2 Filtering by Tags**
-- Click tag badge (execution mode)
-- Workflow filters to tagged items
-- Includes parent hierarchy
-- Filter banner displays
-- "Clear Filter" button to reset
+**Example:**
+```
+Unit: Firewall Rule Documentation
+Tags: [External-Audit] [Evidence-Required]
 
-**8.3 Exporting Tagged Items**
-- Filter by tag first
-- "Export Tag to Board" button appears
-- Creates focused project board
-- All tagged items become tasks
-- Tag becomes board label
+Auditor will review: Yes
+Evidence needed: Screenshot + change log
+```
+
+---
+
+**Departments/Ownership:**
+
+```
+Department:IT
+Department:Legal
+Department:HR
+Department:Finance
+Department:Operations
+Department:Security
+
+Owner:IT-Security-Team
+Owner:Compliance-Team
+Owner:Network-Team
+```
+
+**Use cases:**
+- Assignment: Who owns this?
+- Collaboration: What does Legal need to review?
+- Reporting: Show me all IT items
+
+**Example:**
+```
+Unit: Employee Background Checks
+Tags: [Department:HR] [Department:Legal]
+
+HR: Conducts checks
+Legal: Defines requirements
+```
+
+---
+
+**Status/Progress:**
+
+```
+Status:Not-Started
+Status:In-Progress
+Status:Blocked
+Status:Pending-Review
+Status:Complete
+Status:Deferred
+
+Blocked-By:Budget
+Blocked-By:Vendor
+Blocked-By:Approval
+```
+
+**Use cases:**
+- Daily standups: Show blocked items
+- Management reporting: Count complete vs. in-progress
+- Resource planning: What's not started?
+
+**Example:**
+```
+Unit: Deploy EDR Solution
+Tags: [Status:Blocked] [Blocked-By:Budget]
+
+Status: Waiting for Q2 budget approval
+Cannot proceed until: CFO approves $50k expenditure
+```
+
+---
+
+**Compliance Types:**
+
+```
+Compliance:ISO-27001
+Compliance:SOC-2
+Compliance:HIPAA
+Compliance:GDPR
+Compliance:PCI-DSS
+Compliance:NIST-CSF
+
+Mandatory
+Optional
+Recommended
+```
+
+**Use cases:**
+- Multi-framework compliance: Filter by regulation
+- Shared controls: Find items that satisfy multiple regulations
+- Scope management: Show only mandatory items
+
+**Example:**
+```
+Unit: Encryption at Rest
+Tags: [Compliance:ISO-27001] [Compliance:SOC-2] [Compliance:HIPAA] [Mandatory]
+
+Satisfies:
+- ISO 27001 A.10.1.1
+- SOC 2 CC6.1
+- HIPAA 164.312(a)(2)(iv)
+```
+
+---
+
+**Risk Levels:**
+
+```
+Risk:High
+Risk:Medium
+Risk:Low
+
+Risk-Type:Technical
+Risk-Type:Operational
+Risk-Type:Financial
+Risk-Type:Reputational
+```
+
+**Use cases:**
+- Risk prioritization: Address high risks first
+- Risk reporting: Count by risk level
+- Risk treatment: Track mitigation progress
+
+**Example:**
+```
+Unit: Implement MFA
+Tags: [Risk:High] [Risk-Type:Technical]
+
+Current State: No MFA (high risk of compromise)
+Target State: MFA enforced (risk reduced to medium)
+```
+
+---
+
+**Combined Taxonomy Example:**
+
+```
+TAG TAXONOMY FOR COMPLIANCE WORKFLOWS:
+
+1. Priority: Critical, High, Medium, Low
+2. Timeline: Q1-2024, Q2-2024, Q3-2024, Q4-2024
+3. Audit: External-Audit, Internal-Review, Evidence-Required
+4. Department: IT, Legal, HR, Finance, Operations
+5. Status: Not-Started, In-Progress, Blocked, Complete
+6. Compliance: ISO-27001, SOC-2, HIPAA, GDPR
+7. Risk: High, Medium, Low
+
+Document this in your workflow description!
+```
+
+**Real-World Application:**
+
+```
+Unit: A.9.4.2 Multi-Factor Authentication
+
+Tags:
+[Priority:Critical]        ← Must do for audit
+[Q1-2024]                  ← Due end of quarter
+[External-Audit]           ← Auditor will check
+[Department:IT]            ← IT team implements
+[Department:Security]      ← Security team defines policy
+[Status:In-Progress]       ← Currently being deployed
+[Compliance:ISO-27001]     ← Satisfies ISO control
+[Compliance:SOC-2]         ← Satisfies SOC 2 control
+[Risk:High]                ← High risk if not implemented
+
+Result: 9 tags providing multi-dimensional organization
+```
+
+---
+
+### 8.2 Filtering by Tags
+
+**Purpose:** Focus on specific subsets of your workflow
+
+**How It Works:**
+
+1. **Switch to Execution Mode** (filtering only works in Execution Mode)
+2. **Click any tag badge** on any unit
+3. **Workflow filters** to show only units with that tag
+4. **Parent hierarchy preserved** for context
+5. **Filter banner appears** at top
+6. **Click "Clear Filter"** to show all units again
+
+**Example:**
+
+**Before Filtering (Full Workflow):**
+
+```
+▼ Access Control (not tagged)
+   ├─ MFA Implementation [Q1-2024] [Critical]
+   └─ Password Policy Review [Q2-2024] [Medium]
+▼ Network Security (not tagged)
+   ├─ Firewall Review [Q1-2024] [High]
+   └─ IDS Configuration [Q3-2024] [Medium]
+▼ Physical Security (not tagged)
+   └─ Badge System Upgrade [Q1-2024] [Critical]
+```
+
+**After Clicking [Q1-2024] Tag:**
+
+```
+[Filtered by: Q1-2024] [Clear Filter]
+
+▼ Access Control
+   └─ MFA Implementation [Q1-2024] [Critical]
+▼ Network Security
+   └─ Firewall Review [Q1-2024] [High]
+▼ Physical Security
+   └─ Badge System Upgrade [Q1-2024] [Critical]
+
+(Password Policy and IDS Configuration hidden)
+```
+
+**Parent Context Preservation:**
+
+Notice "Access Control", "Network Security", and "Physical Security" parents are still shown (even though they don't have the Q1-2024 tag). This provides context.
+
+**Without parent context:**
+```
+❌ Confusing:
+   - MFA Implementation
+   - Firewall Review
+   - Badge System Upgrade
+   (Where are these in the hierarchy?)
+```
+
+**With parent context:**
+```
+✅ Clear:
+   Access Control → MFA Implementation
+   Network Security → Firewall Review
+   Physical Security → Badge System Upgrade
+```
+
+---
+
+**Filter Banner:**
+
+When filtering is active:
+
+```
+┌──────────────────────────────────────────┐
+│ [Filtered by: Q1-2024] [Clear Filter]   │
+└──────────────────────────────────────────┘
+
+Filtered view below...
+```
+
+**Click "Clear Filter":**
+- Returns to full workflow view
+- All units visible again
+- Filter removed
+
+**Or Click Another Tag:**
+- Switches filter to new tag
+- Replaces previous filter (not additive)
+
+---
+
+**Use Cases:**
+
+**Sprint Planning:**
+
+```
+Filter by: Q1-2024
+Result: All Q1 tasks visible
+Action: Export to board for Q1 sprint
+```
+
+**Audit Preparation:**
+
+```
+Filter by: External-Audit
+Result: All items auditor will review
+Action: Check completion status, gather evidence
+```
+
+**Department Meetings:**
+
+```
+Filter by: Department:IT
+Result: All IT-owned items
+Action: Discuss progress, identify blockers
+```
+
+**Risk Review:**
+
+```
+Filter by: Risk:High
+Result: All high-risk items
+Action: Ensure mitigation in progress
+```
+
+**Status Check:**
+
+```
+Filter by: Status:Blocked
+Result: All blocked items
+Action: Unblock issues, reallocate resources
+```
+
+**Multi-Regulation View:**
+
+```
+Filter by: Compliance:SOC-2
+Result: All SOC 2 controls
+Action: Prepare for SOC 2 audit
+```
+
+---
+
+**Limitations:**
+
+**Single Tag Filter:**
+
+Current implementation: One tag at a time
+
+```
+Can: Filter by [Q1-2024]
+Can: Filter by [Priority:Critical]
+Cannot: Filter by [Q1-2024] AND [Priority:Critical] simultaneously
+```
+
+**Workaround:** Use compound tags
+
+```
+Create: [Q1-Critical]
+Apply to items that are both Q1 and Critical
+```
+
+**No Tag Exclusion:**
+
+```
+Can: Show items WITH [External-Audit]
+Cannot: Show items WITHOUT [External-Audit]
+```
+
+**Workaround:** Tag explicitly
+
+```
+Tag items as either:
+- [External-Audit] or
+- [Internal-Only]
+Then filter by [Internal-Only]
+```
+
+---
+
+**Filter Tips:**
+
+**Before Filtering:**
+
+1. **Use "Collapse All"** to get clean overview
+2. **Apply filter**
+3. **Expand units** you want to work on
+
+**During Filtering:**
+
+- **Progress bars** still show overall completion (not filtered)
+- **Grades** still show cumulative totals (not filtered)
+- **Done checkboxes** work normally
+
+**After Filtering:**
+
+- **Save progress** before clearing filter
+- **Clear filter** to see full context again
+
+**Filtering + Exporting:**
+
+Powerful combination:
+
+```
+1. Filter by: [Q1-2024]
+2. Export filtered view to board
+3. Result: Q1-focused project board
+```
+
+See Chapter 12 for export details.
+
+---
+
+### 8.3 Exporting Tagged Items
+
+**Purpose:** Create focused project boards from tagged subsets
+
+**Workflow:**
+
+1. **Filter workflow by tag** (see 8.2 above)
+2. **"Export Tag to Board" button appears** (Execution Mode only)
+3. **Click export button**
+4. **Board is created** with:
+   - Board name: "Workflow Name - [Tag Name]"
+   - All tagged items as cards
+   - Hierarchy preserved in dynamic list
+   - Tag becomes label on all cards
+5. **Board opens in new tab**
+
+**Example:**
+
+**Step 1: Filter by Tag**
+
+```
+Workflow: ISO 27001 Implementation
+Click: [Q1-2024] tag
+
+Filtered View:
+▼ Organizational Controls
+   └─ A.5.1 InfoSec Policy [Q1-2024]
+▼ People Controls
+   └─ A.6.1 Screening [Q1-2024]
+▼ Physical Controls
+   └─ A.7.1 Physical Perimeters [Q1-2024]
+
+[Export Tag to Board] ← Button appears
+```
+
+**Step 2: Export**
+
+```
+Click "Export Tag to Board"
+
+Creates Board:
+Name: "ISO 27001 Implementation - Q1-2024"
+
+Board Structure:
+├─ Dynamic List Panel (Left):
+│  Full filtered tree (read-only reference)
+│  
+└─ Workspace Panel (Right):
+   Kanban Columns: To Do | In Progress | Done
+   
+   Cards created:
+   - Card: A.5.1 InfoSec Policy [Q1-2024 label]
+   - Card: A.6.1 Screening [Q1-2024 label]
+   - Card: A.7.1 Physical Perimeters [Q1-2024 label]
+```
+
+**Step 3: Use Board**
+
+```
+Consultant:
+- Manages Dynamic List (reference tree)
+- Updates workflow when requirements change
+
+Client:
+- Creates implementation tasks in workspace
+- Organizes in milestones (sprints)
+- Moves cards through columns
+- Assigns tasks to team members
+```
+
+---
+
+**Export Options:**
+
+**Full Workflow Export:**
+```
+No filter applied
+Export entire workflow
+All units → All cards
+```
+
+**Unit Export:**
+```
+Click "Board" button on specific unit
+Export that unit + all descendants
+```
+
+**Tag Export:**
+```
+Filter by tag
+Export only tagged items
+Focused, sprint-ready board
+```
+
+**Comparison:**
+
+| Export Type | Use Case | Result |
+|-------------|----------|--------|
+| Full Workflow | Initial board setup | 100+ cards (large) |
+| Unit Export | Focus on one domain | 10-20 cards (focused) |
+| Tag Export | Sprint planning | 5-15 cards (sprint-sized) |
+
+---
+
+**Tag Export Best Practices:**
+
+**Sprint-Sized Tags:**
+
+```
+✅ Tag: [Sprint-1] on 8-12 items
+Result: Manageable sprint board
+
+❌ Tag: [Q1-2024] on 50 items
+Result: Overwhelming board
+```
+
+**Specific Tags:**
+
+```
+✅ Tag: [Audit-Week-1] on evidence collection items
+Result: Focused audit prep board
+
+❌ Tag: [Important] on 30 items
+Result: Too broad, defeats purpose
+```
+
+**Time-Bound Tags:**
+
+```
+✅ Tag: [Week-of-May-15]
+Result: Weekly board
+
+✅ Tag: [Q2-Sprint-3]
+Result: Specific sprint board
+```
+
+**Team-Specific Tags:**
+
+```
+✅ Tag: [IT-Team] on IT-owned items
+Result: IT team board
+
+✅ Tag: [Legal-Review] on items needing legal approval
+Result: Legal team task list
+```
+
+---
+
+**Tag as Labels:**
+
+When exported, tags become board labels:
+
+```
+Workflow Tag: [Priority:Critical]
+           ↓
+Board Label: [Priority:Critical]
+
+Benefits:
+- Visual consistency
+- Filter in board by same tags
+- Color-coding carries over
+```
+
+**Multiple Tags → Multiple Labels:**
+
+```
+Workflow Unit: A.5.1 InfoSec Policy
+Tags: [Q1-2024] [Critical] [IT]
+           ↓
+Board Card: A.5.1 InfoSec Policy
+Labels: [Q1-2024] [Critical] [IT]
+```
+
+---
+
+**Workflow: Tag → Export → Execute:**
+
+**Complete Process:**
+
+```
+1. PLAN (Workflow - Creation Mode):
+   - Build workflow structure
+   - Populate with requirements
+   - Add tags for organization
+
+2. TAG (Workflow - Creation Mode):
+   - Apply tags strategically
+   - Group by sprints, teams, priorities
+
+3. FILTER (Workflow - Execution Mode):
+   - Click tag to focus
+   - Review filtered subset
+   - Verify scope is correct
+
+4. EXPORT (Workflow - Execution Mode):
+   - Export tag to board
+   - Board created automatically
+
+5. EXECUTE (Board):
+   - Client creates implementation tasks
+   - Assigns to team members
+   - Tracks progress through columns
+   - Completes sprint
+
+6. REPEAT:
+   - Next sprint: Filter by next tag
+   - Export again
+   - Continue execution
+```
+
+**Example Timeline:**
+
+```
+Week 1-2: Build ISO 27001 workflow, apply sprint tags
+Week 3-6: [Sprint-1] → Export → Execute (Q1 controls)
+Week 7-10: [Sprint-2] → Export → Execute (Q2 controls)
+Week 11-14: [Sprint-3] → Export → Execute (Q3 controls)
+```
+
+---
+
+**Advanced Tagging Strategies:**
+
+**Kanban Flow Tags:**
+
+```
+[Backlog]     ← Not yet started
+[To-Do]       ← Ready for work
+[In-Progress] ← Currently working
+[Review]      ← Needs review
+[Done]        ← Complete
+
+Export [To-Do] items → Sprint backlog board
+```
+
+**Milestone Tags:**
+
+```
+[Milestone:Initial-Assessment]
+[Milestone:Gap-Remediation]
+[Milestone:Pre-Audit-Prep]
+[Milestone:Audit-Readiness]
+
+Export by milestone → Milestone-specific board
+```
+
+**Client Tags:**
+
+For consultants with multiple clients:
+
+```
+[Client:Acme-Corp]
+[Client:Beta-Inc]
+[Client:Gamma-Ltd]
+
+Export [Client:Acme-Corp] → Acme-specific board
+```
+
+**Evidence Tags:**
+
+```
+[Evidence:Policy]
+[Evidence:Screenshot]
+[Evidence:Log-Export]
+[Evidence:Attestation]
+
+Export [Evidence:Screenshot] → Screenshot collection board
+```
+
+---
 
 ---
 
