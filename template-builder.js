@@ -49,7 +49,7 @@ const saveTemplates = async (templates) => {
         return true;
     } catch (e) {
         console.error('Save templates error:', e);
-        alert('Failed to save templates: ' + e.message);
+        Toast.error('Failed to save templates: ' + e.message);
         return false;
     }
 };
@@ -555,7 +555,7 @@ window.addLevel = () => {
 
 window.removeLevel = (index) => {
     if (state.currentTemplate.levels.length <= 1) {
-        alert('Template must have at least one level');
+        Toast.warning('Template must have at least one level');
         return;
     }
     
@@ -687,7 +687,7 @@ window.saveTemplate = async () => {
     // Step 1: Get the template object from state
     const template = state.currentTemplate;
     if (!template) {
-        alert('Error: No template in state!');
+        Toast.error('Error: No template in state!');
         console.error('state.currentTemplate is null');
         return;
     }
@@ -704,7 +704,7 @@ window.saveTemplate = async () => {
     console.log('  template-default element:', templateDefaultEl ? 'FOUND' : 'NOT FOUND');
     
     if (!templateNameEl || !templateDescEl || !templateDefaultEl) {
-        alert('ERROR: Template form elements not found in DOM!\nPlease refresh the page and try again.');
+        Toast.error('Template form elements not found! Please refresh the page and try again.');
         console.error('Missing template form elements');
         return;
     }
@@ -752,7 +752,7 @@ window.saveTemplate = async () => {
         
         if (!levelEl) {
             console.error(`  ✗ Level ${idx} container not found in DOM!`);
-            alert(`ERROR: Level ${idx + 1} form not found in DOM!\nThis should not happen. Please refresh and try again.`);
+            Toast.error(`Level ${idx + 1} form not found! Please refresh and try again.`);
             return;
         }
         
@@ -769,7 +769,7 @@ window.saveTemplate = async () => {
         
         if (!levelNameEl || !levelSingularEl || !levelPluralEl) {
             console.error(`  ✗ Level ${idx} inputs not found in DOM!`);
-            alert(`ERROR: Level ${idx + 1} input fields not found!\nThis should not happen. Please refresh and try again.`);
+            Toast.error(`Level ${idx + 1} input fields not found! Please refresh and try again.`);
             return;
         }
         
@@ -839,7 +839,7 @@ window.saveTemplate = async () => {
     if (saved) {
         console.log('✓ SAVE SUCCESSFUL');
         console.log('==================== SAVE TEMPLATE END ====================\n');
-        alert('Template saved successfully!');
+        Toast.success('Template saved successfully!');
         state.editMode = null;
         state.currentTemplate = null;
         renderTemplateList();
