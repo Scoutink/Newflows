@@ -1282,7 +1282,17 @@ const PPM = (() => {
                     </div>
                 </form>
             `, () => {
-                document.getElementById('create-milestone-form').addEventListener('submit', async (e) => {
+                const milestoneForm = document.getElementById('create-milestone-form');
+
+                // Add form validation
+                if (milestoneForm && window.FormValidator) {
+                    FormValidator.attachTo(milestoneForm, {
+                        'milestone-name': { required: true, minLength: 3, maxLength: 100 },
+                        'milestone-description': { maxLength: 500 }
+                    });
+                }
+
+                milestoneForm.addEventListener('submit', async (e) => {
                     e.preventDefault();
                     const name = document.getElementById('milestone-name').value.trim();
                     const description = document.getElementById('milestone-description').value.trim();
@@ -3157,7 +3167,17 @@ const PPM = (() => {
             ui.showCreateBoardDialog();
         });
         
-        document.getElementById('create-board-form')?.addEventListener('submit', async (e) => {
+        const createBoardForm = document.getElementById('create-board-form');
+
+        // Add form validation
+        if (createBoardForm && window.FormValidator) {
+            FormValidator.attachTo(createBoardForm, {
+                'new-board-name': { required: true, minLength: 3, maxLength: 100 },
+                'new-board-description': { maxLength: 500 }
+            });
+        }
+
+        createBoardForm?.addEventListener('submit', async (e) => {
             e.preventDefault();
             const name = document.getElementById('new-board-name').value.trim();
             const description = document.getElementById('new-board-description').value.trim();

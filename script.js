@@ -84,57 +84,13 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // Toast notification system
+    // Legacy showToast wrapper - delegates to new Toast API for consistency
     const showToast = (message, type = 'info', duration = 3000) => {
-        // Ensure toast container exists
-        let container = document.querySelector('.toast-container');
-        if (!container) {
-            container = document.createElement('div');
-            container.className = 'toast-container';
-            document.body.appendChild(container);
-        }
-
-        // Icon mapping
-        const iconMap = {
-            success: 'fa-circle-check',
-            error: 'fa-circle-exclamation',
-            warning: 'fa-triangle-exclamation',
-            info: 'fa-circle-info'
-        };
-
-        // Create toast element
-        const toast = document.createElement('div');
-        toast.className = `toast toast-${type}`;
-        toast.innerHTML = `
-            <div class="toast-icon">
-                <i class="fa-solid ${iconMap[type] || iconMap.info}"></i>
-            </div>
-            <div class="toast-content">
-                <div class="toast-message">${message}</div>
-            </div>
-            <button class="toast-close" aria-label="Close">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-        `;
-
-        // Add to container
-        container.appendChild(toast);
-
-        // Close button handler
-        const closeBtn = toast.querySelector('.toast-close');
-        const closeToast = () => {
-            toast.classList.remove('toast-show');
-            setTimeout(() => toast.remove(), 300);
-        };
-        closeBtn.addEventListener('click', closeToast);
-
-        // Trigger animation
-        requestAnimationFrame(() => {
-            toast.classList.add('toast-show');
-        });
-
-        // Auto-dismiss
-        if (duration > 0) {
-            setTimeout(closeToast, duration);
+        if (window.Toast) {
+            Toast.show(message, type, duration);
+        } else {
+            // Fallback if Toast not loaded
+            console.warn('Toast system not loaded, using console:', message);
         }
     };
 
@@ -164,12 +120,18 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const saveWorkflow = async () => {
+        const saveBtn = document.getElementById('save-structure-btn');
+        if (saveBtn) {
+            saveBtn.classList.add('loading');
+            saveBtn.disabled = true;
+        }
+
         try {
             // Propagate changes to linked workflows
             if (appState.currentMode === 'creation') {
                 propagateToLinkedWorkflows(appState.currentFlowId);
             }
-            
+
             const res = await fetch('save_workflow.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -177,12 +139,17 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             const json = await res.json();
             if (json.status !== 'success') throw new Error(json.message);
-            showToast('Structure saved successfully', 'success', 2000);
+            Toast.success('Structure saved successfully!');
             return true;
         } catch (e) {
             console.error('Save workflow error:', e);
-            showToast('Failed to save: ' + e.message, 'error', 5000);
+            Toast.error('Failed to save: ' + e.message);
             return false;
+        } finally {
+            if (saveBtn) {
+                saveBtn.classList.remove('loading');
+                saveBtn.disabled = false;
+            }
         }
     };
 
@@ -199,6 +166,12 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const saveExecutions = async () => {
+        const saveBtn = document.getElementById('save-execution-btn');
+        if (saveBtn) {
+            saveBtn.classList.add('loading');
+            saveBtn.disabled = true;
+        }
+
         try {
             const res = await fetch('save_executions.php', {
                 method: 'POST',
@@ -207,12 +180,17 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             const json = await res.json();
             if (json.status !== 'success') throw new Error(json.message);
-            showToast('Execution state saved', 'success', 2000);
+            Toast.success('Execution state saved!');
             return true;
         } catch (e) {
             console.error('Save executions error:', e);
-            showToast('Failed to save executions: ' + e.message, 'error', 5000);
+            Toast.error('Failed to save executions: ' + e.message);
             return false;
+        } finally {
+            if (saveBtn) {
+                saveBtn.classList.remove('loading');
+                saveBtn.disabled = false;
+            }
         }
     };
 
@@ -578,6 +556,17 @@ document.addEventListener('DOMContentLoaded', () => {
             };
 
             const form = document.getElementById('create-flow-form');
+
+            // Add form validation
+            if (window.FormValidator) {
+                FormValidator.attachTo(form, {
+                    'flow-name': { required: true, minLength: 3, maxLength: 100 },
+                    'empty-name': { required: true, minLength: 3, maxLength: 100 },
+                    'copy-name': { required: true, minLength: 3, maxLength: 100 },
+                    'linked-name': { required: true, minLength: 3, maxLength: 100 }
+                });
+            }
+
             form.addEventListener('submit', async (e) => {
                 e.preventDefault();
                 const mode = document.getElementById('creation-mode').value;
@@ -1282,7 +1271,10 @@ document.addEventListener('DOMContentLoaded', () => {
             parent.subcategories.push(newUnit);
             console.log('✅ Added to parent. Parent now has', parent.subcategories.length, 'children');
         }
-        
+
+        // Mark as dirty for auto-save
+        if (window.AutoSave) AutoSave.markDirty();
+
         console.log('🔄 Triggering re-render...');
         render();
     };
@@ -1313,6 +1305,10 @@ document.addEventListener('DOMContentLoaded', () => {
         
         parent.splice(key, 1);
         console.log('✅ Deleted. Parent now has', parent.length, 'children');
+
+        // Mark as dirty for auto-save
+        if (window.AutoSave) AutoSave.markDirty();
+
         render();
     };
 
@@ -1327,7 +1323,10 @@ document.addEventListener('DOMContentLoaded', () => {
         
         console.log('✅ Unit found:', unit.id, '- updating', property);
         unit[property] = value;
-        
+
+        // Mark as dirty for auto-save
+        if (window.AutoSave) AutoSave.markDirty();
+
         // If grade is updated and not cumulative, recalculate parent if parent is cumulative
         if (property === 'grade') {
             const template = getTemplate(flow);
@@ -1339,13 +1338,16 @@ document.addEventListener('DOMContentLoaded', () => {
     window.toggleUnitCompletion = (path, unitId) => {
         const flow = getCurrentFlow();
         if (!flow) return;
-        
+
         const unit = getObjectByPath(path, flow);
         if (!unit) return;
-        
+
         const currentState = isCompleted(flow.id, unitId);
         setCompleted(flow.id, unitId, !currentState);
-        
+
+        // Mark as dirty for auto-save (execution state)
+        if (window.AutoSave) AutoSave.markDirty();
+
         render();
     };
 
@@ -1353,8 +1355,12 @@ document.addEventListener('DOMContentLoaded', () => {
     window.updateWorkflowProperty = (property, value) => {
         const flow = getCurrentFlow();
         if (!flow) return;
-        
+
         flow[property] = value;
+
+        // Mark as dirty for auto-save
+        if (window.AutoSave) AutoSave.markDirty();
+
         // Don't re-render for these properties to avoid losing focus
         if (property === 'description') {
             return;
@@ -1407,8 +1413,12 @@ document.addEventListener('DOMContentLoaded', () => {
     window.selectWorkflowIcon = (iconFilename) => {
         const flow = getCurrentFlow();
         if (!flow) return;
-        
+
         flow.icon = iconFilename;
+
+        // Mark as dirty for auto-save
+        if (window.AutoSave) AutoSave.markDirty();
+
         closeModal();
         render();
     };
@@ -1434,11 +1444,15 @@ document.addEventListener('DOMContentLoaded', () => {
     window.selectUnitIcon = (path, iconFilename) => {
         const flow = getCurrentFlow();
         if (!flow) return;
-        
+
         const unit = getObjectByPath(path, flow);
         if (!unit) return;
-        
+
         unit.icon = iconFilename;
+
+        // Mark as dirty for auto-save
+        if (window.AutoSave) AutoSave.markDirty();
+
         closeModal();
         render();
     };
@@ -1498,6 +1512,10 @@ document.addEventListener('DOMContentLoaded', () => {
                         ensureTagsArray(unit);
                         if (!unit.tags.includes(tag)) {
                             unit.tags.push(tag);
+
+                            // Mark as dirty for auto-save
+                            if (window.AutoSave) AutoSave.markDirty();
+
                             render();
                         }
                     }
@@ -1512,6 +1530,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const unit = getObjectByPath(path, flow);
         if (unit && unit.tags) {
             unit.tags = unit.tags.filter(t => t !== tag);
+
+            // Mark as dirty for auto-save
+            if (window.AutoSave) AutoSave.markDirty();
+
             render();
         }
     };
@@ -1546,6 +1568,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (!unit.footer) unit.footer = { links: [], images: [], notes: [], comments: [] };
                     if (!unit.footer.links) unit.footer.links = [];
                     unit.footer.links.push({ text, url });
+
+                    // Mark as dirty for auto-save
+                    if (window.AutoSave) AutoSave.markDirty();
+
                     render();
                 }
                 closeModal();
@@ -1558,6 +1584,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const unit = getObjectByPath(path, flow);
         if (unit && unit.footer && unit.footer.links) {
             unit.footer.links.splice(index, 1);
+
+            // Mark as dirty for auto-save
+            if (window.AutoSave) AutoSave.markDirty();
+
             render();
         }
     };
@@ -1587,6 +1617,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (!unit.footer) unit.footer = { links: [], images: [], notes: [], comments: [] };
                     if (!unit.footer.images) unit.footer.images = [];
                     unit.footer.images.push(url);
+
+                    // Mark as dirty for auto-save
+                    if (window.AutoSave) AutoSave.markDirty();
+
                     render();
                 }
                 closeModal();
@@ -1599,6 +1633,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const unit = getObjectByPath(path, flow);
         if (unit && unit.footer && unit.footer.images) {
             unit.footer.images.splice(index, 1);
+
+            // Mark as dirty for auto-save
+            if (window.AutoSave) AutoSave.markDirty();
+
             render();
         }
     };
@@ -1628,6 +1666,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (!unit.footer) unit.footer = { links: [], images: [], notes: [], comments: [] };
                     if (!unit.footer.comments) unit.footer.comments = [];
                     unit.footer.comments.push(text);
+
+                    // Mark as dirty for auto-save
+                    if (window.AutoSave) AutoSave.markDirty();
+
                     render();
                 }
                 closeModal();
@@ -1640,6 +1682,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const unit = getObjectByPath(path, flow);
         if (unit && unit.footer && unit.footer.comments) {
             unit.footer.comments.splice(index, 1);
+
+            // Mark as dirty for auto-save
+            if (window.AutoSave) AutoSave.markDirty();
+
             render();
         }
     };
@@ -1679,6 +1725,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (!unit.footer) unit.footer = { links: [], images: [], notes: [], comments: [] };
                     if (!unit.footer.notes) unit.footer.notes = [];
                     unit.footer.notes.push({ title, content });
+
+                    // Mark as dirty for auto-save
+                    if (window.AutoSave) AutoSave.markDirty();
+
                     render();
                 }
                 quillEditor = null;
@@ -1692,6 +1742,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const unit = getObjectByPath(path, flow);
         if (unit && unit.footer && unit.footer.notes) {
             unit.footer.notes.splice(index, 1);
+
+            // Mark as dirty for auto-save
+            if (window.AutoSave) AutoSave.markDirty();
+
             render();
         }
     };
@@ -1808,7 +1862,19 @@ document.addEventListener('DOMContentLoaded', () => {
         if (appState.workflow.flows.length > 0 && !appState.currentFlowId) {
             appState.currentFlowId = appState.workflow.flows[0].id;
         }
-        
+
+        // Initialize auto-save for both workflow structure and execution state
+        if (window.AutoSave) {
+            AutoSave.init(async () => {
+                // Auto-save based on current mode
+                if (appState.currentMode === 'creation') {
+                    await saveWorkflow();
+                } else if (appState.currentMode === 'execution') {
+                    await saveExecutions();
+                }
+            }, 5000); // 5 second debounce
+        }
+
         // Populate UI
         populateFlowSelect();
         render();
