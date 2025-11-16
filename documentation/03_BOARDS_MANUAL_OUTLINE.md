@@ -9120,379 +9120,4425 @@ Team reference library
 
 ---
 
-### CHAPTER 11: ASSIGNMENTS AND SCHEDULING
+## CHAPTER 11: ASSIGNMENTS AND SCHEDULING
 
-**11.1 Assignment Roles**
+Assign work to team members and manage schedules with due dates and effort tracking.
+
+### 11.1 Assignment Roles
+
+**Four Role Types:**
+
+The platform supports four distinct assignment roles, enabling clear responsibility and accountability.
+
 **Executor:**
-- Primary doer
-- Responsible for completion
-- Main assignee
+
+**Primary Doer:**
+
+```
+Definition:
+The person who does the actual work
+Main responsible party for task completion
+"Owner" of the task
+
+Responsibilities:
+✓ Complete the work
+✓ Update progress
+✓ Mark task done when finished
+✓ Add comments and attachments
+✓ Communicate blockers
+
+Example:
+Task: "Configure Azure AD MFA"
+Executor: Sarah Johnson (IT Engineer)
+→ Sarah configures MFA
+→ Sarah marks task done when complete
+
+Most important assignment role
+Usually only one executor per task
+```
+
+**Icon/Indicator:** 🛠️
+
+---
 
 **Approver:**
-- Reviews and approves
-- Quality gate
-- Sign-off authority
+
+**Reviews and Approves:**
+
+```
+Definition:
+The person who verifies work quality
+Final sign-off authority
+Quality gate
+
+Responsibilities:
+✓ Review completed work
+✓ Provide feedback
+✓ Approve or request changes
+✓ Sign off on deliverables
+✓ Move to Done after approval
+
+Example:
+Task: "Draft Information Security Policy"
+Executor: John (writes policy)
+Approver: Legal Team (reviews and approves)
+→ John drafts policy, moves to Review column
+→ Legal reviews, provides feedback
+→ John incorporates feedback
+→ Legal approves, moves to Done
+
+Quality control role
+Critical for compliance
+```
+
+**Icon/Indicator:** ✅
+
+---
 
 **Follower:**
-- Stays informed
-- Receives updates
-- Observer
+
+**Stays Informed:**
+
+```
+Definition:
+Observer role
+Receives updates but not actively involved
+Interested stakeholder
+
+Responsibilities:
+✓ Stay aware of progress
+✓ Receive notifications (if enabled)
+✓ Review updates
+✗ NOT responsible for work
+✗ NOT approval authority
+
+Example:
+Task: "Deploy new encryption standards"
+Executor: IT Team
+Approver: Security Manager
+Follower: VP of Technology, Compliance Officer
+→ Followers stay informed
+→ Can comment with questions
+→ No action required
+
+Keep stakeholders in the loop
+```
+
+**Icon/Indicator:** 👁️
+
+---
 
 **Supervisor:**
-- Oversight role
-- Management awareness
-- Escalation point
 
-**11.2 Adding Assignments**
-- Card details modal
-- Assignments section
-- Add Assignment button
-- Select person
-- Select role
-- Multiple assignments possible
+**Oversight Role:**
 
-**11.3 Managing Team Members**
-- Board members list
-- Add members to board
-- Avatar display
-- Assignment dropdown populated
+```
+Definition:
+Management oversight
+Escalation point
+Strategic awareness
 
-**11.4 Due Date Management**
-- Calendar date picker
-- Due date field in card
-- Visual indicators:
-  - Red: Overdue
-  - Orange: Due soon (<3 days)
-  - Normal: Future
-- Sort/filter by due date
+Responsibilities:
+✓ Monitor progress
+✓ Remove blockers
+✓ Escalation point for issues
+✓ Resource allocation
+✓ Strategic guidance
 
-**11.5 Bulk Due Dates**
-- Via groups
-- Set same date for all
-- Useful for sprints
-- Clear dates option
+Example:
+Task: "Complete SOC 2 Audit Preparation"
+Executor: Compliance Team
+Approver: Compliance Manager
+Supervisor: Chief Compliance Officer (CCO)
+→ CCO aware of critical project
+→ CCO available for escalation
+→ CCO can unblock resources
+→ CCO doesn't do work or approve
 
-**11.6 Effort Tracking**
+Management awareness
+High-level oversight
+```
+
+**Icon/Indicator:** 👔
+
+---
+
+**Role Summary:**
+
+```
+Task Roles Matrix:
+
+Role        | Does Work | Approves | Informed | Escalates
+--------------------------------------------------------------
+Executor    |    ✓      |    ✗     |    ✓     |    ✗
+Approver    |    ✗      |    ✓     |    ✓     |    ✗
+Follower    |    ✗      |    ✗     |    ✓     |    ✗
+Supervisor  |    ✗      |    ✗     |    ✓     |    ✓
+
+Clear separation of responsibilities
+RACI-like model
+```
+
+---
+
+### 11.2 Adding Assignments
+
+**Card Details Modal:**
+
+```
+Open any card → Assignments section:
+
+┌─────────────────────────────────────┐
+│ Assignments                         │
+├─────────────────────────────────────┤
+│                                     │
+│ 👤 Sarah Johnson (Executor) 🛠️     │
+│ 👤 Mike Chen (Approver) ✅          │
+│ 👤 Lisa Park (Follower) 👁️         │
+│                                     │
+│ [+ Add Assignment]                  │
+└─────────────────────────────────────┘
+```
+
+**Add Assignment Button:**
+
+```
+Click [+ Add Assignment]:
+
+┌─────────────────────────────────────┐
+│  Add Assignment                  [×]│
+├─────────────────────────────────────┤
+│                                     │
+│  Person:                            │
+│  [Select member... ▼]               │
+│  ┌─────────────────────────┐       │
+│  │ Sarah Johnson           │       │
+│  │ Mike Chen               │       │
+│  │ Lisa Park               │       │
+│  │ John Smith              │       │
+│  └─────────────────────────┘       │
+│                                     │
+│  Role:                              │
+│  [Select role... ▼]                 │
+│  ┌─────────────────────────┐       │
+│  │ 🛠️ Executor             │       │
+│  │ ✅ Approver             │       │
+│  │ 👁️ Follower            │       │
+│  │ 👔 Supervisor           │       │
+│  └─────────────────────────┘       │
+│                                     │
+│       [Cancel]  [Add]               │
+└─────────────────────────────────────┘
+```
+
+**Select Person:**
+
+```
+Dropdown shows board members:
+- All people added to board
+- Name and avatar
+- Select one person per assignment
+
+If person not in list:
+→ Must add to board first (see 11.3)
+```
+
+**Select Role:**
+
+```
+Choose role:
+🛠️ Executor (does work)
+✅ Approver (reviews/approves)
+👁️ Follower (informed)
+👔 Supervisor (oversight)
+
+Each assignment = One person + One role
+```
+
+**Multiple Assignments Possible:**
+
+```
+Example: Complex task
+
+Task: "Implement Company-Wide MFA"
+
+Assignments:
+👤 Sarah (Executor) 🛠️ - Configures systems
+👤 John (Executor) 🛠️ - Creates documentation
+👤 Mike (Approver) ✅ - Security approval
+👤 Legal (Approver) ✅ - Policy approval
+👤 Lisa (Follower) 👁️ - HR coordination
+👤 Tom (Follower) 👁️ - Finance awareness
+👤 CCO (Supervisor) 👔 - Executive oversight
+
+7 people, various roles
+Clear responsibilities
+```
+
+**Best Practices:**
+
+```
+Assignment Guidelines:
+
+Executor:
+- 1-2 executors ideal
+- More than 3: Consider splitting task
+- Clear primary responsibility
+
+Approver:
+- 1 approver ideal for simple tasks
+- Multiple approvers if needed (legal + technical)
+- Define approval sequence in description
+
+Follower:
+- Add stakeholders who need awareness
+- Don't overdo (max 5-7 followers)
+- Too many = notification overload
+
+Supervisor:
+- Typically 1 supervisor
+- Management level
+- Strategic oversight
+```
+
+---
+
+### 11.3 Managing Team Members
+
+**Board Members List:**
+
+```
+Access: Board header → Members icon (👤👤👤)
+
+Board Members Modal:
+┌─────────────────────────────────────┐
+│  Board Members (8)               [×]│
+├─────────────────────────────────────┤
+│                                     │
+│  👤 Sarah Johnson (Admin)           │
+│     sarah@company.com               │
+│     [Remove]                        │
+│                                     │
+│  👤 Mike Chen (Member)              │
+│     mike@company.com                │
+│     [Remove]                        │
+│                                     │
+│  👤 Lisa Park (Member)              │
+│     lisa@company.com                │
+│     [Remove]                        │
+│                                     │
+│  ... (5 more members)               │
+│                                     │
+│  [+ Add Member]                     │
+└─────────────────────────────────────┘
+```
+
+**Add Members to Board:**
+
+```
+Click [+ Add Member]:
+
+┌─────────────────────────────────────┐
+│  Add Member to Board             [×]│
+├─────────────────────────────────────┤
+│                                     │
+│  Method 1: Enter Email              │
+│  [john.smith@company.com_______]    │
+│                                     │
+│  Method 2: Select from Users        │
+│  ┌─────────────────────────┐       │
+│  │ ☐ John Smith            │       │
+│  │ ☐ Emma Wilson           │       │
+│  │ ☐ David Lee             │       │
+│  └─────────────────────────┘       │
+│                                     │
+│  Board Role:                        │
+│  ● Admin (full control)             │
+│  ○ Member (can edit)                │
+│  ○ Viewer (read-only)               │
+│                                     │
+│       [Cancel]  [Add Member]        │
+└─────────────────────────────────────┘
+
+Board Roles:
+- Admin: Can add/remove members, delete board
+- Member: Can create/edit cards, normal work
+- Viewer: Read-only, can't edit
+
+Most users: Member role
+```
+
+**Avatar Display:**
+
+```
+Board header shows member avatars:
+
+👤 👤 👤 👤 +4
+
+Displays:
+- First 4 member avatars
+- "+N" for additional members
+- Hover shows name
+- Click opens members list
+
+Visual team awareness
+Quick member reference
+```
+
+**Assignment Dropdown Populated:**
+
+```
+Once added to board:
+
+Member appears in:
+✓ Assignment dropdowns (all cards)
+✓ Board member list
+✓ Avatar display
+✓ Activity log
+
+Can be assigned to tasks immediately
+```
+
+---
+
+### 11.4 Due Date Management
+
+**Calendar Date Picker:**
+
+```
+In card details modal:
+
+Due Date Section:
+┌─────────────────────────────────────┐
+│ Due Date:                           │
+│ [2024-02-15] 📅  [×]                │
+│  ↑              ↑   ↑               │
+│ Click        Icon Clear             │
+└─────────────────────────────────────┘
+
+Click date field → Calendar opens
+```
+
+**Calendar Interface:**
+
+```
+┌─────────────────────────────────────┐
+│   February 2024        [< >]        │
+├─────────────────────────────────────┤
+│ Su Mo Tu We Th Fr Sa                │
+│              1  2  3                │
+│  4  5  6  7  8  9 10                │
+│ 11 12 13 14[15]16 17                │
+│ 18 19 20 21 22 23 24                │
+│ 25 26 27 28 29                      │
+├─────────────────────────────────────┤
+│ Today: Feb 12, 2024                 │
+│                                     │
+│       [Clear]  [Set Date]           │
+└─────────────────────────────────────┘
+
+Navigate:
+- [< >] arrows: Previous/next month
+- Click date to select
+- [Today] button: Jump to today
+- [Clear]: Remove due date
+```
+
+**Due Date Field in Card:**
+
+```
+Card details show:
+
+📅 Due: February 15, 2024
+
+Or if not set:
+📅 Due: (not set)
+
+Click to open calendar picker
+```
+
+**Visual Indicators:**
+
+**Red: Overdue:**
+
+```
+Task due date passed:
+📅 Feb 10 🔴
+
+Today: Feb 12
+Due: Feb 10
+Status: 2 days overdue
+
+Red badge on card
+Urgent visual cue
+High priority attention
+```
+
+**Orange: Due Soon (<3 days):**
+
+```
+Task due within 3 days:
+📅 Feb 13 🟠
+
+Today: Feb 11
+Due: Feb 13
+Status: Due in 2 days
+
+Orange badge on card
+Warning indicator
+Upcoming deadline
+```
+
+**Normal: Future:**
+
+```
+Task due >3 days away:
+📅 Feb 20
+
+Today: Feb 11
+Due: Feb 20
+Status: Due in 9 days
+
+Normal display
+No urgency color
+Plan accordingly
+```
+
+**Sort/Filter by Due Date:**
+
+```
+Future feature (if implemented):
+
+Board menu → Sort/Filter
+- Sort by due date (ascending)
+- Sort by due date (descending)
+- Filter: Overdue only
+- Filter: Due this week
+- Filter: No due date
+
+Quick deadline management
+```
+
+---
+
+### 11.5 Bulk Due Dates
+
+**Via Groups:**
+
+```
+The power of groups for deadline management
+```
+
+**Set Same Date for All:**
+
+```
+Group: "Sprint 1" (20 cards)
+
+Bulk Operations:
+→ [Set Due Date]
+→ Select: January 31 (sprint end)
+→ All 20 cards due date = Jan 31
+
+One action → 20 cards updated
+Synchronized deadline
+```
+
+**Useful for Sprints:**
+
+```
+Sprint Planning:
+
+1. Create "Sprint 1" group
+2. Add 20 sprint tasks to group
+3. Bulk set due date: Sprint end (Jan 31)
+4. All tasks now due Jan 31
+
+Entire sprint has clear deadline
+Team knows when work is due
+```
+
+**Clear Dates Option:**
+
+```
+Group bulk operations:
+
+[Clear Dates] button
+
+Removes due dates from all cards in group
+
+Use case:
+- Sprint postponed
+- Clear old dates
+- Reschedule later
+
+Bulk removal
+```
+
+---
+
+### 11.6 Effort Tracking
+
 **Estimated Effort:**
-- Hours to complete
-- Planning input
-- Capacity planning
+
+**Hours to Complete:**
+
+```
+Field: Estimated Effort
+Input: [8____] hours
+
+Purpose:
+How many hours will this task take?
+
+Planning input:
+- Sprint planning
+- Capacity estimation
+- Resource allocation
+- Timeline prediction
+
+Example:
+Task: "Configure Azure AD MFA"
+Estimated: 8 hours
+→ Team knows time commitment
+```
+
+**Planning Input:**
+
+```
+Sprint Planning Session:
+
+20 tasks for Sprint 1
+Estimated effort per task:
+├─ Task 1: 4 hours
+├─ Task 2: 8 hours
+├─ Task 3: 2 hours
+├─ Task 4: 6 hours
+... (16 more tasks)
+
+Total estimated: 120 hours
+
+Team capacity: 4 people × 30 hours = 120 hours
+
+Perfect fit!
+Sprint scope = Team capacity
+```
+
+**Capacity Planning:**
+
+```
+Team Capacity Matrix:
+
+Team: 4 developers
+Available: 30 hours/person/sprint
+Total capacity: 120 hours
+
+Sprint backlog:
+Total estimated effort: 95 hours
+Remaining capacity: 25 hours
+
+Can add:
+- 3 more 8-hour tasks, OR
+- 5 more 5-hour tasks, OR
+- 12 more 2-hour tasks
+
+Capacity-driven planning
+```
+
+---
 
 **Actual Effort:**
-- Hours spent
-- Reality check
-- Improvement data
+
+**Hours Spent:**
+
+```
+Field: Actual Effort
+Input: [6____] hours
+
+Purpose:
+How many hours did this task actually take?
+
+Reality check:
+- Compare to estimate
+- Learn for future estimates
+- Improve accuracy
+- Track actual time
+
+Example:
+Task: "Configure Azure AD MFA"
+Estimated: 8 hours
+Actual: 6 hours (2 hours under estimate)
+→ Good estimate, or task easier than expected
+```
+
+**Reality Check:**
+
+```
+Estimation vs Reality:
+
+Task: "Deploy Encryption"
+Estimated: 4 hours
+Actual: 12 hours
+
+Analysis:
+- 3x over estimate
+- Why? Unexpected issues, missing prerequisites
+- Learn: Add buffer for infrastructure tasks
+- Next time: Estimate 8-10 hours for similar work
+
+Continuous improvement
+```
+
+**Improvement Data:**
+
+```
+Over time, track estimate accuracy:
+
+Sprint 1:
+Estimated: 120 hours
+Actual: 145 hours
+Accuracy: 83% (21% under-estimated)
+
+Sprint 2:
+Estimated: 110 hours (adjusted)
+Actual: 115 hours
+Accuracy: 96% (5% under-estimated)
+
+Sprint 3:
+Estimated: 105 hours
+Actual: 103 hours
+Accuracy: 98% (2% over-estimated)
+
+Improving estimates
+Better planning
+More predictable delivery
+```
+
+**Effort Display on Card:**
+
+```
+Card face shows:
+
+⏱️ 8h est / 6h act
+   ↑         ↑
+Estimate   Actual
+
+Or if only estimate:
+⏱️ 8h est
+
+Or if only actual:
+⏱️ 6h act
+
+Quick reference
+Transparency
+```
 
 ---
 
-### CHAPTER 12: FILTERING AND SEARCH
+---
 
-**12.1 Category Filtering**
-- Click category badge
-- Shows only category cards
-- Maintains columns
-- Filter banner
-- Clear filter button
+## CHAPTER 12: FILTERING AND SEARCH
 
-**12.2 Reference/Backlog Filtering**
-- Click backlog/reference card
-- Shows linked active cards
-- Filter by requirement
-- Traceability view
-- Clear filter button
+Focus your view by filtering cards based on categories, requirements, or dynamic list nodes.
 
-**12.3 Dynamic List Filtering**
-- Click connection node
-- Shows linked cards
-- Requirement-based view
-- Compliance focus
-- Clear filter button
+### 12.1 Category Filtering
 
-**12.4 Combined Filters**
-- Category + Backlog works together
-- Narrow focus
-- Specific views
-- Clear all filters
+**Click Category Badge:**
 
-**12.5 Search (if implemented)**
-- Search bar
-- Card title search
-- Description search
-- Real-time results
+```
+Filter by Category:
+
+Management Tools Panel → Categories Carousel:
+
+┌─────────────────────────────────────┐
+│ Categories                          │
+├─────────────────────────────────────┤
+│ ┌──────┐ ┌──────┐ ┌──────┐ ┌──────┐│
+│ │  IT  │ │  HR  │ │Legal │ │Finance│
+│ │  12  │ │  8   │ │  5   │ │  9    │
+│ └──────┘ └──────┘ └──────┘ └──────┘│
+└─────────────────────────────────────┘
+
+Click any category → Filter active
+```
+
+**Shows Only Category Cards:**
+
+```
+Before filter (40 cards total):
+
+┌────────┐ ┌────────┐ ┌────────┐ ┌────────┐
+│ To Do  │ │Progress│ │ Review │ │  Done  │
+├────────┤ ├────────┤ ├────────┤ ├────────┤
+│ Card 1 │ │ Card 8 │ │Card 15 │ │Card 23 │
+│ (IT)   │ │ (HR)   │ │ (IT)   │ │(Legal) │
+│ Card 2 │ │ Card 9 │ │Card 16 │ │Card 24 │
+│ (HR)   │ │ (IT)   │ │(Legal) │ │ (IT)   │
+│ Card 3 │ │Card 10 │ │Card 17 │ │Card 25 │
+│(Legal) │ │(Finance│ │ (HR)   │ │ (HR)   │
+│ ...    │ │ ...    │ │ ...    │ │ ...    │
+└────────┘ └────────┘ └────────┘ └────────┘
+
+After clicking "IT" category (12 IT cards):
+
+┌────────┐ ┌────────┐ ┌────────┐ ┌────────┐
+│ To Do  │ │Progress│ │ Review │ │  Done  │
+├────────┤ ├────────┤ ├────────┤ ├────────┤
+│ Card 1 │ │ Card 9 │ │Card 15 │ │Card 24 │
+│ (IT)   │ │ (IT)   │ │ (IT)   │ │ (IT)   │
+│ Card 5 │ │Card 11 │ │Card 18 │ │Card 28 │
+│ (IT)   │ │ (IT)   │ │ (IT)   │ │ (IT)   │
+│        │ │Card 12 │ │        │ │Card 30 │
+│        │ │ (IT)   │ │        │ │ (IT)   │
+│        │ │        │ │        │ │Card 35 │
+│        │ │        │ │        │ │ (IT)   │
+└────────┘ └────────┘ └────────┘ └────────┘
+
+Only IT cards visible
+HR, Legal, Finance cards hidden
+```
+
+**Maintains Columns:**
+
+```
+Column structure stays intact:
+✓ All 4 columns still visible
+✓ Cards in correct columns
+✓ Can still drag/drop filtered cards
+✗ Other categories hidden (not deleted)
+
+Clear filter → All cards reappear
+```
+
+**Filter Banner:**
+
+```
+Active filter shows banner:
+
+┌─────────────────────────────────────┐
+│ 🔍 Filtering by: IT Department  [×] │
+└─────────────────────────────────────┘
+     ↑                ↑           ↑
+  Filter icon    Category name  Clear
+
+Banner appears above board
+Always visible when filter active
+Clear reminder of active filter
+```
+
+**Clear Filter Button:**
+
+```
+Two ways to clear:
+
+1. Click [×] in filter banner
+2. Click category badge again (toggle off)
+
+Both actions:
+→ Remove filter
+→ Show all cards
+→ Banner disappears
+
+Return to full board view
+```
 
 ---
 
-### CHAPTER 13: BOARD MANAGEMENT
+### 12.2 Reference/Backlog Filtering
 
-**13.1 Board Settings**
-- Access via board menu
-- Rename board
-- Edit description
-- Change members
-- Board preferences
+**Click Backlog/Reference Card:**
 
-**13.2 Archiving Boards**
-- Archive button
-- Removes from active list
-- Preserves all data
-- Recoverable
-- Clean up completed projects
+```
+References Column (locked, left side):
 
-**13.3 Deleting Boards**
-- Delete button
-- Permanent action
-- Confirmation required
-- All data lost
-- Use with caution
+┌──────────────┐
+│ References   │
+├──────────────┤
+│ □ GDPR Art 32│ ← Click
+│   Security   │
+│                │
+│ □ NIST ID.AM │
+│   Asset Mgmt │
+│                │
+│ □ ISO 27001  │
+│   A.8.1      │
+└──────────────┘
 
-**13.4 Activity Log**
-- View from board menu
-- Last 100 actions
-- User and timestamp
-- Action description
-- Audit trail
+Each reference card = Requirement from dynamic list
+Linked to implementation cards in other columns
+```
 
-**13.5 Progress Tracking**
-- Board card shows progress bar
-- Percentage complete
-- Based on Done column
-- Visual on board library
-- Quick status check
+**Shows Linked Active Cards:**
+
+```
+Click "GDPR Art 32 - Security":
+
+Before (40 cards):
+All cards visible across all columns
+
+After (5 linked cards):
+┌────────┐ ┌────────┐ ┌────────┐ ┌────────┐
+│ To Do  │ │Progress│ │ Review │ │  Done  │
+├────────┤ ├────────┤ ├────────┤ ├────────┤
+│Encrypt │ │Implement│        │ │Deploy  │
+│ Data   │ │  MFA   │        │ │ Logs   │
+│        │ │        │        │ │        │
+│Access  │ │        │        │ │        │
+│Control │ │        │        │ │        │
+└────────┘ └────────┘ └────────┘ └────────┘
+
+Only cards linked to GDPR Art 32 visible
+5 cards shown (were 40)
+```
+
+**Filter by Requirement:**
+
+```
+Use case: Compliance focus
+
+Question: "What have we done for GDPR Article 32?"
+
+Action:
+1. Go to References column
+2. Click "GDPR Art 32" card
+3. View linked implementation cards
+
+Answer:
+✓ Encrypt Data (To Do)
+✓ Access Control (To Do)
+✓ Implement MFA (In Progress)
+✓ Deploy Logs (Done)
+
+Instant requirement traceability
+```
+
+**Traceability View:**
+
+```
+Audit scenario:
+
+Auditor: "Show me NIST Identify controls"
+
+You:
+1. Click "NIST ID" reference card
+2. Filter shows 15 linked cards
+3. Status visible:
+   - 2 cards To Do
+   - 5 cards In Progress
+   - 3 cards In Review
+   - 5 cards Done
+
+Progress: 5/15 complete (33%)
+
+Clear audit trail
+Requirement → Implementation mapping
+```
+
+**Clear Filter Button:**
+
+```
+Filter banner shows:
+
+┌───────────────────────────────────────┐
+│ 🔍 Filtering by: GDPR Art 32      [×] │
+└───────────────────────────────────────┘
+
+Click [×] → Show all 40 cards
+References column still visible
+```
 
 ---
 
-### CHAPTER 14: COLLABORATION FEATURES
+### 12.3 Dynamic List Filtering
 
-**14.1 Team Communication**
-- Card comments
-- @mentions (future)
-- Discussion threads
-- Activity notifications
+**Click Connection Node:**
 
-**14.2 Visibility**
-- Shared boards
-- Team awareness
-- Transparent progress
-- Accountability
+```
+Dynamic List Panel (right side):
 
-**14.3 Workload Management**
-- Assignment tracking
-- Capacity awareness
+Tree structure:
+
+GDPR Compliance Framework
+├─📄 Article 25: Data Protection by Design [Task Node]
+├─🔗 Article 30: Record Keeping [Connection Node] ← CLICK
+├─📄 Article 32: Security Requirements [Task Node]
+└─🔗 Article 35: DPIA Process [Connection Node]
+
+Yellow 📄 = Task nodes (standalone info)
+Blue 🔗 = Connection nodes (linked to cards)
+
+Click blue connection node → Filter
+```
+
+**Shows Linked Cards:**
+
+```
+Click "Article 30: Record Keeping":
+
+Filter activates:
+
+┌───────────────────────────────────────────┐
+│ 🔍 Filtering by: Article 30 (GDPR)   [×] │
+└───────────────────────────────────────────┘
+
+Board shows 8 cards linked to Article 30:
+
+┌────────┐ ┌────────┐ ┌────────┐ ┌────────┐
+│ To Do  │ │Progress│ │ Review │ │  Done  │
+├────────┤ ├────────┤ ├────────┤ ├────────┤
+│Create  │ │Document│ │Review  │ │Publish │
+│Record  │ │Process │ │Records │ │ Policy │
+│Template│ │        │ │        │ │        │
+│        │ │Update  │ │        │ │Train   │
+│Design  │ │System  │ │        │ │ Team   │
+│ Form   │ │        │ │        │ │        │
+└────────┘ └────────┘ └────────┘ └────────┘
+
+8 cards for Article 30
+Other cards hidden
+```
+
+**Requirement-Based View:**
+
+```
+Dynamic list = Compliance framework
+Connection nodes = Specific requirements
+Cards = Implementation tasks
+
+Hierarchy:
+GDPR (framework)
+  └─ Article 30 (requirement) ← Filter here
+       └─ 8 cards (implementation)
+
+Top-down filtering
+Framework → Requirement → Tasks
+```
+
+**Compliance Focus:**
+
+```
+Consultant perspective:
+
+Goal: Guide client through regulation
+
+Setup:
+1. Export GDPR workflow → Board
+2. Full regulation in dynamic list
+3. Connection nodes for each article
+4. Cards for implementation
+
+Client usage:
+1. Open dynamic list
+2. Click Article 30 connection node
+3. See only Article 30 tasks
+4. Focus on specific requirement
+5. Complete tasks
+6. Move to next article
+
+Structured compliance execution
+One requirement at a time
+```
+
+**Clear Filter Button:**
+
+```
+Filter banner:
+
+┌───────────────────────────────────────────┐
+│ 🔍 Filtering by: Article 30 (GDPR)   [×] │
+└───────────────────────────────────────────┘
+
+Click [×] → All cards visible
+Dynamic list stays open
+Click another node → Filter changes
+```
+
+---
+
+### 12.4 Combined Filters
+
+**Category + Backlog Works Together:**
+
+```
+Powerful combination for precision
+
+Example:
+
+1. First filter: Category = "IT Department"
+   Result: 20 IT cards visible
+
+2. Second filter: Reference = "NIST ID.AM-1"
+   Result: 5 cards (IT tasks for NIST ID.AM-1)
+
+Combined filter:
+- IT Department AND
+- NIST ID.AM-1 requirement
+
+Narrows from 40 total → 5 specific cards
+```
+
+**Narrow Focus:**
+
+```
+Before filters (40 cards):
+All departments, all requirements
+
+After Category filter: IT (20 cards)
+┌────────┐ ┌────────┐ ┌────────┐ ┌────────┐
+│ To Do  │ │Progress│ │ Review │ │  Done  │
+├────────┤ ├────────┤ ├────────┤ ├────────┤
+│12 cards│ │5 cards │ │2 cards │ │1 card  │
+│ (IT)   │ │ (IT)   │ │ (IT)   │ │ (IT)   │
+└────────┘ └────────┘ └────────┘ └────────┘
+
+After Reference filter: NIST ID.AM-1 (5 cards)
+┌────────┐ ┌────────┐ ┌────────┐ ┌────────┐
+│ To Do  │ │Progress│ │ Review │ │  Done  │
+├────────┤ ├────────┤ ├────────┤ ├────────┤
+│3 cards │ │1 card  │ │1 card  │ │0 cards │
+│(IT+NIST│ │(IT+NIST│ │(IT+NIST│ │        │
+└────────┘ └────────┘ └────────┘ └────────┘
+
+Progressive narrowing
+Laser focus
+```
+
+**Specific Views:**
+
+```
+Common combinations:
+
+1. Department + Requirement
+   Category: Legal
+   Reference: GDPR Art 35
+   → Legal's DPIA tasks
+
+2. Department + Sprint
+   Category: IT
+   Milestone: Sprint 1
+   → (If milestone filter exists)
+   → IT's sprint tasks
+
+3. Requirement + Dynamic List Node
+   Reference: ISO 27001 A.8.1
+   Dynamic List: Information Classification
+   → Classification implementation tasks
+
+Flexible filtering
+Target specific work
+```
+
+**Clear All Filters:**
+
+```
+Multiple filters active:
+
+Banner shows:
+
+┌───────────────────────────────────────────────────┐
+│ 🔍 Filters: IT Dept | NIST ID.AM-1    [Clear All]│
+└───────────────────────────────────────────────────┘
+              ↑            ↑              ↑
+         Category    Reference      Clear button
+
+Click [Clear All]:
+→ Remove all filters
+→ Show all 40 cards
+→ Banner disappears
+
+Return to full view
+```
+
+---
+
+### 12.5 Search (if implemented)
+
+**Search Bar:**
+
+```
+Future feature (may be implemented):
+
+Board header → Search icon 🔍
+
+┌─────────────────────────────────────┐
+│ 🔍 [Search cards...________]        │
+└─────────────────────────────────────┘
+
+Type search term → Filter cards
+```
+
+**Card Title Search:**
+
+```
+Search: "encryption"
+
+Results:
+- "Deploy encryption standards"
+- "Encryption key management"
+- "Test encryption protocols"
+- "Document encryption policy"
+
+Matches card titles containing "encryption"
+Case-insensitive
+```
+
+**Description Search:**
+
+```
+Search: "GDPR"
+
+Results include cards with:
+- "GDPR" in title
+- "GDPR" in description
+- References to GDPR articles
+
+Full-text search
+Comprehensive results
+```
+
+**Real-time Results:**
+
+```
+As you type:
+
+"enc"     → 12 results
+"encry"   → 8 results
+"encrypt" → 6 results
+
+Live filtering
+Instant feedback
+No "search" button needed
+```
+
+---
+
+---
+
+## CHAPTER 13: BOARD MANAGEMENT
+
+Manage board settings, archive completed work, and track activity.
+
+### 13.1 Board Settings
+
+**Access via Board Menu:**
+
+```
+Board header → Gear icon ⚙️ → Settings
+
+Settings Modal:
+┌─────────────────────────────────────┐
+│  Board Settings                  [×]│
+├─────────────────────────────────────┤
+│                                     │
+│  Board Name:                        │
+│  [GDPR Compliance Project______]    │
+│                                     │
+│  Description:                       │
+│  ┌─────────────────────────────┐   │
+│  │ Full GDPR compliance        │   │
+│  │ implementation for 2024     │   │
+│  │ audit preparation           │   │
+│  └─────────────────────────────┘   │
+│                                     │
+│  Board Members:                     │
+│  👤 Sarah Johnson (Admin)           │
+│  👤 Mike Chen (Member)               │
+│  [+ Add Member]                     │
+│                                     │
+│  Board Preferences:                 │
+│  ☑ Auto-save changes                │
+│  ☑ Show activity notifications      │
+│  ☐ Restrict card deletion          │
+│                                     │
+│       [Cancel]  [Save Changes]      │
+└─────────────────────────────────────┘
+```
+
+**Rename Board:**
+
+```
+Change board name:
+
+Current: "New Board"
+Updated: "GDPR Compliance Implementation Q1 2024"
+
+Best practices:
+- Clear and descriptive
+- Include project/regulation name
+- Add timeframe if relevant
+- Avoid generic names
+
+Examples:
+✓ "NIST CSF Implementation - IT Department"
+✓ "ISO 27001 Audit Prep - March 2024"
+✓ "SOC 2 Type II Evidence Collection"
+✗ "Board 1"
+✗ "New Board"
+✗ "Project"
+```
+
+**Edit Description:**
+
+```
+Board description field:
+
+Purpose:
+- Explain board objective
+- Define scope
+- State target completion
+- Reference regulation/standard
+
+Example:
+"Full GDPR compliance implementation covering all
+79 articles. Target completion: June 2024. Includes
+IT, Legal, HR, and Finance departments. Audit-ready
+documentation required for all controls."
+
+Shows in:
+✓ Board library (preview)
+✓ Board header (tooltip)
+✓ Settings modal
+```
+
+**Change Members:**
+
+```
+Add/remove board members:
+
+Add Member:
+1. Click [+ Add Member]
+2. Enter email or select user
+3. Choose role (Admin/Member/Viewer)
+4. Click [Add]
+
+Remove Member:
+1. Find member in list
+2. Click [Remove] button
+3. Confirm action
+4. Member loses access
+
+Admin permissions:
+- Add/remove members
+- Change board settings
+- Archive/delete board
+- Full control
+```
+
+**Board Preferences:**
+
+```
+Configurable options:
+
+☑ Auto-save changes
+  → Save edits automatically
+  → No manual save button
+  → Changes persist immediately
+
+☑ Show activity notifications
+  → Notify on card moves
+  → Alert on member actions
+  → Activity feed updates
+
+☐ Restrict card deletion
+  → Only admins can delete cards
+  → Prevents accidental deletion
+  → Safety measure
+
+☐ Require approval for Done
+  → Cards need approval before Done
+  → Quality gate enforcement
+  → Compliance focus
+```
+
+---
+
+### 13.2 Archiving Boards
+
+**Archive Button:**
+
+```
+Board menu → Archive Board
+
+Confirmation dialog:
+┌─────────────────────────────────────┐
+│  Archive Board?                  [×]│
+├─────────────────────────────────────┤
+│                                     │
+│  Are you sure you want to archive: │
+│  "GDPR Compliance Q1 2024"?         │
+│                                     │
+│  This will:                         │
+│  ✓ Remove from active boards        │
+│  ✓ Preserve all data                │
+│  ✓ Keep in archive folder           │
+│  ✓ Remain recoverable              │
+│                                     │
+│       [Cancel]  [Archive]           │
+└─────────────────────────────────────┘
+```
+
+**Removes from Active List:**
+
+```
+Before archive:
+
+Boards Library:
+├─ Active Boards (8)
+│  ├─ GDPR Compliance Q1 2024 ← To archive
+│  ├─ NIST Implementation
+│  ├─ ISO 27001 Audit
+│  └─ ... (5 more)
+└─ Archived Boards (3)
+
+After archive:
+
+Boards Library:
+├─ Active Boards (7)
+│  ├─ NIST Implementation
+│  ├─ ISO 27001 Audit
+│  └─ ... (5 more)
+└─ Archived Boards (4)
+   └─ GDPR Compliance Q1 2024 ← Moved here
+
+Out of sight, not deleted
+```
+
+**Preserves All Data:**
+
+```
+Archived board retains:
+✓ All cards (every single one)
+✓ All columns
+✓ All milestones, categories, groups
+✓ All attachments (links, images, notes)
+✓ All comments and activity log
+✓ All member assignments
+✓ All due dates and effort data
+✓ Dynamic lists and references
+
+NOTHING is lost
+100% data preservation
+```
+
+**Recoverable:**
+
+```
+Unarchive process:
+
+1. Go to Boards Library
+2. Click "Archived Boards" section
+3. Find board
+4. Click board → Options menu
+5. Select "Unarchive"
+6. Board returns to Active Boards
+
+Instant recovery
+Exactly as you left it
+```
+
+**Clean Up Completed Projects:**
+
+```
+When to archive:
+
+✓ Project completed
+  Example: "GDPR Q1 2024" done, Q2 started
+
+✓ Audit finished
+  Example: "ISO 27001 Audit Prep" - audit passed
+
+✓ Initiative ended
+  Example: "Security Upgrade Initiative" - complete
+
+✓ Need focus
+  Example: Too many active boards, archive old ones
+
+✓ Historical reference
+  Example: Keep for future reference, not active work
+
+Keep workspace clean
+Focus on active projects
+```
+
+---
+
+### 13.3 Deleting Boards
+
+**Delete Button:**
+
+```
+Board menu → Delete Board
+
+⚠️ WARNING: PERMANENT ACTION ⚠️
+
+Confirmation dialog:
+┌─────────────────────────────────────┐
+│  ⚠️ DELETE BOARD?                 [×]│
+├─────────────────────────────────────┤
+│                                     │
+│  DANGER: This action is PERMANENT!  │
+│                                     │
+│  Board: "Old Test Board"            │
+│                                     │
+│  This will PERMANENTLY DELETE:      │
+│  ✗ All 45 cards                     │
+│  ✗ All columns and settings         │
+│  ✗ All milestones (3)               │
+│  ✗ All categories (5)               │
+│  ✗ All groups (8)                  │
+│  ✗ All attachments and comments     │
+│  ✗ All activity history             │
+│  ✗ All dynamic lists                │
+│                                     │
+│  This CANNOT be undone!             │
+│                                     │
+│  Type "DELETE" to confirm:          │
+│  [_________________]                │
+│                                     │
+│       [Cancel]  [Delete Forever]    │
+└─────────────────────────────────────┘
+```
+
+**Permanent Action:**
+
+```
+What happens:
+
+1. Click [Delete Forever]
+2. Board immediately deleted
+3. All data erased
+4. Cannot undo
+5. Cannot recover
+6. Gone forever
+
+No trash bin
+No "Oops, restore" option
+PERMANENT
+```
+
+**Confirmation Required:**
+
+```
+Safety measures:
+
+1. Warning dialog (red/danger colors)
+2. Explicit danger message
+3. List of what will be deleted
+4. Type "DELETE" to confirm
+5. Must click "Delete Forever"
+
+Multiple barriers
+Prevents accidental deletion
+```
+
+**All Data Lost:**
+
+```
+Permanently deleted:
+
+Cards:
+- Every single card
+- All titles, descriptions
+- All assignments
+- All due dates, effort
+- All progress
+
+Attachments:
+- All comments
+- All notes
+- All links
+- All images
+
+Organization:
+- All milestones
+- All categories
+- All groups
+- All columns
+
+History:
+- All activity log
+- All changes
+- All timestamps
+
+References:
+- All dynamic lists
+- All reference cards
+- All connections
+
+EVERYTHING GONE
+```
+
+**Use with Caution:**
+
+```
+ONLY delete if:
+
+✓ Test board (no real data)
+✓ Duplicate by mistake
+✓ Wrong board created
+✓ 100% certain no need for data
+
+DO NOT delete if:
+
+✗ Might need data later
+✗ Historical reference value
+✗ Audit trail needed
+✗ Team members might need access
+✗ Any uncertainty
+
+When in doubt: ARCHIVE instead of DELETE
+
+Archive = Safe (recoverable)
+Delete = Permanent (gone forever)
+```
+
+---
+
+### 13.4 Activity Log
+
+**View from Board Menu:**
+
+```
+Board header → Activity Log icon 📋
+
+Activity Log Panel:
+┌─────────────────────────────────────────┐
+│  Board Activity Log              [×]    │
+├─────────────────────────────────────────┤
+│                                         │
+│  [All Activity ▼] [Last 7 days ▼]      │
+│                                         │
+│  🕒 2 minutes ago                       │
+│  👤 Sarah Johnson                       │
+│  Moved "Deploy MFA" from Progress       │
+│  to Done                                │
+│  ─────────────────────────────────      │
+│                                         │
+│  🕒 15 minutes ago                      │
+│  👤 Mike Chen                           │
+│  Added comment to "Encrypt Data":       │
+│  "Using AES-256 encryption"             │
+│  ─────────────────────────────────      │
+│                                         │
+│  🕒 1 hour ago                          │
+│  👤 Lisa Park                           │
+│  Created new card "Update Privacy       │
+│  Policy" in To Do                       │
+│  ─────────────────────────────────      │
+│                                         │
+│  ... (97 more recent actions)           │
+│                                         │
+│  [Load More]                            │
+└─────────────────────────────────────────┘
+```
+
+**Last 100 Actions:**
+
+```
+Log capacity:
+- Shows last 100 actions
+- Chronological (newest first)
+- Real-time updates
+- Scrollable list
+- Load more if needed
+
+Older actions:
+- May be archived
+- Not deleted
+- Available in system logs
+```
+
+**User and Timestamp:**
+
+```
+Each entry shows:
+
+👤 User name (who did it)
+🕒 Timestamp (when)
+📝 Action (what happened)
+🎯 Target (which card/item)
+
+Example:
+🕒 3 minutes ago
+👤 Sarah Johnson
+Moved "Implement Firewall Rules"
+from In Progress → Review
+
+Clear attribution
+Time tracking
+Accountability
+```
+
+**Action Description:**
+
+```
+Logged actions:
+
+Cards:
+- Card created
+- Card moved between columns
+- Card deleted
+- Card edited (title, description)
+- Card marked done/undone
+
+Assignments:
+- Member assigned to card
+- Assignment removed
+- Role changed
+
+Scheduling:
+- Due date added
+- Due date changed
+- Effort estimated/actual updated
+
+Organization:
+- Category applied
+- Milestone linked
+- Group membership changed
+
+Attachments:
+- Comment added
+- Note created
+- Link added
+- Image attached
+
+Comprehensive tracking
+```
+
+**Audit Trail:**
+
+```
+Compliance use case:
+
+Auditor: "Show me when this control was implemented"
+
+You:
+1. Open Activity Log
+2. Filter by card: "Deploy MFA"
+3. Review timeline:
+   - Jan 5: Card created (Sarah)
+   - Jan 8: Moved to In Progress (Mike)
+   - Jan 12: Comment "Testing complete" (Mike)
+   - Jan 15: Moved to Review (Mike)
+   - Jan 17: Approved comment (Security Manager)
+   - Jan 18: Moved to Done (Security Manager)
+
+Complete audit trail:
+✓ Who did what
+✓ When it happened
+✓ Sequence of events
+✓ Approval recorded
+
+Audit-ready documentation
+Traceability
+Compliance evidence
+```
+
+---
+
+### 13.5 Progress Tracking
+
+**Board Card Shows Progress Bar:**
+
+```
+Boards Library view:
+
+┌───────────────────────────────────┐
+│  GDPR Compliance Q1 2024          │
+├───────────────────────────────────┤
+│  Full GDPR compliance             │
+│  implementation covering all 79   │
+│  articles...                      │
+│                                   │
+│  Progress: [████████░░] 45/79     │
+│            [=========>---] 57%    │
+│                                   │
+│  👤 8 members  📋 79 tasks        │
+│  📅 Due: Mar 31, 2024             │
+└───────────────────────────────────┘
+       ↑              ↑
+  Visual bar    Percentage
+```
+
+**Percentage Complete:**
+
+```
+Calculation:
+
+Total cards: 79
+Done cards: 45
+Progress: 45 ÷ 79 = 57%
+
+Visual indicator:
+[████████░░] 57%
+ ↑       ↑
+Done   Remaining
+
+Real-time update
+Automatic calculation
+```
+
+**Based on Done Column:**
+
+```
+Progress determination:
+
+Count cards where:
+- Column = "Done"
+- isDone = true
+
+NOT based on:
+✗ Last column (might not be Done)
+✗ Card completion checkbox
+✗ Milestone completion
+✗ Manual input
+
+Based ONLY on Done status
+Accurate progress
+```
+
+**Visual on Board Library:**
+
+```
+Board library shows:
+
+Each board card displays:
+├─ Board name
+├─ Description (preview)
+├─ Progress bar ← Visual indicator
+├─ Percentage (57%)
+├─ Count (45/79)
+├─ Member count (8 members)
+├─ Task count (79 tasks)
+└─ Due date (if set)
+
+At-a-glance status
+Compare multiple boards
+Prioritize work
+```
+
+**Quick Status Check:**
+
+```
+Use case: Status meeting
+
+Manager: "Where are we on GDPR?"
+
+You (looking at board library):
+"57% complete. 45 of 79 controls done.
+34 remaining. On track for March 31st."
+
+Takes 5 seconds
+No need to open board
+Quick overview
+Portfolio view
+
+Multiple boards:
+┌──────────────────────────────────────┐
+│ GDPR Q1 2024    [=====>---] 57%     │
+│ NIST Framework  [========>-] 78%     │
+│ ISO 27001 Audit [==>-------] 23%     │
+│ SOC 2 Type II   [==========>] 95%    │
+└──────────────────────────────────────┘
+
+Instant portfolio status
+Compare progress
+Identify lagging projects
+```
+
+---
+
+---
+
+## CHAPTER 14: COLLABORATION FEATURES
+
+Work effectively as a team with communication, visibility, and workload management tools.
+
+### 14.1 Team Communication
+
+**Card Comments:**
+
+```
+Primary communication channel within boards
+
+Card details modal → Comments tab:
+
+┌─────────────────────────────────────────┐
+│  Comments (12)                      [×] │
+├─────────────────────────────────────────┤
+│                                         │
+│  👤 Sarah Johnson - 2 hours ago         │
+│  "MFA testing complete. All 250 test   │
+│  accounts successfully enrolled."       │
+│  [Reply] [Edit] [Delete]                │
+│  ─────────────────────────────────      │
+│                                         │
+│  👤 Mike Chen - 5 hours ago             │
+│  "Starting integration testing today.  │
+│  Will update by EOD."                   │
+│  [Reply] [Edit] [Delete]                │
+│                                         │
+│    👤 Sarah Johnson - 4 hours ago       │
+│    "↳ Let me know if you need help     │
+│    with SSO configuration."             │
+│    [Edit] [Delete]                      │
+│  ─────────────────────────────────      │
+│                                         │
+│  ... (9 more comments)                  │
+│                                         │
+│  [Write a comment..._______________]    │
+│  [Post Comment]                         │
+└─────────────────────────────────────────┘
+```
+
+**Plain Text Comments:**
+
+```
+Format:
+- Plain text (no formatting)
+- Multi-line supported
+- URLs auto-linked
+- Max 1000 characters
+
+Use for:
+✓ Status updates
+✓ Questions
+✓ Blockers
+✓ Clarifications
+✓ Decisions
+
+Example:
+"Encryption implementation blocked. Need
+approval from Legal team on key length
+requirements. Following up with Jane."
+```
+
+**Discussion Threads:**
+
+```
+Reply structure:
+
+Main comment (top-level)
+  ├─ Reply 1 (indented)
+  ├─ Reply 2 (indented)
+  └─ Reply 3 (indented)
+
+Use case:
+
+Main: "Should we use AES-256 or AES-128?"
+  Reply 1: "AES-256 recommended for GDPR"
+  Reply 2: "Agreed. Performance impact minimal"
+  Main: "Decision: AES-256. Updating docs."
+
+Threaded conversation
+Context preserved
+```
+
+**Edit/Delete Own Comments:**
+
+```
+Permissions:
+- Can edit: Own comments only
+- Can delete: Own comments only
+- Can't edit: Others' comments
+- Can view: All comments
+
+Edit comment:
+1. Click [Edit]
+2. Modify text
+3. Click [Save]
+4. Shows "(edited)" indicator
+
+Delete comment:
+1. Click [Delete]
+2. Confirm action
+3. Comment removed (can't undo)
+
+Accountability maintained
+```
+
+**Comment Count on Card Face:**
+
+```
+Card displays comment count:
+
+┌──────────────────────────┐
+│ Deploy MFA               │
+│ IT Department            │
+│ 📅 Feb 15  ⏱️ 8h        │
+│ 👤👤  💬 5  📎 3          │
+│        ↑               │
+│   5 comments           │
+└──────────────────────────┘
+
+Visual indicator
+Know which cards have discussion
+```
+
+**@Mentions (Future):**
+
+```
+Planned feature:
+
+@username in comments
+→ Notify mentioned person
+→ Bring to their attention
+→ Direct communication
+
+Example:
+"@mike Can you review the encryption
+configuration? @sarah needs approval
+before deployment."
+
+Coming soon
+```
+
+---
+
+### 14.2 Visibility
+
+**Shared Boards:**
+
+```
+All board members see:
+✓ Same board
+✓ Same cards
+✓ Same columns
+✓ Same progress
+✓ Real-time updates
+
+No information silos
+Everyone on same page
+```
+
+**Team Awareness:**
+
+```
+Visible information:
+
+Who's working on what:
+- Card assignments show
+- Avatars on cards
+- See who's executor/approver
+
+What's happening:
+- Cards moving between columns
+- New comments appearing
+- Progress updating
+- Due dates approaching
+
+Where we are:
+- Progress bars
+- Milestone status
+- Category distribution
 - WIP limits
-- Resource balancing
 
-**14.4 Handoffs**
-- Column transitions
-- Assignment changes
-- Status updates
-- Process flow
+Team visibility:
+┌────────┐ ┌────────┐ ┌────────┐ ┌────────┐
+│ To Do  │ │Progress│ │ Review │ │  Done  │
+├────────┤ ├────────┤ ├────────┤ ├────────┤
+│ 12 ●   │ │ 5/7 ●  │ │ 3 ●    │ │ 45 ●   │
+│        │ │ (near  │ │        │ │        │
+│        │ │ limit) │ │        │ │        │
+└────────┘ └────────┘ └────────┘ └────────┘
+   ↑           ↑          ↑          ↑
+ Work      Capacity   Needs    Progress
+ queue     alert      review   
+
+At-a-glance status
+```
+
+**Transparent Progress:**
+
+```
+Everyone sees:
+
+Card level:
+- Which column (status)
+- Done checkbox status
+- Assignments
+- Comments/activity
+
+Milestone level:
+- Linked cards
+- Completion percentage
+- Status (In Progress/Done)
+
+Category level:
+- Card count
+- Distribution across columns
+
+Board level:
+- Overall progress (57%)
+- Cards done/total (45/79)
+- Activity log
+
+No hidden information
+Full transparency
+```
+
+**Accountability:**
+
+```
+Activity log shows:
+
+Who moved what:
+"Sarah moved 'Deploy MFA' to Done"
+
+Who created what:
+"Mike created 'Update Policy'"
+
+Who commented:
+"Lisa commented on 'Security Audit'"
+
+Visible actions:
+→ Everyone accountable
+→ No anonymous changes
+→ Clear responsibility
+→ Audit trail
+
+Compliance benefit:
+Auditor can see:
+- Who implemented control
+- When it was done
+- Who approved it
+- Full timeline
+
+Traceability
+```
 
 ---
 
-### CHAPTER 15: BEST PRACTICES
+### 14.3 Workload Management
 
-**15.1 Board Setup**
+**Assignment Tracking:**
+
+```
+See team workload:
+
+Member view (board level):
+
+Sarah Johnson (15 cards)
+├─ 5 To Do
+├─ 7 In Progress (Executor)
+├─ 2 Review (Approver)
+└─ 1 Done
+
+Mike Chen (12 cards)
+├─ 8 To Do
+├─ 3 In Progress (Executor)
+├─ 1 Review (Approver)
+└─ 0 Done
+
+Lisa Park (8 cards)
+├─ 2 To Do
+├─ 3 In Progress (Executor)
+├─ 2 Review (Follower)
+└─ 1 Done
+
+Workload distribution visible
+Identify overload
+Rebalance if needed
+```
+
+**Capacity Awareness:**
+
+```
+Team capacity check:
+
+Sprint 1: 2-week sprint
+
+Team:
+- Sarah: 40 hours available
+- Mike: 40 hours available
+- Lisa: 30 hours available (part-time)
+Total: 110 hours
+
+Current assignments:
+- Sarah: 60 hours estimated (OVERLOAD)
+- Mike: 45 hours estimated (Slight overload)
+- Lisa: 20 hours estimated (Under capacity)
+
+Action:
+→ Move 15 hours from Sarah to Lisa
+→ Move 5 hours from Mike to Lisa
+→ Balanced workload
+
+Visible capacity issues
+Proactive balancing
+```
+
+**WIP Limits:**
+
+```
+Work In Progress (WIP) limits per column:
+
+┌────────────────────────────┐
+│ In Progress  (5/7)  ⚠️     │
+├────────────────────────────┤
+│ Card 1 (Sarah)             │
+│ Card 2 (Mike)              │
+│ Card 3 (Sarah)             │
+│ Card 4 (Lisa)              │
+│ Card 5 (Mike)              │
+│        (2 slots left)      │
+└────────────────────────────┘
+   ↑         ↑      ↑
+Current   Limit  Warning
+
+Benefits:
+✓ Prevent overload
+✓ Focus on completion
+✓ Faster throughput
+✓ Quality maintenance
+
+Team sees WIP status
+Self-regulating workflow
+```
+
+**Resource Balancing:**
+
+```
+Scenario: Unbalanced workload
+
+Current state:
+Sarah: 15 cards (overloaded)
+Mike: 5 cards (balanced)
+Lisa: 2 cards (under-utilized)
+
+Visual indicators:
+Sarah's avatar shows on 15 cards (too many)
+Mike's avatar shows on 5 cards (good)
+Lisa's avatar shows on 2 cards (capacity available)
+
+Action:
+1. Identify Sarah's overload
+2. Review cards for reassignment
+3. Move 5 cards to Lisa
+4. Move 3 cards to Mike
+
+Result:
+Sarah: 7 cards (balanced)
+Mike: 8 cards (balanced)
+Lisa: 7 cards (balanced)
+
+Team productivity optimized
+Burnout prevented
+```
+
+---
+
+### 14.4 Handoffs
+
+**Column Transitions:**
+
+```
+Cards flow through columns:
+
+To Do → In Progress → Review → Done
+  ↓         ↓          ↓        ↓
+Plan     Execute    Approve  Complete
+
+Each transition = Handoff
+
+Example:
+
+1. To Do → In Progress
+   Handoff: Planning to Execution
+   Actor: Executor starts work
+   
+2. In Progress → Review
+   Handoff: Execution to Review
+   Actor: Executor → Approver
+   
+3. Review → Done
+   Handoff: Review to Completion
+   Actor: Approver signs off
+
+Clear workflow stages
+Visible progress
+```
+
+**Assignment Changes:**
+
+```
+Handoff scenario:
+
+Initial assignment:
+Task: "Deploy MFA"
+Executor: Sarah (IT Engineer)
+
+Sarah completes implementation
+Moves to Review column
+Adds comment: "Ready for security review"
+
+New assignment added:
+Approver: Mike (Security Manager)
+
+Mike receives:
+- Card in Review column
+- Executor (Sarah) marked complete
+- Approver (Mike) needs action
+- Comment explains status
+
+Mike reviews and approves
+Moves to Done column
+
+Clean handoff
+Clear responsibility transfer
+```
+
+**Status Updates:**
+
+```
+Handoff communication:
+
+Before handoff:
+Executor adds comment:
+"Implementation complete. All tests passed.
+Configuration documented in attached note.
+Ready for review."
+
+Moves card: In Progress → Review
+
+Approver sees:
+- Card in Review column
+- Comment with status
+- Documentation attached
+- Assignment to them (Approver role)
+
+Approver knows:
+- What was done
+- What to review
+- Where documentation is
+- Next step expected (approval)
+
+Context transferred
+No information loss
+```
+
+**Process Flow:**
+
+```
+Compliance workflow example:
+
+Task: "Implement Encryption at Rest"
+
+Step 1: Planning (To Do)
+- Supervisor assigned (CCO)
+- Executor assigned (IT Lead)
+- Requirements reviewed
+
+Step 2: Implementation (In Progress)
+- Executor (IT Lead) configures encryption
+- Updates progress in comments
+- Adds technical documentation
+
+Handoff trigger: Work complete
+→ Executor comment: "Implementation done"
+→ Executor moves to Review
+→ Approver notified
+
+Step 3: Review (Review)
+- Approver assigned (Security Manager)
+- Reviews configuration
+- Checks documentation
+- Tests encryption
+
+Approval decision:
+✓ Approved → Move to Done
+✗ Changes needed → Move back to In Progress
+
+Handoff trigger: Approved
+→ Approver comment: "Approved. Meets GDPR requirements"
+→ Approver moves to Done
+→ Control implemented
+
+Step 4: Done
+- Control complete
+- Audit trail complete
+- Evidence attached
+
+Full process flow:
+Planning → Implementation → Review → Approval → Done
+Each stage clear
+Each handoff documented
+```
+
+---
+
+---
+
+## CHAPTER 15: BEST PRACTICES
+
+Implement proven strategies for board setup, card management, workflow optimization, and maintenance.
+
+### 15.1 Board Setup
+
 **Consultant Actions:**
-- Configure dynamic lists
-- Structure reference column
-- Set up initial milestones
-- Define suggested categories
-- Provide documentation
+
+```
+Consultant responsibilities when setting up client boards:
+
+1. Configure Dynamic Lists
+   → Export full compliance framework
+   → Structure hierarchical tree
+   → Set Task nodes (reference info)
+   → Set Connection nodes (linkable requirements)
+   → Test expand/collapse
+
+   Example: GDPR Board
+   ├─ Export GDPR workflow
+   ├─ 79 articles in dynamic list
+   ├─ Connection nodes for key articles
+   └─ Task nodes for guidance
+
+2. Structure Reference Column
+   → Add key requirements as cards
+   → Group by regulation section
+   → Link to dynamic list nodes
+   → Mark as references (checkboxes unchecked)
+   → Lock column (prevent client editing)
+
+   Example: References Column
+   ├─ GDPR Art 5 (Principles)
+   ├─ GDPR Art 6 (Lawfulness)
+   ├─ GDPR Art 32 (Security)
+   └─ ... (key articles only)
+
+3. Set Up Initial Milestones
+   → Create phase milestones
+   → Set realistic due dates
+   → Name clearly
+   → Add descriptions
+
+   Example: GDPR Milestones
+   ├─ Phase 1: Assessment (Month 1)
+   ├─ Phase 2: Implementation (Months 2-3)
+   ├─ Phase 3: Testing (Month 4)
+   └─ Phase 4: Audit Ready (Month 5)
+
+4. Define Suggested Categories
+   → Align with client departments
+   → Create with clear names
+   → Choose distinct colors
+   → Add icons if available
+
+   Example: Department Categories
+   ├─ IT Department (blue, 🖥️)
+   ├─ Legal Department (purple, ⚖️)
+   ├─ HR Department (green, 👥)
+   └─ Finance Department (orange, 💰)
+
+5. Provide Documentation
+   → Add Note cards with guidance
+   → Explain the workflow
+   → Define column purposes
+   → Describe how to use dynamic list
+   → Include contact info for support
+
+   Example: Guidance Note Card
+   Title: "How to Use This Board"
+   Content:
+   - Review requirements in References column
+   - Create implementation tasks in To Do
+   - Link tasks to requirement nodes
+   - Move through workflow (To Do → Done)
+   - Contact: consultant@example.com
+```
+
+---
 
 **Client Actions:**
-- Review references
-- Create initial tasks
-- Set up team structure
-- Define working agreements
-- Establish cadence
 
-**15.2 Card Management**
+```
+Client responsibilities after receiving configured board:
+
+1. Review References
+   → Read References column cards
+   → Understand requirements
+   → Explore dynamic list
+   → Ask questions to consultant
+
+   Time: 1-2 hours
+   Goal: Understand compliance scope
+
+2. Create Initial Tasks
+   → Break requirements into tasks
+   → Write action-oriented titles
+   → Add descriptions with acceptance criteria
+   → Link to requirement nodes
+   → Assign categories (departments)
+
+   Example:
+   Requirement: "GDPR Art 32 - Implement encryption"
+   Tasks:
+   ├─ "Deploy encryption at rest for databases"
+   ├─ "Configure encryption in transit (TLS 1.3)"
+   ├─ "Document encryption key management"
+   └─ "Train IT team on encryption tools"
+
+3. Set Up Team Structure
+   → Add all team members to board
+   → Assign roles (Admin/Member/Viewer)
+   → Define responsibilities
+   → Set up assignment roles
+
+   Example Team:
+   ├─ IT Lead (Admin) - Executor
+   ├─ Security Manager (Admin) - Approver
+   ├─ IT Engineers (Members) - Executors
+   ├─ Legal Team (Members) - Approvers
+   └─ Executives (Viewers) - Supervisors
+
+4. Define Working Agreements
+   → How often to update cards
+   → When to move cards between columns
+   → Comment expectations
+   → WIP limit enforcement
+   → Meeting cadence
+
+   Example Agreement:
+   - Update cards daily (EOD status)
+   - Move to Review when work complete
+   - Add comment when moving to Review
+   - Max 7 cards In Progress at once
+   - Weekly status meeting Fridays
+
+5. Establish Cadence
+   → Daily standup (card status)
+   → Weekly planning (assign new tasks)
+   → Biweekly reviews (milestone progress)
+   → Monthly retrospective (process improvements)
+
+   Example Schedule:
+   Monday: Planning (assign sprint tasks)
+   Daily: Standup (10 min, card updates)
+   Friday: Review (week progress, blockers)
+   End of Month: Retrospective (improve process)
+```
+
+---
+
+### 15.2 Card Management
+
 **Card Titles:**
-- Action-oriented (verbs)
-- Clear and concise
-- Self-explanatory
-- Examples: "Review security policy", "Complete risk assessment"
+
+```
+Action-Oriented (Verbs):
+
+Good examples:
+✓ "Deploy MFA for all users"
+✓ "Review privacy policy for GDPR compliance"
+✓ "Configure database encryption"
+✓ "Complete risk assessment questionnaire"
+✓ "Train HR team on data protection"
+✓ "Document incident response procedures"
+
+Bad examples:
+✗ "MFA" (not action-oriented)
+✗ "Privacy policy" (what about it?)
+✗ "Database" (too vague)
+✗ "Risk" (incomplete)
+✗ "Training" (who? what?)
+✗ "Documentation" (for what?)
+
+Rules:
+1. Start with action verb
+2. Be specific about what
+3. Include enough context
+4. Keep under 60 characters if possible
+```
+
+**Clear and Concise:**
+
+```
+Card title = Quick scan
+
+Good length:
+✓ "Configure Azure AD MFA" (21 chars)
+✓ "Review and approve security policy" (35 chars)
+✓ "Deploy encryption on production DB" (35 chars)
+
+Too short (unclear):
+✗ "Fix it" (6 chars)
+✗ "Update" (6 chars)
+✗ "Review" (6 chars)
+
+Too long (overwhelming):
+✗ "Configure multi-factor authentication for all
+   users across the organization using Azure AD
+   including setup, testing, and documentation" (120 chars)
+   → Better: "Deploy MFA org-wide" + details in description
+```
+
+**Self-Explanatory:**
+
+```
+Title should make sense without context:
+
+✓ "Deploy firewall rules for web servers"
+   → Anyone knows: Deploy, firewall, web servers
+
+✗ "Deploy the thing"
+   → What thing?
+
+✓ "Update GDPR privacy notice on website"
+   → Clear: Update notice, GDPR, website
+
+✗ "Update that document we talked about"
+   → Which document?
+
+Test: Show title to someone not in meeting
+→ Do they understand what needs doing?
+```
+
+---
 
 **Card Descriptions:**
-- Acceptance criteria
-- Context and background
-- Links to references
-- Success definition
+
+**Acceptance Criteria:**
+
+```
+Define "done":
+
+Card: "Deploy MFA for all users"
+
+Description:
+Acceptance Criteria:
+☐ MFA enabled for all 500+ users
+☐ SMS and authenticator app options available
+☐ Backup codes generated for each user
+☐ Help documentation published
+☐ IT team trained on support process
+☐ Rollback plan documented
+☐ Security Manager approval obtained
+
+Done = All criteria met
+Clear definition of success
+```
+
+**Context and Background:**
+
+```
+Card: "Implement database encryption"
+
+Description:
+Context:
+GDPR Article 32 requires encryption of personal data.
+Our current databases (MySQL prod, staging) store
+PII without encryption. This creates compliance risk
+and potential €20M fine.
+
+Background:
+- 3 databases affected (prod, staging, dev)
+- ~500GB data per database
+- Current: No encryption
+- Target: AES-256 encryption at rest
+- Timeline: Complete before Q2 audit
+
+Why it matters
+Provides necessary context
+```
+
+**Links to References:**
+
+```
+Card: "Update privacy policy"
+
+Description:
+References:
+- GDPR Article 13: https://link-to-gdpr-art-13
+- Current privacy policy: https://company.com/privacy
+- Legal template: https://drive.../template
+- Consultant guidance: Dynamic List > GDPR > Art 13
+
+Linked:
+- Reference Card: "GDPR Art 13"
+- Dynamic List Node: "Article 13 Requirements"
+
+All resources in one place
+Easy access to requirements
+```
+
+**Success Definition:**
+
+```
+Card: "Complete SOC 2 audit"
+
+Description:
+Success Definition:
+✓ All 64 controls implemented
+✓ Evidence collected and documented
+✓ External auditor review complete
+✓ Zero critical findings
+✓ Max 3 minor findings acceptable
+✓ SOC 2 Type II report received
+✓ Certificate published
+
+Success = SOC 2 certification achieved
+
+Clear goal
+Measurable outcome
+```
+
+---
 
 **Card Sizing:**
-- Break down large tasks
-- Aim for completable in 1 sprint
-- Use checklists for subtasks
-- Manageable chunks
 
-**15.3 Workflow Optimization**
+```
+Break Down Large Tasks:
+
+Too large:
+✗ "Implement full GDPR compliance" (6 months work)
+
+Better (broken down):
+✓ "Conduct GDPR gap analysis" (1 week)
+✓ "Implement Article 30 records" (2 weeks)
+✓ "Deploy Article 32 security controls" (3 weeks)
+✓ "Create Article 13 privacy notices" (1 week)
+✓ "Train staff on GDPR requirements" (2 weeks)
+
+Each task = Manageable chunk
+```
+
+**Aim for Completable in 1 Sprint:**
+
+```
+Sprint = 2 weeks (typical)
+
+Ideal card size:
+- 1-3 days of work
+- Completable within sprint
+- Fits in single person's capacity
+
+Card size guidelines:
+✓ 2-8 hours: Small card (perfect)
+✓ 1-3 days: Medium card (good)
+⚠️ 1 week: Large card (consider splitting)
+✗ 2+ weeks: Too large (must split)
+
+If estimated effort > 40 hours:
+→ Split into multiple cards
+```
+
+**Use Checklists for Subtasks:**
+
+```
+Card: "Deploy MFA for all users"
+
+Checklist:
+☐ Configure Azure AD MFA settings
+☐ Enable for pilot group (20 users)
+☐ Test authenticator app
+☐ Test SMS backup
+☐ Create user documentation
+☐ Roll out to IT department (50 users)
+☐ Roll out to rest of org (450 users)
+☐ Verify all users enrolled
+☐ Document support procedures
+
+9 subtasks, 1 card
+Progress visible
+Manageable
+```
+
+---
+
+### 15.3 Workflow Optimization
+
 **Column Strategy:**
-- Limit columns (5-7 ideal)
-- Clear definitions
-- Enforce WIP limits
-- Regular review
+
+```
+Limit Columns (5-7 ideal):
+
+Too few (3 columns):
+✗ To Do | In Progress | Done
+→ Not enough granularity
+→ Hard to track stage
+
+Ideal (5-6 columns):
+✓ Backlog | To Do | In Progress | Review | Testing | Done
+→ Clear stages
+→ Visible workflow
+→ Easy tracking
+
+Too many (10+ columns):
+✗ Backlog | Ready | Analysis | Design | Dev | Code Review |
+  Testing | QA | Staging | Approval | Done
+→ Overwhelming
+→ Cards get stuck
+→ Too complex
+
+Sweet spot: 5-6 columns
+```
+
+**Clear Definitions:**
+
+```
+Define each column purpose:
+
+To Do:
+Definition: "Work ready to start, all prerequisites met"
+→ Requirements clear
+→ Resources available
+→ No blockers
+
+In Progress:
+Definition: "Active work happening right now"
+→ Assigned to executor
+→ Work underway
+→ Regular updates
+
+Review:
+Definition: "Work complete, awaiting approval"
+→ Executor finished
+→ Approver needed
+→ Evidence attached
+
+Done:
+Definition: "Work complete and approved"
+→ Approver signed off
+→ Meets acceptance criteria
+→ No further action
+
+Everyone knows what each column means
+```
+
+**Enforce WIP Limits:**
+
+```
+Set limits per column:
+
+In Progress: Max 7 cards
+→ Forces focus
+→ Prevents overload
+→ Faster completion
+
+Review: Max 5 cards
+→ Approvers not overwhelmed
+→ Fast turnaround
+→ No review backlog
+
+When limit reached:
+→ Finish existing cards
+→ Move to Done
+→ Then start new work
+
+Flow optimization
+```
+
+**Regular Review:**
+
+```
+Weekly column review:
+
+Questions:
+1. Are columns still needed?
+2. Should we add/remove any?
+3. Are WIP limits appropriate?
+4. Are cards stuck?
+5. Is flow smooth?
+
+Adjust based on feedback
+Continuous improvement
+```
+
+---
 
 **Milestone Planning:**
-- Time-boxed (1-4 weeks)
-- Clear goals
-- Achievable scope
-- Regular cadence
+
+```
+Time-Boxed (1-4 weeks):
+
+Good examples:
+✓ Sprint 1 (2 weeks)
+✓ Phase 1: Assessment (4 weeks)
+✓ March Deliverables (1 month)
+✓ Q1 Goals (3 months max)
+
+Bad examples:
+✗ "Someday" (no timeframe)
+✗ "Year-long project" (too long)
+✗ "Eventually" (vague)
+
+Rule: If >4 weeks, break into phases
+```
+
+**Clear Goals:**
+
+```
+Milestone: "Phase 1: GDPR Assessment"
+
+Goal:
+"Complete full GDPR gap analysis covering all 79
+articles. Identify current compliance level and
+all gaps requiring remediation. Deliverable:
+Comprehensive gap analysis report."
+
+Linked cards: 15 assessment tasks
+Due date: January 31, 2024
+Success: All 15 cards done, report delivered
+
+Clear objective
+Measurable success
+```
+
+---
 
 **Category Usage:**
-- Meaningful groupings
-- Consistent application
-- Limited number (5-10)
-- Clear definitions
+
+```
+Meaningful Groupings:
+
+Good (aligned with organization):
+✓ IT Department
+✓ Legal Department  
+✓ HR Department
+✓ Finance Department
+
+Or by work type:
+✓ Technical Implementation
+✓ Policy & Documentation
+✓ Training & Awareness
+✓ Evidence Collection
+
+Bad (unclear):
+✗ "Category 1"
+✗ "Important"
+✗ "Miscellaneous"
+✗ "Other"
+```
+
+**Consistent Application:**
+
+```
+Every card should have ONE category:
+
+✓ 100% cards categorized
+✓ One category per card
+✓ Consistent meaning
+
+Avoid:
+✗ Some cards no category
+✗ Multiple categories per card
+✗ Inconsistent usage
+
+Enables filtering and reporting
+```
+
+**Limited Number (5-10):**
+
+```
+Too few:
+✗ 2 categories (not enough granularity)
+
+Ideal:
+✓ 5-8 categories (sweet spot)
+
+Too many:
+✗ 20+ categories (overwhelming, hard to choose)
+
+If you have >10:
+→ Consolidate similar ones
+→ Use broader categories
+```
+
+---
 
 **Group Usage:**
-- Temporary for sprints
-- Permanent for initiatives
-- Bulk operations
-- Clean up completed
 
-**15.4 Maintenance**
+```
+Temporary for Sprints:
+
+Create: "Sprint 1"
+Add: 20 sprint tasks
+Bulk set: Due date = Sprint end
+After sprint: Archive or delete group
+
+Short-lived
+Specific purpose
+
+Permanent for Initiatives:
+
+Create: "Security Hardening Initiative"
+Add: All security-related cards (30+)
+Track: Long-term progress
+Keep: Until initiative complete (months)
+
+Long-lived
+Ongoing tracking
+```
+
+**Bulk Operations:**
+
+```
+Primary use case for groups:
+
+Group: "Sprint 1" (20 cards)
+
+Bulk operations:
+→ Set due date (all cards: Jan 31)
+→ Add milestone (Sprint 1 milestone)
+→ Mark all done (sprint complete)
+→ Clear dates (sprint postponed)
+
+One action → Many cards updated
+Efficiency
+```
+
+**Clean Up Completed:**
+
+```
+After sprint/initiative:
+
+✓ Remove completed cards from group
+✓ Delete empty groups
+✓ Archive old groups
+
+Keep board clean
+Reduce clutter
+```
+
+---
+
+### 15.4 Maintenance
+
 **Regular Activities:**
-- Archive completed boards
-- Clean up old groups
-- Update categories
-- Refresh milestones
-- Review filters
+
+```
+Weekly:
+☐ Review and update card statuses
+☐ Clear completed cards from groups
+☐ Check WIP limits
+☐ Review overdue cards
+
+Biweekly:
+☐ Archive completed milestones
+☐ Create next sprint milestone
+☐ Review category distribution
+☐ Update board description if needed
+
+Monthly:
+☐ Archive completed boards
+☐ Clean up old groups (delete empty)
+☐ Review and consolidate categories
+☐ Refresh milestone targets
+☐ Clear unused filters
+☐ Review board members (remove inactive)
+
+Quarterly:
+☐ Full board structure review
+☐ Process improvement retrospective
+☐ Update documentation
+☐ Training refresh for new members
+```
 
 **Periodic Review:**
-- Board structure
-- Column effectiveness
-- WIP limits
-- Team feedback
-- Process improvements
+
+```
+Quarterly Board Health Check:
+
+1. Board Structure
+   Questions:
+   - Are columns still appropriate?
+   - Do we need to add/remove columns?
+   - Is workflow clear to everyone?
+   
+   Action: Adjust columns if needed
+
+2. Column Effectiveness
+   Metrics:
+   - Average time cards spend in each column
+   - Bottleneck identification
+   - Card aging (stuck cards)
+   
+   Action: Optimize slow columns
+
+3. WIP Limits
+   Check:
+   - Are limits being followed?
+   - Are they too strict/loose?
+   - Is work flowing smoothly?
+   
+   Action: Adjust limits based on data
+
+4. Team Feedback
+   Gather:
+   - What's working well?
+   - What's frustrating?
+   - What should change?
+   - What features are underutilized?
+   
+   Action: Implement improvements
+
+5. Process Improvements
+   Identify:
+   - Repeated problems
+   - Manual workarounds
+   - Time-wasting activities
+   - Automation opportunities
+   
+   Action: Improve processes
+
+Continuous improvement culture
+```
 
 ---
 
-### CHAPTER 16: COMPLIANCE BOARD WORKFLOWS
+---
 
-**16.1 Regulation Implementation Board**
+## CHAPTER 16: COMPLIANCE BOARD WORKFLOWS
+
+Real-world examples of compliance boards for regulation implementation, audit preparation, and continuous monitoring.
+
+### 16.1 Regulation Implementation Board
+
 **Setup:**
-- Export workflow to board
-- Full regulation tree in dynamic list
-- Reference column with requirements
-- Milestones for regulation sections
+
+```
+Scenario: Full GDPR Compliance Implementation
+
+Consultant actions:
+
+1. Export Workflow to Board
+   → Go to GDPR Workflow (Creation mode)
+   → Click "Export to Board"
+   → Select "Export Full Workflow"
+   → Include "All Tags"
+   → Create board: "GDPR Compliance 2024"
+
+2. Full Regulation Tree in Dynamic List
+   Result after export:
+   
+   Dynamic List contains:
+   GDPR Compliance Framework
+   ├─ Chapter I: General Provisions
+   │  ├─📄 Article 1: Subject Matter
+   │  ├─📄 Article 2: Material Scope
+   │  └─🔗 Article 4: Definitions
+   ├─ Chapter II: Principles
+   │  ├─🔗 Article 5: Principles
+   │  └─🔗 Article 6: Lawfulness
+   ├─ Chapter IV: Controller & Processor
+   │  ├─🔗 Article 30: Records of Processing
+   │  ├─🔗 Article 32: Security of Processing
+   │  └─🔗 Article 33: Breach Notification
+   ... (all 79 articles)
+   
+   Blue 🔗 nodes = Clickable filters
+   Yellow 📄 nodes = Reference info
+
+3. Reference Column with Requirements
+   Consultant adds key requirement cards:
+   
+   References Column:
+   ├─ □ GDPR Art 5 (Principles)
+   ├─ □ GDPR Art 6 (Lawfulness)
+   ├─ □ GDPR Art 30 (Records)
+   ├─ □ GDPR Art 32 (Security)
+   ├─ □ GDPR Art 33 (Breach)
+   └─ ... (15 key articles)
+   
+   Column locked by consultant
+   Client cannot edit
+
+4. Milestones for Regulation Sections
+   Consultant creates:
+   
+   Milestones:
+   ├─ Phase 1: Assessment (Jan 1-31)
+   ├─ Phase 2: Principles Impl (Feb 1-28)
+   ├─ Phase 3: Security Impl (Mar 1-31)
+   ├─ Phase 4: Rights Impl (Apr 1-30)
+   └─ Phase 5: Audit Ready (May 1-31)
+   
+   5-month timeline
+   Clear phases
+```
+
+---
 
 **Categories:**
-- IT Department
-- HR Department
-- Finance Department
-- Legal Department
+
+```
+Department-based categories:
+
+1. IT Department (Blue 🖥️)
+   Responsibilities:
+   - Technical security controls
+   - Data encryption
+   - Access controls
+   - System configurations
+   - Breach detection systems
+
+2. HR Department (Green 👥)
+   Responsibilities:
+   - Employee training
+   - Staff awareness
+   - Background checks
+   - Data protection policies
+   - Employee rights (GDPR Art 88)
+
+3. Finance Department (Orange 💰)
+   Responsibilities:
+   - Budget for compliance
+   - Vendor contracts (DPAs)
+   - Insurance coverage
+   - Financial records retention
+   - Payment data protection
+
+4. Legal Department (Purple ⚖️)
+   Responsibilities:
+   - Policy drafting
+   - Privacy notices
+   - Data processing agreements
+   - Legal basis documentation
+   - Regulatory liaison
+
+All implementation cards assigned to one category
+```
+
+---
 
 **Execution:**
-- Create implementation cards
-- Link to requirement nodes
-- Filter by department (category)
-- Track by section (milestone)
-- Mark controls done
-- Audit trail complete
 
-**16.2 Audit Preparation Board**
+```
+Client team workflow:
+
+1. Create Implementation Cards
+   
+   Example for GDPR Article 32 (Security):
+   
+   Reference Card: "GDPR Art 32 - Security"
+   
+   Client creates implementation cards:
+   ├─ "Deploy encryption at rest (AES-256)"
+   │  Category: IT Department
+   │  Milestone: Phase 3
+   │  Linked to: Art 32 node (dynamic list)
+   │
+   ├─ "Implement MFA for all users"
+   │  Category: IT Department  
+   │  Milestone: Phase 3
+   │  Linked to: Art 32 node
+   │
+   ├─ "Configure intrusion detection (IDS)"
+   │  Category: IT Department
+   │  Milestone: Phase 3
+   │  Linked to: Art 32 node
+   │
+   └─ "Document security measures"
+      Category: Legal Department
+      Milestone: Phase 3
+      Linked to: Art 32 node
+   
+   One requirement → Multiple implementation tasks
+
+2. Link to Requirement Nodes
+   
+   Each card references:
+   - Source: GDPR Article 32
+   - Dynamic list connection node
+   - Reference column card
+   
+   Traceability: Requirement → Implementation
+
+3. Filter by Department (Category)
+   
+   IT team clicks "IT Department" category:
+   → See only IT cards (30 cards)
+   → Focus on their responsibilities
+   → Track IT-specific progress
+   
+   Legal team clicks "Legal Department":
+   → See only Legal cards (15 cards)
+   → Focus on policies and documentation
+   → Track legal work
+
+4. Track by Section (Milestone)
+   
+   Phase 3 milestone: "Security Implementation"
+   
+   Linked cards: 25 security-related tasks
+   Progress: 15/25 complete (60%)
+   Status: In Progress
+   Due: March 31, 2024
+   
+   Visual progress tracking
+   Clear deadline
+
+5. Mark Controls Done
+   
+   As implementation completes:
+   ├─ "Deploy encryption" → Done ✓
+   ├─ "Implement MFA" → Done ✓
+   ├─ "Configure IDS" → Done ✓
+   └─ "Document security" → Done ✓
+   
+   Article 32: 100% complete
+   
+   Milestone progress updates automatically
+
+6. Audit Trail Complete
+   
+   Activity Log shows:
+   - Jan 15: IT team created security cards
+   - Feb 1: Sarah started encryption work
+   - Feb 10: Encryption deployed (comment with evidence)
+   - Feb 15: Security Manager approved
+   - Feb 15: Card moved to Done
+   
+   Full history for auditors
+   Evidence of implementation
+   Approval documented
+```
+
+---
+
+### 16.2 Audit Preparation Board
+
 **Setup:**
-- Export audit scope workflow
-- Reference column with evidence requirements
-- Milestones for audit areas
+
+```
+Scenario: ISO 27001 Audit Preparation
+
+Consultant setup:
+
+1. Export Audit Scope Workflow
+   → ISO 27001 workflow with audit scope
+   → Export to board: "ISO 27001 Audit Prep"
+   → Include all control evidence requirements
+
+2. Reference Column with Evidence Requirements
+   
+   References Column:
+   ├─ □ A.5.1 Information Security Policies
+   │     Evidence: Policy docs, approval records
+   ├─ □ A.8.1 Inventory of Assets  
+   │     Evidence: Asset register, classifications
+   ├─ □ A.9.1 Access Control Policy
+   │     Evidence: Policy, user access logs
+   ├─ □ A.12.1 Operational Procedures
+   │     Evidence: Runbooks, change logs
+   └─ ... (all 114 controls)
+   
+   Each card lists required evidence
+
+3. Milestones for Audit Areas
+   
+   Milestones by control domain:
+   ├─ Information Security Policies (Week 1)
+   ├─ Asset Management (Week 2)
+   ├─ Access Control (Week 3)
+   ├─ Cryptography (Week 4)
+   ├─ Physical Security (Week 5)
+   ├─ Operations Security (Week 6)
+   └─ ... (14 domains, 14 weeks)
+   
+   One domain per week
+   Systematic preparation
+```
+
+---
 
 **Groups:**
-- Pre-audit tasks
-- Evidence collection
-- Remediation items
-- Follow-up actions
+
+```
+Task organization using groups:
+
+1. Pre-Audit Tasks
+   Purpose: Setup and planning
+   
+   Cards:
+   ├─ "Schedule audit kickoff meeting"
+   ├─ "Distribute audit scope to team"
+   ├─ "Assign evidence owners"
+   ├─ "Create evidence repository"
+   └─ "Set up audit communication channel"
+   
+   5 setup cards
+   Complete before evidence collection
+
+2. Evidence Collection
+   Purpose: Gather all proof of compliance
+   
+   Cards:
+   ├─ "Collect A.5.1 policy documents"
+   ├─ "Export A.8.1 asset register"
+   ├─ "Generate A.9.1 access logs"
+   ├─ "Compile A.12.1 change records"
+   └─ ... (114 evidence cards)
+   
+   Bulk operations:
+   → Set due date: 2 weeks before audit
+   → Add milestone: Evidence Collection
+
+3. Remediation Items
+   Purpose: Fix gaps found during prep
+   
+   Cards:
+   ├─ "Fix: Missing asset classifications"
+   ├─ "Fix: Outdated backup policy"
+   ├─ "Fix: Incomplete change logs"
+   └─ "Fix: MFA not on all accounts"
+   
+   Created as gaps identified
+   High priority
+
+4. Follow-Up Actions
+   Purpose: Post-audit activities
+   
+   Cards:
+   ├─ "Address auditor findings"
+   ├─ "Update policies per recommendations"
+   ├─ "Implement improvement suggestions"
+   └─ "Schedule next audit"
+   
+   Added during/after audit
+```
+
+---
 
 **Execution:**
-- Create evidence cards
-- Link to requirements
-- Bulk operations on groups
-- Track completion by area
-- Ready for audit
 
-**16.3 Continuous Monitoring Board**
+```
+Audit prep workflow:
+
+1. Create Evidence Cards
+   
+   For each control:
+   
+   Control: A.9.1 Access Control Policy
+   
+   Evidence card:
+   Title: "Collect A.9.1 evidence"
+   Description:
+   Required evidence:
+   ☐ Access Control Policy (latest version)
+   ☐ User access review logs (last 12 months)
+   ☐ Access request/approval forms (samples)
+   ☐ Access revocation records (samples)
+   ☐ Privileged access list (current)
+   
+   Linked to: A.9.1 reference card
+   Category: IT Department
+   Milestone: Access Control (Week 3)
+   Group: Evidence Collection
+
+2. Link to Requirements
+   
+   Each evidence card linked to:
+   - Control reference card
+   - Dynamic list node (control details)
+   - Required evidence list
+   
+   Traceability maintained
+
+3. Bulk Operations on Groups
+   
+   Group: "Evidence Collection" (114 cards)
+   
+   Week 1:
+   → Bulk set due date: March 15
+   → All 114 cards due March 15
+   
+   Week 3 (2 weeks before audit):
+   → Check completion: 95/114 done (83%)
+   → Identify lagging: 19 cards still open
+   → Escalate to managers
+   
+   Week 4 (1 week before audit):
+   → Bulk mark done: All evidence collected
+   → Move group to Done
+
+4. Track Completion by Area
+   
+   Milestone view:
+   
+   ├─ Asset Management: 8/8 controls ✓ (100%)
+   ├─ Access Control: 12/14 controls (86%)
+   ├─ Cryptography: 5/10 controls (50%)
+   └─ Physical Security: 0/14 controls (0%)
+   
+   Focus on incomplete areas
+   Prioritize remaining work
+
+5. Ready for Audit
+   
+   Checklist:
+   ☑ All 114 evidence items collected
+   ☑ Evidence organized in repository
+   ☑ Evidence owners assigned
+   ☑ Remediation items resolved
+   ☑ Audit room prepared
+   ☑ Team briefed on process
+   ☑ Auditor access configured
+   
+   Audit-ready board
+   Comprehensive preparation
+```
+
+---
+
+### 16.3 Continuous Monitoring Board
+
 **Setup:**
-- Export monitoring framework
-- Monthly milestones
-- Categories for control types
+
+```
+Scenario: SOC 2 Continuous Monitoring
+
+Consultant setup:
+
+1. Export Monitoring Framework
+   → SOC 2 control framework workflow
+   → Export to board: "SOC 2 Ongoing Monitoring"
+   → Trust Services Criteria in dynamic list
+
+2. Monthly Milestones
+   
+   Create recurring monthly milestones:
+   ├─ January 2024 Monitoring
+   ├─ February 2024 Monitoring
+   ├─ March 2024 Monitoring
+   ├─ Q1 2024 Quarterly Review
+   ├─ April 2024 Monitoring
+   ... (12 months)
+   
+   Monthly cadence
+   Quarterly deep dives
+
+3. Categories for Control Types
+   
+   SOC 2 Trust Services Categories:
+   ├─ Security (CC6)
+   ├─ Availability (A1)
+   ├─ Processing Integrity (PI1)
+   ├─ Confidentiality (C1)
+   └─ Privacy (P1)
+   
+   Align with SOC 2 criteria
+```
+
+---
 
 **Recurring Tasks:**
-- Monthly reviews
-- Quarterly assessments
-- Annual audits
-- Ongoing monitoring
+
+```
+Ongoing monitoring activities:
+
+1. Monthly Reviews
+   
+   Example cards (repeat monthly):
+   ├─ "Review user access (monthly)"
+   │  Due: Last day of each month
+   │  Checklist:
+   │  ☐ Export active user list
+   │  ☐ Review for anomalies
+   │  ☐ Document findings
+   │  ☐ Escalate issues
+   │
+   ├─ "Security patch compliance check"
+   │  Due: 15th of each month
+   │  Checklist:
+   │  ☐ Run vulnerability scan
+   │  ☐ Verify patches current
+   │  ☐ Document exceptions
+   │  ☐ Plan remediation
+   │
+   └─ "Backup verification test"
+      Due: 1st of each month
+      Checklist:
+      ☐ Test backup restoration
+      ☐ Verify data integrity
+      ☐ Document results
+      ☐ Update procedures
+
+2. Quarterly Assessments
+   
+   Deeper reviews every 3 months:
+   ├─ "Quarterly risk assessment"
+   ├─ "Vendor security review"
+   ├─ "Incident response drill"
+   ├─ "Policy review and update"
+   └─ "Control effectiveness testing"
+
+3. Annual Audits
+   
+   Yearly activities:
+   ├─ "Annual SOC 2 Type II audit"
+   ├─ "Annual security training"
+   ├─ "Annual BCP/DR test"
+   └─ "Annual compliance certification"
+
+4. Ongoing Monitoring
+   
+   Continuous activities:
+   ├─ "Log review (weekly)"
+   ├─ "Incident tracking (as needed)"
+   ├─ "Change management (as needed)"
+   └─ "Vulnerability remediation (as found)"
+```
+
+---
 
 **Execution:**
-- Create monitoring cards
-- Schedule with due dates
-- Track by month (milestone)
-- Filter by control type (category)
-- Trend analysis
+
+```
+Continuous monitoring workflow:
+
+1. Create Monitoring Cards
+   
+   Card: "Review user access (January 2024)"
+   Category: Security
+   Milestone: January 2024 Monitoring
+   Due: January 31, 2024
+   
+   Card: "Review user access (February 2024)"
+   Category: Security
+   Milestone: February 2024 Monitoring
+   Due: February 29, 2024
+   
+   ... (repeat for all 12 months)
+   
+   Same task, monthly recurrence
+
+2. Schedule with Due Dates
+   
+   Monthly tasks:
+   All due last day of month
+   
+   Quarterly tasks:
+   Due last day of quarter (Mar 31, Jun 30, Sep 30, Dec 31)
+   
+   Annual tasks:
+   Due specific dates (e.g., Annual audit: December 15)
+   
+   Clear schedule
+   No missed reviews
+
+3. Track by Month (Milestone)
+   
+   Milestone: "February 2024 Monitoring"
+   
+   Linked cards:
+   ├─ User access review ✓ (Done)
+   ├─ Patch compliance check ✓ (Done)
+   ├─ Backup verification (In Progress)
+   ├─ Log review Week 1 ✓ (Done)
+   ├─ Log review Week 2 ✓ (Done)
+   ├─ Log review Week 3 (To Do)
+   ├─ Log review Week 4 (To Do)
+   └─ Incident tracking ✓ (Done)
+   
+   Progress: 5/8 complete (63%)
+   Status: In Progress
+   
+   Month-by-month tracking
+
+4. Filter by Control Type (Category)
+   
+   Click "Security" category:
+   → See all Security controls
+   → 15 cards for February
+   → Track Security-specific monitoring
+   
+   Focus on control type
+   Compliance area visibility
+
+5. Trend Analysis
+   
+   Compare milestones:
+   
+   January: 20/20 cards done (100%)
+   February: 18/20 cards done (90%) - 2 late
+   March: 15/20 cards done (75%) - 5 late
+   
+   Trend: Declining performance
+   Action: Investigate capacity issues
+   
+   Continuous improvement
+   Data-driven decisions
+```
 
 ---
 
-### CHAPTER 17: TROUBLESHOOTING
+---
 
-**17.1 Common Issues**
-**Cards not moving:**
-- Check locked columns
-- Verify drag permissions
-- Refresh browser
+## CHAPTER 17: TROUBLESHOOTING
 
-**Filter not clearing:**
-- Click "Clear Filter" button
-- Check multiple filters active
-- Refresh if stuck
+Common issues, solutions, and how to get help.
 
-**Milestone progress wrong:**
-- Check card done status
-- Not based on column
-- Verify card links
-- Recalculates on changes
+### 17.1 Common Issues
 
-**Dynamic list not loading:**
-- Check export completed
-- Verify board created from workflow
-- Refresh panel
+**Cards Not Moving:**
 
-**17.2 Data Issues**
-**Changes not saving:**
-- Check network connection
-- Verify auto-save active
-- Manual save if needed
-- Check console errors
+```
+Problem: Can't drag and drop cards between columns
 
-**Missing cards:**
-- Check active filters
-- Verify not in References column
-- Check all columns (scroll)
-- Review activity log
+Possible causes:
 
-**17.3 Performance**
-**Slow board loading:**
-- Too many cards (>500)
-- Consider archiving old
-- Split into multiple boards
-- Clean up completed
+1. Check Locked Columns
+   → References column is locked by default
+   → Can't drag cards into/out of locked columns
+   → Solution: Use unlocked columns only
+   
+   Visual indicator:
+   References Column shows 🔒 icon
 
-**17.4 Getting Help**
-- Documentation
-- Support contact
-- Error messages
-- Console logs
-- Screenshots
+2. Verify Drag Permissions
+   → Check your board role (Admin/Member/Viewer)
+   → Viewers can't edit (read-only)
+   → Solution: Ask admin to change role to Member
+   
+   Your role shown in Members modal
+
+3. Refresh Browser
+   → Browser cache issue
+   → JavaScript error
+   → Solution: Hard refresh (Ctrl+Shift+R)
+   
+   Often fixes stuck states
+
+4. Browser Compatibility
+   → Some browsers have drag/drop issues
+   → Solution: Use Chrome, Firefox, or Edge
+   → Avoid Internet Explorer
+```
+
+**Filter Not Clearing:**
+
+```
+Problem: Filter banner shows but cards not appearing
+
+Solutions:
+
+1. Click "Clear Filter" Button
+   → Look for filter banner at top
+   → Click [×] or [Clear Filter] button
+   → Should show all cards
+
+2. Check Multiple Filters Active
+   → Category filter + Reference filter both on
+   → Showing intersection (very few cards)
+   → Solution: Clear all filters
+   
+   Filter banner shows all active filters:
+   "Filters: IT Dept | GDPR Art 32"
+
+3. Refresh If Stuck
+   → Filter state cached
+   → Solution: Refresh browser (F5)
+   → Filters reset to none
+
+4. Check URL Parameters
+   → Filter might be in URL
+   → Solution: Navigate to board home
+   → Clean URL without parameters
+```
+
+**Milestone Progress Wrong:**
+
+```
+Problem: Milestone shows 0% but cards are done
+
+Causes:
+
+1. Check Card Done Status
+   → Milestone progress based on isDone property
+   → NOT based on which column
+   → Solution: Mark cards as Done (checkbox)
+   
+   Card must be:
+   ✓ In Done column AND
+   ✓ Done checkbox checked
+
+2. Not Based on Column
+   → Common misunderstanding
+   → Moving to Done column ≠ marking done
+   → Solution: Check Done checkbox in card
+   
+   Progress = (Cards with Done ☑) / (Total cards)
+
+3. Verify Card Links
+   → Card might not be linked to milestone
+   → Solution: Open card, check Milestone field
+   → Re-link if needed
+
+4. Recalculates on Changes
+   → Progress updates after action
+   → May take 1-2 seconds
+   → Solution: Wait briefly, refresh if needed
+   
+   Auto-calculated
+   Not manual
+```
+
+**Dynamic List Not Loading:**
+
+```
+Problem: Dynamic list panel empty or shows error
+
+Solutions:
+
+1. Check Export Completed
+   → Board must be created from workflow export
+   → Can't add dynamic list to manual board
+   → Solution: Re-export workflow to new board
+   
+   Workflow → Export to Board → Creates dynamic list
+
+2. Verify Board Created from Workflow
+   → Manual boards don't have dynamic lists
+   → Solution: Use workflow export feature
+   
+   Check board creation method:
+   Board created "from workflow" = Has dynamic list
+   Board created "from scratch" = No dynamic list
+
+3. Refresh Panel
+   → Click Dynamic List toggle off, then on
+   → Solution: Close and reopen panel
+   → Or refresh browser (F5)
+
+4. Check Workflow Had Content
+   → Exported empty workflow = Empty dynamic list
+   → Solution: Add content to workflow, re-export
+   
+   Export full workflow with hierarchy
+```
 
 ---
 
-### APPENDICES
+### 17.2 Data Issues
 
-**Appendix A: Board Keyboard Shortcuts**
-**Appendix B: Card Properties Quick Reference**
-**Appendix C: Bulk Operations Checklist**
-**Appendix D: Board Setup Template**
-**Appendix E: Sample Boards by Use Case**
-**Appendix F: Integration Guide (Future)**
-**Appendix G: Reporting Guide (Future)**
+**Changes Not Saving:**
+
+```
+Problem: Edits disappear after reload
+
+Diagnosis:
+
+1. Check Network Connection
+   → No internet = No save
+   → Look for network error messages
+   → Solution: Reconnect, retry edit
+   
+   Browser shows offline indicator
+
+2. Verify Auto-Save Active
+   → Auto-save usually enabled
+   → Should see "Saving..." indicator
+   → Solution: Check board settings
+   
+   Settings → Auto-save checkbox ☑
+
+3. Manual Save If Needed
+   → Some boards may require manual save
+   → Look for Save button
+   → Solution: Click Save before leaving
+   
+   Ctrl+S might trigger save
+
+4. Check Console Errors
+   → Browser developer tools (F12)
+   → Console tab
+   → Look for save errors
+   → Solution: Report error to support
+   
+   Red errors in console = Problem
+   
+5. Session Expired
+   → Logged out automatically
+   → Solution: Log in again, retry
+   
+   Re-authenticate if session timeout
+```
+
+**Missing Cards:**
+
+```
+Problem: Cards disappeared from board
+
+Where to look:
+
+1. Check Active Filters
+   → Most common cause
+   → Filter hiding cards
+   → Solution: Clear all filters
+   
+   Look for filter banner at top
+   Click [Clear All Filters]
+
+2. Verify Not in References Column
+   → References column often collapsed
+   → Cards might be there
+   → Solution: Scroll left to References column
+   
+   Locked column on far left
+
+3. Check All Columns (Scroll)
+   → Board wider than screen
+   → Cards in rightmost columns
+   → Solution: Scroll horizontally
+   
+   Use scrollbar or drag board
+
+4. Review Activity Log
+   → Cards might be deleted
+   → Check who did what
+   → Solution: Activity log shows history
+   
+   Board menu → Activity Log
+   Filter by "deleted"
+   
+5. Check Search
+   → If search feature enabled
+   → Search by card title
+   → Solution: Find card by name
+```
 
 ---
 
-*This outline will be filled with detailed content, screenshots, and step-by-step tutorials in the final documentation.*
+### 17.3 Performance
+
+**Slow Board Loading:**
+
+```
+Problem: Board takes >10 seconds to load
+
+Causes:
+
+1. Too Many Cards (>500)
+   → Large boards slow down
+   → 500+ cards = Performance issue
+   → Current board size:
+     - Check total card count
+     - Shown in board library
+   
+   Recommended: <300 cards per board
+
+2. Consider Archiving Old
+   → Completed work still on board
+   → Archive old projects
+   → Solution:
+     a. Create archive board
+     b. Move done cards to archive
+     c. Or use Archive feature
+   
+   Keep active board lean
+
+3. Split into Multiple Boards
+   → One huge board → Multiple focused boards
+   → Solution:
+     - By department (IT board, Legal board)
+     - By project (Q1 board, Q2 board)
+     - By phase (Planning board, Execution board)
+   
+   Smaller boards = Better performance
+
+4. Clean Up Completed
+   → Remove done cards regularly
+   → Solution: Monthly cleanup
+   
+   Archive done cards
+   Delete unnecessary cards
+   
+5. Clear Browser Cache
+   → Cached data causing slowness
+   → Solution: Clear cache (Ctrl+Shift+Delete)
+   
+   Fresh start
+```
+
+---
+
+### 17.4 Getting Help
+
+**Documentation:**
+
+```
+First stop: This manual
+
+1. Search This Manual
+   → Use Find (Ctrl+F)
+   → Search for your issue
+   → Follow troubleshooting steps
+
+2. Platform Overview
+   → General concepts
+   → How features work
+   → Architecture understanding
+
+3. Workflows Manual
+   → If issue with workflow export
+   → Export to board problems
+   → Dynamic list issues
+
+4. Templates Manual
+   → If board structure issues
+   → Understanding hierarchy
+   → Configuration problems
+```
+
+**Support Contact:**
+
+```
+When to contact support:
+
+✓ Tried troubleshooting steps
+✓ Checked documentation
+✓ Issue persists
+✓ Data loss risk
+✓ Critical problem
+
+What to include:
+
+1. Clear Problem Description
+   - What you were trying to do
+   - What happened instead
+   - What you expected to happen
+
+2. Steps to Reproduce
+   - Step 1: I clicked...
+   - Step 2: Then I...
+   - Step 3: Error appeared
+
+3. Error Messages (exact text)
+4. Screenshots (see below)
+5. Console Logs (if technical)
+6. Browser & Version
+7. When it started
+8. Frequency (always/sometimes)
+
+Support contact:
+- Email: support@platform.com
+- Phone: (555) 123-4567
+- Portal: support.platform.com
+```
+
+**Error Messages:**
+
+```
+Capturing error details:
+
+1. Screenshot the Error
+   → Exact error text
+   → Error code (if shown)
+   → Context (what you were doing)
+
+2. Copy Error Text
+   → Select and copy (Ctrl+C)
+   → Paste into support ticket
+   → Searchable text helps
+
+3. Note Error Timing
+   → When did it appear?
+   → After which action?
+   → Can you reproduce it?
+```
+
+**Console Logs:**
+
+```
+For technical issues:
+
+1. Open Developer Tools
+   → Press F12 (or Ctrl+Shift+I)
+   → Click "Console" tab
+
+2. Reproduce the Issue
+   → Do the action that causes error
+   → Watch for red errors in console
+
+3. Copy Console Output
+   → Right-click in console
+   → "Save as.." or copy text
+   → Send to support
+
+Helps technical support diagnose
+```
+
+**Screenshots:**
+
+```
+Taking helpful screenshots:
+
+What to capture:
+
+1. Full Screen Context
+   → Show entire board
+   → Include header, columns, cards
+   → Shows what you're looking at
+
+2. Specific Error
+   → Close-up of error message
+   → Dialog box with error
+   → Button/feature not working
+
+3. Before/After
+   → State before action
+   → State after action
+   → Shows the problem
+
+4. Highlight the Issue
+   → Use red arrow/circle
+   → Point to problem area
+   → Makes issue clear
+
+How to take screenshots:
+- Windows: Win+Shift+S (Snip Tool)
+- Mac: Cmd+Shift+4
+- Full screen: Print Screen
+
+Save as .png or .jpg
+Attach to support ticket
+```
+
+---
+
+---
+
+## APPENDICES
+
+Quick reference guides and templates.
+
+---
+
+### APPENDIX A: BOARD KEYBOARD SHORTCUTS
+
+```
+General Navigation:
+─────────────────────────────────────
+Ctrl + F          Search (if enabled)
+Esc               Close modal/panel
+F5                Refresh board
+Ctrl + S          Manual save (if needed)
+Ctrl + Z          Undo (if supported)
+Ctrl + Y          Redo (if supported)
+
+Card Operations:
+─────────────────────────────────────
+N or +            Create new card (floating button focus)
+Enter             Open focused card
+Del               Delete selected card (with confirmation)
+Ctrl + C          Copy card (if supported)
+Ctrl + V          Paste card (if supported)
+E                 Edit focused card
+M                 Move card to column (if shortcut enabled)
+
+Column Operations:
+─────────────────────────────────────
+←                 Scroll left
+→                 Scroll right
+Ctrl + ←          Jump to first column
+Ctrl + →          Jump to last column
+
+Panel Toggles:
+─────────────────────────────────────
+Ctrl + D          Toggle Dynamic List panel
+Ctrl + A          Toggle Activity Log
+Ctrl + M          Toggle Members list
+
+Filter Operations:
+─────────────────────────────────────
+Ctrl + Shift + C  Clear all filters
+F                 Focus filter input (if available)
+
+Board Management:
+─────────────────────────────────────
+Ctrl + Shift + S  Open Settings
+Ctrl + Shift + E  Export board (if available)
+Ctrl + Shift + A  Archive board (with confirmation)
+
+Note: Keyboard shortcuts may vary by browser and implementation.
+Check board Help menu for complete list.
+```
+
+---
+
+### APPENDIX B: CARD PROPERTIES QUICK REFERENCE
+
+```
+Card Property Summary:
+═══════════════════════════════════════════════════════════
+
+Property          | Type       | Required | Editable | Filterable
+────────────────────────────────────────────────────────────────
+Title             | Text       | Yes      | Yes      | Yes (search)
+Description       | Rich Text  | No       | Yes      | Yes (search)
+Column            | Dropdown   | Yes      | Yes      | No (visual)
+Done Status       | Checkbox   | No       | Yes      | No (calc)
+Category          | Single     | No       | Yes      | Yes
+Milestone         | Single     | No       | Yes      | No
+Due Date          | Date       | No       | Yes      | Yes
+Effort (Est)      | Number     | No       | Yes      | No
+Effort (Actual)   | Number     | No       | Yes      | No
+Assignments       | Multiple   | No       | Yes      | No
+Groups            | Multiple   | No       | Yes      | No
+Linked References | Multiple   | No       | Yes      | Yes
+Comments          | Text List  | No       | Yes      | No
+Notes             | Rich Text  | No       | Yes      | No
+Links             | URL List   | No       | Yes      | No
+Images            | URL List   | No       | Yes      | No
+Checklist         | Task List  | No       | Yes      | No
+
+Assignment Roles:
+- Executor: Primary doer, responsible for completion
+- Approver: Reviews and approves, quality gate
+- Follower: Stays informed, observer
+- Supervisor: Oversight, escalation point
+
+Due Date Visual Indicators:
+🔴 Red = Overdue (past due date)
+🟠 Orange = Due soon (within 3 days)
+Normal = Future (more than 3 days away)
+
+Effort Tracking:
+- Estimated: Planning hours (capacity planning)
+- Actual: Hours spent (reality check, improvement data)
+- Display: "8h est / 6h act" on card face
+
+Timestamps (Auto-generated):
+- Created At: Card creation timestamp
+- Created By: User who created card
+- Updated At: Last modification timestamp
+- Updated By: User who last modified card
+```
+
+---
+
+### APPENDIX C: BULK OPERATIONS CHECKLIST
+
+```
+Using Groups for Bulk Operations:
+═══════════════════════════════════════════════════════════
+
+Step 1: Create Group
+☐ Navigate to Management Tools Panel
+☐ Click [+] on Groups carousel
+☐ Enter group name (e.g., "Sprint 1")
+☐ Choose color
+☐ Click [Create]
+
+Step 2: Add Cards to Group
+☐ Open each card to add
+☐ Scroll to Groups section
+☐ Check the group checkbox
+☐ Verify group card count updates
+
+Step 3: Perform Bulk Operation
+
+Available Operations:
+☐ Add/Remove Milestone: Apply milestone to all cards in group
+☐ Apply/Remove Category: Set category for all cards (replaces existing)
+☐ Mark All Done/Undone: Update done status for all cards
+☐ Set/Clear Due Date: Apply same due date or clear all dates
+
+Best Practices:
+✓ Use groups for 5+ cards (for fewer cards, edit individually)
+✓ Verify results after bulk operation (check sample cards)
+✓ Delete empty groups regularly (reduce clutter)
+✓ Remember bulk operations REPLACE existing values
+
+Common Use Cases:
+- Sprint Planning: Create sprint group, add 20 tasks, bulk set due date
+- Initiative Tracking: Long-term group, track progress across sprints
+- Evidence Collection: Audit prep group, bulk set due date 2 weeks before audit
+```
+
+---
+
+### APPENDIX D: BOARD SETUP TEMPLATE
+
+```
+Board Setup Checklist
+═══════════════════════════════════════════════════════════
+
+Phase 1: Planning
+☐ Define regulation/standard (GDPR, ISO 27001, SOC 2, etc.)
+☐ Identify scope (full or specific sections)
+☐ List departments involved (IT, Legal, HR, Finance)
+☐ Determine timeline (start date, target completion)
+☐ Identify team members (names, roles)
+
+Phase 2: Board Creation (Consultant)
+☐ Export workflow to board
+☐ Name board: "[Regulation] [Project] [Year]"
+   Example: "GDPR Compliance Implementation 2024"
+☐ Verify dynamic list populated correctly
+
+Phase 3: Configuration (Consultant)
+☐ Adjust columns (default: To Do, Progress, Review, Done)
+☐ Set WIP limits (e.g., Progress: 7, Review: 5)
+☐ Create milestones with due dates
+☐ Create categories (by department or work type)
+☐ Add key reference cards to References column
+☐ Lock References column
+☐ Add guidance note: "How to Use This Board"
+
+Phase 4: Team Setup
+☐ Add board members with appropriate roles:
+   - Admins: Full control
+   - Members: Can edit
+   - Viewers: Read-only
+☐ Configure board settings (auto-save, notifications)
+
+Phase 5: Launch (Client)
+☐ Review references and requirements
+☐ Create initial implementation cards (50-150 cards)
+☐ Define working agreements (standup time, update frequency)
+☐ Set up meeting cadence (daily standup, weekly planning)
+☐ Begin first sprint
+
+Phase 6: Ongoing Maintenance
+☐ Weekly: Update statuses, review overdue cards
+☐ Biweekly: Create next milestone, plan next sprint
+☐ Monthly: Archive old milestones, clean up groups
+☐ Quarterly: Board health check, process improvements
+```
+
+---
+
+### APPENDIX E: SAMPLE BOARDS BY USE CASE
+
+```
+Sample Board Configurations
+═══════════════════════════════════════════════════════════
+
+Use Case 1: GDPR Compliance Implementation
+────────────────────────────────────────────────────────────
+Timeline: 6 months
+Team: 15 members
+Columns: Backlog, To Do, In Progress (10), Review (5), Done
+Milestones: 6 phases (Gap Analysis, Principles, Security, Rights, Documentation, Audit Prep)
+Categories: IT, Legal, HR, Finance, Executive
+Expected Cards: 120-150
+
+Use Case 2: ISO 27001 Audit Preparation
+────────────────────────────────────────────────────────────
+Timeline: 3 months
+Team: 10 members
+Columns: Backlog, Evidence Needed, Collection, Review, Audit Ready
+Milestones: 12 weeks (by control domain)
+Categories: Security, HR, Operations, Compliance
+Expected Cards: 150-180
+
+Use Case 3: SOC 2 Continuous Monitoring
+────────────────────────────────────────────────────────────
+Timeline: 12 months (recurring)
+Team: 8 members
+Columns: Scheduled, This Month, In Progress (7), Review, Complete
+Milestones: Monthly (Jan-Dec) + Quarterly reviews
+Categories: Security, Availability, Processing Integrity, Confidentiality, Privacy
+Expected Cards: 50-70 (recurring monthly)
+
+Use Case 4: NIST CSF Implementation
+────────────────────────────────────────────────────────────
+Timeline: 9 months
+Team: 12 IT staff
+Columns: Backlog, Planning, Implementation, Testing, Deployed
+Milestones: 5 functions (Identify, Protect, Detect, Respond, Recover)
+Categories: Network Security, Application Security, Data Security, Identity & Access, Infrastructure
+Expected Cards: 100-130
+
+Board Sizing Guidelines:
+- Small project: 30-50 cards
+- Medium project: 80-150 cards
+- Large project: 150-300 cards
+- >300 cards: Consider splitting into multiple boards
+```
+
+---
+
+### APPENDIX F: INTEGRATION GUIDE (Future Feature)
+
+```
+Future Feature: Board Integrations
+
+Planned integrations for future releases:
+
+1. Calendar Integration
+   - Sync due dates to Google Calendar, Outlook
+   - Milestone dates as calendar events
+
+2. Communication Tools
+   - Slack notifications for card moves
+   - Microsoft Teams integration
+   - Email alerts for assignments
+
+3. Ticketing Systems
+   - Jira sync (two-way)
+   - ServiceNow integration
+
+4. Documentation Platforms
+   - Confluence page linking
+   - SharePoint document library
+
+5. Audit/GRC Tools
+   - OneTrust integration
+   - ServiceNow GRC
+
+Check product roadmap for release dates and details.
+```
+
+---
+
+### APPENDIX G: REPORTING GUIDE (Future Feature)
+
+```
+Future Feature: Advanced Reporting
+
+Planned reporting capabilities:
+
+1. Progress Reports
+   - Board completion percentage over time
+   - Milestone progress tracking
+   - Card velocity (cards completed per week)
+   - Burndown charts
+
+2. Team Reports
+   - Workload distribution
+   - Member productivity
+   - Capacity utilization
+
+3. Compliance Reports
+   - Control implementation status
+   - Audit readiness assessment
+   - Evidence collection progress
+
+4. Custom Reports
+   - Filter by category, milestone, date range
+   - Export to PDF, Excel, CSV
+   - Dashboard views
+
+Check product roadmap for release dates and details.
+```
+
+---
+
+## END OF BOARDS MANUAL
+
+**Manual Status: Complete**
+
+This manual provides comprehensive coverage of the Boards (Project Portfolio Management) module, including:
+
+✓ 17 detailed chapters covering all features
+✓ Step-by-step instructions with ASCII diagrams
+✓ Real-world compliance use cases (GDPR, ISO 27001, SOC 2, NIST CSF, PCI-DSS)
+✓ Best practices and troubleshooting guides
+✓ Quick reference appendices
+✓ Sample board configurations
+
+**Total Content:**
+- ~12,000 lines of documentation
+- 17 main chapters
+- 7 appendices
+- Comprehensive feature coverage
+- Non-technical, user-focused language
+- Compliance consultancy use case throughout
+
+**Related Documentation:**
+- [Platform Overview Manual](00_PLATFORM_OVERVIEW_OUTLINE.md)
+- [Templates Manual](01_TEMPLATES_MANUAL_OUTLINE.md)
+- [Workflows Manual](02_WORKFLOWS_MANUAL_OUTLINE.md)
+
+---
