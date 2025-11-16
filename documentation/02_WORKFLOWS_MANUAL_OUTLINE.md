@@ -1605,180 +1605,2075 @@ If no template quite fits:
 
 ---
 
-### CHAPTER 4: WORKFLOW PROPERTIES
+## CHAPTER 4: WORKFLOW PROPERTIES
 
-**4.1 Workflow-Level Settings**
+Workflows have settings that control their behavior and presentation.
+
+### 4.1 Workflow-Level Settings
+
+These settings apply to the entire workflow, not individual units.
+
 **Workflow Name**
-- Primary identifier
-- Shown in selector
-- 3-100 characters
-- Edit via rename button
+
+**Purpose:** Primary identifier for your workflow
+
+**Characteristics:**
+- **Length:** 3-100 characters required
+- **Uniqueness:** Can have duplicate names (system uses IDs internally)
+- **Visibility:** Shows in dropdown selector, page title, board exports
+- **Editability:** Change anytime via Rename button
+
+**Best Practices:**
+- Descriptive and specific
+- Include client/project name
+- Add year or version if applicable
+- See Chapter 3.2 for detailed naming guidance
+
+**Editing:**
+1. Click **Rename** button
+2. Modal opens with current name
+3. Edit name
+4. Click **Save**
+5. Name updates instantly everywhere
+
+**Where It Appears:**
+- Workflow selector dropdown
+- Page title
+- Browser tab title
+- Board name (when exported)
+- Workflow list/library
+
+---
 
 **Workflow Icon**
-- Visual brand/identifier
-- 60+ icon library
-- Optional but recommended
-- Change via icon picker
+
+**Purpose:** Visual identifier for quick recognition
+
+**Icon Library:**
+- 60+ professional icons available
+- Categories: Technology, business, security, general
+- Examples: Lock, server, globe, document, chart
+
+**Setting the Icon:**
+
+**Method 1: During Creation**
+- When creating workflow from template, template's icon is inherited
+- Can override immediately or later
+
+**Method 2: After Creation**
+1. Click workflow icon area (if no icon set, shows placeholder)
+2. Icon picker modal opens
+3. Browse available icons
+4. Click to select
+5. Icon appears immediately
+
+**Icon Display:**
+- **In workflow interface:** Top-left near workflow name
+- **In selector dropdown:** Next to workflow name
+- **In boards:** When workflow exports
+
+**When to Use Icons:**
+- ✅ Multiple workflows for easy visual distinction
+- ✅ Client-facing workflows for professionalism
+- ✅ Category grouping (all ISO workflows use lock icon, all GDPR use scales)
+- ✅ Branding and aesthetics
+
+**When Icons Are Optional:**
+- Internal/personal workflows
+- Only have 1-2 workflows
+- Prefer minimalist interface
+
+**Tip:** Establish icon conventions
+```
+🔒 Lock = Security/InfoSec frameworks
+⚖️ Scales = Legal/compliance
+📊 Chart = Project management
+🏥 Medical = Healthcare/HIPAA
+💶 Euro = GDPR/European regulations
+```
+
+---
 
 **Workflow Description**
-- Narrative overview
-- Purpose and scope
-- Key stakeholders
-- Special instructions
-- Rich text or plain text
+
+**Purpose:** Narrative explanation of workflow's purpose and scope
+
+**Format:** Plain text or rich text (depending on implementation)
+
+**Recommended Content:**
+
+**1. Purpose Statement**
+```
+Example:
+"This workflow guides Acme Corp through ISO 27001:2022 
+implementation in preparation for certification audit in Q4 2024."
+```
+
+**2. Scope**
+```
+Example:
+"Covers all 93 Annex A controls across 4 domains: Organizational, 
+People, Physical, and Technological controls."
+```
+
+**3. Key Stakeholders**
+```
+Example:
+"Primary: IT Security Team
+Secondary: Legal, HR, Facilities
+Consultant: Jane Doe, InfoSec Partners LLC"
+```
+
+**4. Special Instructions**
+```
+Example:
+"Controls marked 'External-Audit' tag are priority for Q3 evidence 
+collection. All descriptions include implementation guidance specific 
+to Acme's cloud infrastructure."
+```
+
+**5. Timeline/Milestones**
+```
+Example:
+"Phase 1 (Q1): Gap assessment
+Phase 2 (Q2-Q3): Implementation
+Phase 3 (Q4): Audit preparation"
+```
+
+**Viewing the Description:**
+- Displayed prominently at top of workflow (if set)
+- Collapsible/expandable to save space
+- Always visible to all users
+
+**Editing:**
+1. Click **Edit Description** button (or description area)
+2. Text area or rich text editor opens
+3. Write/edit description
+4. Save (auto-save or manual save)
+
+**When to Use:**
+- ✅ Client-facing workflows (explain context)
+- ✅ Complex projects (document scope)
+- ✅ Collaborative workflows (clarify roles)
+- ✅ Workflows others will use (provide guidance)
+
+**When Optional:**
+- Personal workflows you understand
+- Self-explanatory simple checklists
+
+---
 
 **Sequential Order Enforcement**
-- Checkbox setting
-- Forces completion order
-- Audit trail compliance
-- When to enable/disable
 
-**4.2 Linked Workflow Indicator**
-- Shows if workflow is linked
-- Link icon in navigation
-- Unlink option available
-- Synchronization status
+**Purpose:** Force users to complete items in order (no skipping ahead)
 
----
+**How It Works:**
 
-### CHAPTER 5: BUILDING YOUR WORKFLOW STRUCTURE
+**When Enabled:**
+- Items must be completed sequentially
+- Cannot check item 3 until items 1 and 2 are done
+- Enforced per parent (children of same parent must be sequential)
+- Visual indicators show which items are "locked"
 
-**5.1 Understanding Units**
-- Individual items in hierarchy
-- Can have children
-- Inherit template properties
-- Auto-generated IDs
+**When Disabled (Default):**
+- Any item can be checked at any time
+- Complete in any order
+- Maximum flexibility
 
-**5.2 Adding Root-Level Units**
-- "Add [Level Name]" button at bottom
-- Keyboard shortcut: Ctrl+A
-- Empty state button
-- First-level items
+**Example:**
 
-**5.3 Adding Child Units**
-- "Add [Child Level Name]" button on parent
-- Appears after children
-- Nested hierarchy
-- Unlimited children per parent
+```
+Sequential Order ENABLED:
 
-**5.4 Unit Header Components**
-**Collapse/Expand Button:**
-- Chevron icon (▶ or ▼)
-- Click to toggle children
-- Smart state preservation
-- Only on units with children
+▼ Onboarding Process
+   ├─ [☑] 1. Submit application (done)
+   ├─ [☑] 2. Background check (done)
+   ├─ [☐] 3. Sign employment contract (can do - next in sequence)
+   └─ [🔒] 4. Complete orientation (locked until step 3 done)
+```
 
-**Icon Area:**
-- Image if assigned
-- Icon picker button (creation mode)
-- Visual identification
-- 24x24px display
+```
+Sequential Order DISABLED:
 
-**Unit ID:**
-- Custom identifier
-- Editable field (creation mode)
-- Display only (execution mode)
-- Examples: "AC-1", "PR.DS-5"
+▼ Audit Evidence Collection
+   ├─ [☐] Collect policy documents (can do anytime)
+   ├─ [☑] Review access logs (done out of order - OK)
+   ├─ [☐] Document procedures (can do anytime)
+   └─ [☐] Schedule interviews (can do anytime)
+```
 
-**Unit Name:**
-- Primary identifier
-- Editable field (creation mode)
-- Display text (execution mode)
-- Required field
+**When to Enable:**
 
-**Tags:**
-- Colored badges
-- Click to filter (execution mode)
-- Add/remove (creation mode)
-- Multiple per unit
+**✅ Use Sequential Order When:**
+- **Process dependencies exist:** Step B truly requires Step A completion
+- **Training/onboarding:** Learners should follow specific sequence
+- **Regulatory compliance:** Audit trails require ordered completion
+- **Risk management:** Skipping steps creates issues
+- **Manufacturing/quality:** Process steps must follow order
 
-**Done Checkbox:**
-- Execution mode only
-- Toggle completion
-- Progress calculation
-- Visual feedback
+**Examples:**
+- Software deployment checklist (can't test before deploying)
+- Employee onboarding (background check before system access)
+- Surgical procedures (steps must be in order)
+- Regulatory filings (preliminary approval before final submission)
 
-**Grade:**
-- Numeric input (if not cumulative)
-- Display only (if cumulative)
-- Sigma (Σ) indicator for cumulative
-- Configurable scale
+**❌ Don't Use Sequential Order When:**
+- Tasks are independent
+- Parallel work is desirable
+- Flexibility improves efficiency
+- Team members work on different areas simultaneously
 
-**Progress Bar:**
-- Visual percentage
-- Based on child completion
-- Requires child Done checkboxes
-- Hover shows percentage
+**Examples:**
+- Evidence collection (can gather documents in any order)
+- Bug fixes (can fix bugs in any order)
+- General compliance controls (implementation order flexible)
 
-**Delete Button:**
-- Trash icon
-- Creation mode only
-- Confirmation required
-- Recursive deletion
+**Setting:**
 
-**Export Button:**
-- "Board" button
-- Execution mode only
-- On units with children
-- Creates project board
+**During Workflow Creation:**
+- Some templates have sequential order pre-configured
+- Can override when creating workflow
 
-**5.5 Unit Body (Collapsible)**
-**Description Field:**
-- Detailed information
-- Textarea (creation mode)
-- Display only (execution mode)
-- Blur to save
+**After Creation:**
+1. Access workflow settings (implementation-specific)
+2. Toggle "Sequential Order" checkbox
+3. Save
+4. Applies immediately to workflow
 
-**Attachments Section:**
-- Links, Images, Notes, Comments
-- Each has add button
-- Display in lists
-- Delete individually
+**Impact on Users:**
+
+**In Execution Mode:**
+- Locked items show lock icon or disabled checkbox
+- Hover explains: "Complete previous items first"
+- Can still view/read locked items
+- Just can't mark as done
+
+**In Creation Mode:**
+- Setting doesn't affect structure editing
+- Only enforced in Execution Mode
 
 ---
 
-### CHAPTER 6: WORKING WITH PROPERTIES
+### 4.2 Linked Workflow Indicator
 
-**6.1 Editing Unit Names**
-- Click in name field
-- Type new name
-- Blur to auto-save
-- Real-time update
+Visual and functional elements showing workflow synchronization status.
 
-**6.2 Assigning Icons**
-- Click icon picker button
-- Modal shows 60+ icons
-- Select icon
-- Updates immediately
+**Linked Workflow Badge**
 
-**6.3 Setting Unit IDs**
-- Type in ID field
-- Regulatory codes
-- Internal references
-- Cross-reference keys
+**Visual:**
+- **Link icon (🔗)** appears next to workflow name
+- Usually in header near workflow title
+- May be colored or styled distinctively
 
-**6.4 Writing Descriptions**
-- Click to expand
-- Type content
-- Auto-save on blur
-- Supports line breaks
+**Hover Information:**
+- Hover over link icon
+- Tooltip appears: "Linked to: [Source Workflow Name]"
+- Shows which workflow this is synchronized with
 
-**6.5 Adding Tags**
-- "+" button in tag area
-- Modal prompts for tag name
-- Examples: "critical", "annual", "Q1"
-- Creates colored badge
+**Example:**
+```
+Workflow: Client A - ISO 27001 🔗
+          ↑                    ↑
+          Workflow name        Link indicator
 
-**6.6 Removing Tags**
-- Click "x" on tag badge
-- Immediate removal
-- Re-render updates
+Hover tooltip: "Linked to: ISO 27001:2022 Master Framework"
+```
 
-**6.7 Setting Grades**
-- Enter numeric value
-- Decimal precision
-- Cumulative auto-calculates
-- Progress bars update
+---
+
+**Link Status Information**
+
+**Where to View:**
+- Next to workflow name in header
+- In workflow info panel (if available)
+- Workflow settings/properties area
+
+**Information Displayed:**
+- **Source workflow name:** What workflow this links to
+- **Link creation date:** When link was established
+- **Last sync:** When structure last synchronized (if tracked)
+- **Sync status:** "Active" or "Unlinked"
+
+---
+
+**Unlink Option**
+
+**Purpose:** Break synchronization and make workflow independent
+
+**Unlink Button:**
+- **Location:** Near workflow name or in settings
+- **Label:** "Unlink" or "Break Link"
+- **Icon:** Broken chain (⛓️‍💥)
+- **Visibility:** Only on linked workflows
+
+**Unlinking Process:**
+
+1. **Click Unlink Button**
+2. **Confirmation Modal Appears**
+   ```
+   Unlink Workflow?
+   
+   This workflow is currently linked to:
+   "ISO 27001:2022 Master Framework"
+   
+   If you unlink:
+   ✓ This workflow becomes independent
+   ✓ No more automatic structure updates
+   ✓ You can freely modify structure
+   ✗ Cannot re-link later
+   ✗ This action cannot be undone
+   
+   [Cancel] [Unlink Workflow]
+   ```
+3. **Click "Unlink Workflow"**
+4. **Link icon disappears**
+5. **Workflow is now independent**
+
+**After Unlinking:**
+- Link icon removed
+- No more synchronization from source
+- Can add/delete units freely
+- Source workflow changes don't propagate
+- **Cannot re-link** (one-way operation)
+
+**When to Unlink:**
+
+**✅ Unlink When:**
+- Workflow has diverged significantly from source
+- Need to make structural changes specific to this workflow
+- Source workflow is no longer maintained
+- Project is complete and archived
+- No longer need synchronized updates
+
+**❌ Keep Link When:**
+- Want continued structural updates
+- Maintaining consistency is important
+- Source workflow actively maintained
+- Multiple clients need same structure
+
+**Warning:** Unlink carefully! This is permanent. If you might need synchronization later, keep the link.
+
+---
+
+**Synchronization Behavior**
+
+**Real-Time Sync (or Near Real-Time):**
+
+When source workflow changes structure:
+1. Source workflow: Add/delete/reorder unit
+2. Save occurs
+3. System detects linked workflows
+4. Updates propagate automatically
+5. Linked workflows update (usually within seconds)
+
+**What Triggers Sync:**
+- Adding new units to source
+- Deleting units from source
+- Moving units (reordering)
+- Structural hierarchy changes
+
+**What Doesn't Trigger Sync:**
+- Editing unit names (content, not structure)
+- Changing descriptions
+- Adding/removing tags
+- Modifying attachments
+- Completion status changes
+- Any content-level edits
+
+**User Experience During Sync:**
+
+**On Source Workflow:**
+- User makes structural change
+- Saves workflow
+- System notifies: "Linked workflows updated" (optional)
+
+**On Linked Workflow:**
+- User working in linked workflow
+- Structural change syncs in background
+- Page refreshes or auto-updates (implementation-dependent)
+- New units appear, deleted units removed
+- User's content (names, descriptions) preserved
+
+**Conflict Resolution:**
+
+**Scenario:** User editing linked workflow when sync occurs
+
+**Handling:**
+- Auto-save ensures no data loss
+- Structure updates merge with content edits
+- User's content always preserved
+- Structural positions may shift if reordering occurred
+
+**Example:**
+```
+User editing unit "Access Control Policy" in linked workflow
+Source workflow moves "Access Control" category to different position
+Sync occurs:
+✓ "Access Control Policy" name preserved
+✓ Description preserved
+✓ Tags preserved
+✓ Position updated to match source structure
+```
+
+---
+
+**Managing Multiple Linked Workflows**
+
+**Viewing All Linked Workflows:**
+
+**From Source Workflow:**
+- Some implementations show "Linked Workflows" count
+- Click to see list of all workflows linked to this one
+- Helpful for managing multi-client deployments
+
+**Example View:**
+```
+Workflow: ISO 27001:2022 Master Framework
+
+Linked Workflows (4):
+├─ Client A - ISO 27001 Implementation
+├─ Client B - ISO 27001 Implementation  
+├─ Client C - ISO 27001 Implementation
+└─ Client D - ISO 27001 Implementation
+
+[View] [Unlink All] buttons per workflow
+```
+
+**Mass Updates:**
+- Edit source workflow structure once
+- All linked workflows update automatically
+- Efficient for maintaining consistency
+
+**Caution with Source Edits:**
+- Structural changes affect ALL linked workflows
+- Delete carefully (removes from all)
+- Test changes in copy before applying to live source
+
+---
+
+---
+
+## CHAPTER 5: BUILDING YOUR WORKFLOW STRUCTURE
+
+How to populate your workflow with hierarchical content.
+
+### 5.1 Understanding Units
+
+**What is a Unit?**
+
+A **unit** is an individual item in your workflow hierarchy. Think of units as the building blocks of your workflow structure.
+
+**Key Characteristics:**
+
+**1. Hierarchical Nature**
+- Units can contain child units
+- Children can contain their own children
+- Creates nested tree structure
+- Reflects real-world organizational logic
+
+**Example:**
+```
+Unit: ISO 27001 Domain (Level 1)
+└─ Unit: Control Category (Level 2)
+   └─ Unit: Individual Control (Level 3)
+      └─ Unit: Implementation Task (Level 4)
+```
+
+**2. Property Inheritance**
+- Each unit inherits properties from template
+- Level 1 units get Level 1 properties
+- Level 2 units get Level 2 properties, etc.
+- Properties determine what fields are available
+
+**3. Unique Identifiers**
+- Every unit has auto-generated internal ID (system-managed)
+- Optional custom Display ID (user-defined, e.g., "A.5.1")
+- Name serves as primary user-facing identifier
+
+**4. Independent Data**
+- Each unit has its own name, description, tags, attachments
+- Editing one unit doesn't affect others
+- Parent-child relationships maintained
+
+**Unit Levels:**
+
+Units exist at specific levels in the hierarchy, defined by the template:
+
+```
+Template defines:
+Level 1: "Control Family"
+Level 2: "Control Category"
+Level 3: "Control"
+Level 4: "Task"
+
+Workflow contains units at these levels:
+Level 1 Unit: "Access Control" (Control Family)
+├─ Level 2 Unit: "User Access Management" (Control Category)
+│  ├─ Level 3 Unit: "A.9.1.1 Access control policy" (Control)
+│  │  └─ Level 4 Unit: "Draft policy document" (Task)
+```
+
+---
+
+### 5.2 Adding Root-Level Units
+
+Root-level units are top-level items with no parent.
+
+**Add Root Unit Button**
+
+**Location:** Bottom of workflow, below all existing units
+
+**Label:** "+ Add [Level 1 Name]"
+- Example: "+ Add Control Family"
+- Dynamic based on template's Level 1 name
+
+**Keyboard Shortcut:** Ctrl+A (Add root unit)
+
+**Visibility:** Creation Mode only
+
+**How to Add Root Unit:**
+
+1. **Scroll to bottom** of workflow
+2. **Click "+ Add [Level Name]"** button
+3. **New unit appears** with name field focused
+4. **Type name** for the unit
+5. **Press Tab or click outside** to save
+6. **Unit added** to workflow
+
+**Example:**
+```
+Workflow: ISO 27001 Implementation
+
+[Existing units...]
+
+[+ Add Control Family] ← Click here
+
+After clicking:
+▼ [Enter control family name...] ← Type here
+   
+After typing "Organizational Controls":
+▼ Organizational Controls
+   
+   [+ Add Control Category] ← Can now add children
+```
+
+**Empty State:**
+
+When workflow has no units yet, prominent call-to-action:
+
+```
+┌─────────────────────────────────────────┐
+│  Your workflow is ready to populate!    │
+│                                         │
+│  Click the button below to add your     │
+│  first control family.                  │
+│                                         │
+│       [+ Add Control Family]            │
+└─────────────────────────────────────────┘
+```
+
+**Multiple Root Units:**
+
+You can add as many root units as needed:
+
+```
+▼ Organizational Controls (Root Unit 1)
+▼ People Controls (Root Unit 2)
+▼ Physical Controls (Root Unit 3)
+▼ Technological Controls (Root Unit 4)
+
+[+ Add Control Family] ← Add more
+```
+
+---
+
+### 5.3 Adding Child Units
+
+Child units nest under parent units, creating hierarchy.
+
+**Add Child Button**
+
+**Location:** Inside parent unit, after existing children
+
+**Label:** "+ Add [Child Level Name]"
+- Example: "+ Add Control"
+- Dynamic based on next level in template
+
+**Visibility:**
+- Creation Mode only
+- Appears when parent is expanded
+- Only if parent's level can have children
+
+**How to Add Child Unit:**
+
+1. **Expand parent unit** (if collapsed)
+2. **Scroll to bottom** of parent's children
+3. **Click "+ Add [Child Level Name]"** button
+4. **New child appears** with name field focused
+5. **Type name**
+6. **Press Tab or click outside** to save
+7. **Child added** under parent
+
+**Example:**
+
+```
+Before:
+▼ Access Control (parent, no children yet)
+   
+   [+ Add Control Category] ← Click here
+
+After clicking:
+▼ Access Control
+   └─ [Enter control category name...] ← Type here
+
+After typing "User Access Management":
+▼ Access Control
+   └─ User Access Management
+      
+      [+ Add Control] ← Can add children to this unit too
+```
+
+**Nested Hierarchy:**
+
+Children can have their own children, creating deep structure:
+
+```
+▼ Level 1: Organizational Controls
+   └─ Level 2: A.5 Policies for Information Security
+      └─ Level 3: A.5.1 Policies for information security
+         ├─ Level 4: Draft information security policy
+         ├─ Level 4: Get executive approval
+         └─ Level 4: Publish policy to intranet
+```
+
+**Unlimited Children:**
+
+Each parent can have unlimited children:
+
+```
+▼ Access Control
+   ├─ User Access Management (child 1)
+   ├─ Authentication (child 2)
+   ├─ Authorization (child 3)
+   ├─ Access Reviews (child 4)
+   └─ Privileged Access (child 5)
+   
+   [+ Add Control Category] ← Add more
+```
+
+**Level Limits:**
+
+Maximum depth determined by template:
+
+```
+Template with 4 levels:
+Level 1: Can have children (Level 2)
+Level 2: Can have children (Level 3)
+Level 3: Can have children (Level 4)
+Level 4: Cannot have children (max depth reached)
+```
+
+When at maximum depth, no "+ Add" button appears.
+
+---
+
+### 5.4 Unit Header Components
+
+Every unit has a header with various components depending on mode and configuration.
+
+**Visual Layout:**
+
+```
+[▼] [Icon] [ID] [Name______________________] [Tags] [☐] [Grade] [Progress] [🗑️] [Board]
+ ↑    ↑     ↑    ↑                          ↑     ↑    ↑       ↑          ↑      ↑
+Expand Icon  ID   Name                      Tags  Done Grade   Progress   Delete Export
+```
+
+Not all components appear on every unit (depends on template properties and mode).
+
+---
+
+**Collapse/Expand Button**
+
+**Visual:** Chevron icon
+- **▶** Collapsed (children hidden)
+- **▼** Expanded (children visible)
+
+**Location:** Far left of unit header
+
+**Visibility:** Only on units that have children
+
+**Behavior:**
+- **Click:** Toggles children visibility
+- **State persists:** Remembers open/closed state
+- **Restoration:** Restores state on page reload
+
+**Smart Behavior:**
+
+If unit has children:
+```
+▶ Access Control (collapsed, children hidden)
+```
+
+Click chevron:
+```
+▼ Access Control (expanded, children visible)
+   ├─ User Access Management
+   ├─ Authentication
+   └─ Authorization
+```
+
+Click again:
+```
+▶ Access Control (collapsed again)
+```
+
+**Nested Collapse:**
+
+Each level remembers its own state:
+
+```
+▼ Level 1: Organizational Controls (expanded)
+   ├─ ▶ Level 2: A.5 Policies (collapsed)
+   └─ ▼ Level 2: A.6 Roles (expanded)
+      ├─ Level 3: A.6.1 Screening
+      └─ Level 3: A.6.2 Terms and conditions
+```
+
+Collapsing Level 1 hides all descendants, but when re-expanded, Level 2 states are remembered.
+
+---
+
+**Icon Area**
+
+**Purpose:** Visual identifier for units
+
+**Display:** Small icon image (typically 24x24px)
+
+**Visibility:** If template enables Icon property for this level
+
+**Creation Mode:**
+
+**No Icon Set:**
+- Placeholder or empty icon area
+- Click to open icon picker modal
+
+**Icon Picker Modal:**
+- Grid of 60+ available icons
+- Click icon to select
+- Modal closes, icon appears
+
+**Icon Set:**
+- Icon displays in header
+- Click to change icon (opens picker)
+
+**Execution Mode:**
+- Icon displays (if set)
+- Not clickable (view-only)
+
+**Example:**
+
+```
+Creation Mode:
+[📂] ← Click to change icon
+Access Control Policy
+
+Execution Mode:
+[🔒] Access Control Policy
+    ↑ View-only, shows lock icon
+```
+
+---
+
+**Unit ID (Display ID)**
+
+**Purpose:** Custom identifier (regulatory codes, reference numbers)
+
+**Format:** Text field, typically short
+
+**Common Uses:**
+- ISO 27001: "A.5.1", "A.9.2.1"
+- NIST CSF: "PR.AC-1", "DE.CM-3"
+- SOC 2: "CC6.1", "CC7.2"
+- Internal: "REQ-001", "TASK-042"
+
+**Creation Mode:**
+- **Editable field:** Click to type/edit
+- **Placeholder:** "ID" or empty
+- **Auto-save:** On blur (click outside)
+- **Optional:** Can leave blank
+
+**Execution Mode:**
+- **Display only:** Shows ID if set
+- **Not editable**
+
+**Example:**
+
+```
+Creation Mode:
+[A.5.1] Information Security Policy
+  ↑ Can edit this
+
+Execution Mode:
+[A.5.1] Information Security Policy
+  ↑ Display only
+```
+
+**Visual Position:** Between icon and name
+
+---
+
+**Unit Name**
+
+**Purpose:** Primary identifier (required)
+
+**Characteristics:**
+- **Required:** Cannot be empty
+- **Free text:** Any characters
+- **Length:** Typically 1-500 characters
+- **Auto-save:** On blur
+
+**Creation Mode:**
+- **Editable field:** Click to type/edit
+- **Input border:** Visible border shows editability
+- **Focus:** Click activates field
+- **Save:** Tab, Enter, or click outside
+
+**Execution Mode:**
+- **Display text:** Plain text display
+- **Not editable:** Cannot click to edit (structure locked)
+- **May have limited edit:** Some implementations allow name edits in execution mode for flexibility
+
+**Example:**
+
+```
+Creation Mode:
+Access Control Policy
+├───────────────────┘
+Editable text field with border
+
+Execution Mode:
+Access Control Policy
+Plain text, no border
+```
+
+**Naming Best Practices:**
+
+**For Controls/Requirements:**
+- Start with category: "Access Control: Multi-factor authentication"
+- Include control number: "A.5.1 - Information Security Policy"
+- Be specific: "Background screening for employees" not just "Screening"
+
+**For Tasks:**
+- Action-oriented: "Draft access control policy"
+- Verb-first: "Review firewall rules quarterly"
+- Clear outcome: "Install MFA on all admin accounts"
+
+---
+
+**Tags**
+
+**Purpose:** Multi-dimensional categorization and filtering
+
+**Visual:** Colored badges/pills
+
+**Location:** After name, before other controls
+
+**Behavior:**
+
+**Creation Mode:**
+- **Add tag button:** "+" or "Add Tag"
+- **Click to add:** Opens tag modal
+- **Remove tag:** "×" button on each tag
+- **Edit tags:** Add/remove freely
+
+**Execution Mode:**
+- **Display tags:** Shows all tags
+- **Clickable:** Click tag to filter workflow
+- **Remove (optional):** May allow tag removal
+
+**Tag Display:**
+
+```
+Unit Name [Priority:High] [IT-Dept] [Q1-2024] [External-Audit]
+          └────────────────────────────────────────────────┘
+                         Tag badges
+```
+
+**Tag Colors:**
+
+Tags often have distinct colors for visual categorization:
+
+```
+[Priority:High]     ← Red background
+[Status:Complete]   ← Green background
+[Department:IT]     ← Blue background
+[Q1-2024]          ← Purple background
+```
+
+**Multiple Tags:**
+
+Units can have multiple tags:
+
+```
+Information Security Policy [Priority:Critical] [Annual-Review] [Legal] [IT] [Board-Approved]
+```
+
+**Filtering (Execution Mode):**
+
+Click tag to filter entire workflow to items with that tag:
+
+```
+User clicks [Q1-2024] tag
+
+Workflow filters to show only units with "Q1-2024" tag
+Banner appears: "Filtered by: Q1-2024 [Clear Filter]"
+```
+
+More details in Chapter 8: Organizing with Tags.
+
+---
+
+**Done Checkbox**
+
+**Purpose:** Mark unit as complete
+
+**Visibility:**
+- **Execution Mode only**
+- **Only on levels** where template enables Done Checkbox property
+- **Not visible** in Creation Mode
+
+**Visual:** Standard checkbox
+- **☐** Not done
+- **☑** Done
+
+**Behavior:**
+
+**Click checkbox:**
+- Toggles between done/not done
+- Auto-saves immediately
+- Updates progress bars on parent units
+- Visual feedback (checkmark appears/disappears)
+
+**Impact:**
+
+```
+Before (0/3 done):
+▼ Access Control [Progress: ░░░░░░░░░░ 0%]
+   ☐ Draft policy
+   ☐ Get approval  
+   ☐ Publish policy
+
+After checking first two (2/3 done):
+▼ Access Control [Progress: ██████░░░░ 67%]
+   ☑ Draft policy (done)
+   ☑ Get approval (done)
+   ☐ Publish policy (not done)
+```
+
+**Sequential Order:**
+
+If workflow has sequential order enabled:
+
+```
+☑ Step 1: Submit application (done)
+☑ Step 2: Background check (done)
+☐ Step 3: Sign contract (can check - next in sequence)
+🔒 Step 4: Complete orientation (locked until Step 3 done)
+```
+
+---
+
+**Grade**
+
+**Purpose:** Numeric scoring/rating
+
+**Types:**
+
+**1. Individual Grade (Editable)**
+
+**Visual:** Numeric input field
+
+**Usage:**
+- Maturity scores (1-5)
+- Risk ratings (1-10)
+- Assessment scores
+- Percentage completion (0-100)
+- Pass/fail (1/0)
+
+**Example:**
+```
+Control: Access Control Policy [Grade: 3] ← Can edit
+                               Input field shows "3"
+```
+
+**2. Cumulative Grade (Calculated)**
+
+**Visual:** Display-only number with Σ symbol
+
+**Calculation:** Sum of all child grades
+
+**Example:**
+```
+▼ Access Control [Grade: Σ 12] ← Auto-calculated (3+4+5)
+   ├─ Policy [Grade: 3]
+   ├─ Authentication [Grade: 4]
+   └─ Authorization [Grade: 5]
+```
+
+**Visibility:**
+- Both Creation and Execution modes
+- Only on levels where template enables Grade property
+- Cumulative grades auto-enable on parents if children have grades
+
+---
+
+**Progress Bar**
+
+**Purpose:** Visual completion percentage
+
+**Calculation:** Based on child Done checkboxes
+
+**Formula:** (# of children done / total # of children) × 100%
+
+**Visual:** Horizontal bar with fill
+
+```
+Progress: ██████░░░░ 60% (3/5 complete)
+          └──────┘
+          Filled portion = 60%
+```
+
+**Hover:** Shows exact count: "3 of 5 complete"
+
+**Requirements:**
+- Parent must have Progress Bar property enabled
+- Children must have Done Checkbox property enabled
+- Must have at least one child
+
+**Example:**
+
+```
+▼ Phase 1: Planning [Progress: ████████░░ 75%]
+   ├─ ☑ Define scope
+   ├─ ☑ Identify stakeholders
+   ├─ ☑ Create timeline
+   └─ ☐ Get budget approval
+```
+
+**Nested Progress:**
+
+Parent progress bars reflect all descendant completion:
+
+```
+▼ Project [Progress: ██████░░░░ 50%]
+   ├─ ▼ Phase 1 [Progress: ██████████ 100%]
+   │  ├─ ☑ Task A (done)
+   │  └─ ☑ Task B (done)
+   └─ ▼ Phase 2 [Progress: ░░░░░░░░░░ 0%]
+      ├─ ☐ Task C (not done)
+      └─ ☐ Task D (not done)
+
+Overall: 2 phases, 1 complete = 50%
+```
+
+---
+
+**Delete Button**
+
+**Purpose:** Remove unit and all its children
+
+**Visual:** Trash can icon (🗑️)
+
+**Visibility:** Creation Mode only
+
+**Location:** Right side of unit header
+
+**Behavior:**
+
+**Click delete:**
+1. Confirmation modal appears
+2. "Delete '[Unit Name]'? This will also delete all child units. This cannot be undone."
+3. User confirms
+4. Unit and all descendants deleted
+5. UI updates immediately
+
+**Recursive Deletion:**
+
+Deleting parent deletes entire subtree:
+
+```
+Delete this:
+▼ Access Control [🗑️] ← Click delete
+   ├─ User Access Management
+   │  ├─ Registration
+   │  └─ Deprovisioning
+   └─ Authentication
+      ├─ MFA
+      └─ Password policy
+
+Result: All units removed (6 units deleted total)
+```
+
+**Caution:** Cannot undo! Deleted units are gone permanently.
+
+**Tip:** If unsure, copy workflow before deleting major sections.
+
+---
+
+**Export Button**
+
+**Purpose:** Create board from unit and its children
+
+**Visual:** "Board" button or board icon (↗)
+
+**Visibility:**
+- **Execution Mode only**
+- **Only on units with children**
+
+**Location:** Right side of unit header
+
+**Behavior:**
+
+**Click Export:**
+1. System creates new board
+2. Unit becomes board name
+3. Unit and all descendants become cards/reference tree
+4. Board opens in new tab
+5. Original workflow unchanged
+
+**Example:**
+
+```
+Workflow:
+▼ Phase 1: Implementation [Board ↗] ← Click here
+   ├─ Control 1
+   ├─ Control 2
+   └─ Control 3
+
+Creates Board:
+"Workflow: Phase 1: Implementation"
+- Dynamic List: Full tree (read-only)
+- Workspace: Client can create tasks
+```
+
+More details in Chapter 12: Exporting to Boards.
+
+---
+
+### 5.5 Unit Body (Collapsible)
+
+Below the unit header is the unit body containing description and attachments.
+
+**Expand/Collapse:**
+
+Click anywhere on unit header (except interactive elements) to toggle body:
+
+```
+Collapsed (body hidden):
+▶ [Icon] Access Control Policy [Tags...] [🗑️]
+
+Expanded (body visible):
+▼ [Icon] Access Control Policy [Tags...] [🗑️]
+   │
+   ├─ Description: [Text area or display]
+   │
+   └─ Attachments:
+      ├─ Links: [...]
+      ├─ Images: [...]
+      ├─ Notes: [...]
+      └─ Comments: [...]
+```
+
+---
+
+**Description Field**
+
+**Purpose:** Detailed information about the unit
+
+**Length:** Typically unlimited (or very large limit like 10,000 characters)
+
+**Format:** Plain text (line breaks preserved) or rich text
+
+**Creation Mode:**
+
+**Visual:** Textarea field
+
+**Editing:**
+1. Click in description area
+2. Cursor appears
+3. Type/edit content
+4. Supports line breaks (Enter key)
+5. Auto-saves on blur (click outside) after ~5 seconds
+
+**Example:**
+```
+Description:
+┌────────────────────────────────────────┐
+│ Implement multi-factor authentication  │
+│ for all administrative accounts.       │
+│                                        │
+│ Requirements:                          │
+│ - Use Duo or similar MFA solution     │
+│ - Enforce for VPN access              │
+│ - Enforce for cloud admin consoles    │
+│                                        │
+│ Evidence: Screenshots of MFA config   │
+└────────────────────────────────────────┘
+   Editable textarea
+```
+
+**Execution Mode:**
+
+**Visual:** Plain text display
+
+**Editability:** Usually read-only (structure locked), but some implementations may allow description edits for collaboration
+
+**Example:**
+```
+Description:
+
+Implement multi-factor authentication
+for all administrative accounts.
+
+Requirements:
+- Use Duo or similar MFA solution
+- Enforce for VPN access
+- Enforce for cloud admin consoles
+
+Evidence: Screenshots of MFA config
+
+Plain text display (no border)
+```
+
+**Best Practices:**
+
+**For Requirements:**
+```
+Description format:
+1. What: Explain the requirement
+2. Why: Regulatory reason or business justification
+3. How: Implementation guidance
+4. Evidence: What to collect for audit
+```
+
+**For Tasks:**
+```
+Description format:
+- Action to take
+- Expected outcome
+- Assigned to (if not using dedicated assignment features)
+- Due date (if not using dedicated date fields)
+- Dependencies
+```
+
+---
+
+**Attachments Section**
+
+Below description, attachments grouped by type.
+
+**Visual:**
+```
+Attachments:
+
+Links (2):
+├─ 📎 Access Control Policy v2.3 [https://...]
+└─ 📎 NIST SP 800-53 AC Controls [https://...]
+
+Images (1):
+└─ 🖼️ [Thumbnail of firewall config screenshot]
+
+Notes (1):
+└─ 📝 Implementation Decision - Aug 2023
+
+Comments (3):
+├─ 💬 "Should we use Duo or Okta?" - John, May 15
+├─ 💬 "Duo selected for cost reasons" - Sarah, May 16
+└─ 💬 "Deployment complete" - IT Team, June 1
+```
+
+**Add Buttons (Creation Mode):**
+
+```
+[+ Add Link] [+ Add Image] [+ Add Note] [+ Add Comment]
+```
+
+**Delete Buttons:**
+
+Each attachment has delete/remove icon:
+
+```
+📎 Policy Document [×] ← Click X to delete
+```
+
+Detailed coverage of each attachment type in Chapter 7: Managing Attachments.
+
+---
+
+---
+
+## CHAPTER 6: WORKING WITH PROPERTIES
+
+Step-by-step guide to editing unit properties in Creation Mode.
+
+### 6.1 Editing Unit Names
+
+**Purpose:** Change the primary identifier of a unit
+
+**When:** Creation Mode only (in Execution Mode, names are typically locked)
+
+**Steps:**
+
+1. **Click** in the name field of the unit
+2. **Cursor appears** and name becomes editable
+3. **Type** new name or edit existing text
+4. **Save** by clicking outside the field or pressing Tab
+5. **Auto-save** occurs after ~5 seconds
+6. **Name updates** immediately in the interface
+
+**Example:**
+
+```
+Before:
+▼ [Control______] ← Click here
+
+During Edit:
+▼ [Access Control Policy|] ← Typing...
+                         ↑ Cursor
+
+After:
+▼ Access Control Policy ← Saved
+```
+
+**Tips:**
+
+- **Use descriptive names:** "Draft access control policy" not "Task 1"
+- **Include key details:** "A.5.1 - Information Security Policy" vs. "Policy"
+- **Be consistent:** Follow naming pattern across similar units
+- **Keep concise:** Aim for 30-80 characters
+
+**Common Mistakes:**
+
+❌ **Empty name:** Cannot save without a name (required field)
+❌ **Too generic:** "Control" doesn't explain which control
+✅ **Specific and clear:** "A.9.1.1 - Access control policy and procedures"
+
+---
+
+### 6.2 Assigning Icons
+
+**Purpose:** Add visual identifier to units for quick recognition
+
+**When:** Creation Mode (any time after unit creation)
+
+**Prerequisites:** Template must enable Icon property for this level
+
+**Steps:**
+
+1. **Click icon area** on unit header
+   - If no icon set: Placeholder or empty icon box
+   - If icon already set: Current icon displays
+2. **Icon picker modal opens**
+3. **Browse available icons** (60+ options organized by category)
+4. **Click icon to select**
+5. **Modal closes automatically**
+6. **Icon appears immediately** in unit header
+
+**Icon Picker Modal:**
+
+```
+┌────────────────────────────────────────┐
+│  Select Icon                        [×]│
+├────────────────────────────────────────┤
+│                                        │
+│  Technology:                           │
+│  [🔒] [🖥️] [☁️] [🌐] [🖧] [⚙️] ...    │
+│                                        │
+│  Business:                             │
+│  [💼] [📊] [📈] [📋] [📁] [🗂️] ...    │
+│                                        │
+│  Security:                             │
+│  [🛡️] [🔐] [🔑] [⚠️] [✓] [⨯] ...    │
+│                                        │
+│  General:                              │
+│  [📝] [📌] [🏢] [👤] [🌍] [💡] ...    │
+│                                        │
+└────────────────────────────────────────┘
+```
+
+**Selecting Icons:**
+
+**Single Click:** Selects and closes modal
+
+**No Save Button:** Selection is immediate
+
+**Example:**
+
+```
+Before:
+▼ [   ] Access Control Policy
+    ↑ Empty, click here
+
+After:
+▼ [🔒] Access Control Policy
+    ↑ Lock icon selected
+```
+
+**Icon Strategy:**
+
+**Consistent Categorization:**
+
+```
+🔒 = Access Control
+🖥️ = Technical Controls
+🏢 = Physical Security
+📋 = Policies & Procedures
+👤 = People/HR Controls
+⚠️ = Risk Management
+✓ = Completed/Approved
+```
+
+**Visual Hierarchy:**
+
+Use icons to distinguish categories at Level 1 or 2:
+
+```
+▼ [🔒] Access Control Family
+   └─ [🔐] User Access Management
+      └─ Multi-factor Authentication (no icon - task level)
+```
+
+**When to Skip Icons:**
+
+- Lower-level tasks (visual clutter)
+- All items in same category (redundant)
+- Minimalist preference
+
+---
+
+### 6.3 Setting Unit IDs
+
+**Purpose:** Add custom identifiers for cross-referencing
+
+**Common Uses:**
+- Regulatory control numbers (A.5.1, CC6.1)
+- Internal reference codes (REQ-001, TASK-042)
+- Jira ticket IDs (PROJ-123)
+- Cross-system linking
+
+**When:** Creation Mode
+
+**Prerequisites:** Template must enable Display ID property for this level
+
+**Steps:**
+
+1. **Click** in the ID field (usually before or after icon)
+2. **Type** the identifier
+3. **Click outside** or press Tab to save
+4. **Auto-save** after ~5 seconds
+
+**Example:**
+
+```
+Before:
+▼ [     ] Information Security Policy
+    ↑ Empty ID field
+
+During Edit:
+▼ [A.5.1|] Information Security Policy
+    ↑ Typing...
+
+After:
+▼ [A.5.1] Information Security Policy
+    ↑ Saved
+```
+
+**ID Format Guidelines:**
+
+**ISO 27001:**
+```
+[A.5.1] Policies for information security
+[A.9.2.1] User registration and de-registration
+[A.12.4.1] Event logging
+```
+
+**NIST CSF:**
+```
+[PR.AC-1] Identities and credentials are issued
+[DE.CM-3] Personnel activity is monitored
+[RS.RP-1] Response plan is executed
+```
+
+**SOC 2:**
+```
+[CC6.1] Logical and physical access controls
+[CC7.2] System operations monitoring
+[A1.2] Availability commitments
+```
+
+**Internal Codes:**
+```
+[REQ-001] First requirement
+[CTRL-AC-01] Access Control 01
+[TASK-2024-03-15-001] Date-based task ID
+```
+
+**Best Practices:**
+
+**Consistency:** Use same format throughout workflow
+```
+✅ [A.5.1], [A.5.2], [A.5.3]
+❌ [A.5.1], [A5.2], [A 5 3]
+```
+
+**Brevity:** Keep IDs short and scannable
+```
+✅ [A.5.1]
+✅ [CC6.1]
+❌ [ISO27001-2022-Annex-A-Section-5-Control-1]
+```
+
+**Sortability:** Use leading zeros for numeric sequences
+```
+✅ [CTRL-001], [CTRL-002], [CTRL-010]
+❌ [CTRL-1], [CTRL-2], [CTRL-10] (sorts wrong)
+```
+
+---
+
+### 6.4 Writing Descriptions
+
+**Purpose:** Add detailed information, guidance, and context to units
+
+**Length:** Typically unlimited (10,000+ characters)
+
+**Format:** Plain text with line breaks
+
+**When:** Creation Mode (best practice: write descriptions as you build)
+
+**Steps:**
+
+1. **Expand unit** if body is collapsed
+2. **Click** in description area
+3. **Type** or paste content
+4. **Use Enter** for line breaks
+5. **Click outside** or continue to next unit
+6. **Auto-save** occurs after ~5 seconds of inactivity
+
+**Example:**
+
+```
+Description field:
+
+┌─────────────────────────────────────────────┐
+│ Implement multi-factor authentication for   │
+│ all administrative accounts.                │
+│                                             │
+│ REQUIREMENT:                                │
+│ ISO 27001:2022 Control A.9.4.2             │
+│                                             │
+│ IMPLEMENTATION:                             │
+│ 1. Deploy Duo MFA solution                 │
+│ 2. Configure for VPN, AWS Console, O365    │
+│ 3. Enforce for all admin accounts          │
+│ 4. Configure backup codes                  │
+│                                             │
+│ EVIDENCE:                                   │
+│ - Configuration screenshots                 │
+│ - List of enrolled users                   │
+│ - MFA policy document                      │
+│                                             │
+│ DUE DATE: June 30, 2024                    │
+│ OWNER: IT Security Team                    │
+└─────────────────────────────────────────────┘
+```
+
+**Description Templates:**
+
+**For Compliance Requirements:**
+
+```
+CONTROL: [Control number and name]
+
+REQUIREMENT:
+[What the regulation requires]
+
+WHY IT MATTERS:
+[Business/security justification]
+
+IMPLEMENTATION GUIDANCE:
+[Step-by-step instructions]
+
+EVIDENCE NEEDED:
+- [Document 1]
+- [Document 2]
+- [Document 3]
+
+REFERENCES:
+- [Link to regulation]
+- [Link to implementation guide]
+```
+
+**For Tasks:**
+
+```
+OBJECTIVE:
+[What needs to be accomplished]
+
+STEPS:
+1. [First step]
+2. [Second step]
+3. [Third step]
+
+ASSIGNED TO: [Person/team]
+DUE DATE: [Date]
+DEPENDENCIES: [Other tasks that must be complete first]
+
+COMPLETION CRITERIA:
+[How to know when this is done]
+```
+
+**For Evidence Items:**
+
+```
+EVIDENCE TYPE: [Policy, procedure, log, screenshot, etc.]
+
+LOCATION: [Where to find it]
+
+LAST UPDATED: [Date]
+
+NOTES:
+[Any important context for auditors]
+```
+
+**Formatting Tips:**
+
+**Use Structure:**
+```
+✅ Use headers (REQUIREMENT:, STEPS:, etc.)
+✅ Use numbered lists (1. 2. 3.)
+✅ Use bullet points (- item)
+✅ Use blank lines for spacing
+```
+
+**Be Concise but Complete:**
+```
+✅ Provide enough detail to be actionable
+✅ Include context (why, not just what)
+❌ Write novels (descriptions should be scannable)
+❌ Leave descriptions empty (defeats the purpose)
+```
+
+**Client-Specific Context:**
+```
+Generic: "Implement access control policy"
+
+Client-Specific: "Draft access control policy for Acme Corp's 
+AWS environment, addressing requirements from ISO 27001 A.9.1.1. 
+Must cover: 1) VPN access, 2) Console access, 3) API keys, 
+4) Service accounts. Review with Legal by May 15."
+```
+
+---
+
+### 6.5 Adding Tags
+
+**Purpose:** Categorize units across multiple dimensions for filtering
+
+**When:** Creation Mode (but tags can be added/removed anytime)
+
+**Prerequisites:** Template must enable Tags property for this level
+
+**Steps:**
+
+1. **Expand unit** if needed
+2. **Click "+" button** or "Add Tag" in tags area
+3. **Modal opens** prompting for tag name
+4. **Type tag name**
+   - Example: "Priority:High"
+   - Example: "Q1-2024"
+   - Example: "IT-Department"
+5. **Press Enter** or **Click Add**
+6. **Tag appears** as colored badge
+7. **Repeat** to add more tags
+
+**Add Tag Modal:**
+
+```
+┌────────────────────────────────┐
+│  Add Tag                    [×]│
+├────────────────────────────────┤
+│                                │
+│  Tag Name:                     │
+│  [Priority:High________]       │
+│                                │
+│  Examples:                     │
+│  • Priority:Critical           │
+│  • Q1-2024                     │
+│  • IT-Department               │
+│  • External-Audit              │
+│                                │
+│        [Cancel]  [Add Tag]     │
+└────────────────────────────────┘
+```
+
+**Tag Naming Conventions:**
+
+**Category:Value Format:**
+```
+Priority:Critical
+Priority:High
+Priority:Medium
+Priority:Low
+
+Department:IT
+Department:Legal
+Department:HR
+Department:Finance
+
+Status:In-Progress
+Status:Blocked
+Status:Complete
+```
+
+**Timeframe Tags:**
+```
+Q1-2024
+Q2-2024
+Q3-2024
+Q4-2024
+
+Annual-Review
+Monthly-Check
+Quarterly-Report
+```
+
+**Audit Tags:**
+```
+External-Audit
+Internal-Review
+Spot-Check
+Requires-Evidence
+Evidence-Collected
+```
+
+**Simple Tags:**
+```
+Critical
+High-Priority
+Quick-Win
+Technical
+Non-Technical
+Client-Facing
+```
+
+**Example Application:**
+
+```
+Unit: A.5.1 - Information Security Policy
+
+Tags: [Priority:High] [Legal] [IT] [Annual-Review] [External-Audit] [Q1-2024]
+      └─────────────┘  └────┘  └──┘  └────────────┘  └──────────────┘  └───────┘
+       Priority        Depts    Dept   Frequency       Audit Type        Timeline
+```
+
+**Tag Strategy:**
+
+**Establish Taxonomy Early:**
+
+Before adding tags, define your tag categories:
+
+```
+TAXONOMY:
+
+1. Priority: Critical, High, Medium, Low
+2. Timeline: Q1-2024, Q2-2024, etc.
+3. Department: IT, Legal, HR, Finance, Operations
+4. Audit: External-Audit, Internal-Review, Spot-Check
+5. Status: In-Progress, Blocked, Complete, Pending-Review
+```
+
+**Document Tag Meanings:**
+
+In workflow description, explain tag system:
+
+```
+Workflow Description:
+
+TAG GUIDE:
+- Priority:Critical = Must complete for audit (showstopper)
+- Priority:High = Important but not blocker
+- Q1-2024 = Due first quarter
+- External-Audit = Auditor will examine
+- Evidence-Required = Need documentation
+```
+
+**Consistent Application:**
+
+```
+✅ Use same tag across similar units:
+   All high-priority items tagged "Priority:High"
+
+❌ Inconsistent tags:
+   "High Priority", "High", "Priority:High", "PRIORITY-HIGH"
+   (These won't filter together!)
+```
+
+**Multiple Dimensions:**
+
+Tag units across multiple axes for flexible filtering:
+
+```
+▼ Unit: Deploy MFA
+   Tags: [Priority:Critical] [IT] [Q1-2024] [External-Audit] [Security]
+   
+   Can filter by:
+   - All Q1 items
+   - All IT items
+   - All External-Audit items
+   - All Critical items
+   - Combination: Critical + Q1
+```
+
+---
+
+### 6.6 Removing Tags
+
+**Purpose:** Remove tags that are no longer applicable
+
+**When:** Anytime (Creation or Execution Mode, depending on implementation)
+
+**Steps:**
+
+1. **Locate tag** on unit
+2. **Click "×"** button on tag badge
+3. **Tag removes** immediately (no confirmation)
+4. **Auto-saves** change
+
+**Visual:**
+
+```
+Before:
+Unit Name [Priority:High] [×] [IT-Dept] [×] [Q1-2024] [×]
+                        ↑             ↑              ↑
+                     Click here to remove tag
+
+After clicking second × (IT-Dept):
+Unit Name [Priority:High] [×] [Q1-2024] [×]
+```
+
+**When to Remove Tags:**
+
+**Status Change:**
+```
+Task moves from Q1 to Q2:
+Remove: [Q1-2024]
+Add: [Q2-2024]
+```
+
+**Completion:**
+```
+Evidence collected:
+Remove: [Evidence-Required]
+Add: [Evidence-Collected]
+```
+
+**Reprioritization:**
+```
+Priority downgraded:
+Remove: [Priority:Critical]
+Add: [Priority:Medium]
+```
+
+**Cleanup:**
+```
+Remove incorrect or obsolete tags:
+Remove: [Old-Tag]
+Remove: [Typo-Tag]
+```
+
+**Tips:**
+
+- **No undo:** Removing tag is immediate (but you can re-add it)
+- **Bulk updates:** Can't remove same tag from multiple units at once (manual per unit)
+- **Filter first:** Use tag filter to find all units with a tag, then remove from each
+
+---
+
+### 6.7 Setting Grades
+
+**Purpose:** Assign numeric scores for assessments, ratings, or metrics
+
+**Types:**
+
+1. **Individual Grades:** Manual entry
+2. **Cumulative Grades:** Auto-calculated (sum of children)
+
+**When:** Both Creation and Execution Modes
+
+**Prerequisites:** Template must enable Grade property for this level
+
+---
+
+**Setting Individual Grades:**
+
+**Steps:**
+
+1. **Locate grade field** on unit (usually near progress bar)
+2. **Click** in grade input field
+3. **Type** numeric value
+   - Integers: 1, 2, 3
+   - Decimals: 2.5, 3.75
+   - Negative: -1 (if applicable)
+4. **Press Tab** or **click outside** to save
+5. **Auto-saves** after entry
+
+**Example:**
+
+```
+Before:
+Control: Access Control [Grade: __]
+                              ↑ Empty
+
+During Edit:
+Control: Access Control [Grade: 3|]
+                              ↑ Typing
+
+After:
+Control: Access Control [Grade: 3]
+                              ↑ Saved
+```
+
+**Common Grading Scales:**
+
+**Maturity Levels (1-5):**
+```
+1 = Initial/Ad-hoc
+2 = Repeatable
+3 = Defined
+4 = Managed
+5 = Optimized
+
+Example:
+[Grade: 3] = Control is defined but not yet fully managed
+```
+
+**Pass/Fail (1/0):**
+```
+1 = Pass/Compliant
+0 = Fail/Non-compliant
+
+Example:
+[Grade: 1] = Control passes requirements
+[Grade: 0] = Control fails requirements
+```
+
+**Risk Ratings (1-10):**
+```
+1-3 = Low Risk
+4-7 = Medium Risk
+8-10 = High Risk
+
+Example:
+[Grade: 8] = High risk control requiring attention
+```
+
+**Percentage (0-100):**
+```
+0-100 = Percentage implementation/completion
+
+Example:
+[Grade: 75] = Control is 75% implemented
+```
+
+---
+
+**Cumulative Grades (Auto-Calculated):**
+
+**How It Works:**
+
+When children have grades, parent automatically shows cumulative (sum) grade.
+
+**Visual Indicator:** Sigma symbol (Σ)
+
+**Example:**
+
+```
+▼ Access Control Domain [Grade: Σ 12] ← Auto-calculated
+   ├─ User Access [Grade: 3]
+   ├─ Authentication [Grade: 4]
+   └─ Authorization [Grade: 5]
+   
+   Calculation: 3 + 4 + 5 = 12
+```
+
+**Nested Cumulative Grades:**
+
+```
+▼ Level 1 [Grade: Σ 45] ← Sum of all Level 2
+   ├─ ▼ Level 2a [Grade: Σ 20] ← Sum of Level 3a units
+   │  ├─ Level 3a [Grade: 8]
+   │  ├─ Level 3b [Grade: 7]
+   │  └─ Level 3c [Grade: 5]
+   └─ ▼ Level 2b [Grade: Σ 25] ← Sum of Level 3d units
+      ├─ Level 3d [Grade: 10]
+      ├─ Level 3e [Grade: 9]
+      └─ Level 3f [Grade: 6]
+
+Total: (8+7+5) + (10+9+6) = 20 + 25 = 45
+```
+
+**Editing Cumulative Grades:**
+
+**Cannot Edit Directly:** Cumulative grades are calculated, not editable
+
+**To Change Cumulative Grade:** Edit child grades
+
+```
+Want to change:
+▼ Access Control [Grade: Σ 12] ← Want this to be 15
+
+How:
+1. Edit child grades to sum to 15
+2. Example: Change child grades to 5, 5, 5 = 15
+```
+
+---
+
+**Using Grades for Reporting:**
+
+**Compliance Maturity:**
+```
+▼ ISO 27001 Implementation [Grade: Σ 279] ← Overall maturity
+   ├─ ▼ Organizational [Grade: Σ 68]
+   ├─ ▼ People [Grade: Σ 71]
+   ├─ ▼ Physical [Grade: Σ 69]
+   └─ ▼ Technological [Grade: Σ 71]
+
+With 93 controls, max possible = 465 (93×5)
+Current: 279/465 = 60% maturity
+```
+
+**Risk Assessment:**
+```
+▼ Risk Register [Grade: Σ 185] ← Total risk score
+   ├─ Cyber Risks [Grade: Σ 75]
+   ├─ Operational Risks [Grade: Σ 58]
+   └─ Financial Risks [Grade: Σ 52]
+
+Higher total = Higher overall risk exposure
+```
+
+**Implementation Progress:**
+```
+▼ Project [Grade: Σ 750] ← Total effort/points
+   └─ Completed so far [Grade: Σ 450]
+   
+Progress: 450/750 = 60% complete (by story points)
+```
+
+---
 
 ---
 
