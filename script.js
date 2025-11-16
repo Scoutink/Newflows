@@ -40,7 +40,9 @@ document.addEventListener('DOMContentLoaded', () => {
         currentFlowId: null,
         selectedActionPaths: {},
         expandedTextAreas: new Set(),
-        activeTag: null
+        activeTag: null,
+        collapsedUnits: new Set(),  // Track collapsed unit IDs
+        collapseState: {}  // Track collapse state per workflow: { flowId: { unitId: boolean } }
     };
 
     let quillEditor = null;
@@ -84,57 +86,13 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // Toast notification system
+    // Legacy showToast wrapper - delegates to new Toast API for consistency
     const showToast = (message, type = 'info', duration = 3000) => {
-        // Ensure toast container exists
-        let container = document.querySelector('.toast-container');
-        if (!container) {
-            container = document.createElement('div');
-            container.className = 'toast-container';
-            document.body.appendChild(container);
-        }
-
-        // Icon mapping
-        const iconMap = {
-            success: 'fa-circle-check',
-            error: 'fa-circle-exclamation',
-            warning: 'fa-triangle-exclamation',
-            info: 'fa-circle-info'
-        };
-
-        // Create toast element
-        const toast = document.createElement('div');
-        toast.className = `toast toast-${type}`;
-        toast.innerHTML = `
-            <div class="toast-icon">
-                <i class="fa-solid ${iconMap[type] || iconMap.info}"></i>
-            </div>
-            <div class="toast-content">
-                <div class="toast-message">${message}</div>
-            </div>
-            <button class="toast-close" aria-label="Close">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-        `;
-
-        // Add to container
-        container.appendChild(toast);
-
-        // Close button handler
-        const closeBtn = toast.querySelector('.toast-close');
-        const closeToast = () => {
-            toast.classList.remove('toast-show');
-            setTimeout(() => toast.remove(), 300);
-        };
-        closeBtn.addEventListener('click', closeToast);
-
-        // Trigger animation
-        requestAnimationFrame(() => {
-            toast.classList.add('toast-show');
-        });
-
-        // Auto-dismiss
-        if (duration > 0) {
-            setTimeout(closeToast, duration);
+        if (window.Toast) {
+            Toast.show(message, type, duration);
+        } else {
+            // Fallback if Toast not loaded
+            console.warn('Toast system not loaded, using console:', message);
         }
     };
 
@@ -164,12 +122,18 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const saveWorkflow = async () => {
+        const saveBtn = document.getElementById('save-structure-btn');
+        if (saveBtn) {
+            saveBtn.classList.add('loading');
+            saveBtn.disabled = true;
+        }
+
         try {
             // Propagate changes to linked workflows
             if (appState.currentMode === 'creation') {
                 propagateToLinkedWorkflows(appState.currentFlowId);
             }
-            
+
             const res = await fetch('save_workflow.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -177,12 +141,17 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             const json = await res.json();
             if (json.status !== 'success') throw new Error(json.message);
-            showToast('Structure saved successfully', 'success', 2000);
+            Toast.success('Structure saved successfully!');
             return true;
         } catch (e) {
             console.error('Save workflow error:', e);
-            showToast('Failed to save: ' + e.message, 'error', 5000);
+            Toast.error('Failed to save: ' + e.message);
             return false;
+        } finally {
+            if (saveBtn) {
+                saveBtn.classList.remove('loading');
+                saveBtn.disabled = false;
+            }
         }
     };
 
@@ -199,6 +168,12 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const saveExecutions = async () => {
+        const saveBtn = document.getElementById('save-execution-btn');
+        if (saveBtn) {
+            saveBtn.classList.add('loading');
+            saveBtn.disabled = true;
+        }
+
         try {
             const res = await fetch('save_executions.php', {
                 method: 'POST',
@@ -207,12 +182,17 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             const json = await res.json();
             if (json.status !== 'success') throw new Error(json.message);
-            showToast('Execution state saved', 'success', 2000);
+            Toast.success('Execution state saved!');
             return true;
         } catch (e) {
             console.error('Save executions error:', e);
-            showToast('Failed to save executions: ' + e.message, 'error', 5000);
+            Toast.error('Failed to save executions: ' + e.message);
             return false;
+        } finally {
+            if (saveBtn) {
+                saveBtn.classList.remove('loading');
+                saveBtn.disabled = false;
+            }
         }
     };
 
@@ -578,6 +558,17 @@ document.addEventListener('DOMContentLoaded', () => {
             };
 
             const form = document.getElementById('create-flow-form');
+
+            // Add form validation
+            if (window.FormValidator) {
+                FormValidator.attachTo(form, {
+                    'flow-name': { required: true, minLength: 3, maxLength: 100 },
+                    'empty-name': { required: true, minLength: 3, maxLength: 100 },
+                    'copy-name': { required: true, minLength: 3, maxLength: 100 },
+                    'linked-name': { required: true, minLength: 3, maxLength: 100 }
+                });
+            }
+
             form.addEventListener('submit', async (e) => {
                 e.preventDefault();
                 const mode = document.getElementById('creation-mode').value;
@@ -785,11 +776,289 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
 
+    // ===== EXPAND/COLLAPSE MANAGEMENT =====
+    /**
+     * Premium collapse/expand logic with parent-child relationship management
+     */
+    const CollapseManager = {
+        /**
+         * Check if a unit is collapsed
+         */
+        isCollapsed(flowId, unitId) {
+            if (!appState.collapseState[flowId]) {
+                return false;
+            }
+            return appState.collapseState[flowId][unitId] === true;
+        },
+
+        /**
+         * Toggle collapse state for a unit with premium parent-child logic
+         */
+        toggle(flowId, unitId, unit) {
+            if (!appState.collapseState[flowId]) {
+                appState.collapseState[flowId] = {};
+            }
+
+            const isCurrentlyCollapsed = this.isCollapsed(flowId, unitId);
+            const newState = !isCurrentlyCollapsed;
+
+            // Set the state
+            appState.collapseState[flowId][unitId] = newState;
+
+            // Premium Logic: If collapsing, remember children's current state
+            // If expanding, restore children to their previous state
+            if (newState && unit.subcategories && unit.subcategories.length > 0) {
+                // Collapsing: Store children states before hiding them
+                this.rememberChildrenStates(flowId, unit.subcategories);
+            }
+
+            // Save state to localStorage
+            this.saveToStorage();
+
+            return newState;
+        },
+
+        /**
+         * Remember children's collapse states (premium logic)
+         */
+        rememberChildrenStates(flowId, subcategories) {
+            if (!subcategories || subcategories.length === 0) return;
+
+            subcategories.forEach(child => {
+                // State is already tracked, no need to change it
+                // This preserves the user's previous expand/collapse choices
+
+                // Recursively remember grandchildren
+                if (child.subcategories && child.subcategories.length > 0) {
+                    this.rememberChildrenStates(flowId, child.subcategories);
+                }
+            });
+        },
+
+        /**
+         * Expand a unit and all its parents (bubble up)
+         */
+        expandWithParents(flowId, path) {
+            if (!appState.collapseState[flowId]) {
+                appState.collapseState[flowId] = {};
+            }
+
+            // Parse path to get all parent paths
+            const pathParts = path.split('.');
+            let currentPath = '';
+
+            for (let i = 0; i < pathParts.length; i++) {
+                if (i > 0) currentPath += '.';
+                currentPath += pathParts[i];
+
+                // Get unit ID from path
+                const flow = getCurrentFlow();
+                const unit = getObjectByPath(currentPath, flow);
+                if (unit && unit.id) {
+                    appState.collapseState[flowId][unit.id] = false;
+                }
+            }
+
+            this.saveToStorage();
+        },
+
+        /**
+         * Collapse all units in the workflow
+         */
+        collapseAll(flowId, units) {
+            if (!appState.collapseState[flowId]) {
+                appState.collapseState[flowId] = {};
+            }
+
+            const collapseRecursive = (items) => {
+                items.forEach(unit => {
+                    if (unit.subcategories && unit.subcategories.length > 0) {
+                        appState.collapseState[flowId][unit.id] = true;
+                        collapseRecursive(unit.subcategories);
+                    }
+                });
+            };
+
+            collapseRecursive(units);
+            this.saveToStorage();
+        },
+
+        /**
+         * Expand all units in the workflow
+         */
+        expandAll(flowId, units) {
+            if (!appState.collapseState[flowId]) {
+                appState.collapseState[flowId] = {};
+            }
+
+            const expandRecursive = (items) => {
+                items.forEach(unit => {
+                    appState.collapseState[flowId][unit.id] = false;
+                    if (unit.subcategories && unit.subcategories.length > 0) {
+                        expandRecursive(unit.subcategories);
+                    }
+                });
+            };
+
+            expandRecursive(units);
+            this.saveToStorage();
+        },
+
+        /**
+         * Check if unit should be visible based on parent collapse states
+         */
+        isVisible(flowId, path) {
+            // Root level is always visible
+            if (!path || path === 'data') return true;
+
+            // Check all parents - if any parent is collapsed, this is not visible
+            const pathParts = path.split('.');
+            let currentPath = '';
+
+            for (let i = 0; i < pathParts.length - 1; i += 2) { // Step by 2 to skip indices
+                if (i > 0) currentPath += '.';
+                currentPath += pathParts[i];
+
+                if (i + 1 < pathParts.length) {
+                    currentPath += '.' + pathParts[i + 1];
+                }
+
+                // Get parent unit
+                const flow = getCurrentFlow();
+                const parentPath = currentPath.substring(0, currentPath.lastIndexOf('.subcategories'));
+                if (parentPath && parentPath !== 'data') {
+                    const parent = getObjectByPath(parentPath, flow);
+                    if (parent && parent.id && this.isCollapsed(flowId, parent.id)) {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+        },
+
+        /**
+         * Save collapse state to localStorage
+         */
+        saveToStorage() {
+            try {
+                localStorage.setItem('workflowCollapseState', JSON.stringify(appState.collapseState));
+            } catch (e) {
+                console.error('Failed to save collapse state:', e);
+            }
+        },
+
+        /**
+         * Load collapse state from localStorage
+         */
+        loadFromStorage() {
+            try {
+                const saved = localStorage.getItem('workflowCollapseState');
+                if (saved) {
+                    appState.collapseState = JSON.parse(saved);
+                }
+            } catch (e) {
+                console.error('Failed to load collapse state:', e);
+                appState.collapseState = {};
+            }
+        },
+
+        /**
+         * Initialize default collapsed state for a workflow if not set
+         */
+        initializeDefaultState(flowId, units) {
+            // If this workflow already has saved state, don't override
+            if (appState.collapseState[flowId] && Object.keys(appState.collapseState[flowId]).length > 0) {
+                return;
+            }
+
+            // Initialize the workflow state object
+            if (!appState.collapseState[flowId]) {
+                appState.collapseState[flowId] = {};
+            }
+
+            // Set all units with children to collapsed by default
+            const setCollapsedRecursive = (items) => {
+                items.forEach(unit => {
+                    if (unit.subcategories && unit.subcategories.length > 0) {
+                        appState.collapseState[flowId][unit.id] = true; // Collapsed
+                        setCollapsedRecursive(unit.subcategories);
+                    }
+                });
+            };
+
+            setCollapsedRecursive(units);
+            this.saveToStorage();
+        }
+    };
+
+    // Global functions for UI
+    window.toggleUnitCollapse = (unitId) => {
+        const flow = getCurrentFlow();
+        if (!flow) return;
+
+        // Find the unit
+        const findUnit = (units) => {
+            for (const unit of units) {
+                if (unit.id === unitId) return unit;
+                if (unit.subcategories && unit.subcategories.length > 0) {
+                    const found = findUnit(unit.subcategories);
+                    if (found) return found;
+                }
+            }
+            return null;
+        };
+
+        const unit = findUnit(flow.data);
+        if (unit) {
+            CollapseManager.toggle(flow.id, unitId, unit);
+            render();
+        }
+    };
+
+    window.expandAllUnits = () => {
+        const flow = getCurrentFlow();
+        if (!flow) return;
+
+        CollapseManager.expandAll(flow.id, flow.data);
+        Toast.success('All sections expanded');
+        render();
+    };
+
+    window.collapseAllUnits = () => {
+        const flow = getCurrentFlow();
+        if (!flow) return;
+
+        CollapseManager.collapseAll(flow.id, flow.data);
+        Toast.success('All sections collapsed');
+        render();
+    };
+
+
     // ===== DYNAMIC RENDERING =====
     const render = () => {
         const flow = getCurrentFlow();
         if (!flow) {
-            workflowRoot.innerHTML = '<div class="loading-state">Select or create a workflow</div>';
+            workflowRoot.innerHTML = `
+                <div class="empty-state-container">
+                    <div class="empty-state-icon">
+                        <i class="fa-solid fa-diagram-project"></i>
+                    </div>
+                    <h2 class="empty-state-title">No Workflow Selected</h2>
+                    <p class="empty-state-description">
+                        Get started by creating your first workflow to organize and track your work.
+                    </p>
+                    <div class="empty-state-actions">
+                        <button class="btn-primary" onclick="document.getElementById('flow-new-btn').click()">
+                            <i class="fa-solid fa-plus"></i> Create Your First Workflow
+                        </button>
+                    </div>
+                    <div class="empty-state-hint">
+                        <i class="fa-solid fa-lightbulb"></i>
+                        <span>Tip: Press <kbd>Ctrl+N</kbd> to quickly create a new workflow</span>
+                    </div>
+                </div>
+            `;
             return;
         }
 
@@ -799,6 +1068,9 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
+        // Initialize default collapsed state for this workflow if not set
+        CollapseManager.initializeDefaultState(flow.id, flow.data);
+
         // Update cumulative grades before rendering
         updateAllCumulativeGrades(flow.data, template, 0);
 
@@ -806,10 +1078,31 @@ document.addEventListener('DOMContentLoaded', () => {
         const unitsHtml = renderUnits(flow.data, template, 0);
         
         const contentHtml = unitsHtml || `
-            <div class="empty-state">
-                <i class="fa-solid fa-folder-open" style="font-size: 3rem; color: var(--text-tertiary); margin-bottom: 1rem;"></i>
-                <h3>No ${template.levels[0].pluralName} Yet</h3>
-                <p>Click the button below to add your first ${template.levels[0].singularName.toLowerCase()}</p>
+            <div class="empty-state-container" style="margin-top: 3rem;">
+                <div class="empty-state-icon">
+                    <i class="fa-solid fa-folder-open"></i>
+                </div>
+                <h2 class="empty-state-title">No ${template.levels[0].pluralName} Yet</h2>
+                <p class="empty-state-description">
+                    Start building your workflow by adding your first ${template.levels[0].singularName.toLowerCase()}.
+                    ${appState.currentMode === 'creation' ? 'You can add items, organize them hierarchically, and customize properties.' : 'Switch to creation mode to add items.'}
+                </p>
+                ${appState.currentMode === 'creation' ? `
+                    <div class="empty-state-actions">
+                        <button class="btn-primary" onclick="document.getElementById('add-category-btn').click()">
+                            <i class="fa-solid fa-plus"></i> Add First ${template.levels[0].singularName}
+                        </button>
+                    </div>
+                    <div class="empty-state-hint">
+                        <i class="fa-solid fa-lightbulb"></i>
+                        <span>Tip: Press <kbd>Ctrl+A</kbd> to quickly add a new item</span>
+                    </div>
+                ` : `
+                    <div class="empty-state-hint">
+                        <i class="fa-solid fa-info-circle"></i>
+                        <span>Switch to creation mode to start adding items</span>
+                    </div>
+                `}
             </div>
         `;
         
@@ -915,9 +1208,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const renderUnitHeader = (unit, level, config, depth, path, isCreation, template, flow) => {
         const unitIsCompleted = flow ? isCompleted(flow.id, unit.id) : false;
         const progress = config.enableProgressBar ? calculateProgress(unit, template, depth) : 0;
-        
+        const hasChildren = unit.subcategories && unit.subcategories.length > 0;
+        const isCollapsed = flow ? CollapseManager.isCollapsed(flow.id, unit.id) : false;
+
         return `
             <div class="unit-header">
+                ${hasChildren ? `
+                    <button class="btn-collapse"
+                            onclick="toggleUnitCollapse('${unit.id}')"
+                            title="${isCollapsed ? 'Expand' : 'Collapse'}">
+                        <i class="fa-solid fa-chevron-${isCollapsed ? 'right' : 'down'}"></i>
+                    </button>
+                ` : '<span class="collapse-spacer"></span>'}
                 ${config.enableIcon ? `
                     <span class="unit-icon-container">
                         ${unit.icon ? `
@@ -1019,11 +1321,14 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!nextLevel) return '';
 
         const isCreation = appState.currentMode === 'creation';
+        const flow = getCurrentFlow();
+        const isCollapsed = flow ? CollapseManager.isCollapsed(flow.id, unit.id) : false;
+
         // CRITICAL FIX: Pass parent path to renderUnits
         const childrenHtml = renderUnits(unit.subcategories || [], template, depth + 1, path);
 
         return `
-            <div class="unit-children">
+            <div class="unit-children ${isCollapsed ? 'collapsed' : 'expanded'}">
                 ${childrenHtml}
                 ${isCreation ? `
                     <button class="btn-add-child" onclick="addChildUnit('${path}', ${depth + 1})">
@@ -1282,7 +1587,10 @@ document.addEventListener('DOMContentLoaded', () => {
             parent.subcategories.push(newUnit);
             console.log('✅ Added to parent. Parent now has', parent.subcategories.length, 'children');
         }
-        
+
+        // Mark as dirty for auto-save
+        if (window.AutoSave) AutoSave.markDirty();
+
         console.log('🔄 Triggering re-render...');
         render();
     };
@@ -1313,6 +1621,10 @@ document.addEventListener('DOMContentLoaded', () => {
         
         parent.splice(key, 1);
         console.log('✅ Deleted. Parent now has', parent.length, 'children');
+
+        // Mark as dirty for auto-save
+        if (window.AutoSave) AutoSave.markDirty();
+
         render();
     };
 
@@ -1327,7 +1639,10 @@ document.addEventListener('DOMContentLoaded', () => {
         
         console.log('✅ Unit found:', unit.id, '- updating', property);
         unit[property] = value;
-        
+
+        // Mark as dirty for auto-save
+        if (window.AutoSave) AutoSave.markDirty();
+
         // If grade is updated and not cumulative, recalculate parent if parent is cumulative
         if (property === 'grade') {
             const template = getTemplate(flow);
@@ -1339,13 +1654,16 @@ document.addEventListener('DOMContentLoaded', () => {
     window.toggleUnitCompletion = (path, unitId) => {
         const flow = getCurrentFlow();
         if (!flow) return;
-        
+
         const unit = getObjectByPath(path, flow);
         if (!unit) return;
-        
+
         const currentState = isCompleted(flow.id, unitId);
         setCompleted(flow.id, unitId, !currentState);
-        
+
+        // Mark as dirty for auto-save (execution state)
+        if (window.AutoSave) AutoSave.markDirty();
+
         render();
     };
 
@@ -1353,8 +1671,12 @@ document.addEventListener('DOMContentLoaded', () => {
     window.updateWorkflowProperty = (property, value) => {
         const flow = getCurrentFlow();
         if (!flow) return;
-        
+
         flow[property] = value;
+
+        // Mark as dirty for auto-save
+        if (window.AutoSave) AutoSave.markDirty();
+
         // Don't re-render for these properties to avoid losing focus
         if (property === 'description') {
             return;
@@ -1407,8 +1729,12 @@ document.addEventListener('DOMContentLoaded', () => {
     window.selectWorkflowIcon = (iconFilename) => {
         const flow = getCurrentFlow();
         if (!flow) return;
-        
+
         flow.icon = iconFilename;
+
+        // Mark as dirty for auto-save
+        if (window.AutoSave) AutoSave.markDirty();
+
         closeModal();
         render();
     };
@@ -1434,11 +1760,15 @@ document.addEventListener('DOMContentLoaded', () => {
     window.selectUnitIcon = (path, iconFilename) => {
         const flow = getCurrentFlow();
         if (!flow) return;
-        
+
         const unit = getObjectByPath(path, flow);
         if (!unit) return;
-        
+
         unit.icon = iconFilename;
+
+        // Mark as dirty for auto-save
+        if (window.AutoSave) AutoSave.markDirty();
+
         closeModal();
         render();
     };
@@ -1498,6 +1828,10 @@ document.addEventListener('DOMContentLoaded', () => {
                         ensureTagsArray(unit);
                         if (!unit.tags.includes(tag)) {
                             unit.tags.push(tag);
+
+                            // Mark as dirty for auto-save
+                            if (window.AutoSave) AutoSave.markDirty();
+
                             render();
                         }
                     }
@@ -1512,6 +1846,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const unit = getObjectByPath(path, flow);
         if (unit && unit.tags) {
             unit.tags = unit.tags.filter(t => t !== tag);
+
+            // Mark as dirty for auto-save
+            if (window.AutoSave) AutoSave.markDirty();
+
             render();
         }
     };
@@ -1546,6 +1884,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (!unit.footer) unit.footer = { links: [], images: [], notes: [], comments: [] };
                     if (!unit.footer.links) unit.footer.links = [];
                     unit.footer.links.push({ text, url });
+
+                    // Mark as dirty for auto-save
+                    if (window.AutoSave) AutoSave.markDirty();
+
                     render();
                 }
                 closeModal();
@@ -1558,6 +1900,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const unit = getObjectByPath(path, flow);
         if (unit && unit.footer && unit.footer.links) {
             unit.footer.links.splice(index, 1);
+
+            // Mark as dirty for auto-save
+            if (window.AutoSave) AutoSave.markDirty();
+
             render();
         }
     };
@@ -1587,6 +1933,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (!unit.footer) unit.footer = { links: [], images: [], notes: [], comments: [] };
                     if (!unit.footer.images) unit.footer.images = [];
                     unit.footer.images.push(url);
+
+                    // Mark as dirty for auto-save
+                    if (window.AutoSave) AutoSave.markDirty();
+
                     render();
                 }
                 closeModal();
@@ -1599,6 +1949,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const unit = getObjectByPath(path, flow);
         if (unit && unit.footer && unit.footer.images) {
             unit.footer.images.splice(index, 1);
+
+            // Mark as dirty for auto-save
+            if (window.AutoSave) AutoSave.markDirty();
+
             render();
         }
     };
@@ -1628,6 +1982,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (!unit.footer) unit.footer = { links: [], images: [], notes: [], comments: [] };
                     if (!unit.footer.comments) unit.footer.comments = [];
                     unit.footer.comments.push(text);
+
+                    // Mark as dirty for auto-save
+                    if (window.AutoSave) AutoSave.markDirty();
+
                     render();
                 }
                 closeModal();
@@ -1640,6 +1998,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const unit = getObjectByPath(path, flow);
         if (unit && unit.footer && unit.footer.comments) {
             unit.footer.comments.splice(index, 1);
+
+            // Mark as dirty for auto-save
+            if (window.AutoSave) AutoSave.markDirty();
+
             render();
         }
     };
@@ -1679,6 +2041,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (!unit.footer) unit.footer = { links: [], images: [], notes: [], comments: [] };
                     if (!unit.footer.notes) unit.footer.notes = [];
                     unit.footer.notes.push({ title, content });
+
+                    // Mark as dirty for auto-save
+                    if (window.AutoSave) AutoSave.markDirty();
+
                     render();
                 }
                 quillEditor = null;
@@ -1692,6 +2058,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const unit = getObjectByPath(path, flow);
         if (unit && unit.footer && unit.footer.notes) {
             unit.footer.notes.splice(index, 1);
+
+            // Mark as dirty for auto-save
+            if (window.AutoSave) AutoSave.markDirty();
+
             render();
         }
     };
@@ -1796,6 +2166,9 @@ document.addEventListener('DOMContentLoaded', () => {
             appState.currentMode = savedMode;
         }
 
+        // Load collapse state
+        CollapseManager.loadFromStorage();
+
         // Load data
         await Promise.all([
             loadTemplates().then(templates => appState.templates = templates),
@@ -1808,7 +2181,19 @@ document.addEventListener('DOMContentLoaded', () => {
         if (appState.workflow.flows.length > 0 && !appState.currentFlowId) {
             appState.currentFlowId = appState.workflow.flows[0].id;
         }
-        
+
+        // Initialize auto-save for both workflow structure and execution state
+        if (window.AutoSave) {
+            AutoSave.init(async () => {
+                // Auto-save based on current mode
+                if (appState.currentMode === 'creation') {
+                    await saveWorkflow();
+                } else if (appState.currentMode === 'execution') {
+                    await saveExecutions();
+                }
+            }, 5000); // 5 second debounce
+        }
+
         // Populate UI
         populateFlowSelect();
         render();
@@ -1903,6 +2288,74 @@ document.addEventListener('DOMContentLoaded', () => {
                     exportTagToBoard(appState.activeTag);
                 }
             });
+        }
+
+        // Expand/Collapse All buttons
+        const expandAllBtn = document.getElementById('expand-all-btn');
+        const collapseAllBtn = document.getElementById('collapse-all-btn');
+
+        if (expandAllBtn) {
+            expandAllBtn.addEventListener('click', () => {
+                const flow = getCurrentFlow();
+                if (!flow) {
+                    Toast.warning('No workflow selected');
+                    return;
+                }
+                CollapseManager.expandAll(flow.id, flow.data);
+                Toast.success('All sections expanded');
+                render();
+            });
+        }
+
+        if (collapseAllBtn) {
+            collapseAllBtn.addEventListener('click', () => {
+                const flow = getCurrentFlow();
+                if (!flow) {
+                    Toast.warning('No workflow selected');
+                    return;
+                }
+                CollapseManager.collapseAll(flow.id, flow.data);
+                Toast.success('All sections collapsed');
+                render();
+            });
+        }
+
+        // Register additional keyboard shortcuts
+        if (window.KeyboardNav) {
+            // New workflow
+            KeyboardNav.register('Ctrl+n', (e) => {
+                if (flowNewBtn) {
+                    flowNewBtn.click();
+                }
+            }, 'Create new workflow');
+
+            // Toggle mode
+            KeyboardNav.register('Ctrl+e', (e) => {
+                if (modeSwitch) {
+                    modeSwitch.checked = !modeSwitch.checked;
+                    modeSwitch.dispatchEvent(new Event('change'));
+                    const mode = modeSwitch.checked ? 'execution' : 'creation';
+                    Toast.info(`Switched to ${mode} mode`);
+                }
+            }, 'Toggle creation/execution mode');
+
+            // Focus on workflow selector
+            KeyboardNav.register('Ctrl+f', (e) => {
+                if (flowSelect) {
+                    flowSelect.focus();
+                    Toast.info('Focus on workflow selector');
+                }
+            }, 'Focus workflow selector');
+
+            // Add root item
+            KeyboardNav.register('Ctrl+a', (e) => {
+                if (appState.currentMode === 'creation') {
+                    const addBtn = document.getElementById('add-category-btn');
+                    if (addBtn) {
+                        addBtn.click();
+                    }
+                }
+            }, 'Add new root item (creation mode)');
         }
     };
 

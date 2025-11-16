@@ -57,6 +57,15 @@
                     <button id="flow-export-to-board" class="doc-button highlight" title="Export workflow to board" style="margin-left: 1rem; background: var(--primary-color); color: white;">
                         <i class="fa-solid fa-diagram-project"></i> Export to Board
                     </button>
+                    <!-- Expand/Collapse Controls -->
+                    <div class="expand-collapse-controls" style="margin-left: auto; display: flex; gap: 0.5rem;">
+                        <button id="expand-all-btn" class="doc-button" title="Expand all sections">
+                            <i class="fa-solid fa-angles-down"></i> Expand All
+                        </button>
+                        <button id="collapse-all-btn" class="doc-button" title="Collapse all sections">
+                            <i class="fa-solid fa-angles-up"></i> Collapse All
+                        </button>
+                    </div>
                 </div>
 
                 <div class="header-buttons">
@@ -140,6 +149,8 @@
 
     <!-- Quill -->
     <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+    <!-- Shared Components & Utilities -->
+    <script src="shared-components.js"></script>
     <!-- App -->
     <script src="script.js"></script>
     <!-- Export to Board Module -->

@@ -7,13 +7,13 @@
 window.openExportToBoardModal = () => {
     const flow = getCurrentFlow();
     if (!flow) {
-        alert('No workflow selected');
+        Toast.warning('No workflow selected');
         return;
     }
-    
+
     const template = getTemplate(flow);
     if (!template) {
-        alert('Template not found for this workflow');
+        Toast.error('Template not found for this workflow');
         return;
     }
     
@@ -617,18 +617,18 @@ const handleExportSubmit = async (flow, template) => {
         
         // Validate
         if (!config.boardName.trim()) {
-            alert('Please enter a board name');
+            Toast.warning('Please enter a board name');
             return;
         }
-        
+
         // Collect selected nodes for partial export
         if (config.scope === 'partial') {
             document.querySelectorAll('.partial-checkbox:checked').forEach(checkbox => {
                 config.selectedNodes.add(checkbox.dataset.nodeId);
             });
-            
+
             if (config.selectedNodes.size === 0) {
-                alert('Please select at least one section to export');
+                Toast.warning('Please select at least one section to export');
                 return;
             }
         }
@@ -637,7 +637,7 @@ const handleExportSubmit = async (flow, template) => {
         if (config.scope === 'tag') {
             config.tagFilter = document.getElementById('tag-select')?.value;
             if (!config.tagFilter) {
-                alert('Please select a tag to filter by');
+                Toast.warning('Please select a tag to filter by');
                 return;
             }
         }
@@ -667,10 +667,10 @@ const handleExportSubmit = async (flow, template) => {
         
         // Execute export
         await executeWorkflowExport(flow, template, config);
-        
+
     } catch (e) {
         console.error('Export submit error:', e);
-        alert('Export configuration error: ' + e.message);
+        Toast.error('Export configuration error: ' + e.message);
     }
 };
 
@@ -734,9 +734,9 @@ const executeWorkflowExport = async (flow, template, config) => {
         };
         
         collectNodes(flow.data || [], null, 0);
-        
+
         if (nodesToExport.length === 0) {
-            alert('No nodes to export with current configuration');
+            Toast.warning('No nodes to export with current configuration');
             return;
         }
         
@@ -1077,15 +1077,15 @@ const executeWorkflowExport = async (flow, template, config) => {
         
         const result = await saveRes.json();
         if (result.status !== 'success') throw new Error(result.message || 'Save failed');
-        
+
         // Success
-        alert(`Board "${board.name}" created successfully!\n\n• ${board.cards.length} tasks created\n• ${board.dynamicList.nodes.length} dynamic list nodes`);
-        
+        Toast.success(`Board "${board.name}" created successfully! ${board.cards.length} tasks and ${board.dynamicList.nodes.length} dynamic list nodes created.`);
+
         // Open board in new tab
         window.open(`board.html?id=${board.id}`, '_blank');
-        
+
     } catch (e) {
         console.error('Execute workflow export error:', e);
-        alert('Failed to export workflow to board: ' + e.message);
+        Toast.error('Failed to export workflow to board: ' + e.message);
     }
 };

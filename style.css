@@ -658,10 +658,63 @@ input:checked + .slider:before { transform: translateX(28px); }
     transform: translateY(-2px);
 }
 
+/* ===== EXPAND/COLLAPSE CONTROLS ===== */
+.btn-collapse {
+    background: transparent;
+    border: none;
+    padding: 0.25rem 0.5rem;
+    cursor: pointer;
+    color: var(--text-secondary);
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 4px;
+    min-width: 32px;
+    height: 32px;
+}
+
+.btn-collapse:hover {
+    background: var(--surface-color);
+    color: var(--accent-color);
+    transform: scale(1.1);
+}
+
+.btn-collapse i {
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.collapse-spacer {
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+}
+
 .unit-children {
     padding: 0 1.5rem 1.5rem 1.5rem;
     border-left: 3px solid var(--border-color);
     margin-left: 1.5rem;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Expanded state - default */
+.unit-children.expanded {
+    max-height: 100000px; /* Large enough for any content */
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Collapsed state - hidden with smooth animation */
+.unit-children.collapsed {
+    max-height: 0;
+    opacity: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-bottom: 0;
+    transform: translateY(-10px);
 }
 
 .unit-children .unit {

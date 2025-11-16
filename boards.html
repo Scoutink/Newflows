@@ -51,13 +51,24 @@
         </div>
 
         <!-- Empty State -->
-        <div id="empty-state" class="empty-state hidden">
-            <i class="fa-solid fa-diagram-project empty-icon"></i>
-            <h3>No boards yet</h3>
-            <p>Create your first board from a workflow control or start from scratch</p>
-            <button class="btn-primary" onclick="document.getElementById('create-board-btn').click()">
-                <i class="fa-solid fa-plus"></i> Create Your First Board
-            </button>
+        <div id="empty-state" class="empty-state-container hidden">
+            <div class="empty-state-icon">
+                <i class="fa-solid fa-diagram-project"></i>
+            </div>
+            <h2 class="empty-state-title">No Boards Yet</h2>
+            <p class="empty-state-description">
+                Create your first project board to organize tasks, track progress, and collaborate with your team.
+                You can create a board from scratch or export a workflow structure.
+            </p>
+            <div class="empty-state-actions">
+                <button class="btn-primary" onclick="document.getElementById('create-board-btn').click()">
+                    <i class="fa-solid fa-plus"></i> Create Your First Board
+                </button>
+            </div>
+            <div class="empty-state-hint">
+                <i class="fa-solid fa-lightbulb"></i>
+                <span>Tip: You can also export workflows directly from the workflow page</span>
+            </div>
         </div>
     </main>
 
@@ -111,6 +122,8 @@
         </div>
     </div>
 
+    <!-- Shared Components & Utilities -->
+    <script src="shared-components.js"></script>
     <script src="ppm-script.js"></script>
     <script>
         // Initialize boards view

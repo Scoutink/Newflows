@@ -49,7 +49,7 @@ const saveTemplates = async (templates) => {
         return true;
     } catch (e) {
         console.error('Save templates error:', e);
-        alert('Failed to save templates: ' + e.message);
+        Toast.error('Failed to save templates: ' + e.message);
         return false;
     }
 };
@@ -410,7 +410,7 @@ const renderTemplateBuilder = () => {
                 <button class="btn-secondary" onclick="cancelTemplateBuilder()">
                     <i class="fa-solid fa-xmark"></i> Cancel
                 </button>
-                <button class="btn-primary" onclick="saveTemplate()">
+                <button id="save-template-btn" class="btn-primary" onclick="saveTemplate()">
                     <i class="fa-solid fa-check"></i> ${isEdit ? 'Update Template' : 'Create Template'}
                 </button>
             </div>
@@ -555,7 +555,7 @@ window.addLevel = () => {
 
 window.removeLevel = (index) => {
     if (state.currentTemplate.levels.length <= 1) {
-        alert('Template must have at least one level');
+        Toast.warning('Template must have at least one level');
         return;
     }
     
@@ -683,15 +683,23 @@ const validateTemplate = (template) => {
 
 window.saveTemplate = async () => {
     console.log('==================== SAVE TEMPLATE START ====================');
-    
-    // Step 1: Get the template object from state
-    const template = state.currentTemplate;
-    if (!template) {
-        alert('Error: No template in state!');
-        console.error('state.currentTemplate is null');
-        return;
+
+    // Get save button and add loading state
+    const saveBtn = document.getElementById('save-template-btn');
+    if (saveBtn) {
+        saveBtn.classList.add('loading');
+        saveBtn.disabled = true;
     }
-    console.log('✓ Template object exists in state');
+
+    try {
+        // Step 1: Get the template object from state
+        const template = state.currentTemplate;
+        if (!template) {
+            Toast.error('Error: No template in state!');
+            console.error('state.currentTemplate is null');
+            return;
+        }
+        console.log('✓ Template object exists in state');
     
     // Step 2: Read template-level fields from DOM
     console.log('Reading template-level fields from DOM...');
@@ -704,7 +712,7 @@ window.saveTemplate = async () => {
     console.log('  template-default element:', templateDefaultEl ? 'FOUND' : 'NOT FOUND');
     
     if (!templateNameEl || !templateDescEl || !templateDefaultEl) {
-        alert('ERROR: Template form elements not found in DOM!\nPlease refresh the page and try again.');
+        Toast.error('Template form elements not found! Please refresh the page and try again.');
         console.error('Missing template form elements');
         return;
     }
@@ -752,7 +760,7 @@ window.saveTemplate = async () => {
         
         if (!levelEl) {
             console.error(`  ✗ Level ${idx} container not found in DOM!`);
-            alert(`ERROR: Level ${idx + 1} form not found in DOM!\nThis should not happen. Please refresh and try again.`);
+            Toast.error(`Level ${idx + 1} form not found! Please refresh and try again.`);
             return;
         }
         
@@ -769,7 +777,7 @@ window.saveTemplate = async () => {
         
         if (!levelNameEl || !levelSingularEl || !levelPluralEl) {
             console.error(`  ✗ Level ${idx} inputs not found in DOM!`);
-            alert(`ERROR: Level ${idx + 1} input fields not found!\nThis should not happen. Please refresh and try again.`);
+            Toast.error(`Level ${idx + 1} input fields not found! Please refresh and try again.`);
             return;
         }
         
@@ -832,20 +840,27 @@ window.saveTemplate = async () => {
         });
     }
     
-    // Step 9: Save to backend
-    console.log('Saving to backend...');
-    const saved = await saveTemplates(state.templates);
-    
-    if (saved) {
-        console.log('✓ SAVE SUCCESSFUL');
-        console.log('==================== SAVE TEMPLATE END ====================\n');
-        alert('Template saved successfully!');
-        state.editMode = null;
-        state.currentTemplate = null;
-        renderTemplateList();
-    } else {
-        console.error('✗ SAVE FAILED');
-        console.log('==================== SAVE TEMPLATE END (FAILED) ====================\n');
+        // Step 9: Save to backend
+        console.log('Saving to backend...');
+        const saved = await saveTemplates(state.templates);
+
+        if (saved) {
+            console.log('✓ SAVE SUCCESSFUL');
+            console.log('==================== SAVE TEMPLATE END ====================\n');
+            Toast.success('Template saved successfully!');
+            state.editMode = null;
+            state.currentTemplate = null;
+            renderTemplateList();
+        } else {
+            console.error('✗ SAVE FAILED');
+            console.log('==================== SAVE TEMPLATE END (FAILED) ====================\n');
+        }
+    } finally {
+        // Remove loading state
+        if (saveBtn) {
+            saveBtn.classList.remove('loading');
+            saveBtn.disabled = false;
+        }
     }
 };
 
