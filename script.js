@@ -961,6 +961,34 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.error('Failed to load collapse state:', e);
                 appState.collapseState = {};
             }
+        },
+
+        /**
+         * Initialize default collapsed state for a workflow if not set
+         */
+        initializeDefaultState(flowId, units) {
+            // If this workflow already has saved state, don't override
+            if (appState.collapseState[flowId] && Object.keys(appState.collapseState[flowId]).length > 0) {
+                return;
+            }
+
+            // Initialize the workflow state object
+            if (!appState.collapseState[flowId]) {
+                appState.collapseState[flowId] = {};
+            }
+
+            // Set all units with children to collapsed by default
+            const setCollapsedRecursive = (items) => {
+                items.forEach(unit => {
+                    if (unit.subcategories && unit.subcategories.length > 0) {
+                        appState.collapseState[flowId][unit.id] = true; // Collapsed
+                        setCollapsedRecursive(unit.subcategories);
+                    }
+                });
+            };
+
+            setCollapsedRecursive(units);
+            this.saveToStorage();
         }
     };
 
@@ -1039,6 +1067,9 @@ document.addEventListener('DOMContentLoaded', () => {
             workflowRoot.innerHTML = '<div class="loading-state">Error: Template not found</div>';
             return;
         }
+
+        // Initialize default collapsed state for this workflow if not set
+        CollapseManager.initializeDefaultState(flow.id, flow.data);
 
         // Update cumulative grades before rendering
         updateAllCumulativeGrades(flow.data, template, 0);
@@ -2256,6 +2287,36 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (appState.activeTag) {
                     exportTagToBoard(appState.activeTag);
                 }
+            });
+        }
+
+        // Expand/Collapse All buttons
+        const expandAllBtn = document.getElementById('expand-all-btn');
+        const collapseAllBtn = document.getElementById('collapse-all-btn');
+
+        if (expandAllBtn) {
+            expandAllBtn.addEventListener('click', () => {
+                const flow = getCurrentFlow();
+                if (!flow) {
+                    Toast.warning('No workflow selected');
+                    return;
+                }
+                CollapseManager.expandAll(flow.id, flow.data);
+                Toast.success('All sections expanded');
+                render();
+            });
+        }
+
+        if (collapseAllBtn) {
+            collapseAllBtn.addEventListener('click', () => {
+                const flow = getCurrentFlow();
+                if (!flow) {
+                    Toast.warning('No workflow selected');
+                    return;
+                }
+                CollapseManager.collapseAll(flow.id, flow.data);
+                Toast.success('All sections collapsed');
+                render();
             });
         }
 
