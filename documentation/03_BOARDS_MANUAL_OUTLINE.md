@@ -6872,206 +6872,2248 @@ Proactive risk management
 
 ---
 
-### CHAPTER 9: GROUPS
+## CHAPTER 9: GROUPS
 
-**9.1 Understanding Groups**
-- Cross-cutting collections
-- Multiple groups per card
-- Bulk operation targets
-- Temporary or permanent
-- Examples: Design Sprint, Critical Tasks, Q4 Initiative
+Groups enable flexible, multi-dimensional organization and powerful bulk operations on related cards.
 
-**9.2 Creating Groups**
-- "+" button in carousel
-- Name (required)
-- Color picker
-- Creates immediately
+### 9.1 Understanding Groups
 
-**9.3 Group Properties**
-- Name (editable)
-- Color (editable)
-- Linked cards (auto-count)
-- Multi-card membership
+**What are Groups:**
 
-**9.4 Adding Cards to Groups**
-- Card details modal
-- Groups section with checkboxes
-- Select multiple groups
-- Add/remove any time
-- Cards can be in many groups
+Groups are flexible collections of cards that can overlap, enabling multi-dimensional organization and bulk operations.
 
-**9.5 Viewing Group Details**
-- Click group card
-- Modal shows all group cards
-- Organized by column
-- Card titles and status
-- Bulk action buttons
+**Cross-Cutting Collections:**
 
-**9.6 Bulk Operations on Groups**
-**Add Milestone:**
-- Select milestone
-- Applies to all group cards
-- Existing milestones replaced
+```
+Unlike Categories (single):
+- Card in ONE category (Frontend OR Backend)
 
-**Remove Milestone:**
-- Unlinks from all group cards
-- Cards remain in group
+Groups (multiple):
+- Card in MANY groups simultaneously
+- Card can be in "MFA Project" AND "Q1 Goals" AND "Critical"
 
-**Apply Category:**
-- Select category
-- Applies to all group cards
-- Existing categories replaced
+Flexible Classification:
+Card: "Configure Azure AD MFA"
+├─ Category: Technical (single, exclusive)
+└─ Groups: MFA Project, Q1 Goals, Azure Changes, Security (multiple, overlapping)
 
-**Remove Category:**
-- Unassigns from all group cards
-- Cards remain in group
+Multi-dimensional organization
+```
 
-**Mark All Done:**
-- Sets done=true on all
-- Independent of column
-- Milestone progress updates
+**Multiple Groups Per Card:**
 
-**Mark All Undone:**
-- Sets done=false on all
-- Reverses completion
-- Milestone progress updates
+```
+Example Card: "Implement Encryption"
 
-**Set Due Date:**
-- Calendar picker
-- Same date for all group cards
-- Overrides existing dates
+Groups:
+☑ Security Initiative
+☑ Q1 2024 Goals
+☑ Compliance Required
+☑ High Priority
+☐ Backend Tasks
+☐ Documentation Needed
 
-**Clear Due Dates:**
-- Removes dates from all
-- Cards without dates after
+Card belongs to 4 groups simultaneously
 
-**9.7 Use Cases**
-**Sprint Planning:**
-- Group for each sprint
-- Add sprint tasks to group
-- Bulk set due date (sprint end)
-- Bulk mark done at sprint completion
+Benefits:
+- View from multiple perspectives
+- Organize by project, timeline, priority, etc.
+- Bulk operations on any dimension
+```
 
-**Initiative Tracking:**
-- Group for each initiative
-- Cross-departmental tasks
-- Bulk apply milestone
-- Track initiative progress
+**Bulk Operation Targets:**
 
-**Batch Processing:**
-- Group related tasks
-- Bulk operations
-- Efficient management
-- Temporary grouping
+```
+The Power of Groups:
+
+Select group: "Q1 2024 Goals" (25 cards)
+↓
+Bulk Operations:
+- Set all due dates to March 31
+- Assign all to milestone "Q1 Completion"
+- Mark all as high priority category
+- Assign all to project manager
+
+One action → 25 cards updated
+
+Massive time savings
+```
+
+**Temporary or Permanent:**
+
+```
+Permanent Groups:
+├─ "Security Initiative" (long-term project)
+├─ "Compliance Required" (ongoing classification)
+└─ "High Priority" (standing designation)
+
+Temporary Groups:
+├─ "Week of Jan 15" (this week's focus)
+├─ "Pre-Audit Cleanup" (one-time effort)
+└─ "Bug Bash Sprint" (temporary campaign)
+
+Create/Delete as needed
+Flexible grouping strategies
+```
+
+**Examples:**
+
+```
+By Project:
+├─ MFA Implementation
+├─ Encryption Upgrade
+├─ Security Training
+└─ Compliance Audit
+
+By Timeline:
+├─ Q1 2024 Goals
+├─ January Sprint
+├─ This Week
+└─ Overdue Tasks
+
+By Characteristic:
+├─ High Priority
+├─ Blocked
+├─ Quick Wins
+└─ Technical Debt
+
+By Domain:
+├─ Azure Changes
+├─ Policy Updates
+├─ Infrastructure
+└─ User-Facing
+
+Unlimited flexibility
+```
 
 ---
 
-### CHAPTER 10: DYNAMIC LISTS (REFERENCE TREES)
+### 9.2 Creating Groups
 
-**10.1 Understanding Dynamic Lists**
-- Tree-structured references
-- Two node types: Tasks and Connections
-- Exported from workflows
-- Consultant-controlled structure
-- Client reference and filtering
+**"+" Button in Carousel:**
 
-**10.2 Panel Interface**
-- Toggle button opens/closes
-- Side panel overlay
-- Mode toggle (Creation/Reference)
-- Search bar
-- Tree display
-- Collapse/expand all
+```
+Location: Groups carousel (below categories)
 
-**10.3 Node Types**
+Groups
+[MFA Project] [Q1 Goals] [Critical] [+ Add]
+                                     ↑
+                                Click here
+
+Create Group modal opens
+```
+
+**Create Group Form:**
+
+```
+┌─────────────────────────────────────┐
+│  Create Group                    [×]│
+├─────────────────────────────────────┤
+│                                     │
+│  Name: (required)                   │
+│  [MFA Implementation__________]     │
+│                                     │
+│  Description: (optional)            │
+│  [All tasks related to multi-__]   │
+│  [factor authentication________]    │
+│                                     │
+│  Color:                             │
+│  🔵 🟢 🟡 🔴 🟣 🟤              │
+│                                     │
+│       [Cancel]  [Create Group]      │
+└─────────────────────────────────────┘
+```
+
+**Name (Required):**
+
+```
+Best Practices:
+✓ Descriptive and clear
+✓ Indicates grouping purpose
+✓ Meaningful to team
+
+Examples:
+✓ "MFA Implementation"
+✓ "Q1 2024 Compliance Goals"
+✓ "Critical Security Tasks"
+✓ "Azure Infrastructure Changes"
+
+Avoid:
+✗ "Group 1" (too vague)
+✗ "Misc" (unclear purpose)
+✗ "G1" (unclear abbreviation)
+```
+
+**Description (Optional):**
+
+```
+What to include:
+- Group purpose
+- Scope
+- Timeline (if applicable)
+- Success criteria
+
+Example:
+"All tasks related to implementing multi-factor 
+authentication across the organization. Includes 
+Azure AD configuration, user training, and policy 
+updates. Target completion: Q1 2024."
+
+Provides context for team
+Useful for large groups
+```
+
+**Color Picker:**
+
+```
+Choose color for visual distinction:
+🔵 Blue (default)
+🟢 Green (approved, proceeding)
+🟡 Yellow (caution, attention needed)
+🔴 Red (urgent, critical)
+🟣 Purple (special initiative)
+🟤 Brown (maintenance/operational)
+
+Use color strategically:
+- Projects: Blue/Purple
+- Urgent: Red
+- Routine: Green
+- On hold: Yellow
+
+Visual cues in carousel
+```
+
+**Creates Immediately:**
+
+```
+Click [Create Group]:
+- Group created
+- Appears in carousel
+- Progress: 0% (no cards yet)
+- Ready to add cards
+
+No separate save step
+Instant availability
+```
+
+---
+
+### 9.3 Group Properties
+
+**Name (Editable):**
+
+```
+Change group name:
+1. Click group card in carousel
+2. Group details modal opens
+3. Click [Edit] button
+4. Update name
+5. Click [Save]
+
+Name updates everywhere:
+- Carousel
+- Card group checkboxes
+- Group details modal
+```
+
+**Color (Editable):**
+
+```
+Change color:
+- Group details modal
+- Click color picker
+- Select new color
+- Group card updates immediately
+
+Use case:
+Change from Yellow (in progress) to Green (complete)
+Visual status indication
+```
+
+**Linked Cards (Auto-Count):**
+
+```
+Displays automatically:
+
+Group Card:
+┌────────────────┐
+│ MFA Project    │
+│ ████░░░░░░ 40% │
+│ 2 / 5 cards    │ ← Auto-count
+└────────────────┘
+
+2 cards done / 5 total cards in group
+
+Real-time updates:
+- Add card to group → Total increases
+- Remove card from group → Total decreases
+- Mark card done → Done count increases
+
+No manual tracking
+```
+
+**Multi-Card Membership:**
+
+```
+Key Difference from Categories:
+
+Categories:
+- Card in ONE category
+- Mutually exclusive
+
+Groups:
+- Card in MANY groups
+- Overlapping membership
+
+Example:
+Card: "Configure MFA"
+├─ Category: Technical (exclusive)
+└─ Groups: MFA Project, Q1 Goals, Azure Changes, Security (all at once)
+
+Flexible multi-dimensional organization
+```
+
+---
+
+### 9.4 Adding Cards to Groups
+
+**Card Details Modal:**
+
+```
+Open any card → Card details modal
+
+Scroll to Organization section:
+
+┌─────────────────────────────────────┐
+│ Organization                        │
+├─────────────────────────────────────┤
+│                                     │
+│ Milestone: [Sprint 1 ▼]             │
+│                                     │
+│ Category: [Technical ▼]             │
+│                                     │
+│ Groups:                             │
+│ ☑ MFA Implementation               │
+│ ☑ Q1 Goals                         │
+│ ☐ Security Initiative              │
+│ ☐ Azure Changes                    │
+│ ☐ High Priority                    │
+│                                     │
+└─────────────────────────────────────┘
+```
+
+**Groups Section with Checkboxes:**
+
+```
+Checkbox Interface:
+☑ = Card in this group
+☐ = Card NOT in this group
+
+Click checkbox to toggle:
+☐ → ☑ (add to group)
+☑ → ☐ (remove from group)
+
+Independent checkboxes:
+- Check multiple groups
+- Uncheck any group
+- No mutual exclusion
+```
+
+**Select Multiple Groups:**
+
+```
+Example:
+
+Current state:
+☐ MFA Implementation
+☐ Q1 Goals
+☐ Security Initiative
+
+Check all three:
+☑ MFA Implementation
+☑ Q1 Goals
+☑ Security Initiative
+
+Card now in 3 groups simultaneously
+
+Progress updates for all 3 groups:
+- MFA Implementation: +1 card
+- Q1 Goals: +1 card
+- Security Initiative: +1 card
+```
+
+**Add/Remove Any Time:**
+
+```
+Dynamic Group Membership:
+
+Add to group:
+1. Open card details
+2. Check group checkbox
+3. Card added to group
+4. Group count increases
+
+Remove from group:
+1. Open card details
+2. Uncheck group checkbox
+3. Card removed from group
+4. Group count decreases
+
+No restrictions
+Change membership freely
+```
+
+**Cards Can Be in Many Groups:**
+
+```
+Extreme Example:
+
+Card: "Update Security Policy"
+
+Groups (all checked):
+☑ Security Initiative
+☑ Q1 Goals
+☑ Compliance Required
+☑ Policy Updates
+☑ Documentation
+☑ Legal Review Required
+☑ High Priority
+☑ This Week
+
+Card in 8 groups!
+
+While possible, recommend:
+- 2-4 groups per card (typical)
+- More than 5 groups (excessive, consider simplifying)
+
+Balance flexibility with clarity
+```
+
+---
+
+### 9.5 Viewing Group Details
+
+**Click Group Card:**
+
+```
+In groups carousel, click any group:
+
+[MFA Project] ← Click here
+   40%
+
+Group details modal opens
+```
+
+**Modal Shows All Group Cards:**
+
+```
+┌─────────────────────────────────────────────┐
+│  MFA Implementation                      [×]│
+│  Progress: 2 / 5 cards (40%)                │
+├─────────────────────────────────────────────┤
+│                                             │
+│ To Do (2 cards)                             │
+│ ├─ ☐ Purchase MFA licenses                 │
+│ └─ ☐ Schedule user training                │
+│                                             │
+│ In Progress (1 card)                        │
+│ └─ ☐ Configure Azure AD MFA                │
+│                                             │
+│ Review (0 cards)                            │
+│                                             │
+│ Done (2 cards)                              │
+│ ├─ ☑ Draft MFA policy                      │
+│ └─ ☑ Get management approval               │
+│                                             │
+│ ┌─────────────────────────────────────────┐ │
+│ │ Bulk Operations                         │ │
+│ │ [Set Milestone ▼] [Set Category ▼]     │ │
+│ │ [Set Due Date] [Mark All Done]          │ │
+│ └─────────────────────────────────────────┘ │
+│                                             │
+│          [Edit Group]  [Delete]             │
+└─────────────────────────────────────────────┘
+```
+
+**Organized by Column:**
+
+```
+Cards grouped by column:
+- To Do: 2 cards
+- In Progress: 1 card
+- Review: 0 cards
+- Done: 2 cards
+
+See distribution
+Identify workflow stages
+```
+
+**Card Titles and Status:**
+
+```
+Each card shows:
+☐ or ☑ (done status)
+Card title
+Column (by grouping)
+
+Click card title:
+→ Opens card details
+→ Edit card
+→ Quick access
+```
+
+**Bulk Action Buttons:**
+
+```
+At bottom of modal:
+┌─────────────────────────────────────────┐
+│ Bulk Operations                         │
+│ [Set Milestone ▼] [Set Category ▼]     │
+│ [Set Due Date] [Mark All Done]          │
+│ [Clear Dates] [Mark All Undone]         │
+└─────────────────────────────────────────┘
+
+One click → All 5 cards updated
+
+Power of bulk operations
+```
+
+---
+
+### 9.6 Bulk Operations on Groups
+
+**The Power of Groups:**
+
+Groups enable bulk operations on collections of cards, saving massive time.
+
+---
+
+**Add Milestone:**
+
+```
+Button: [Set Milestone ▼]
+
+Click → Milestone selector:
+┌─────────────────────────┐
+│ None                    │
+│ Sprint 1                │
+│ Sprint 2                │
+│ Q1 2024                 │
+└─────────────────────────┘
+
+Select "Q1 2024":
+→ All 5 cards in group assigned to Q1 2024 milestone
+→ Q1 2024 progress recalculates
+→ Card milestone badges update
+
+One action → 5 cards updated
+```
+
+**Existing Milestones Replaced:**
+
+```
+Before bulk operation:
+Card 1: Sprint 1
+Card 2: Sprint 2
+Card 3: (no milestone)
+Card 4: Sprint 1
+Card 5: (no milestone)
+
+Bulk set milestone: Q1 2024
+
+After bulk operation:
+Card 1: Q1 2024 (replaced Sprint 1)
+Card 2: Q1 2024 (replaced Sprint 2)
+Card 3: Q1 2024 (added)
+Card 4: Q1 2024 (replaced Sprint 1)
+Card 5: Q1 2024 (added)
+
+All cards now in Q1 2024 milestone
+```
+
+---
+
+**Remove Milestone:**
+
+```
+Button: [Remove Milestone]
+
+Click → Confirmation:
+"Remove milestone from all 5 cards in group?"
+
+Confirm:
+→ All 5 cards unlinked from milestones
+→ Cards remain in group
+→ Milestone progress updates
+
+Cards Remain in Group:
+- Group membership unchanged
+- Only milestone link removed
+```
+
+---
+
+**Apply Category:**
+
+```
+Button: [Set Category ▼]
+
+Click → Category selector:
+┌─────────────────────────┐
+│ None                    │
+│ Documentation           │
+│ Technical               │
+│ HR                      │
+└─────────────────────────┘
+
+Select "Technical":
+→ All 5 cards assigned "Technical" category
+→ Category count updates
+→ Card category badges update
+
+Unified classification
+```
+
+**Existing Categories Replaced:**
+
+```
+Before bulk operation:
+Card 1: Documentation
+Card 2: HR
+Card 3: (no category)
+Card 4: Technical
+Card 5: (no category)
+
+Bulk set category: Technical
+
+After bulk operation:
+Card 1: Technical (replaced Documentation)
+Card 2: Technical (replaced HR)
+Card 3: Technical (added)
+Card 4: Technical (kept)
+Card 5: Technical (added)
+
+All cards now "Technical" category
+```
+
+---
+
+**Remove Category:**
+
+```
+Button: [Remove Category]
+
+Click → Confirmation:
+"Remove category from all 5 cards in group?"
+
+Confirm:
+→ All 5 cards unassigned from categories
+→ Cards remain in group
+→ Category counts update
+
+Cards no longer have category badge
+```
+
+---
+
+**Mark All Done:**
+
+```
+Button: [Mark All Done]
+
+Click → Confirmation:
+"Mark all 5 cards in group as done?"
+
+Confirm:
+→ All 5 cards: done = true
+→ Cards show ✓ Done indicator
+→ Milestones progress updates
+→ Group progress → 100%
+
+Independent of Column:
+- Cards stay in their columns
+- Just marked done
+- Can be in "To Do" and done (unusual but possible)
+
+Use case:
+End of sprint: Mark all sprint group cards done
+Fast completion tracking
+```
+
+---
+
+**Mark All Undone:**
+
+```
+Button: [Mark All Undone]
+
+Click → Confirmation:
+"Mark all 5 cards in group as not done?"
+
+Confirm:
+→ All 5 cards: done = false
+→ ✓ Done indicators removed
+→ Milestones progress updates
+→ Group progress decreases
+
+Reverses Completion:
+- Undo accidental bulk mark done
+- Reopen completed group for review
+```
+
+---
+
+**Set Due Date:**
+
+```
+Button: [Set Due Date]
+
+Click → Calendar picker:
+┌─────────────────────────┐
+│   January 2024          │
+├─────────────────────────┤
+│ Su Mo Tu We Th Fr Sa    │
+│        1  2  3  4  5  6 │
+│  7  8  9 10 11 12 13    │
+│ 14 15 16 17 18 19 20    │
+│ 21 22 23 24 25 26 27    │
+│ 28 29 30 31             │
+└─────────────────────────┘
+
+Select January 31:
+→ All 5 cards due date = Jan 31
+→ Cards show 📅 Jan 31
+
+Same Date for All:
+- Synchronized deadline
+- Group-wide due date
+- Sprint end date, project milestone, etc.
+```
+
+**Overrides Existing Dates:**
+
+```
+Before bulk operation:
+Card 1: Jan 15
+Card 2: Jan 20
+Card 3: (no due date)
+Card 4: Feb 5
+Card 5: (no due date)
+
+Bulk set due date: Jan 31
+
+After bulk operation:
+Card 1: Jan 31 (replaced Jan 15)
+Card 2: Jan 31 (replaced Jan 20)
+Card 3: Jan 31 (added)
+Card 4: Jan 31 (replaced Feb 5)
+Card 5: Jan 31 (added)
+
+All cards now due Jan 31
+```
+
+---
+
+**Clear Due Dates:**
+
+```
+Button: [Clear Dates]
+
+Click → Confirmation:
+"Remove due dates from all 5 cards in group?"
+
+Confirm:
+→ All 5 cards: due date = null
+→ No due date badges on cards
+
+Cards Without Dates After:
+- Due date field empty
+- No date-based urgency coloring
+- Clean slate for re-scheduling
+```
+
+---
+
+### 9.7 Use Cases
+
+**Sprint Planning:**
+
+**Group for Each Sprint:**
+
+```
+Create groups:
+├─ Sprint 1 (Jan 1-14)
+├─ Sprint 2 (Jan 15-28)
+├─ Sprint 3 (Jan 29-Feb 11)
+└─ ...
+
+Each sprint = One group
+```
+
+**Add Sprint Tasks to Group:**
+
+```
+Sprint planning meeting:
+1. Create "Sprint 1" group
+2. Select 20 tasks for sprint
+3. Add all 20 to "Sprint 1" group (bulk or individually)
+4. Group now has 20 cards
+
+Sprint scope defined
+```
+
+**Bulk Set Due Date (Sprint End):**
+
+```
+End of sprint = End of group due date
+
+Sprint 1 group (20 cards)
+→ Bulk Operations
+→ Set Due Date: Jan 14 (sprint end)
+→ All 20 cards due Jan 14
+
+Everyone knows the deadline
+```
+
+**Bulk Mark Done at Sprint Completion:**
+
+```
+Sprint retrospective:
+- Open "Sprint 1" group
+- Review: 18/20 cards done (90%)
+- Move remaining 2 to Sprint 2
+- Bulk mark all done (if completing sprint)
+
+Clean sprint closure
+```
+
+---
+
+**Initiative Tracking:**
+
+**Group for Each Initiative:**
+
+```
+Strategic initiatives:
+├─ Security Improvements
+├─ Customer Experience
+├─ Cost Reduction
+└─ Innovation Projects
+
+Each initiative = One group
+Track strategic progress
+```
+
+**Cross-Departmental Tasks:**
+
+```
+Initiative: "Security Improvements"
+
+Tasks from multiple departments:
+├─ IT: "Implement MFA" (Technical category)
+├─ Legal: "Update privacy policy" (Documentation category)
+├─ HR: "Security training" (HR category)
+└─ Finance: "Security insurance" (Finance category)
+
+All in ONE group: "Security Improvements"
+Track cross-functional initiative
+```
+
+**Bulk Apply Milestone:**
+
+```
+Initiative group: "Security Improvements" (15 cards)
+
+Bulk Operations:
+→ Set Milestone: Q1 2024
+→ All 15 cards assigned to Q1 2024
+
+Initiative aligned with quarterly goal
+```
+
+**Track Initiative Progress:**
+
+```
+Initiative Dashboard:
+
+Security Improvements: 12/15 cards done (80%)
+Customer Experience: 8/20 cards done (40%)
+Cost Reduction: 15/15 cards done (100% ✓)
+Innovation Projects: 3/10 cards done (30%)
+
+Executive visibility
+Strategic progress tracking
+```
+
+---
+
+**Batch Processing:**
+
+**Group Related Tasks:**
+
+```
+Temporary group: "Pre-Audit Cleanup"
+
+Add all tasks needed before audit:
+├─ Update all policies (5 tasks)
+├─ Complete evidence collection (8 tasks)
+├─ Fix non-conformities (3 tasks)
+└─ Prepare audit materials (2 tasks)
+
+Total: 18 tasks in group
+```
+
+**Bulk Operations:**
+
+```
+Pre-Audit Cleanup group:
+
+Bulk Operations:
+1. Set Due Date: Jan 31 (audit date)
+2. Set Category: Critical
+3. Set Milestone: Audit Prep
+4. Assign all to compliance team
+
+4 bulk operations → 18 cards fully configured
+
+Massive time savings:
+Manual: 18 cards × 4 properties × 30 seconds = 36 minutes
+Bulk: 4 operations × 10 seconds = 40 seconds
+
+54x faster!
+```
+
+**Efficient Management:**
+
+```
+Group enables:
+✓ Batch configuration
+✓ Unified deadline
+✓ Collective tracking
+✓ Synchronized completion
+
+From chaos to coordinated effort
+```
+
+**Temporary Grouping:**
+
+```
+After audit complete:
+
+Option 1: Delete group
+- Cards remain on board
+- Just group structure removed
+
+Option 2: Keep group
+- Historical reference
+- Future audit cycles
+
+Flexibility
+```
+
+---
+
+---
+
+## CHAPTER 10: DYNAMIC LISTS (REFERENCE TREES)
+
+Dynamic Lists provide a hierarchical reference structure for compliance frameworks and project documentation.
+
+### 10.1 Understanding Dynamic Lists
+
+**What are Dynamic Lists:**
+
+Dynamic Lists are tree-structured reference hierarchies that live alongside your board, typically containing compliance frameworks or project structures.
+
+**Tree-Structured References:**
+
+```
+Example: ISO 27001 Dynamic List
+
+▼ ISO 27001:2022
+  ├─ ▼ A.5 Organizational Controls
+  │  ├─ A.5.1 Information Security Policy
+  │  ├─ A.5.2 Information Security Roles
+  │  ├─ A.5.3 Separation of Duties
+  │  └─ ... (more controls)
+  │
+  ├─ ▶ A.6 People Controls
+  ├─ ▶ A.7 Physical Controls
+  └─ ▶ A.8 Technological Controls
+
+Hierarchical structure
+Expandable/collapsible
+Visual tree navigation
+```
+
+**Two Node Types: Tasks and Connections:**
+
+```
+Task Nodes (Yellow 🟡):
+- Standalone reference information
+- Not linked to board cards
+- Contains: description, checklists, comments, notes
+- Example: Process documentation, guidelines
+
+Connection Nodes (Blue 🔵):
+- Linked to board cards
+- Clicking filters board to show linked cards
+- Compliance requirements
+- Example: ISO controls, GDPR articles
+
+Two purposes, one tree
+```
+
+**Exported from Workflows:**
+
+```
+Workflow Creation Process:
+1. Consultant creates workflow (ISO 27001)
+2. Workflow contains 93 controls
+3. Export workflow to board
+4. Workflow → Dynamic List (tree structure)
+5. Board created with dynamic list reference
+
+Source of Truth:
+- Workflow = Master structure (consultant maintains)
+- Dynamic List = Board reference (client uses)
+- Sync: Workflow updates → Dynamic list updates
+```
+
+**Consultant-Controlled Structure:**
+
+```
+Permissions Model:
+
+Consultant:
+✓ Create/edit dynamic list structure
+✓ Add/remove nodes
+✓ Edit node content
+✓ Maintain compliance framework
+✓ Update when regulations change
+
+Client:
+✓ View dynamic list
+✓ Expand/collapse nodes
+✓ Click to filter board
+✓ Read node content
+✗ CANNOT edit structure
+
+Separation of Concerns:
+- Consultant: Framework structure
+- Client: Task execution
+```
+
+**Client Reference and Filtering:**
+
+```
+Client Use Case:
+
+1. View Dynamic List panel
+2. See full ISO 27001 structure
+3. Click control "A.9.4.3 MFA"
+4. Board filters to show MFA implementation tasks
+5. Work on tasks
+6. Reference control description while working
+
+Always-available compliance reference
+Context-aware task filtering
+```
+
+---
+
+### 10.2 Panel Interface
+
+**Toggle Button Opens/Closes:**
+
+```
+Location: Left edge of board
+
+[▶] Button (panel closed)
+[◀] Button (panel open)
+
+Click to toggle:
+▶ → Opens panel (slides in from left)
+◀ → Closes panel (slides out)
+
+Keyboard: Ctrl+D (toggle dynamic list)
+```
+
+**Side Panel Overlay:**
+
+```
+Panel Layout:
+
+┌──────────┬────────────────────────────────┐
+│ Dynamic  │  Board Columns                 │
+│ List     │                                │
+│          │  [To Do] [In Progress] [Done] │
+│ ▼ ISO    │                                │
+│   ├─A.5  │  Tasks                         │
+│   ├─A.6  │                                │
+│   └─A.7  │                                │
+│          │                                │
+└──────────┴────────────────────────────────┘
+   ↑                    ↑
+Panel              Board
+
+Panel takes ~25-30% of screen width
+Board adjusts to remaining space
+```
+
+**Mode Toggle (Creation/Reference):**
+
+```
+Top of panel:
+
+[Creation Mode] [Reference Mode]
+       ↑              ↑
+  (Consultant)   (Client - default)
+
+Creation Mode:
+- Add/edit/delete nodes
+- Build structure
+- Consultant only
+
+Reference Mode:
+- View-only structure
+- Filter functionality
+- Client and consultant
+
+Most users stay in Reference Mode
+```
+
+**Search Bar:**
+
+```
+Search Box:
+┌─────────────────────────┐
+│ 🔍 Search... [×]        │
+└─────────────────────────┘
+
+Type to search:
+- Node names
+- Node IDs (A.5.1, A.5.2)
+- Descriptions
+
+Results:
+- Matching nodes expand automatically
+- Highlighted in yellow
+- Clear with [×]
+
+Example:
+Search: "multi-factor"
+Result: Expands and highlights "A.9.4.3 MFA"
+```
+
+**Tree Display:**
+
+```
+Tree Structure:
+
+▼ Root Node
+  ├─ ▼ Parent Node
+  │  ├─ 🔵 Connection Node (5 cards)
+  │  ├─ 🟡 Task Node
+  │  └─ 🔵 Connection Node (2 cards)
+  │
+  └─ ▶ Parent Node (collapsed)
+
+Symbols:
+▼ = Expanded (children visible)
+▶ = Collapsed (children hidden)
+🔵 = Connection node (linked to cards)
+🟡 = Task node (standalone reference)
+
+Click ▼▶ to expand/collapse
+Click node to interact
+```
+
+**Collapse/Expand All:**
+
+```
+Control Buttons:
+
+[▼ Expand All] [▲ Collapse All]
+
+Expand All:
+- Opens all nodes
+- Full tree visible
+- See complete structure
+
+Collapse All:
+- Closes all nodes
+- Only root nodes visible
+- Clean, minimal view
+
+Keyboard:
+Ctrl+E: Expand all
+Ctrl+Shift+E: Collapse all
+```
+
+---
+
+### 10.3 Node Types
 
 **Task Nodes (Standalone):**
-- Independent tasks
-- Not linked to board cards
-- Has description
-- Has checklists
-- Has comments, notes, links, images
-- Yellow indicator
+
+**Purpose:** Reference information without board linkage
+
+**Yellow Indicator:**
+
+```
+Display:
+🟡 Process Documentation
+
+Yellow = Task node
+Standalone reference
+Not linked to cards
+```
+
+**Independent Tasks:**
+
+```
+Task nodes exist independently:
+- Not connected to board cards
+- Self-contained information
+- Reference material only
+- Guidelines, procedures, notes
+
+Example:
+🟡 "GDPR Principles Overview"
+- Contains description of GDPR principles
+- Reference for team
+- Not a task to complete
+```
+
+**Not Linked to Board Cards:**
+
+```
+No filtering:
+- Clicking task node does NOT filter board
+- Opens task node details modal
+- Shows reference content
+- No card linkage
+```
+
+**Has Description:**
+
+```
+Full description field:
+- What this reference is about
+- Background information
+- Context and guidance
+- Formatted text
+
+Example:
+Node: "Security Best Practices"
+Description: "Industry-standard security practices 
+for authentication and access control..."
+```
+
+**Has Checklists:**
+
+```
+Checklist items:
+☑ Review best practice guide
+☑ Assess current implementation
+☐ Identify gaps
+☐ Create improvement plan
+
+Progress: 2/4 (50%)
+
+Use for sub-items, verification steps
+```
+
+**Has Comments, Notes, Links, Images:**
+
+```
+Full attachment support:
+
+Comments:
+💬 "Updated with 2024 guidelines" - John
+
+Notes:
+📝 "Implementation Guide" (rich text)
+
+Links:
+🔗 "ISO 27002:2022 Full Text"
+🔗 "NIST CSF Reference"
+
+Images:
+🖼️ "Control Framework Diagram"
+
+Complete reference package
+```
+
+---
 
 **Connection Nodes (Filters):**
-- Link to board cards
-- Filter activation
-- Compliance requirements
-- Reference materials
-- Blue indicator
 
-**10.4 Creation Mode**
+**Purpose:** Link to board cards and enable filtering
+
+**Blue Indicator:**
+
+```
+Display:
+🔵 A.9.4.3 Multi-Factor Authentication (5)
+                                       ↑
+                            5 cards linked
+
+Blue = Connection node
+Linked to board cards
+Clickable to filter
+```
+
+**Link to Board Cards:**
+
+```
+Connection established:
+- Node represents compliance requirement
+- Board cards implement the requirement
+- Node → Cards linkage maintained
+- Card count displayed
+
+Example:
+🔵 "A.9.4.3 MFA Requirement" (5 cards)
+Linked to:
+├─ "Research MFA solutions"
+├─ "Purchase licenses"
+├─ "Configure Azure AD"
+├─ "Test MFA"
+└─ "Deploy MFA"
+
+5 implementation tasks
+```
+
+**Filter Activation:**
+
+```
+Click connection node:
+→ Board filters instantly
+→ Shows only linked cards (5 cards)
+→ Filter banner appears
+→ Other cards hidden
+
+Work in context:
+See only tasks related to this requirement
+```
+
+**Compliance Requirements:**
+
+```
+Typical use:
+Each regulatory requirement = Connection node
+
+ISO 27001:
+🔵 A.5.1 InfoSec Policy
+🔵 A.5.2 InfoSec Roles
+🔵 A.5.3 Separation of Duties
+... (93 controls total)
+
+GDPR:
+🔵 Article 5(1)(a) Lawfulness
+🔵 Article 5(1)(b) Purpose Limitation
+... (99 articles)
+
+SOC 2:
+🔵 CC6.1 Logical Access
+🔵 CC6.2 Data Protection
+... (64 criteria)
+
+Comprehensive coverage
+```
+
+**Reference Materials:**
+
+```
+Connection nodes can link to:
+- Policies
+- Procedures
+- Guidelines
+- Standards
+- Regulations
+- Control frameworks
+
+Dual purpose:
+1. Reference (description, guidance)
+2. Filter (show implementation tasks)
+```
+
+---
+
+### 10.4 Creation Mode
+
 **For Consultants:**
-- Add root nodes
-- Add child nodes
-- Edit node names
-- Delete nodes
-- Build reference tree
-- Structure compliance requirements
 
-**10.5 Reference Mode**
+Creation Mode enables consultants to build and maintain the reference structure.
+
+**Add Root Nodes:**
+
+```
+Button: [+ Add Root Node]
+
+Creates top-level node:
+▼ New Root Node
+  (empty, ready for children)
+
+Use for:
+- Regulation name (ISO 27001)
+- Project name
+- Framework name
+```
+
+**Add Child Nodes:**
+
+```
+Right-click any node → Add Child
+
+Creates child under selected node:
+
+Before:
+▼ A.5 Organizational Controls
+
+After:
+▼ A.5 Organizational Controls
+  └─ A.5.1 Information Security Policy
+
+Build hierarchy recursively
+Unlimited depth
+```
+
+**Edit Node Names:**
+
+```
+Right-click node → Rename
+
+Enter new name:
+"A.5.1 Information Security Policy"
+
+Node label updates
+Maintains children and linkages
+```
+
+**Delete Nodes:**
+
+```
+Right-click node → Delete
+
+Confirmation:
+"Delete node and all children?"
+
+Deletes:
+✗ Node removed
+✗ Children removed (recursively)
+✓ Linked cards remain (just unlinked)
+
+Permanent action
+```
+
+**Build Reference Tree:**
+
+```
+Building ISO 27001 Structure:
+
+1. Add root: "ISO 27001:2022"
+2. Add children: "A.5 Organizational Controls", "A.6 People Controls", etc.
+3. Add grandchildren: "A.5.1", "A.5.2", etc.
+4. Set node types (task vs connection)
+5. Add descriptions
+6. Link connection nodes to cards
+
+Result: Complete ISO 27001 reference tree
+```
+
+**Structure Compliance Requirements:**
+
+```
+Consultant workflow:
+
+1. Create template (one-time)
+2. Build workflow with all requirements
+3. Export workflow to board
+   → Auto-creates dynamic list structure
+4. Maintain: Update workflow when regulations change
+   → Dynamic list syncs automatically
+
+Efficient framework management
+```
+
+---
+
+### 10.5 Reference Mode
+
 **For Clients:**
-- View tree structure
-- Expand/collapse nodes
-- Click connection nodes to filter
-- View linked card counts
-- Open task node details
-- Read-only structure
 
-**10.6 Filtering with Connection Nodes**
-- Click connection node
-- Board filters to linked cards
-- Filter banner appears
-- Shows requirement context
-- Clear filter to reset
+Reference Mode is the default, view-only mode for clients to use the structure.
 
-**10.7 Task Node Details**
-- Click task node
-- Modal with full details
-- Description
-- Checklist items (add/complete/delete)
-- Comments thread
-- Notes (rich text)
+**View Tree Structure:**
+
+```
+Panel displays full hierarchy:
+
+▼ ISO 27001:2022 (93 controls)
+  ├─ ▼ A.5 Organizational Controls (15)
+  │  ├─ 🔵 A.5.1 InfoSec Policy (3 cards)
+  │  ├─ 🔵 A.5.2 InfoSec Roles (2 cards)
+  │  └─ ... (more controls)
+  │
+  ├─ ▶ A.6 People Controls (20)
+  └─ ▶ A.7 Physical Controls (18)
+
+Read-only visualization
+Structured navigation
+```
+
+**Expand/Collapse Nodes:**
+
+```
+Click ▼ or ▶:
+- Toggle node expansion
+- Show/hide children
+- Navigate structure
+
+Keyboard:
+- Arrow keys to navigate
+- Space to expand/collapse
+- Enter to interact with node
+
+Efficient navigation
+```
+
+**Click Connection Nodes to Filter:**
+
+```
+Click 🔵 connection node:
+
+Example:
+Click: 🔵 A.5.1 InfoSec Policy (3 cards)
+
+Result:
+→ Board filters to show 3 cards
+→ Filter banner: "A.5.1 Information Security Policy [×]"
+→ See only cards implementing this control
+→ Work in context
+
+Primary use case
+```
+
+**View Linked Card Counts:**
+
+```
+Connection node display:
+🔵 A.5.1 InfoSec Policy (3 cards)
+                        ↑
+                Card count
+
+Shows:
+- How many cards address this requirement
+- Implementation coverage
+- Progress indicator
+
+Quick assessment:
+- 0 cards: Gap! Requirement not addressed
+- 1-5 cards: Normal implementation
+- 10+ cards: Complex requirement
+```
+
+**Open Task Node Details:**
+
+```
+Click 🟡 task node:
+
+Opens modal:
+┌─────────────────────────────────────┐
+│  Task Node Details               [×]│
+│  GDPR Principles Overview           │
+├─────────────────────────────────────┤
+│                                     │
+│  Description:                       │
+│  GDPR Article 5(1) defines six key  │
+│  principles for data processing...  │
+│                                     │
+│  Checklist:                         │
+│  ☑ Review principles                │
+│  ☐ Assess compliance                │
+│                                     │
+│  Notes: (2)                         │
+│  Links: (3)                         │
+│  Images: (1)                        │
+│                                     │
+│           [Close]                   │
+└─────────────────────────────────────┘
+
+Full reference content
+```
+
+**Read-Only Structure:**
+
+```
+In Reference Mode:
+
+Can do:
+✓ View tree
+✓ Expand/collapse
+✓ Search
+✓ Click to filter
+✓ Read content
+
+Cannot do:
+✗ Add nodes
+✗ Delete nodes
+✗ Rename nodes
+✗ Restructure
+
+Client = Consumer
+Consultant = Curator
+```
+
+---
+
+### 10.6 Filtering with Connection Nodes
+
+**Click Connection Node:**
+
+```
+Action: Click 🔵 A.9.4.3 MFA (5 cards)
+
+Result: Instant board filtering
+```
+
+**Board Filters to Linked Cards:**
+
+```
+Before click:
+Board showing all 45 cards across columns
+
+After click:
+Board showing only 5 MFA cards
+
+[To Do]        [In Progress]     [Done]
+├─ Research    ├─ Configure      └─ Test MFA
+│  MFA         │  Azure AD          (done)
+└─ Purchase    └─ Training
+   licenses       materials
+
+5 cards visible, 40 hidden
+```
+
+**Filter Banner Appears:**
+
+```
+Top of board:
+┌─────────────────────────────────────┐
+│ Filter: 🔵 A.9.4.3 MFA [×]          │
+│ Showing 5 of 45 cards               │
+└─────────────────────────────────────┘
+
+Clear indication:
+- Filter active
+- Which requirement
+- Card counts
+- Clear button [×]
+```
+
+**Shows Requirement Context:**
+
+```
+While filtered:
+- Dynamic list highlights active node
+- Node shows (5 cards) count
+- Board shows only relevant work
+- Team knows context
+
+Example workflow:
+1. Audit preparation
+2. Click each ISO control in list
+3. Review implementation cards
+4. Ensure coverage
+5. Document evidence
+```
+
+**Clear Filter to Reset:**
+
+```
+Clear filter:
+Method 1: Click [×] in filter banner
+Method 2: Click same connection node again (toggle)
+Method 3: Click different connection node (switch filter)
+Method 4: Keyboard: Esc
+
+Result:
+→ All 45 cards visible again
+→ Normal board view
+→ Filter banner disappears
+```
+
+---
+
+### 10.7 Task Node Details
+
+**Click Task Node:**
+
+```
+Click 🟡 task node:
+
+Example: 🟡 "GDPR Implementation Guide"
+
+Opens detailed modal
+```
+
+**Modal with Full Details:**
+
+```
+┌─────────────────────────────────────────────┐
+│  GDPR Implementation Guide               [×]│
+├─────────────────────────────────────────────┤
+│                                             │
+│  Description:                               │
+│  ┌─────────────────────────────────────┐  │
+│  │ Comprehensive guide for implementing│  │
+│  │ GDPR requirements. Covers all 99    │  │
+│  │ articles with practical examples... │  │
+│  └─────────────────────────────────────┘  │
+│                                             │
+│  Checklist: (3/5 complete)                  │
+│  ☑ Read full GDPR text                     │
+│  ☑ Identify applicable articles            │
+│  ☑ Map to existing controls                │
+│  ☐ Create implementation plan              │
+│  ☐ Assign responsibilities                 │
+│                                             │
+│  Comments: (2)                              │
+│  Notes: (1)                                 │
+│  Links: (4)                                 │
+│  Images: (2)                                │
+│                                             │
+│           [Close]                           │
+└─────────────────────────────────────────────┘
+
+Complete reference package
+```
+
+**Description:**
+
+```
+Full-length description:
+- What this reference covers
+- Background and context
+- Key points
+- Guidance for implementation
+
+Rich text formatting:
+- Headings, bold, italic
+- Bullet lists
 - Links
-- Images
 
-**10.8 Workflow Export to Dynamic List**
+Comprehensive information
+```
+
+**Checklist Items (Add/Complete/Delete):**
+
+```
+Interactive checklist:
+
+Add item:
+- [+ Add Item] button
+- Type item text
+- Press Enter
+- Appears in list
+
+Complete item:
+- Click ☐ checkbox
+- Changes to ☑
+- Progress updates
+
+Delete item:
+- Hover over item
+- Click [×] button
+- Confirms deletion
+
+Progress tracking:
+Header shows: (3/5 complete) 60%
+```
+
+**Comments Thread:**
+
+```
+Comments section:
+┌─────────────────────────────────────┐
+│ Comments (2)                        │
+├─────────────────────────────────────┤
+│                                     │
+│ [Add comment__________________]     │
+│                                     │
+│ Sarah - 2 days ago                  │
+│ Updated with 2024 guidelines        │
+│                                     │
+│ Mike - 1 week ago                   │
+│ Great reference, very helpful       │
+└─────────────────────────────────────┘
+
+Team discussion
+Updates and notes
+```
+
+**Notes (Rich Text):**
+
+```
+Notes section:
+📝 "Implementation Steps" (rich text)
+📝 "Legal Requirements"
+
+Click to view/edit
+Formatted documentation
+Detailed guidance
+```
+
+**Links:**
+
+```
+Links section:
+🔗 "GDPR Full Text (EUR-Lex)"
+🔗 "ICO Guidance"
+🔗 "Company Privacy Policy"
+🔗 "DPA Contact Information"
+
+External resources
+Quick access
+```
+
+**Images:**
+
+```
+Images section:
+🖼️ "GDPR Structure Diagram"
+🖼️ "Data Flow Chart"
+
+Visual aids
+Diagrams and screenshots
+```
+
+---
+
+### 10.8 Workflow Export to Dynamic List
+
 **Full Export:**
-- Entire workflow structure
-- All levels become nodes
-- All units become nodes
-- Hierarchy preserved
-- Descriptions copied
-- Tags become connections
+
+**Entire Workflow Structure:**
+
+```
+Workflow:
+ISO 27001:2022
+├─ Organizational Controls (Level 1)
+│  ├─ A.5 Org Controls (Level 2)
+│  │  ├─ A.5.1 InfoSec Policy (Level 3)
+│  │  ├─ A.5.2 InfoSec Roles (Level 3)
+│  │  └─ A.5.3 Separation (Level 3)
+│  └─ ...
+└─ ...
+
+Export → Dynamic List:
+Same structure preserved
+All levels, all units
+Complete hierarchy
+```
+
+**All Levels Become Nodes:**
+
+```
+Workflow levels → Dynamic list nodes
+
+10-level workflow:
+├─ Level 1 (Domains)
+│  ├─ Level 2 (Categories)
+│  │  ├─ Level 3 (Subcategories)
+│  │  │  ├─ Level 4 (Controls)
+│  │  │  │  └─ Level 5 (Requirements)
+│  │  │  │     └─ Level 6 (Tasks)
+│  │  │  │        └─ Level 7-10 (Sub-tasks)
+
+All levels → All nodes
+Full depth preserved
+```
+
+**All Units Become Nodes:**
+
+```
+Workflow with 93 units:
+→ Dynamic list with 93 nodes
+
+1:1 mapping
+Every unit = One node
+Complete coverage
+```
+
+**Hierarchy Preserved:**
+
+```
+Parent-child relationships maintained:
+
+Workflow:
+A.5 Org Controls
+  └─ A.5.1 InfoSec Policy
+
+Dynamic List:
+▼ A.5 Org Controls
+  └─ 🔵 A.5.1 InfoSec Policy
+
+Exact structure replication
+```
+
+**Descriptions Copied:**
+
+```
+Workflow unit description:
+"Establish and maintain information security 
+policies aligned with business objectives..."
+
+→ Copied to dynamic list node description
+
+Same content
+Reference consistency
+```
+
+**Tags Become Connections:**
+
+```
+Workflow units with tags:
+A.5.1 [Critical] [Policy] [Documentation]
+
+→ Dynamic list behavior:
+If unit has tags → Connection node (🔵)
+Cards can be linked
+
+If unit no tags → Task node (🟡)
+Standalone reference
+
+Tag presence determines node type
+```
+
+---
 
 **Partial Export:**
-- Unit-level export
-- Unit and children only
-- Subtree preserved
 
-**10.9 Smart Card Linking**
-- Connection nodes auto-link to cards
-- Based on workflow completion status
-- Completed units → Done column cards
-- Incomplete units → Backlog cards
-- Preserves requirement traceability
+**Unit-Level Export:**
 
-**10.10 Use Cases**
+```
+Instead of full workflow:
+Select specific unit to export
+
+Example:
+Full workflow: ISO 27001 (93 controls)
+Export unit: "A.5 Organizational Controls" only
+
+Result:
+Dynamic list with just A.5 and children (15 controls)
+
+Focused subset
+```
+
+**Unit and Children Only:**
+
+```
+Export unit: A.5 Organizational Controls
+
+Includes:
+▼ A.5 Organizational Controls
+  ├─ A.5.1 InfoSec Policy
+  ├─ A.5.2 InfoSec Roles
+  ├─ A.5.3 Separation
+  └─ ... (A.5.4 through A.5.15)
+
+Excludes:
+A.6, A.7, A.8, etc. (sibling branches)
+
+Subtree only
+```
+
+**Subtree Preserved:**
+
+```
+Complete subtree structure maintained:
+
+Export: A.5 (has 15 children, some with grandchildren)
+
+Dynamic list:
+▼ A.5 Organizational Controls
+  ├─ ▼ A.5.1 InfoSec Policy
+  │  ├─ A.5.1.1 Policy creation
+  │  └─ A.5.1.2 Policy review
+  ├─ A.5.2 InfoSec Roles
+  └─ ... (full A.5 subtree)
+
+All descendants included
+```
+
+---
+
+### 10.9 Smart Card Linking
+
+**Connection Nodes Auto-Link to Cards:**
+
+```
+During workflow export:
+- Each workflow unit exported as connection node
+- Cards automatically created for each unit
+- Node → Card linkage established
+- Traceability maintained
+
+Result:
+🔵 A.5.1 InfoSec Policy (1 card)
+       ↑
+   Auto-linked to card created from this unit
+```
+
+**Based on Workflow Completion Status:**
+
+```
+Export considers workflow unit status:
+
+Unit marked done in workflow:
+→ Card created in Done column
+→ Card marked ☑ done
+
+Unit not done in workflow:
+→ Card created in Backlog/To Do
+→ Card not marked done
+
+Status synchronization
+```
+
+**Completed Units → Done Column Cards:**
+
+```
+Workflow state:
+☑ A.5.1 InfoSec Policy (done)
+☑ A.5.2 InfoSec Roles (done)
+☐ A.5.3 Separation (not done)
+
+After export:
+
+Board Done column:
+├─ ☑ A.5.1 InfoSec Policy
+└─ ☑ A.5.2 InfoSec Roles
+
+Board To Do column:
+└─ ☐ A.5.3 Separation
+
+Reflects workflow completion
+```
+
+**Incomplete Units → Backlog Cards:**
+
+```
+Units not done:
+→ Cards in To Do or Backlog column
+→ Ready for implementation
+→ Work to be done
+
+Example:
+☐ A.5.3 Separation (not done in workflow)
+→ Card in To Do column
+→ Team picks up for implementation
+```
+
+**Preserves Requirement Traceability:**
+
+```
+Traceability chain:
+
+Regulation → Workflow Unit → Dynamic List Node → Board Card
+
+Example:
+ISO 27001 A.5.1 → Workflow unit → 🔵 Node → "Draft policy" card
+
+Audit trail:
+- Which regulation requirement
+- Which workflow unit
+- Which board card
+- Complete traceability
+
+Compliance demonstration
+```
+
+---
+
+### 10.10 Use Cases
+
 **Compliance Requirements:**
-- Full regulation tree
-- Each requirement as node
-- Link to implementation cards
-- Filter by requirement
-- Audit trail
+
+**Full Regulation Tree:**
+
+```
+ISO 27001 Structure:
+▼ ISO 27001:2022
+  ├─ ▼ Organizational Controls (15)
+  ├─ ▼ People Controls (20)
+  ├─ ▼ Physical Controls (18)
+  └─ ▼ Technological Controls (40)
+
+Total: 93 controls
+
+Complete framework reference
+```
+
+**Each Requirement as Node:**
+
+```
+Every ISO control:
+🔵 A.5.1 Information Security Policy
+🔵 A.5.2 Information Security Roles
+🔵 A.5.3 Separation of Duties
+... (93 nodes)
+
+Full coverage
+No gaps
+```
+
+**Link to Implementation Cards:**
+
+```
+Control → Implementation
+
+🔵 A.9.4.3 MFA (5 cards):
+├─ "Research MFA solutions"
+├─ "Purchase licenses"
+├─ "Configure Azure AD"
+├─ "Test MFA"
+└─ "Deploy MFA"
+
+Requirement → Execution
+```
+
+**Filter by Requirement:**
+
+```
+Audit prep workflow:
+1. Auditor asks: "Show me MFA implementation"
+2. Click 🔵 A.9.4.3 MFA
+3. Board filters to 5 MFA cards
+4. Show evidence
+5. Auditor satisfied
+
+Instant compliance demonstration
+```
+
+**Audit Trail:**
+
+```
+Complete traceability:
+
+Question: "How do you meet ISO A.9.4.3?"
+
+Answer (via board):
+1. Dynamic list: 🔵 A.9.4.3 MFA requirement
+2. Board cards: 5 implementation tasks (all done)
+3. Card attachments: Evidence, screenshots, policies
+4. Activity log: Who, when, what
+
+Comprehensive audit response
+```
+
+---
 
 **Project Documentation:**
-- Project structure tree
-- Deliverables as nodes
-- Link to work cards
-- Navigate by structure
+
+**Project Structure Tree:**
+
+```
+Project dynamic list:
+▼ Website Redesign Project
+  ├─ ▼ Discovery Phase
+  │  ├─ User research
+  │  ├─ Competitive analysis
+  │  └─ Requirements gathering
+  │
+  ├─ ▼ Design Phase
+  │  ├─ Wireframes
+  │  ├─ Visual design
+  │  └─ Design system
+  │
+  ├─ ▼ Development Phase
+  │  ├─ Frontend
+  │  ├─ Backend
+  │  └─ Integration
+  │
+  └─ ▼ Launch Phase
+     ├─ QA testing
+     ├─ Deployment
+     └─ Marketing
+
+Project work breakdown structure
+```
+
+**Deliverables as Nodes:**
+
+```
+Each deliverable = Node:
+🟡 "User Research Report"
+🟡 "Wireframe Documentation"
+🟡 "Design System"
+🔵 "Frontend Development" (8 cards)
+
+Mix of references and work items
+```
+
+**Link to Work Cards:**
+
+```
+Node → Cards:
+🔵 "Frontend Development" (8 cards)
+├─ "Set up React app"
+├─ "Build homepage"
+├─ "Build product page"
+└─ ... (5 more)
+
+Project phase → Execution tasks
+```
+
+**Navigate by Structure:**
+
+```
+Navigate project phases:
+1. Expand "Development Phase"
+2. Click "Frontend Development"
+3. Board filters to 8 frontend cards
+4. Team works on frontend
+5. Click "Backend Development"
+6. Switch to 6 backend cards
+
+Structured project navigation
+```
+
+---
 
 **Knowledge Base:**
-- Process documentation
+
+**Process Documentation:**
+
+```
+Knowledge base tree:
+▼ Company Processes
+  ├─ ▼ HR Processes
+  │  ├─ 🟡 Onboarding Process
+  │  ├─ 🟡 Performance Review
+  │  └─ 🟡 Exit Process
+  │
+  ├─ ▼ IT Processes
+  │  ├─ 🟡 Access Request
+  │  ├─ 🟡 Incident Response
+  │  └─ 🟡 Change Management
+  │
+  └─ ▼ Finance Processes
+     ├─ 🟡 Expense Approval
+     ├─ 🟡 Invoice Processing
+     └─ 🟡 Budget Planning
+
+Organizational knowledge repository
+Task nodes with process documentation
+Checklists for each process
+Team reference library
+```
+
+---
 - Reference materials
 - Training content
 - Quick access
