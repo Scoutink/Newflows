@@ -40,7 +40,9 @@ document.addEventListener('DOMContentLoaded', () => {
         currentFlowId: null,
         selectedActionPaths: {},
         expandedTextAreas: new Set(),
-        activeTag: null
+        activeTag: null,
+        collapsedUnits: new Set(),  // Track collapsed unit IDs
+        collapseState: {}  // Track collapse state per workflow: { flowId: { unitId: boolean } }
     };
 
     let quillEditor = null;
@@ -774,6 +776,237 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
 
+    // ===== EXPAND/COLLAPSE MANAGEMENT =====
+    /**
+     * Premium collapse/expand logic with parent-child relationship management
+     */
+    const CollapseManager = {
+        /**
+         * Check if a unit is collapsed
+         */
+        isCollapsed(flowId, unitId) {
+            if (!appState.collapseState[flowId]) {
+                return false;
+            }
+            return appState.collapseState[flowId][unitId] === true;
+        },
+
+        /**
+         * Toggle collapse state for a unit with premium parent-child logic
+         */
+        toggle(flowId, unitId, unit) {
+            if (!appState.collapseState[flowId]) {
+                appState.collapseState[flowId] = {};
+            }
+
+            const isCurrentlyCollapsed = this.isCollapsed(flowId, unitId);
+            const newState = !isCurrentlyCollapsed;
+
+            // Set the state
+            appState.collapseState[flowId][unitId] = newState;
+
+            // Premium Logic: If collapsing, remember children's current state
+            // If expanding, restore children to their previous state
+            if (newState && unit.subcategories && unit.subcategories.length > 0) {
+                // Collapsing: Store children states before hiding them
+                this.rememberChildrenStates(flowId, unit.subcategories);
+            }
+
+            // Save state to localStorage
+            this.saveToStorage();
+
+            return newState;
+        },
+
+        /**
+         * Remember children's collapse states (premium logic)
+         */
+        rememberChildrenStates(flowId, subcategories) {
+            if (!subcategories || subcategories.length === 0) return;
+
+            subcategories.forEach(child => {
+                // State is already tracked, no need to change it
+                // This preserves the user's previous expand/collapse choices
+
+                // Recursively remember grandchildren
+                if (child.subcategories && child.subcategories.length > 0) {
+                    this.rememberChildrenStates(flowId, child.subcategories);
+                }
+            });
+        },
+
+        /**
+         * Expand a unit and all its parents (bubble up)
+         */
+        expandWithParents(flowId, path) {
+            if (!appState.collapseState[flowId]) {
+                appState.collapseState[flowId] = {};
+            }
+
+            // Parse path to get all parent paths
+            const pathParts = path.split('.');
+            let currentPath = '';
+
+            for (let i = 0; i < pathParts.length; i++) {
+                if (i > 0) currentPath += '.';
+                currentPath += pathParts[i];
+
+                // Get unit ID from path
+                const flow = getCurrentFlow();
+                const unit = getObjectByPath(currentPath, flow);
+                if (unit && unit.id) {
+                    appState.collapseState[flowId][unit.id] = false;
+                }
+            }
+
+            this.saveToStorage();
+        },
+
+        /**
+         * Collapse all units in the workflow
+         */
+        collapseAll(flowId, units) {
+            if (!appState.collapseState[flowId]) {
+                appState.collapseState[flowId] = {};
+            }
+
+            const collapseRecursive = (items) => {
+                items.forEach(unit => {
+                    if (unit.subcategories && unit.subcategories.length > 0) {
+                        appState.collapseState[flowId][unit.id] = true;
+                        collapseRecursive(unit.subcategories);
+                    }
+                });
+            };
+
+            collapseRecursive(units);
+            this.saveToStorage();
+        },
+
+        /**
+         * Expand all units in the workflow
+         */
+        expandAll(flowId, units) {
+            if (!appState.collapseState[flowId]) {
+                appState.collapseState[flowId] = {};
+            }
+
+            const expandRecursive = (items) => {
+                items.forEach(unit => {
+                    appState.collapseState[flowId][unit.id] = false;
+                    if (unit.subcategories && unit.subcategories.length > 0) {
+                        expandRecursive(unit.subcategories);
+                    }
+                });
+            };
+
+            expandRecursive(units);
+            this.saveToStorage();
+        },
+
+        /**
+         * Check if unit should be visible based on parent collapse states
+         */
+        isVisible(flowId, path) {
+            // Root level is always visible
+            if (!path || path === 'data') return true;
+
+            // Check all parents - if any parent is collapsed, this is not visible
+            const pathParts = path.split('.');
+            let currentPath = '';
+
+            for (let i = 0; i < pathParts.length - 1; i += 2) { // Step by 2 to skip indices
+                if (i > 0) currentPath += '.';
+                currentPath += pathParts[i];
+
+                if (i + 1 < pathParts.length) {
+                    currentPath += '.' + pathParts[i + 1];
+                }
+
+                // Get parent unit
+                const flow = getCurrentFlow();
+                const parentPath = currentPath.substring(0, currentPath.lastIndexOf('.subcategories'));
+                if (parentPath && parentPath !== 'data') {
+                    const parent = getObjectByPath(parentPath, flow);
+                    if (parent && parent.id && this.isCollapsed(flowId, parent.id)) {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+        },
+
+        /**
+         * Save collapse state to localStorage
+         */
+        saveToStorage() {
+            try {
+                localStorage.setItem('workflowCollapseState', JSON.stringify(appState.collapseState));
+            } catch (e) {
+                console.error('Failed to save collapse state:', e);
+            }
+        },
+
+        /**
+         * Load collapse state from localStorage
+         */
+        loadFromStorage() {
+            try {
+                const saved = localStorage.getItem('workflowCollapseState');
+                if (saved) {
+                    appState.collapseState = JSON.parse(saved);
+                }
+            } catch (e) {
+                console.error('Failed to load collapse state:', e);
+                appState.collapseState = {};
+            }
+        }
+    };
+
+    // Global functions for UI
+    window.toggleUnitCollapse = (unitId) => {
+        const flow = getCurrentFlow();
+        if (!flow) return;
+
+        // Find the unit
+        const findUnit = (units) => {
+            for (const unit of units) {
+                if (unit.id === unitId) return unit;
+                if (unit.subcategories && unit.subcategories.length > 0) {
+                    const found = findUnit(unit.subcategories);
+                    if (found) return found;
+                }
+            }
+            return null;
+        };
+
+        const unit = findUnit(flow.data);
+        if (unit) {
+            CollapseManager.toggle(flow.id, unitId, unit);
+            render();
+        }
+    };
+
+    window.expandAllUnits = () => {
+        const flow = getCurrentFlow();
+        if (!flow) return;
+
+        CollapseManager.expandAll(flow.id, flow.data);
+        Toast.success('All sections expanded');
+        render();
+    };
+
+    window.collapseAllUnits = () => {
+        const flow = getCurrentFlow();
+        if (!flow) return;
+
+        CollapseManager.collapseAll(flow.id, flow.data);
+        Toast.success('All sections collapsed');
+        render();
+    };
+
+
     // ===== DYNAMIC RENDERING =====
     const render = () => {
         const flow = getCurrentFlow();
@@ -944,9 +1177,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const renderUnitHeader = (unit, level, config, depth, path, isCreation, template, flow) => {
         const unitIsCompleted = flow ? isCompleted(flow.id, unit.id) : false;
         const progress = config.enableProgressBar ? calculateProgress(unit, template, depth) : 0;
-        
+        const hasChildren = unit.subcategories && unit.subcategories.length > 0;
+        const isCollapsed = flow ? CollapseManager.isCollapsed(flow.id, unit.id) : false;
+
         return `
             <div class="unit-header">
+                ${hasChildren ? `
+                    <button class="btn-collapse"
+                            onclick="toggleUnitCollapse('${unit.id}')"
+                            title="${isCollapsed ? 'Expand' : 'Collapse'}">
+                        <i class="fa-solid fa-chevron-${isCollapsed ? 'right' : 'down'}"></i>
+                    </button>
+                ` : '<span class="collapse-spacer"></span>'}
                 ${config.enableIcon ? `
                     <span class="unit-icon-container">
                         ${unit.icon ? `
@@ -1048,11 +1290,14 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!nextLevel) return '';
 
         const isCreation = appState.currentMode === 'creation';
+        const flow = getCurrentFlow();
+        const isCollapsed = flow ? CollapseManager.isCollapsed(flow.id, unit.id) : false;
+
         // CRITICAL FIX: Pass parent path to renderUnits
         const childrenHtml = renderUnits(unit.subcategories || [], template, depth + 1, path);
 
         return `
-            <div class="unit-children">
+            <div class="unit-children ${isCollapsed ? 'collapsed' : 'expanded'}">
                 ${childrenHtml}
                 ${isCreation ? `
                     <button class="btn-add-child" onclick="addChildUnit('${path}', ${depth + 1})">
@@ -1889,6 +2134,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (savedMode && (savedMode === 'creation' || savedMode === 'execution')) {
             appState.currentMode = savedMode;
         }
+
+        // Load collapse state
+        CollapseManager.loadFromStorage();
 
         // Load data
         await Promise.all([
