@@ -713,470 +713,6162 @@ Result:
 
 ---
 
-### CHAPTER 2: ACCESSING BOARDS
+## CHAPTER 2: ACCESSING BOARDS
 
-**2.1 Boards Navigation**
-- "Boards" link from workflow page
-- Board library view
-- Empty state if no boards
-- Create first board prompt
+Navigate to boards and understand the board library.
 
-**2.2 Board Library**
-- Grid of board cards
-- Board name and description
-- Progress bars
-- Task count
-- Member count
-- Percentage complete
-- Click to open
+### 2.1 Boards Navigation
 
-**2.3 Creating Boards**
-**Method 1: From Scratch**
-- "Create Board" button
-- Board name (required)
-- Description (optional)
-- Include references column (checkbox)
+**From the Platform:**
 
-**Method 2: From Workflow Export**
-- Export button in workflow
-- Auto-creates board
-- Auto-populates dynamic list
-- Opens immediately
+**Primary Entry Point:**
+
+```
+Main Navigation Bar:
+[Templates] [Workflows] [Boards] [Documentation]
+                          ↑
+                    Click here
+```
+
+**From Any Page:**
+
+```
+Top Navigation:
+- Always accessible
+- "Boards" link visible globally
+- Click to go to Board Library
+- Current location highlights in nav bar
+```
+
+**From Workflow (After Export):**
+
+```
+Workflow → Export to Board → Board Created
+                                    ↓
+                        "Open Board" button appears
+                                    ↓
+                            Takes you directly to board
+```
+
+**Direct URL:**
+
+```
+https://yourplatform.com/boards.html
+(Bookmark this for quick access)
+```
+
+**Board Library View:**
+
+```
+When you click "Boards," you arrive at the Board Library:
+
+┌─────────────────────────────────────────────────────┐
+│  Your Boards                                        │
+│  Manage all your project boards                    │
+│                                          [+ Create] │
+├─────────────────────────────────────────────────────┤
+│                                                     │
+│  ┌──────────┐  ┌──────────┐  ┌──────────┐        │
+│  │ Board 1  │  │ Board 2  │  │ Board 3  │        │
+│  │          │  │          │  │          │        │
+│  │ ███░░ 60%│  │ ██████ 95%│  │ ░░░░░ 10%│        │
+│  └──────────┘  └──────────┘  └──────────┘        │
+│                                                     │
+└─────────────────────────────────────────────────────┘
+```
+
+**Empty State (No Boards Yet):**
+
+```
+First time accessing Boards:
+
+┌─────────────────────────────────────────────────────┐
+│                                                     │
+│              📋 No Boards Yet                       │
+│                                                     │
+│  Create your first board to start managing tasks   │
+│                                                     │
+│            [+ Create Your First Board]              │
+│                                                     │
+│  Or export a workflow to automatically create      │
+│  a board with reference structure                  │
+│                                                     │
+└─────────────────────────────────────────────────────┘
+```
+
+**Create First Board Prompt:**
+
+```
+Helpful guidance for new users:
+
+"Get Started with Boards:
+
+Option 1: Create Empty Board
+- Start from scratch
+- Build your own structure
+- Ideal for general projects
+
+Option 2: Export from Workflow
+- Auto-populate with compliance framework
+- Reference structure included
+- Ideal for compliance projects"
+
+[Create Empty Board]  [Go to Workflows]
+```
 
 ---
 
-### CHAPTER 3: THE BOARD INTERFACE
+### 2.2 Board Library
 
-**3.1 Board Header**
-- Board name (display)
-- Member avatars
-- Action buttons (Activity, Archive, Delete)
-- Theme toggle
-- Help link
+**Board Card Display:**
 
-**3.2 Management Tools Panel**
+Each board displays as a card in a grid layout with key information at a glance.
+
+**Board Card Structure:**
+
+```
+┌─────────────────────────────────────────┐
+│  ISO 27001 Implementation               │ ← Board Name
+│  Acme Corp certification project        │ ← Description
+├─────────────────────────────────────────┤
+│  Progress: ████████░░ 75%               │ ← Progress Bar
+│                                         │
+│  📝 45 tasks  │  👥 8 members           │ ← Stats
+│  ✓ 34 done   │  🎯 3 milestones        │
+│                                         │
+│  Last updated: 2 hours ago              │ ← Timestamp
+└─────────────────────────────────────────┘
+```
+
+**Board Name and Description:**
+
+```
+Board Name:
+- Large, bold text
+- Clearly identifies project
+- Clickable (opens board)
+
+Description:
+- 1-2 line summary
+- Project context
+- Helps distinguish between boards
+- Optional but recommended
+
+Example:
+Name: "Q1 2024 Security Initiatives"
+Description: "Quarterly security projects and compliance updates"
+```
+
+**Progress Bars:**
+
+```
+Visual Progress Indicator:
+
+████████░░ 75%
+
+Calculation:
+Progress = (Done tasks / Total tasks) × 100%
+
+Example:
+34 tasks done / 45 total tasks = 75.6% → displayed as 76%
+
+Color Coding:
+0-33%:  🔴 Red (not much progress)
+34-66%: 🟡 Yellow (making progress)
+67-99%: 🟢 Green (almost done)
+100%:   🔵 Blue (complete)
+```
+
+**Task Count:**
+
+```
+📝 45 tasks
+
+Shows total number of cards on board
+Includes tasks in all columns
+Updated in real-time
+Quick gauge of board size
+```
+
+**Member Count:**
+
+```
+👥 8 members
+
+Shows number of people with board access
+Includes all roles (admin, member, viewer)
+Click to see member list
+Useful for team coordination
+```
+
+**Percentage Complete:**
+
+```
+✓ 34 done (75%)
+
+Combines:
+- Number of completed tasks
+- Percentage calculation
+- Visual progress bar
+
+Quick status check without opening board
+```
+
+**Click to Open:**
+
+```
+Interaction:
+- Click anywhere on card → Opens board
+- Hover: Slight elevation/shadow effect
+- Cursor changes to pointer
+- Smooth transition to board view
+
+Opens board in same tab
+(Use Ctrl+Click to open in new tab)
+```
+
+**Board Card Example:**
+
+```
+┌─────────────────────────────────────────┐
+│  GDPR Compliance - Beta Industries      │
+│  Privacy implementation for EU ops      │
+├─────────────────────────────────────────┤
+│  Progress: ██████░░░░ 55%               │
+│                                         │
+│  📝 87 tasks  │  👥 12 members          │
+│  ✓ 48 done   │  🎯 6 milestones        │
+│                                         │
+│  Last updated: 15 minutes ago           │
+│                                         │
+│  Categories: 📄 Docs, 💻 Tech, 👥 HR   │
+└─────────────────────────────────────────┘
+
+Hover to see additional details
+Click to open board
+```
+
+**Sorting and Filtering (if available):**
+
+```
+Sort By:
+- Last Updated (default)
+- Name (A-Z)
+- Progress (high to low)
+- Created Date
+
+Filter By:
+- My Boards
+- Shared with Me
+- Archived
+- By Member
+```
+
+---
+
+### 2.3 Creating Boards
+
+**Two Creation Methods:**
+
+1. **From Scratch** - Empty board, build your own structure
+2. **From Workflow Export** - Pre-populated with compliance framework
+
+---
+
+**Method 1: From Scratch (Manual Creation)**
+
+**Step-by-Step:**
+
+1. **Click "Create Board" Button**
+
+```
+Location: Top-right of Board Library
+Button: [+ Create Board]
+Action: Opens creation modal
+```
+
+2. **Fill in Board Details**
+
+```
+Create Board Modal:
+┌─────────────────────────────────────────┐
+│  Create New Board                    [×]│
+├─────────────────────────────────────────┤
+│                                         │
+│  Board Name: (required)                 │
+│  [_________________________________]    │
+│                                         │
+│  Description: (optional)                │
+│  [_________________________________]    │
+│  [_________________________________]    │
+│                                         │
+│  ☑ Include References Column           │
+│     (For compliance frameworks)         │
+│                                         │
+│            [Cancel]  [Create Board]     │
+└─────────────────────────────────────────┘
+```
+
+3. **Board Name (Required)**
+
+```
+Best Practices:
+✓ Clear and descriptive
+✓ Include project/client name
+✓ Include timeframe if relevant
+
+Examples:
+✓ "Acme Corp - ISO 27001 Implementation"
+✓ "Q1 2024 Security Projects"
+✓ "Website Redesign - Sprint 1"
+
+Avoid:
+✗ "Board 1" (too vague)
+✗ "ISO" (incomplete context)
+✗ "New Board" (default, not descriptive)
+```
+
+4. **Description (Optional but Recommended)**
+
+```
+What to Include:
+- Project purpose
+- Timeline
+- Key stakeholders
+- Scope
+
+Example:
+"12-month ISO 27001 certification project for Acme Corp's 
+EU operations. Includes 93 controls across 4 domains. 
+Target completion: Q4 2024."
+
+Benefits:
+- Helps team understand context
+- Useful when managing many boards
+- Good for reporting
+```
+
+5. **Include References Column (Checkbox)**
+
+```
+☑ Include References Column
+
+What This Does:
+- Adds a locked "References" column (first column)
+- Column cannot be deleted
+- Cards in this column cannot be moved
+- Ideal for compliance frameworks
+
+When to Enable:
+✓ Compliance projects (ISO, GDPR, SOC 2, etc.)
+✓ Need to maintain reference materials
+✓ Want locked documentation column
+
+When to Skip:
+✗ General project management
+✗ Agile software development
+✗ Simple task tracking
+```
+
+6. **Create Board**
+
+```
+Click [Create Board] button:
+- Board is created immediately
+- Redirects to new board
+- Board appears with default columns:
+  - References (if enabled)
+  - To Do
+  - In Progress
+  - Review
+  - Done
+- Empty (no cards yet)
+- Ready for task creation
+```
+
+**After Creation:**
+
+```
+New Empty Board:
+
+┌─────────────────────────────────────────────────────┐
+│  Acme Corp - ISO 27001 Implementation               │
+├────────┬────────┬────────┬────────┬─────────────────┤
+│ Ref    │ To Do  │ In Prog│ Review │ Done            │
+├────────┼────────┼────────┼────────┼─────────────────┤
+│        │        │        │        │                 │
+│ (empty)│ (empty)│ (empty)│ (empty)│ (empty)         │
+│        │        │        │        │                 │
+│        │  Click │        │        │                 │
+│        │  [+]   │        │        │                 │
+│        │  to add│        │        │                 │
+│        │  task  │        │        │                 │
+│        │        │        │        │                 │
+└────────┴────────┴────────┴────────┴─────────────────┘
+
+Start adding tasks with [+ Add Task] button
+```
+
+---
+
+**Method 2: From Workflow Export (Automated)**
+
+**The Power of Workflow Integration:**
+
+This is the recommended method for compliance projects as it auto-populates your board with the entire compliance framework.
+
+**Step-by-Step:**
+
+1. **Start from Workflow**
+
+```
+Open a workflow:
+- Navigate to Workflows
+- Select workflow (e.g., "ISO 27001:2022 Framework")
+- Ensure workflow is complete and saved
+```
+
+2. **Click Export Button**
+
+```
+Location: Top navigation in workflow
+Button: [Export to Board]
+
+Export Modal Opens:
+┌─────────────────────────────────────────┐
+│  Export Workflow to Board            [×]│
+├─────────────────────────────────────────┤
+│                                         │
+│  Export Method:                         │
+│  ● Full Workflow                        │
+│  ○ Selected Unit                        │
+│  ○ By Tag                               │
+│                                         │
+│  Destination:                           │
+│  ● Create New Board                     │
+│  ○ Add to Existing Board                │
+│                                         │
+│  Board Name:                            │
+│  [Acme Corp - ISO 27001 Implementation] │
+│                                         │
+│  Export Options:                        │
+│  ☑ Include Descriptions                 │
+│  ☑ Include Links                        │
+│  ☑ Include Images                       │
+│  ☑ Include Notes                        │
+│  ☑ Sync future workflow updates         │
+│                                         │
+│         [Cancel]  [Export to Board]     │
+└─────────────────────────────────────────┘
+```
+
+3. **Configure Export**
+
+```
+Choose Export Method:
+- Full Workflow: All 93 controls (most common)
+- Selected Unit: Just one section (e.g., "Access Controls")
+- By Tag: Filtered subset (e.g., [Critical] tagged items)
+
+Choose Destination:
+- Create New Board: Fresh board (recommended)
+- Add to Existing: Append to existing board
+
+Name Your Board:
+- Auto-suggests: "[Workflow Name]"
+- Edit as needed
+- Example: "Acme Corp - ISO 27001 Implementation"
+
+Export Options:
+- Include all content (recommended)
+- Enable sync (updates when workflow changes)
+```
+
+4. **Execute Export**
+
+```
+Click [Export to Board]:
+- Progress indicator appears
+- Exports all units from workflow
+- Creates board structure
+- Populates references column
+
+Progress:
+▓▓▓▓▓▓▓▓░░ 80% (75/93 units exported)
+
+Takes 5-30 seconds depending on workflow size
+```
+
+5. **Board Created Automatically**
+
+```
+Success Message:
+┌─────────────────────────────────────────┐
+│  ✓ Board Created Successfully           │
+│                                         │
+│  93 units exported to:                  │
+│  "Acme Corp - ISO 27001 Implementation" │
+│                                         │
+│     [Open Board]  [Stay in Workflow]    │
+└─────────────────────────────────────────┘
+
+Click [Open Board] to go to new board
+```
+
+6. **Board Opens with Content**
+
+```
+Exported Board Structure:
+
+┌─────────────────────────────────────────────────────┐
+│  Acme Corp - ISO 27001 Implementation               │
+├─────────────┬────────┬────────┬────────┬───────────┤
+│ References  │ To Do  │ In Prog│ Review │ Done      │
+│ (Read-Only) │        │        │        │           │
+├─────────────┼────────┼────────┼────────┼───────────┤
+│ ▼ ISO 27001 │        │        │        │           │
+│   ├─ A.5    │ (empty)│ (empty)│ (empty)│ (empty)   │
+│   │  └─5.1  │        │        │        │           │
+│   │  └─5.2  │  Ready │        │        │           │
+│   │  └─5.3  │  for   │        │        │           │
+│   ├─ A.6    │  task  │        │        │           │
+│   │  └─6.1  │  creat-│        │        │           │
+│   │  └─6.2  │  ion   │        │        │           │
+│   └─ ...    │        │        │        │           │
+│             │        │        │        │           │
+└─────────────┴────────┴────────┴────────┴───────────┘
+
+References column: Full ISO 27001 structure
+Other columns: Empty, ready for tasks
+```
+
+**What Gets Exported:**
+
+```
+From Workflow → To Board References:
+
+✓ All unit names
+✓ Full hierarchy structure
+✓ Descriptions
+✓ Display IDs (A.5.1, A.5.2, etc.)
+✓ Icons
+✓ Tags (become board labels)
+✓ Links (policy references)
+✓ Images (diagrams, screenshots)
+✓ Notes (implementation guidance)
+
+References Column = Complete compliance framework
+Ready to reference while creating implementation tasks
+```
+
+---
+
+**Comparison: From Scratch vs From Export**
+
+```
+From Scratch:
+✓ Full control over structure
+✓ Simple setup
+✓ Good for general projects
+✗ No pre-populated content
+✗ Manual entry required
+Use Case: General project management
+
+From Export:
+✓ Auto-populated references
+✓ Complete framework included
+✓ Linked to source workflow
+✓ Syncs with workflow updates
+✗ Requires existing workflow
+Use Case: Compliance projects
+```
+
+**Best Practice:**
+
+```
+Compliance Projects:
+1. Create template (one-time)
+2. Create workflow from template
+3. Populate workflow with requirements
+4. Export workflow to board
+5. Client creates tasks on board
+
+General Projects:
+1. Create board from scratch
+2. Add columns for your workflow
+3. Create tasks directly
+4. Manage with milestones and categories
+```
+
+---
+
+---
+
+## CHAPTER 3: THE BOARD INTERFACE
+
+Master the board layout and navigation.
+
+### 3.1 Board Header
+
+**Complete Header Layout:**
+
+```
+┌────────────────────────────────────────────────────────┐
+│ ← ISO 27001 Implementation    👤👤👤  📊 🗄️ 🗑️ 🌓 ❓ │
+│   Acme Corp certification                              │
+└────────────────────────────────────────────────────────┘
+  ↑                              ↑     ↑  ↑  ↑  ↑  ↑
+Board Name                    Members  │  │  │  │  │
+                                    Activity│  │  │  │
+                                        Archive│  │  │
+                                            Delete │  │
+                                                Theme│
+                                                   Help
+```
+
+---
+
+**Board Name (Display):**
+
+```
+Display:
+- Large, prominent text
+- Top-left of header
+- Shows board title
+
+Example: "ISO 27001 Implementation"
+Subtitle: "Acme Corp certification" (if provided)
+
+Clickable:
+- Click to edit board name
+- Modal opens for editing
+- Update name and description
+```
+
+**Edit Board Name:**
+
+```
+Click on board name → Edit Modal:
+
+┌─────────────────────────────────────┐
+│  Edit Board Details              [×]│
+├─────────────────────────────────────┤
+│                                     │
+│  Board Name:                        │
+│  [ISO 27001 Implementation_____]   │
+│                                     │
+│  Description:                       │
+│  [Acme Corp certification project_] │
+│  [_________________________________]│
+│                                     │
+│       [Cancel]  [Save Changes]      │
+└─────────────────────────────────────┘
+
+Changes save immediately
+Board name updates in library view too
+```
+
+---
+
+**Member Avatars:**
+
+```
+Display:
+👤 👤 👤 +5
+
+Shows:
+- First 3-4 member avatars
+- "+N" if more members
+- Hover shows member name
+
+Click to View Members:
+┌─────────────────────────────────────┐
+│  Board Members (8)               [×]│
+├─────────────────────────────────────┤
+│                                     │
+│  👤 John Smith (Admin)              │
+│     john@acme.com                   │
+│                                     │
+│  👤 Sarah Johnson (Member)          │
+│     sarah@acme.com                  │
+│                                     │
+│  👤 Mike Chen (Member)              │
+│     mike@acme.com                   │
+│                                     │
+│  ... (5 more members)               │
+│                                     │
+│  [+ Add Member]                     │
+└─────────────────────────────────────┘
+
+Roles:
+- Admin: Full control
+- Member: Can edit
+- Viewer: Read-only
+```
+
+**Adding Members:**
+
+```
+Click [+ Add Member]:
+
+1. Enter email address
+2. Select role (Admin/Member/Viewer)
+3. Click [Invite]
+4. Member receives invitation
+5. Joins board after accepting
+
+Or:
+
+Select from existing users:
+- List of platform users
+- Check to add
+- Immediate access
+```
+
+---
+
+**Action Buttons:**
+
+**Activity Button (📊):**
+
+```
+Purpose: View board activity log
+
+Click to open activity panel:
+┌─────────────────────────────────────┐
+│  Activity Log                    [×]│
+├─────────────────────────────────────┤
+│                                     │
+│  Today, 2:30 PM                     │
+│  👤 John moved "Draft Policy" to    │
+│     Done                            │
+│                                     │
+│  Today, 11:15 AM                    │
+│  👤 Sarah added comment to          │
+│     "Configure MFA"                 │
+│                                     │
+│  Yesterday, 4:45 PM                 │
+│  👤 Mike created task               │
+│     "Review Access Logs"            │
+│                                     │
+│  ... (more activity)                │
+│                                     │
+└─────────────────────────────────────┘
+
+Shows:
+- All board changes
+- Who made the change
+- When it happened
+- What changed
+
+Useful for:
+- Team coordination
+- Audit trails
+- Progress monitoring
+- Understanding history
+```
+
+**Archive Button (🗄️):**
+
+```
+Purpose: Archive completed board
+
+Click to archive:
+┌─────────────────────────────────────┐
+│  Archive Board?                  [×]│
+├─────────────────────────────────────┤
+│                                     │
+│  Archive "ISO 27001 Implementation"?│
+│                                     │
+│  Archived boards:                   │
+│  ✓ Hidden from active board list   │
+│  ✓ Preserved for future reference  │
+│  ✓ Can be restored later           │
+│  ✓ Activity log maintained         │
+│                                     │
+│  ✗ No new tasks can be added       │
+│  ✗ Existing tasks become read-only │
+│                                     │
+│       [Cancel]  [Archive Board]     │
+└─────────────────────────────────────┘
+
+When to Archive:
+✓ Project completed
+✓ Audit finished
+✓ Certification achieved
+✓ Need to declutter active boards
+
+Restore Later:
+- Go to Board Library
+- Filter: Archived
+- Click board
+- Click [Restore]
+```
+
+**Delete Button (🗑️):**
+
+```
+Purpose: Permanently delete board
+
+Click to delete:
+┌─────────────────────────────────────┐
+│  Delete Board?                   [×]│
+├─────────────────────────────────────┤
+│                                     │
+│  ⚠️ Warning: This Cannot Be Undone  │
+│                                     │
+│  Delete "ISO 27001 Implementation"? │
+│                                     │
+│  This will permanently delete:      │
+│  • All 45 tasks                     │
+│  • All activity logs                │
+│  • All attachments                  │
+│  • All comments                     │
+│                                     │
+│  Type board name to confirm:        │
+│  [_________________________________]│
+│                                     │
+│       [Cancel]  [Delete Forever]    │
+└─────────────────────────────────────┘
+
+Safety Features:
+- Requires typing board name
+- Admin permission required
+- Confirmation dialog
+- No undo
+
+When to Delete:
+✓ Test board no longer needed
+✓ Duplicate created by mistake
+✓ Client project cancelled
+✗ DON'T delete for completed projects (archive instead)
+```
+
+---
+
+**Theme Toggle (🌓):**
+
+```
+Purpose: Switch between light and dark themes
+
+Click to toggle:
+Light Mode ⇄ Dark Mode
+
+Light Mode:
+- White background
+- Dark text
+- High contrast
+- Good for bright environments
+
+Dark Mode:
+- Dark background
+- Light text
+- Reduces eye strain
+- Good for low-light environments
+
+Preference saved:
+- Per-user setting
+- Persists across sessions
+- Works on all boards
+- Platform-wide setting
+```
+
+**Help Link (❓):**
+
+```
+Purpose: Access documentation and help
+
+Click for help menu:
+┌─────────────────────────────────────┐
+│  Help & Documentation            [×]│
+├─────────────────────────────────────┤
+│                                     │
+│  📖 Boards Manual                   │
+│  📖 Workflows Manual                │
+│  📖 Templates Manual                │
+│  📖 Platform Overview               │
+│                                     │
+│  ❓ FAQ                             │
+│  💬 Support Chat                    │
+│  📧 Contact Support                 │
+│  🎥 Video Tutorials                 │
+│                                     │
+│  ⌨️  Keyboard Shortcuts             │
+│                                     │
+└─────────────────────────────────────┘
+
+Quick access to:
+- Documentation manuals
+- Help resources
+- Support contact
+- Tutorials
+```
+
+---
+
+### 3.2 Management Tools Panel
+
+**Location:** Below board header, above columns
+
+**Three Horizontal Carousels:**
+
+```
+┌────────────────────────────────────────────────────────┐
+│ Milestones                            [←] [→] [+ Add]  │
+│ ┌────────┐ ┌────────┐ ┌────────┐                      │
+│ │Sprint 1│ │Sprint 2│ │Sprint 3│                      │
+│ │██░░ 50%│ │░░░░  0%│ │░░░░  0%│                      │
+│ └────────┘ └────────┘ └────────┘                      │
+├────────────────────────────────────────────────────────┤
+│ Categories                            [←] [→] [+ Add]  │
+│ 🔴 Urgent (5)  🟡 Important (12)  🟢 Routine (8)      │
+├────────────────────────────────────────────────────────┤
+│ Groups                                [←] [→] [+ Add]  │
+│ ┌────────┐ ┌────────┐ ┌────────┐                      │
+│ │  MFA   │ │Encrypt │ │Training│                      │
+│ │██░░ 40%│ │████ 75%│ │██████100%                     │
+│ └────────┘ └────────┘ └────────┘                      │
+└────────────────────────────────────────────────────────┘
+```
+
+---
+
 **Milestones Carousel:**
-- Horizontal scroll
-- Milestone cards
-- Add milestone button
-- Progress indicators
+
+**Purpose:** Time-based project phases
+
+**Display:**
+
+```
+Milestone Card:
+┌────────────────┐
+│  Sprint 1      │ ← Milestone Name
+│  ██████░░░░ 60%│ ← Progress Bar
+│  12 / 20 tasks │ ← Task Count
+│  Due: Jan 15   │ ← Due Date
+└────────────────┘
+
+Hover: Shows more details
+Click: Filters board to show only milestone tasks
+```
+
+**Horizontal Scroll:**
+
+```
+[←] [→] Navigation buttons
+
+If more milestones than fit:
+- Use arrows to scroll
+- Or drag horizontally
+- Smooth scrolling
+
+Example with many milestones:
+[←] Sprint 1 | Sprint 2 | Sprint 3 | Sprint 4... [→]
+```
+
+**Add Milestone Button:**
+
+```
+Click [+ Add] → Create Milestone Modal:
+
+┌─────────────────────────────────────┐
+│  Create Milestone                [×]│
+├─────────────────────────────────────┤
+│                                     │
+│  Milestone Name:                    │
+│  [Sprint 1________________________] │
+│                                     │
+│  Description: (optional)            │
+│  [Two-week sprint for critical____] │
+│  [controls_________________________]│
+│                                     │
+│  Due Date: (optional)               │
+│  [2024-01-15] 📅                    │
+│                                     │
+│  Color:                             │
+│  🔵 🟢 🟡 🔴 🟣 🟤                  │
+│                                     │
+│       [Cancel]  [Create Milestone]  │
+└─────────────────────────────────────┘
+
+After creation:
+- Milestone appears in carousel
+- Ready to link tasks to milestone
+- Progress starts at 0%
+```
+
+**Progress Indicators:**
+
+```
+Progress Calculation:
+Progress = (Linked tasks marked done / Total linked tasks) × 100%
+
+Example:
+Milestone "Sprint 1":
+- 20 tasks linked to milestone
+- 12 tasks marked done
+- Progress: 12/20 = 60%
+
+Display: ██████░░░░ 60%
+
+Real-time Update:
+- Mark task done → Progress increases
+- Uncheck done → Progress decreases
+```
+
+**Filtering by Milestone:**
+
+```
+Click on milestone card:
+- Board filters to show only tasks in that milestone
+- Other tasks hidden
+- Filter banner appears at top
+- Click [X] to clear filter
+
+Example:
+Filter: Sprint 1 [×]
+Showing 20 of 45 tasks
+```
+
+---
 
 **Categories Carousel:**
-- Horizontal scroll
-- Category tags
-- Add category button
-- Card counters
+
+**Purpose:** Classify tasks by type/theme
+
+**Display:**
+
+```
+Category Tag:
+🔴 Urgent (5)
+↑   ↑      ↑
+Icon Name  Count
+
+Click: Filters board to show only tasks in this category
+```
+
+**Horizontal Scroll:**
+
+```
+Categories scroll horizontally if many:
+
+🔴 Urgent (5) | 🟡 Important (12) | 🟢 Routine (8) | ...
+
+[←] [→] to navigate
+Or drag to scroll
+```
+
+**Add Category Button:**
+
+```
+Click [+ Add] → Create Category Modal:
+
+┌─────────────────────────────────────┐
+│  Create Category                 [×]│
+├─────────────────────────────────────┤
+│                                     │
+│  Category Name:                     │
+│  [Documentation________________]    │
+│                                     │
+│  Color:                             │
+│  🔴 🟡 🟢 🔵 🟣 🟤 ⚫ ⚪           │
+│                                     │
+│  Icon: (optional)                   │
+│  📄 📊 💻 👥 🔧 🏢 ...            │
+│                                     │
+│       [Cancel]  [Create Category]   │
+└─────────────────────────────────────┘
+
+After creation:
+- Category appears in carousel
+- Available when creating/editing tasks
+- Can be applied to multiple tasks
+```
+
+**Card Counters:**
+
+```
+Category Tag: 🔴 Urgent (5)
+                         ↑
+              Number of tasks with this category
+
+Updates in real-time:
+- Add category to task → Count increases
+- Remove category → Count decreases
+- Delete task → Count decreases
+```
+
+**Filtering by Category:**
+
+```
+Click on category tag:
+- Board filters to show only tasks with that category
+- Other tasks hidden
+- Filter banner appears
+
+Example:
+Filter: 🔴 Urgent [×]
+Showing 5 of 45 tasks
+
+Helpful for:
+- Focus on specific task types
+- Department-specific views
+- Priority filtering
+```
+
+---
 
 **Groups Carousel:**
-- Horizontal scroll
-- Group cards
-- Add group button
-- Card counters
 
-**3.3 Board Columns Area**
-- Horizontal scrolling columns
-- Default: To Do, In Progress, Review, Done
-- Add column button
-- Column menus
-- Card counts
-- WIP limits (if set)
+**Purpose:** Logical collections of related tasks
 
-**3.4 Dynamic List Panel**
-- Slide-out panel (toggle)
-- Tree structure display
-- Mode toggle (Creation/Reference)
-- Search bar
-- Collapse/expand controls
-- Task/connection nodes
+**Display:**
 
-**3.5 Add Task Button**
-- Floating action button
-- Quick task creation
-- Appears in default column
+```
+Group Card:
+┌────────────────┐
+│  MFA           │ ← Group Name
+│  Implementation│
+│  ████░░░░░░ 40%│ ← Progress
+│  2 / 5 tasks   │ ← Completion
+└────────────────┘
+
+Click: Filters board to show only tasks in group
+```
+
+**Horizontal Scroll:**
+
+```
+[←] MFA | Encryption | Training | Access Control... [→]
+
+Navigate with arrows or drag
+Smooth horizontal scrolling
+```
+
+**Add Group Button:**
+
+```
+Click [+ Add] → Create Group Modal:
+
+┌─────────────────────────────────────┐
+│  Create Group                    [×]│
+├─────────────────────────────────────┤
+│                                     │
+│  Group Name:                        │
+│  [MFA Implementation______________] │
+│                                     │
+│  Description: (optional)            │
+│  [All tasks related to multi-______]│
+│  [factor authentication deployment_]│
+│                                     │
+│  Color:                             │
+│  🔵 🟢 🟡 🔴 🟣 🟤                  │
+│                                     │
+│       [Cancel]  [Create Group]      │
+└─────────────────────────────────────┘
+
+After creation:
+- Group appears in carousel
+- Progress starts at 0%
+- Ready to add tasks to group
+```
+
+**Card Counters:**
+
+```
+Group Card: 2 / 5 tasks
+           ↑   ↑
+        Done  Total
+
+Shows completion ratio:
+- Numerator: Tasks marked done
+- Denominator: Total tasks in group
+- Updates in real-time
+```
+
+**Group-Level Progress:**
+
+```
+Progress Calculation:
+Progress = (Done tasks in group / Total tasks in group) × 100%
+
+Example:
+Group "MFA Implementation":
+- 5 tasks in group
+- 2 tasks done
+- Progress: 2/5 = 40%
+
+Display: ████░░░░░░ 40%
+
+Visual Grouping:
+- Tasks in same group can be visually connected
+- Helps see related work
+- Track sub-project progress
+```
 
 ---
 
-### CHAPTER 4: WORKING WITH COLUMNS
+### 3.3 Board Columns Area
 
-**4.1 Understanding Columns**
-- Workflow states
-- Left to right progression
-- Unlimited columns
-- Customizable names
-- Reorderable
+**Main Workspace:**
 
-**4.2 Default Columns**
+```
+┌────────┬────────┬────────┬────────┬────────┐
+│ To Do  │ In Prog│ Review │ Done   │ [+]    │
+│   (12) │   (8)  │   (5)  │  (20)  │        │
+├────────┼────────┼────────┼────────┼────────┤
+│ ┌────┐ │ ┌────┐ │ ┌────┐ │ ┌────┐ │        │
+│ │Task│ │ │Task│ │ │Task│ │ │Task│ │        │
+│ └────┘ │ └────┘ │ └────┘ │ └────┘ │        │
+│        │        │        │        │        │
+│ ┌────┐ │ ┌────┐ │ ┌────┐ │ ┌────┐ │        │
+│ │Task│ │ │Task│ │ │Task│ │ │Task│ │        │
+│ └────┘ │ └────┘ │ └────┘ │ └────┘ │        │
+│        │        │        │        │        │
+│  ...   │  ...   │  ...   │  ...   │        │
+└────────┴────────┴────────┴────────┴────────┘
+  ↑                                    ↑
+Columns                            Add Column
+```
+
+**Horizontal Scrolling:**
+
+```
+If many columns:
+- Scroll horizontally to see all
+- Mouse wheel scroll
+- Drag scrollbar
+- Touch swipe on mobile
+
+No limit to number of columns
+Create as many as needed for your workflow
+```
+
+**Default Columns:**
+
+```
+New boards start with 4 columns:
+
+1. To Do
+   - Backlog
+   - Not started
+   - Planning
+
+2. In Progress
+   - Active work
+   - Current focus
+   - WIP limit useful here
+
+3. Review
+   - Needs checking
+   - Awaiting approval
+   - Quality control
+
+4. Done
+   - Completed work
+   - Achieved
+   - Success
+
+Fully customizable - rename, reorder, add, delete
+```
+
+**Column Structure:**
+
+```
+Column Header:
+┌────────────────┐
+│ In Progress    │ ← Column Name
+│ (8 tasks)      │ ← Task Count
+│ WIP: 8/10 ⚠️   │ ← WIP Limit (if set)
+│      ⋮         │ ← Column Menu
+└────────────────┘
+
+Column Body:
+│ ┌────────────┐ │
+│ │   Task 1   │ │ ← Cards
+│ └────────────┘ │
+│                │
+│ ┌────────────┐ │
+│ │   Task 2   │ │
+│ └────────────┘ │
+```
+
+**Add Column Button ([+]):**
+
+```
+Location: Far right of columns
+Click [+] → Add Column Modal:
+
+┌─────────────────────────────────────┐
+│  Add Column                      [×]│
+├─────────────────────────────────────┤
+│                                     │
+│  Column Name:                       │
+│  [QA Testing___________________]    │
+│                                     │
+│  Position:                          │
+│  ○ At end (default)                 │
+│  ○ After "In Progress"              │
+│  ○ Before "Done"                    │
+│                                     │
+│  WIP Limit: (optional)              │
+│  [5_____] tasks                     │
+│  (Leave blank for no limit)         │
+│                                     │
+│       [Cancel]  [Add Column]        │
+└─────────────────────────────────────┘
+
+Column appears immediately
+Ready to add tasks
+```
+
+**Column Menus:**
+
+```
+Click ⋮ (three dots) → Column Menu:
+
+┌─────────────────────┐
+│ Rename Column       │
+│ Set WIP Limit       │
+│ Change Color        │
+│ Move Left           │
+│ Move Right          │
+│ ──────────────      │
+│ Delete Column       │
+└─────────────────────┘
+
+Actions:
+- Rename: Change column name
+- WIP Limit: Set max tasks allowed
+- Color: Visual distinction
+- Move: Reorder columns
+- Delete: Remove column (moves tasks to first column)
+```
+
+**Card Counts:**
+
+```
+Display: (8 tasks)
+
+Shows number of cards in column
+Updates in real-time:
+- Add task → Count increases
+- Move task out → Count decreases
+- Delete task → Count decreases
+
+Helpful for:
+- Visualizing workload
+- Balancing work across columns
+- Identifying bottlenecks
+```
+
+**WIP Limits (Work In Progress):**
+
+```
+Purpose: Prevent overload, maintain flow
+
+Set WIP Limit:
+Column Menu → Set WIP Limit → Enter number
+
+Example:
+In Progress: WIP Limit = 10
+
+Display:
+In Progress
+(12 tasks)
+WIP: 12/10 ⚠️
+
+Warning (⚠️) when exceeded:
+- Orange/red badge
+- Visual indicator
+- Soft limit (not enforced)
+- Encourages moving tasks forward
+
+Benefits:
+- Prevents too much parallel work
+- Encourages finishing before starting
+- Improves flow and focus
+- Identifies bottlenecks
+```
+
+**Drag and Drop:**
+
+```
+Move cards between columns:
+
+1. Click and hold card
+2. Drag to target column
+3. Drop in column
+4. Card moves
+
+Visual Feedback:
+- Card lifts (shadow effect)
+- Target column highlights
+- Drop zones show
+- Smooth animation
+
+Keyboard Alternative:
+- Select card
+- Press Ctrl+→ (move right)
+- Press Ctrl+← (move left)
+```
+
+---
+
+### 3.4 Dynamic List Panel
+
+**Purpose:** Reference tree from exported workflows
+
+**Panel Location:**
+
+```
+┌─────────────────────────────────────────────┐
+│  Board Header                               │
+├──────────┬──────────────────────────────────┤
+│ Dynamic  │  Board Columns                   │
+│ List     │  (Main Workspace)                │
+│ (Panel)  │                                  │
+│          │  To Do│In Prog│Review│Done      │
+│ ▼ ISO    │                                  │
+│   ├─A.5  │  Task  Task    Task   Task      │
+│   ├─A.6  │                                  │
+│   └─A.7  │                                  │
+│          │                                  │
+│ [Toggle] │                                  │
+└──────────┴──────────────────────────────────┘
+   ↑                    ↑
+References          Execution
+(Read-Only)         (Editable)
+```
+
+**Slide-Out Panel (Toggle):**
+
+```
+Toggle Button: [◀] or [▶]
+
+Click to toggle:
+[◀] Close panel (more space for columns)
+[▶] Open panel (see references)
+
+Panel States:
+- Open: Takes ~25% of screen width
+- Closed: Hidden, full width for columns
+
+Preference saved per user
+```
+
+**Tree Structure Display:**
+
+```
+Hierarchy Display:
+
+▼ ISO 27001:2022
+  ├─ ▼ Organizational Controls
+  │  ├─ A.5.1 Information Security Policy
+  │  ├─ A.5.2 Information Security Roles
+  │  └─ A.5.3 Separation of Duties
+  │
+  ├─ ▶ People Controls (collapsed)
+  │
+  ├─ ▶ Physical Controls (collapsed)
+  │
+  └─ ▶ Technological Controls (collapsed)
+
+▼ = Expanded
+▶ = Collapsed
+Click to toggle
+```
+
+**Mode Toggle (Creation/Reference):**
+
+```
+Two Modes:
+
+[Creation Mode] [Reference Mode]
+      ↑              ↑
+  (Selected)    (Not selected)
+
+Creation Mode:
+- Can add connections to tasks
+- Link tasks to reference items
+- Show which tasks address which requirements
+
+Reference Mode:
+- View-only
+- Browse compliance framework
+- Read descriptions and guidance
+
+Most users stay in Reference Mode
+```
+
+**Search Bar:**
+
+```
+Search within dynamic list:
+
+┌─────────────────────────────────┐
+│ 🔍 Search references... [×]     │
+└─────────────────────────────────┘
+
+Type to search:
+- Unit names
+- Display IDs
+- Descriptions
+
+Results highlight:
+- Matching items expand automatically
+- Search term highlighted in yellow
+- Clear search with [×]
+
+Example:
+Search: "MFA"
+Results: Highlights "Multi-Factor Authentication" items
+```
+
+**Collapse/Expand Controls:**
+
+```
+Control Buttons:
+
+[▼ Expand All] [▲ Collapse All]
+
+Expand All:
+- Opens all tree nodes
+- See full structure
+- Useful for overview
+
+Collapse All:
+- Closes all tree nodes
+- Clean view
+- See only top-level items
+
+Keyboard:
+- Space: Expand/collapse selected item
+- → : Expand
+- ← : Collapse
+```
+
+**Task/Connection Nodes:**
+
+```
+Show Task Connections:
+
+▼ A.5.1 Information Security Policy
+  │
+  ├─ 📋 Draft InfoSec Policy (To Do)
+  ├─ 📋 Get legal review (In Progress)
+  └─ 📋 Publish to intranet (Done)
+     ↑
+  Tasks linked to this requirement
+
+Benefits:
+- See which tasks address which requirements
+- Ensure requirement coverage
+- Track requirement completion
+- Audit trail
+```
+
+**Dynamic List Features:**
+
+```
+Features:
+✓ Full workflow structure (read-only)
+✓ Expand/collapse navigation
+✓ Search functionality
+✓ Link tasks to reference items
+✓ See task connections
+✓ Compliance coverage tracking
+✓ Syncs with source workflow
+✓ Always current
+
+Use Cases:
+- Reference compliance requirements
+- Ensure coverage
+- Link tasks to requirements
+- Audit preparation
+- Team guidance
+```
+
+---
+
+### 3.5 Add Task Button
+
+**Floating Action Button (FAB):**
+
+```
+Location: Bottom-right corner of board
+
+┌──────────────────────────────────────┐
+│  Board Columns                       │
+│                                      │
+│  To Do│In Progress│Review│Done      │
+│                                      │
+│  Task  Task        Task   Task      │
+│                                      │
+│                                      │
+│                                  ┌───┐
+│                                  │ + │ ← FAB
+│                                  └───┘
+└──────────────────────────────────────┘
+
+Always visible
+Floats above content
+Click to create task
+```
+
+**Quick Task Creation:**
+
+```
+Click [+] → Quick Add Task Dialog:
+
+┌─────────────────────────────────────┐
+│  Quick Add Task                  [×]│
+├─────────────────────────────────────┤
+│                                     │
+│  Task Title:                        │
+│  [Draft MFA Policy______________]   │
+│                                     │
+│  Column:                            │
+│  [To Do ▼]                          │
+│                                     │
+│  Assign to: (optional)              │
+│  [Select member... ▼]               │
+│                                     │
+│  Due Date: (optional)               │
+│  [2024-01-15] 📅                    │
+│                                     │
+│     [Cancel]  [Create Task]         │
+│                                     │
+│  Or [Create & Add Another]          │
+└─────────────────────────────────────┘
+
+Fast task creation without leaving board view
+```
+
+**Appears in Default Column:**
+
+```
+New task appears in selected column:
+- Choose column in dialog
+- Defaults to "To Do"
+- Task appears at bottom of column
+- Can be moved immediately
+
+Or:
+
+Click [+] within a specific column:
+- Task automatically goes in that column
+- Even faster creation
+```
+
+**Keyboard Shortcut:**
+
+```
+Press: N (for "New task")
+
+Opens quick add dialog
+Start typing immediately
+Fast task entry
+
+Ideal for:
+- Rapid brainstorming
+- Sprint planning
+- Quick capture
+```
+
+---
+
+---
+
+## CHAPTER 4: WORKING WITH COLUMNS
+
+Customize your workflow states with flexible column management.
+
+### 4.1 Understanding Columns
+
+**What are Columns:**
+
+Columns represent the stages or states that tasks move through during their lifecycle.
+
+**Kanban Column Concept:**
+
+```
+Traditional Workflow:
+Task created → Task in progress → Task reviewed → Task completed
+
+Kanban Board Columns:
+[To Do] → [In Progress] → [Review] → [Done]
+
+Each column = One state
+Cards (tasks) move left to right as they progress
+```
+
+**Workflow States:**
+
+```
+Column = State of Work
+
+Examples by Project Type:
+
+Software Development:
+Backlog → To Do → Development → Code Review → QA → Staging → Production
+
+Compliance Implementation:
+Not Started → Planning → Implementation → Documentation → Review → Complete
+
+Manufacturing:
+Design → Prototype → Testing → Quality Check → Production → Shipped
+
+Content Creation:
+Ideas → Outline → Draft → Editing → Review → Published
+```
+
+**Left to Right Progression:**
+
+```
+Standard Flow:
+
+←────────────────────────────────────────────→
+Start                                       End
+
+[Backlog] → [To Do] → [Doing] → [Done]
+
+Conventions:
+- Left: Early stages
+- Middle: Active work
+- Right: Completion
+
+Visual Flow:
+- Cards enter from left
+- Move rightward as progress
+- End at rightmost column (typically "Done")
+```
+
+**Unlimited Columns:**
+
+```
+Create as many as needed:
+
+Simple: 3 columns
+[To Do] [Doing] [Done]
+
+Standard: 4 columns
+[To Do] [In Progress] [Review] [Done]
+
+Complex: 8+ columns
+[Backlog] [To Do] [In Progress] [Code Review] [QA Testing] [UAT] [Staging] [Done]
+
+No artificial limits
+Adapt to your process
+```
+
+**Customizable Names:**
+
+```
+Not limited to default names
+Rename to match your terminology:
+
+✓ "Backlog" or "Ideas" or "Queue"
+✓ "In Progress" or "Doing" or "Active Work"
+✓ "Review" or "QA" or "Approval"
+✓ "Done" or "Complete" or "Deployed"
+
+Use terms your team understands
+```
+
+**Reorderable:**
+
+```
+Change column sequence:
+- Drag column headers to reorder
+- Or use column menu (Move Left/Right)
+
+Example:
+Before: [To Do] [Done] [In Progress]
+(Wrong order!)
+
+After: [To Do] [In Progress] [Done]
+(Correct flow!)
+
+Order matters for intuitive workflow
+```
+
+---
+
+### 4.2 Default Columns
+
+New boards start with 4 standard columns optimized for most projects.
+
 **To Do:**
-- Backlog items
-- Not yet started
-- Entry point for tasks
+
+**Purpose:** Task backlog and entry point
+
+```
+Characteristics:
+- Leftmost column (after References if present)
+- Where new tasks start
+- Not yet assigned or scheduled
+- Planning stage
+
+Typical Contents:
+- Newly created tasks
+- Unassigned work
+- Future tasks
+- Ideas and possibilities
+
+Example Tasks:
+├─ "Draft MFA policy"
+├─ "Research encryption solutions"
+├─ "Schedule security training"
+└─ "Review firewall rules"
+
+State: Not started, planning phase
+```
+
+**When to Move FROM To Do:**
+
+```
+Move to next column when:
+✓ Task is assigned to someone
+✓ Work is about to begin
+✓ Resources are available
+✓ Dependencies are resolved
+
+Keep IN To Do when:
+- Not ready to start
+- Waiting for something
+- Lower priority
+- Still planning
+```
+
+---
 
 **In Progress:**
-- Active work
-- Current focus
-- WIP limits useful here
+
+**Purpose:** Active work happening now
+
+```
+Characteristics:
+- Middle column (active work zone)
+- WIP limits most useful here
+- Indicates current team focus
+- High-attention area
+
+Typical Contents:
+- Tasks being worked on right now
+- Assigned and active
+- Team's current focus
+- Today's work
+
+Example Tasks:
+├─ "Writing access control policy" (Sarah, 60% done)
+├─ "Configuring MFA in Azure AD" (John, in progress)
+└─ "Installing encryption software" (Mike, started today)
+
+State: Active, in progress, being worked on
+```
+
+**WIP Limit Recommendation:**
+
+```
+Set WIP limit = Number of team members × 1.5
+
+Examples:
+- 4 team members → WIP limit: 6 tasks
+- 8 team members → WIP limit: 12 tasks
+
+Prevents:
+- Too many concurrent tasks
+- Context switching
+- Unfinished work piling up
+
+Encourages:
+- Finishing before starting
+- Focus on completion
+- Better flow
+```
+
+---
 
 **Review:**
-- Quality check
-- Approval needed
+
+**Purpose:** Quality check and approval
+
+```
+Characteristics:
 - Pre-completion stage
+- Awaiting verification
+- Quality gate
+- Approval checkpoint
+
+Typical Contents:
+- Completed work awaiting review
+- Documents pending approval
+- Code in code review
+- Deliverables before acceptance
+
+Example Tasks:
+├─ "InfoSec Policy v1.0" (Awaiting legal review)
+├─ "MFA Configuration" (Awaiting security approval)
+└─ "Training Materials" (Awaiting manager approval)
+
+State: Done with work, pending verification
+```
+
+**Who Reviews:**
+
+```
+Reviewers depend on task type:
+
+Technical Tasks → Technical Lead
+Documentation → Legal/Compliance
+Policies → Management
+Code → Senior Developer
+Designs → Design Lead
+
+Assign reviewers:
+- In task assignments
+- In task comments
+- Via @ mentions
+```
+
+**Review Process:**
+
+```
+1. Worker moves task to Review column
+2. Reviewer notified (if notifications enabled)
+3. Reviewer checks task
+4. Options:
+   ✓ Approve → Move to Done
+   ✗ Request changes → Move back to In Progress
+   ? Need info → Add comment, keep in Review
+
+Fast track compliance:
+Ensures quality before marking complete
+```
+
+---
 
 **Done:**
-- Completed work
+
+**Purpose:** Completed and approved work
+
+```
+Characteristics:
+- Rightmost column
+- Finished tasks
+- Approved and accepted
 - Achievement tracking
-- Progress calculation basis
 
-**4.3 Adding Custom Columns**
-- "+" button at end
-- Prompt for name
-- Auto-positioned at end
-- Immediately available
+Typical Contents:
+- Completed and approved tasks
+- Delivered work
+- Achieved milestones
+- Success stories
 
-**4.4 Renaming Columns**
-- Column menu → Rename
-- Enter new name
-- Updates immediately
-- Historical data preserved
+Example Tasks:
+├─ "✓ InfoSec Policy Published" (Completed Jan 15)
+├─ "✓ MFA Deployed Company-Wide" (Completed Jan 20)
+└─ "✓ Security Training Complete" (Completed Jan 25)
 
-**4.5 Setting WIP Limits**
-- Column menu → Set WIP Limit
-- Enter numeric limit
-- Visual warning when exceeded
-- Orange badge on column header
-- Soft limit (not enforced)
+State: Finished, approved, delivered
+```
 
-**4.6 Deleting Columns**
-- Column menu → Delete
-- Cannot delete if only column
-- Cards move to first column
-- Confirmation required
-- Permanent action
+**Done Means Done:**
 
-**4.7 The References Column**
-**Special Properties:**
-- First column if enabled
-- Locked (cards cannot leave)
-- Reference materials only
-- Filter activation point
-- Cannot be deleted
-- Consultant controlled
+```
+Tasks in Done column should be:
+✓ Work completed
+✓ Quality verified
+✓ Approved by reviewer
+✓ Delivered to stakeholder
+✓ No further action needed
 
-**Purpose:**
-- Store compliance requirements
-- Hold regulation references
-- Maintain source documentation
-- Link to active work
+Not Done:
+✗ "90% complete" → Keep in In Progress or Review
+✗ "Waiting for approval" → Keep in Review
+✗ "Almost done" → Not done yet
+```
+
+**Progress Calculation:**
+
+```
+Board Progress = Tasks in Done / Total Tasks
+
+Example:
+- To Do: 10 tasks
+- In Progress: 5 tasks
+- Review: 3 tasks
+- Done: 27 tasks
+
+Total: 45 tasks
+Done: 27 tasks
+Progress: 27/45 = 60%
+
+Done column drives board completion percentage
+```
 
 ---
 
-### CHAPTER 5: MANAGING CARDS (TASKS)
+### 4.3 Adding Custom Columns
 
-**5.1 Creating Cards**
-**Quick Create:**
-- "Add Card" button on column
-- Title only
-- Instant creation
-- Appears at bottom of column
+**When to Add Columns:**
 
-**Full Create:**
-- Floating "+" button
-- Title and description
-- Full modal form
-- More initial details
+```
+Add columns when:
+✓ Need more granular workflow states
+✓ Have specific approval stages
+✓ Separate different types of work
+✓ Compliance requires specific stages
+✓ Team needs more clarity
 
-**5.2 Card Display**
-**On Card Face:**
-- Labels (up to 3 shown)
-- Card title
-- Done indicator (if complete)
-- Assignment avatars
-- Due date (if set, color-coded)
-- Milestone badge
-- Category badge
-- Effort hours
-- Comment count
-- Attachment count (links, images, notes)
+Examples:
+- Add "QA Testing" between Review and Done
+- Add "Backlog" before To Do
+- Add "Deployed" after Done
+- Add "Blocked" for stuck tasks
+```
 
-**5.3 Moving Cards**
-**Drag and Drop:**
-- Click and hold card
-- Drag to target column
-- Drop to release
-- Visual feedback during drag
-- Locked columns reject drops
+**How to Add:**
 
-**5.4 Opening Card Details**
-- Click anywhere on card
-- Full-screen modal opens
-- All card properties
-- Edit any field
-- Add attachments
-- View activity
+**Method 1: Plus Button**
 
-**5.5 Card Properties**
+```
+1. Scroll to far right of columns
+2. Click [+] button
+3. Add Column modal opens
+4. Enter column name
+5. Choose position
+6. Click [Add Column]
+
+Column appears immediately
+```
+
+**Method 2: Column Menu**
+
+```
+Some implementations:
+- Any column menu → Add Column After
+- Creates column immediately after current
+- Skip position selection
+```
+
+**Add Column Modal:**
+
+```
+┌─────────────────────────────────────┐
+│  Add Column                      [×]│
+├─────────────────────────────────────┤
+│                                     │
+│  Column Name: (required)            │
+│  [QA Testing___________________]    │
+│                                     │
+│  Position:                          │
+│  ● At end (default)                 │
+│  ○ After "In Progress"              │
+│  ○ Before "Done"                    │
+│  ○ At beginning                     │
+│                                     │
+│  Color: (optional)                  │
+│  🔵 🟢 🟡 🔴 🟣 🟤 ⚫              │
+│                                     │
+│  WIP Limit: (optional)              │
+│  [____] tasks (blank = no limit)    │
+│                                     │
+│       [Cancel]  [Add Column]        │
+└─────────────────────────────────────┘
+```
+
+**Positioning Options:**
+
+```
+At End (Default):
+Before: [To Do] [In Progress] [Review] [Done]
+After:  [To Do] [In Progress] [Review] [Done] [QA Testing]
+
+After "In Progress":
+Before: [To Do] [In Progress] [Review] [Done]
+After:  [To Do] [In Progress] [QA Testing] [Review] [Done]
+
+Before "Done":
+Same as "After Review" in most cases
+
+At Beginning:
+Before: [To Do] [In Progress] [Review] [Done]
+After:  [Backlog] [To Do] [In Progress] [Review] [Done]
+```
+
+**Immediate Availability:**
+
+```
+After creation:
+✓ Column appears on board
+✓ Can add tasks immediately
+✓ Can drag tasks to it
+✓ Included in column count
+✓ Appears in column selection dropdowns
+
+Auto-saves:
+- No manual save needed
+- Column persists immediately
+- Visible to all board members
+```
+
+---
+
+### 4.4 Renaming Columns
+
+**When to Rename:**
+
+```
+Reasons to rename:
+- Initial name unclear
+- Team prefers different terminology
+- Process changes
+- Better clarity needed
+
+Example:
+"In Progress" → "Active Development" (more specific)
+"Review" → "Code Review" (clarifies type of review)
+"Done" → "Deployed to Production" (explicit outcome)
+```
+
+**How to Rename:**
+
+```
+1. Click column menu (⋮)
+2. Select "Rename Column"
+3. Enter new name
+4. Press Enter or click Save
+5. Column renames immediately
+
+Or:
+
+Double-click column name (if enabled)
+- Inline editing
+- Type new name
+- Press Enter
+- Updates immediately
+```
+
+**Rename Column Dialog:**
+
+```
+┌─────────────────────────────────────┐
+│  Rename Column                   [×]│
+├─────────────────────────────────────┤
+│                                     │
+│  Current Name: "In Progress"        │
+│                                     │
+│  New Name:                          │
+│  [Active Development___________]    │
+│                                     │
+│       [Cancel]  [Rename]            │
+└─────────────────────────────────────┘
+
+Changes apply immediately
+No data loss
+Historical activity logs preserve old name
+```
+
+**Updates Immediately:**
+
+```
+Before:
+[To Do] [In Progress] [Done]
+         ↑
+    Rename this
+
+After:
+[To Do] [Active Development] [Done]
+         ↑
+    New name shows immediately
+```
+
+**Historical Data Preserved:**
+
+```
+Activity Log Maintains Context:
+
+Before Rename:
+"John moved task to In Progress" (Jan 10, 10:00 AM)
+
+After Rename to "Active Development":
+"John moved task to Active Development" (Jan 10, 10:00 AM)
+(Some implementations update retroactively)
+
+Or:
+"John moved task to In Progress (now 'Active Development')"
+(Shows both names for clarity)
+
+Cards in column:
+- Remain in column
+- Not affected by rename
+- Continue working normally
+```
+
+---
+
+### 4.5 Setting WIP Limits
+
+**What are WIP Limits:**
+
+```
+WIP = Work In Progress
+
+WIP Limit = Maximum number of tasks allowed in a column
+
+Purpose:
+- Prevent overload
+- Maintain focus
+- Encourage completion before starting new work
+- Identify bottlenecks
+```
+
+**How to Set:**
+
+```
+1. Click column menu (⋮)
+2. Select "Set WIP Limit"
+3. Enter numeric limit
+4. Click [Save]
+5. Limit applies immediately
+
+Dialog:
+┌─────────────────────────────────────┐
+│  Set WIP Limit                   [×]│
+├─────────────────────────────────────┤
+│                                     │
+│  Column: "In Progress"              │
+│                                     │
+│  Maximum tasks allowed:             │
+│  [10____]                           │
+│                                     │
+│  Current tasks in column: 8         │
+│                                     │
+│  ☐ Block new tasks when limit hit  │
+│     (Soft limit - warning only)     │
+│                                     │
+│       [Cancel]  [Set Limit]         │
+└─────────────────────────────────────┘
+```
+
+**Visual Warning When Exceeded:**
+
+```
+Column with WIP Limit:
+
+Normal (Under Limit):
+┌────────────────┐
+│ In Progress    │
+│ (8 tasks)      │
+│ WIP: 8/10 ✓    │ ← Green indicator
+└────────────────┘
+
+Exceeded (Over Limit):
+┌────────────────┐
+│ In Progress    │
+│ (12 tasks)     │
+│ WIP: 12/10 ⚠️  │ ← Orange/red warning
+└────────────────┘
+```
+
+**Orange Badge on Column Header:**
+
+```
+Visual Indicators:
+
+[In Progress (12) ⚠️]
+                   ↑
+            Warning badge
+
+Color changes:
+- Green: Under limit
+- Orange: At limit
+- Red: Significantly over limit
+
+Purpose: Visual reminder to finish work before starting more
+```
+
+**Soft Limit (Not Enforced):**
+
+```
+Soft Limit = Warning, not blocking
+
+You CAN still:
+✓ Add more tasks to column
+✓ Drag tasks to column
+✓ Move tasks beyond limit
+
+System just warns you:
+"WIP limit exceeded. Consider finishing existing tasks first."
+
+Hard Limit (if enabled):
+✗ Blocks new tasks when limit reached
+✗ Cannot drag tasks to full column
+(Rarely used - too restrictive)
+```
+
+**Recommended WIP Limits:**
+
+```
+Formula:
+WIP Limit = Team Size × 1.5 to 2
+
+Examples:
+- 4 developers → WIP: 6-8 tasks
+- 2 developers → WIP: 3-4 tasks
+- 10 team members → WIP: 15-20 tasks
+
+Adjust based on:
+- Task complexity (complex tasks → lower WIP)
+- Task duration (short tasks → higher WIP)
+- Team experience (new teams → lower WIP)
+```
+
+**Benefits:**
+
+```
+Prevents:
+✗ Context switching
+✗ Unfinished work accumulation
+✗ Bottlenecks going unnoticed
+✗ Team overload
+
+Encourages:
+✓ Finishing before starting
+✓ Focus and completion
+✓ Identifying blockers
+✓ Better flow
+
+Result:
+- More tasks actually completed
+- Less stress
+- Better quality
+```
+
+---
+
+### 4.6 Deleting Columns
+
+**When to Delete:**
+
+```
+Reasons to delete:
+- Column no longer needed
+- Process simplified
+- Wrong column created
+- Workflow changed
+
+Example:
+Had "Staging" column for testing
+Moved to continuous deployment
+"Staging" column obsolete → Delete
+```
+
+**How to Delete:**
+
+```
+1. Click column menu (⋮)
+2. Select "Delete Column"
+3. Confirmation dialog appears
+4. Confirm deletion
+5. Column removed immediately
+
+Cannot Delete If:
+- Only 1 column remains (board must have at least one)
+- Column is "References" (locked column)
+```
+
+**Delete Column Dialog:**
+
+```
+┌─────────────────────────────────────┐
+│  Delete Column?                  [×]│
+├─────────────────────────────────────┤
+│                                     │
+│  Delete column "QA Testing"?        │
+│                                     │
+│  ⚠️ This column has 5 tasks         │
+│                                     │
+│  Tasks will be moved to:            │
+│  [To Do ▼] (select destination)     │
+│                                     │
+│  This action cannot be undone.      │
+│                                     │
+│       [Cancel]  [Delete Column]     │
+└─────────────────────────────────────┘
+```
+
+**Cards Move to First Column:**
+
+```
+Before Delete:
+[To Do] [In Progress] [QA Testing] [Done]
+                       ↑
+                   5 tasks here
+
+Delete "QA Testing" →
+
+After Delete:
+[To Do] [In Progress] [Done]
+   ↑
+5 tasks moved here (default)
+
+Or:
+Choose destination column in delete dialog
+Tasks move there instead
+```
+
+**Confirmation Required:**
+
+```
+Safety measures:
+- Must click through confirmation
+- Shows task count in column
+- Option to choose task destination
+- Admin permission may be required
+
+Prevents accidental deletion
+```
+
+**Permanent Action:**
+
+```
+Cannot undo column deletion
+
+After deletion:
+✗ Column structure removed
+✗ Column configuration lost
+✗ Historical activity logs keep old column name references
+
+✓ Tasks preserved (moved to another column)
+✓ Task data intact
+✓ Can recreate column if needed (but configuration is lost)
+
+Think carefully before deleting
+```
+
+---
+
+### 4.7 The References Column
+
+**Special Column for Compliance Frameworks:**
+
+The References column is a unique, locked column designed specifically for compliance and regulatory frameworks.
+
+**Special Properties:**
+
+**1. First Column (If Enabled):**
+
+```
+Board Layout with References:
+
+[References] [To Do] [In Progress] [Review] [Done]
+     ↑
+ Always first
+```
+
+**2. Locked (Cards Cannot Leave):**
+
+```
+References Column Behavior:
+
+✓ Can add cards to References
+✓ Can view cards in References
+✗ CANNOT drag cards out of References
+✗ CANNOT move References cards to other columns
+
+Purpose:
+- Keep reference materials separate
+- Prevent accidental mixing with execution tasks
+- Maintain clean reference library
+```
+
+**3. Reference Materials Only:**
+
+```
+Typical Reference Column Contents:
+
+Compliance Requirements:
+├─ "GDPR Article 32: Security of Processing"
+├─ "ISO 27001 A.9.4.3: MFA Requirement"
+├─ "NIST CSF PR.AC-7: Access Control"
+└─ ... (more requirements)
+
+NOT for execution tasks:
+✗ "Draft MFA policy" (this goes in To Do)
+✗ "Configure encryption" (this goes in To Do/In Progress)
+
+References = WHAT to do
+Other columns = WHO, WHEN, HOW
+```
+
+**4. Filter Activation Point:**
+
+```
+Click reference item:
+- Filters board to show only linked tasks
+- See which tasks address this requirement
+- Track requirement coverage
+
+Example:
+Click "A.9.4.3: MFA Requirement" in References
+↓
+Board filters to show:
+- "Research MFA solutions" (To Do)
+- "Purchase MFA licenses" (In Progress)
+- "Deploy MFA" (Done)
+
+All tasks linked to this requirement visible
+Others hidden
+```
+
+**5. Cannot Be Deleted:**
+
+```
+References column is permanent (if enabled at board creation)
+
+Attempting to delete:
+┌─────────────────────────────────────┐
+│  Cannot Delete References Column    │
+├─────────────────────────────────────┤
+│                                     │
+│  The References column is locked    │
+│  and cannot be deleted.             │
+│                                     │
+│  It maintains compliance framework  │
+│  structure and requirement links.   │
+│                                     │
+│            [OK]                      │
+└─────────────────────────────────────┘
+
+Protection for compliance integrity
+```
+
+**6. Consultant Controlled:**
+
+```
+Typical Access:
+- Consultant: Can add/edit References
+- Client: Read-only access to References
+- Client: Full control of other columns
+
+Permission Model:
+References Column: Consultant domain
+Other Columns: Client domain
+
+Prevents:
+- Client accidentally deleting requirements
+- Framework structure corruption
+- Compliance gaps
+```
+
+---
+
+**Purpose of References Column:**
+
+**Store Compliance Requirements:**
+
+```
+Populate with:
+- Regulatory requirements (GDPR articles, ISO controls)
+- Compliance obligations
+- Legal requirements
+- Standards and frameworks
+- Policy requirements
+
+Example:
+├─ "GDPR Art. 5(1)(a): Lawfulness"
+├─ "GDPR Art. 5(1)(b): Purpose Limitation"
+├─ "GDPR Art. 5(1)(c): Data Minimization"
+└─ ... (all GDPR principles)
+
+Complete compliance reference library
+```
+
+**Hold Regulation References:**
+
+```
+Reference card contains:
+- Requirement title
+- Regulatory source (article, clause)
+- Description (what is required)
+- Implementation guidance
+- Links to official regulation text
+- Evidence requirements
+
+Team references while creating implementation tasks
+```
+
+**Maintain Source Documentation:**
+
+```
+References = Single Source of Truth
+
+Workflow (Source):
+- Consultant updates when regulations change
+- Syncs to board references
+- Always current
+
+Board References:
+- Reflects current regulation
+- Team always has latest requirements
+- No outdated frameworks
+
+Synchronization:
+Workflow changes → References update automatically
+```
+
+**Link to Active Work:**
+
+```
+Task-to-Requirement Linkage:
+
+Reference: "A.9.4.3: Multi-Factor Authentication"
+     ↓ (linked to)
+Tasks:
+├─ "Research MFA solutions"
+├─ "Purchase MFA licenses"
+└─ "Deploy MFA"
+
+Benefits:
+- Track which requirements are covered
+- Identify gaps (requirements with no tasks)
+- Audit trail (show how requirement was met)
+- Coverage reporting (% of requirements addressed)
+```
+
+**Use Case Example:**
+
+```
+Compliance Board Setup:
+
+Step 1: Export ISO 27001 workflow to board
+Result: 93 controls appear in References column
+
+Step 2: Client creates implementation tasks in To Do
+Result: Execution tasks in main columns
+
+Step 3: Link tasks to requirements
+Task "Implement MFA" linked to Control "A.9.4.3"
+
+Step 4: Auditor visits
+Shows:
+- Control A.9.4.3 in References (requirement)
+- Linked tasks showing implementation (evidence)
+- Clear traceability
+- Audit success
+
+References column = Compliance backbone of board
+```
+
+---
+
+---
+
+## CHAPTER 5: MANAGING CARDS (TASKS)
+
+Cards are the fundamental unit of work on a board, representing individual tasks, deliverables, or action items.
+
+### 5.1 Creating Cards
+
+**Two Creation Methods:**
+
+**Quick Create - Fast Entry:**
+
+```
+Purpose: Rapid task capture
+
+Location: Each column has [+ Add Card] button
+
+Click [+ Add Card]:
+┌─────────────────────────────┐
+│ [Task title_______________] │ ← Type title
+│ [Add Card]                  │ ← Press Enter or click
+└─────────────────────────────┘
+
+Workflow:
+1. Click [+ Add Card] in desired column
+2. Type task title
+3. Press Enter (or click Add Card)
+4. Card appears at bottom of column
+5. Ready for next task
+
+Ideal for:
+- Brainstorming sessions
+- Sprint planning
+- Rapid task entry
+- Initial task capture
+```
+
+**Quick Create Example:**
+
+```
+In "To Do" column, click [+ Add Card]:
+
+Type: "Draft MFA policy"
+Press Enter →
+
+Card appears:
+┌─────────────────────────────┐
+│ Draft MFA policy            │
+└─────────────────────────────┘
+
+Type next task: "Configure Azure AD"
+Press Enter →
+
+Another card appears:
+┌─────────────────────────────┐
+│ Configure Azure AD          │
+└─────────────────────────────┘
+
+Fast, efficient, continuous entry
+```
+
+---
+
+**Full Create - Detailed Entry:**
+
+```
+Purpose: Create task with full details upfront
+
+Location: Floating [+] button (bottom-right corner)
+
+Click [+] → Full Create Modal Opens:
+
+┌─────────────────────────────────────┐
+│  Create Task                     [×]│
+├─────────────────────────────────────┤
+│                                     │
+│  Title: (required)                  │
+│  [Draft Multi-Factor Auth Policy__] │
+│                                     │
+│  Description:                       │
+│  [Create comprehensive MFA policy_] │
+│  [covering all access scenarios___]│
+│                                     │
+│  Column:                            │
+│  [To Do ▼]                          │
+│                                     │
+│  Assign to:                         │
+│  [Sarah Johnson ▼] (Executor)       │
+│                                     │
+│  Due Date:                          │
+│  [2024-02-15] 📅                    │
+│                                     │
+│  Milestone:                         │
+│  [Sprint 1 ▼]                       │
+│                                     │
+│  Category:                          │
+│  [Documentation ▼]                  │
+│                                     │
+│  Estimated Effort:                  │
+│  [8____] hours                      │
+│                                     │
+│     [Cancel]  [Create Task]         │
+└─────────────────────────────────────┘
+
+More fields, less follow-up editing needed
+```
+
+**Full Create Benefits:**
+
+```
+Advantages:
+✓ Set all properties at creation
+✓ Assign immediately
+✓ Set deadlines upfront
+✓ Link to milestone/category
+✓ Estimate effort
+
+Ideal for:
+- Planned tasks with known details
+- Formal project management
+- Tasks needing immediate assignment
+- Compliance tasks with requirements
+```
+
+**Appears at Bottom of Column:**
+
+```
+New cards always append to bottom:
+
+Column Before:
+┌──────────────┐
+│ Task 1       │
+│ Task 2       │
+│ Task 3       │
+└──────────────┘
+
+Add "Task 4" →
+
+Column After:
+┌──────────────┐
+│ Task 1       │
+│ Task 2       │
+│ Task 3       │
+│ Task 4       │ ← New card here
+└──────────────┘
+
+Drag to reorder if needed
+```
+
+---
+
+### 5.2 Card Display
+
+**Card Face Layout:**
+
+The card face shows key information at a glance without opening the full details.
+
+**Complete Card Anatomy:**
+
+```
+┌───────────────────────────────────────┐
+│ 🔴 📄 🟢                               │ ← Labels (max 3)
+│                                       │
+│ Draft Multi-Factor Authentication     │ ← Title
+│ Policy                                │
+│                                       │
+│ ✓ Done                                │ ← Done indicator
+│                                       │
+│ 👤 👤                                 │ ← Assignments (avatars)
+│                                       │
+│ 📅 Feb 15 🔴                          │ ← Due date (color-coded)
+│ 🎯 Sprint 1                           │ ← Milestone badge
+│ 📂 Documentation                      │ ← Category badge
+│                                       │
+│ ⏱️ 8h est  💬 3  📎 5                │ ← Effort, Comments, Attachments
+└───────────────────────────────────────┘
+```
+
+**Labels (Up to 3 Shown):**
+
+```
+Display:
+🔴 🟡 🟢 (colored circles/badges)
+
+Purpose:
+- Quick visual coding
+- At-a-glance categorization
+- Priority indication
+- Status markers
+
+If more than 3 labels:
+🔴 🟡 🟢 +2 
+          ↑
+    (shows count of additional labels)
+
+Click card to see all labels
+```
+
+**Card Title:**
+
+```
+Display:
+- Large, prominent text
+- 1-3 lines (truncated if longer)
+- Main task identifier
+
+Examples:
+✓ "Draft MFA Policy"
+✓ "Configure Azure AD for SSO"
+✓ "Complete Security Training"
+
+✗ "Do stuff" (too vague)
+✗ "Task" (not descriptive)
+```
+
+**Done Indicator (If Complete):**
+
+```
+When card marked done:
+
+┌───────────────────────────────────────┐
+│ ✓ Done                                │ ← Green checkmark + text
+│                                       │
+│ Draft MFA Policy                      │ ← May have strikethrough
+└───────────────────────────────────────┘
+
+Visual Indicators:
+- Green ✓ checkmark
+- "Done" text
+- Optional strikethrough title
+- Muted/grayed appearance
+
+Purpose:
+- Quickly identify completed work
+- Visual sense of progress
+- Celebration of achievement
+```
+
+**Assignment Avatars:**
+
+```
+Display:
+👤 👤 👤 +2
+
+Shows:
+- First 3 assigned members
+- "+N" if more assignees
+- Avatars with initials or photos
+- Hover shows full name
+
+Example:
+Sarah Johnson (Executor)
+Mike Chen (Approver)
+Lisa Park (Follower)
+... +2 more
+```
+
+**Due Date (Color-Coded):**
+
+```
+Display: 📅 Feb 15
+
+Color Coding:
+
+Overdue (Past Due):
+📅 Feb 10 🔴 (red badge)
+
+Due Soon (< 3 days):
+📅 Feb 13 🟠 (orange badge)
+
+Future (> 3 days):
+📅 Feb 20 (normal color)
+
+No Due Date:
+(Field not shown if not set)
+
+Purpose: Visual urgency indicator
+```
+
+**Milestone Badge:**
+
+```
+Display: 🎯 Sprint 1
+
+Shows:
+- Milestone icon
+- Milestone name
+- Linked milestone
+
+Indicates:
+- Task is part of milestone
+- Contributes to milestone progress
+- Phase/sprint membership
+
+Click to filter board by milestone
+```
+
+**Category Badge:**
+
+```
+Display: 📂 Documentation
+
+Shows:
+- Category icon (if set)
+- Category name
+- Category color (background)
+
+Example Categories:
+📄 Documentation
+💻 Technical
+👥 HR
+🔧 Configuration
+
+Purpose: Task type/theme indicator
+```
+
+**Effort Hours:**
+
+```
+Display: ⏱️ 8h est
+
+Shows estimated effort (if set)
+
+Variants:
+⏱️ 8h est (estimated only)
+⏱️ 8h / 6h act (estimated / actual)
+
+Purpose:
+- Workload planning
+- Capacity management
+- Time tracking
+```
+
+**Comment Count:**
+
+```
+Display: 💬 3
+
+Shows number of comments
+
+Updates in real-time:
+- Add comment → count increases
+- Delete comment → count decreases
+
+Indicates:
+- Discussion activity
+- Team engagement
+- Communication level
+```
+
+**Attachment Count:**
+
+```
+Display: 📎 5
+
+Shows total attachments:
+- Links
+- Images
+- Notes
+- (Checklists not included)
+
+Example:
+📎 5 = 2 links + 1 image + 2 notes
+
+Purpose: Indicates task has supporting documentation
+```
+
+---
+
+### 5.3 Moving Cards
+
+**Drag and Drop - Primary Method:**
+
+**How to Drag:**
+
+```
+1. Click and Hold Card
+   - Mouse down on card
+   - Hold for ~200ms
+   - Card "lifts" (shadow appears)
+
+2. Drag to Target Column
+   - Move mouse while holding
+   - Card follows cursor
+   - Target column highlights
+
+3. Drop to Release
+   - Release mouse button
+   - Card settles into column
+   - Animation completes
+
+4. Visual Feedback During Drag
+   - Card has elevation/shadow
+   - Target column glows or changes color
+   - Drop zones indicated
+   - Invalid drop zones marked (locked columns)
+```
+
+**Drag Example:**
+
+```
+Before:
+[To Do]        [In Progress]    [Done]
+┌──────────┐   ┌──────────┐    ┌──────────┐
+│ Task A   │   │ Task C   │    │ Task E   │
+│ Task B   │   │ Task D   │    │ Task F   │
+└──────────┘   └──────────┘    └──────────┘
+
+Drag "Task A" to "In Progress":
+
+During Drag:
+[To Do]        [In Progress]    [Done]
+┌──────────┐   ┌──────────┐    ┌──────────┐
+│ Task B   │   │▓▓▓▓▓▓▓▓▓▓│    │ Task E   │
+│          │   │ Task C   │    │ Task F   │
+└──────────┘   │ Task D   │    └──────────┘
+  Task A ──────>│ Drop Here│
+                └──────────┘
+                     ↑
+              (Column highlighted)
+
+After Drop:
+[To Do]        [In Progress]    [Done]
+┌──────────┐   ┌──────────┐    ┌──────────┐
+│ Task B   │   │ Task A   │    │ Task E   │
+│          │   │ Task C   │    │ Task F   │
+└──────────┘   │ Task D   │    └──────────┘
+                └──────────┘
+```
+
+**Locked Columns Reject Drops:**
+
+```
+Attempting to drag OUT of References column:
+
+[References]   [To Do]
+┌──────────┐   ┌──────────┐
+│ Req A    │   │          │
+│ Req B    │   │          │
+└──────────┘   └──────────┘
+
+Try to drag "Req A" to "To Do":
+  Req A ────✗────> [To Do]
+                      ↑
+              (Rejects drop)
+
+Visual Feedback:
+- Cursor shows "not allowed" icon (🚫)
+- Column doesn't highlight
+- Card snaps back to original position
+
+Error Toast:
+"Cannot move cards out of locked References column"
+```
+
+**Reordering Within Column:**
+
+```
+Drag within same column to reorder:
+
+Before:
+[To Do]
+┌──────────┐
+│ Task A   │
+│ Task B   │
+│ Task C   │
+└──────────┘
+
+Drag "Task C" to top:
+
+After:
+[To Do]
+┌──────────┐
+│ Task C   │
+│ Task A   │
+│ Task B   │
+└──────────┘
+
+Use for prioritization
+```
+
+---
+
+### 5.4 Opening Card Details
+
+**Click Anywhere on Card:**
+
+```
+Card on board:
+┌───────────────────────────────────────┐
+│ Draft MFA Policy                      │
+│ 📅 Feb 15  💬 3  📎 5                │
+└───────────────────────────────────────┘
+      ↑
+   Click anywhere
+
+→ Card details modal opens
+```
+
+**Full-Screen Modal Opens:**
+
+```
+┌─────────────────────────────────────────────────────┐
+│  Task Details                                    [×]│
+├─────────────────────────────────────────────────────┤
+│                                                     │
+│  Title: Draft Multi-Factor Authentication Policy   │
+│         [________________________________]          │
+│                                                     │
+│  Description:                                       │
+│  ┌─────────────────────────────────────┐          │
+│  │ Create comprehensive MFA policy     │          │
+│  │ covering all access scenarios...    │          │
+│  └─────────────────────────────────────┘          │
+│                                                     │
+│  Column: [In Progress ▼]                           │
+│  Done: ☐                                           │
+│                                                     │
+│  ├─ Assignments                                    │
+│  ├─ Schedule (Due Date, Effort)                    │
+│  ├─ Organization (Milestone, Category, Groups)     │
+│  ├─ Linked References                              │
+│  ├─ Attachments (Links, Images, Notes)             │
+│  ├─ Checklist                                      │
+│  └─ Comments                                       │
+│                                                     │
+│  Activity Log (recent changes)                     │
+│                                                     │
+│                   [Delete Task]  [Close]           │
+└─────────────────────────────────────────────────────┘
+
+Comprehensive task management interface
+```
+
+**All Card Properties Accessible:**
+
+```
+In modal, can view and edit:
+✓ Title
+✓ Description
+✓ Column
+✓ Done status
+✓ Assignments
+✓ Due date
+✓ Effort (estimated/actual)
+✓ Milestone
+✓ Category
+✓ Groups
+✓ Linked references
+✓ Links
+✓ Images
+✓ Notes
+✓ Comments
+✓ Checklist
+✓ Activity log
+
+Everything in one place
+```
+
+**Edit Any Field:**
+
+```
+Most fields editable inline:
+- Click to edit
+- Type changes
+- Auto-saves on blur or Enter
+- Immediate persistence
+
+Some fields have pickers:
+- Date picker for due date
+- Dropdown for milestone/category
+- Member selector for assignments
+- Color picker for labels
+```
+
+**Add Attachments:**
+
+```
+Attachment sections in modal:
+
+[+ Add Link]
+┌─────────────────────────────────────┐
+│ 🔗 Policy Guidelines                │
+│ 🔗 MFA Best Practices               │
+└─────────────────────────────────────┘
+
+[+ Add Image]
+┌─────────────────────────────────────┐
+│ 🖼️ MFA Diagram                      │
+└─────────────────────────────────────┘
+
+[+ Add Note]
+┌─────────────────────────────────────┐
+│ 📝 Implementation Notes             │
+│ 📝 Vendor Requirements              │
+└─────────────────────────────────────┘
+
+All attachment types accessible
+```
+
+**View Activity:**
+
+```
+Activity Log (bottom of modal):
+
+Recent Activity:
+─────────────────────────────────
+Sarah moved to "In Progress"
+2 hours ago
+
+Mike added comment
+4 hours ago
+
+John assigned Sarah (Executor)
+Yesterday, 3:00 PM
+
+Lisa created task
+2 days ago
+─────────────────────────────────
+
+Full task history
+```
+
+---
+
+### 5.5 Card Properties
+
+Detailed explanation of each card property.
 
 **Title (Required):**
-- Main task identifier
-- Edit inline in modal
+
+```
+Purpose: Main task identifier
+
+Field: [Draft Multi-Factor Authentication Policy__]
+
+Requirements:
+- Required (cannot be empty)
+- 1-200 characters
+- Plain text only
+
+Edit:
+- Click to edit inline in modal
+- Type new title
+- Press Enter or click away
 - Auto-saves on blur
 
+Best Practices:
+✓ Start with verb ("Draft", "Configure", "Review")
+✓ Be specific and clear
+✓ Include what and optionally who/when
+✓ Keep concise but meaningful
+
+Examples:
+✓ "Draft MFA Policy"
+✓ "Configure Azure AD SSO"
+✓ "Review Q1 Security Metrics"
+✓ "Complete GDPR Training (All Staff)"
+
+Avoid:
+✗ "Do this"
+✗ "Task"
+✗ "Follow up"
+```
+
+---
+
 **Description:**
-- Detailed task information
-- Rich text support
+
+```
+Purpose: Detailed task information
+
+Field: Rich text editor
+┌─────────────────────────────────────┐
+│ **What:** Create comprehensive MFA  │
+│ policy                              │
+│                                     │
+│ **Why:** Required for ISO 27001     │
+│ control A.9.4.3                     │
+│                                     │
+│ **How:**                            │
+│ 1. Review existing policies         │
+│ 2. Draft new sections               │
+│ 3. Get legal review                 │
+│ 4. Publish to intranet              │
+│                                     │
+│ **Success Criteria:**               │
+│ - All scenarios covered             │
+│ - Legal approved                    │
+│ - Published and communicated        │
+└─────────────────────────────────────┘
+
+Rich Text Support:
+- Bold, italic, underline
+- Bullet lists, numbered lists
+- Links
+- Headings
+- Formatted content
+
+What to Include:
 - What needs to be done
-- How to do it
+- Why it's important
+- How to do it (steps)
 - Success criteria
+- Constraints or dependencies
+```
+
+---
 
 **Column:**
-- Current workflow state
-- Dropdown to change
-- Alternative to drag-drop
+
+```
+Purpose: Current workflow state
+
+Field: [In Progress ▼] (dropdown)
+
+Options: All board columns
+- To Do
+- In Progress
+- Review
+- Done
+- (Custom columns)
+
+Alternative to Drag-Drop:
+- Open card modal
+- Change column dropdown
+- Card moves immediately
+- Same result as dragging
+
+Use When:
+- Card modal already open
+- Prefer keyboard navigation
+- Drag-drop not available (mobile)
+```
+
+---
 
 **Done Status:**
-- Checkbox
-- Independent of column
-- Used for milestone progress
+
+```
+Purpose: Mark task completion
+
+Field: ☐ Done (checkbox)
+
+States:
+☐ Not done (unchecked)
+☑ Done (checked)
+
+Independent of Column:
+- Can mark done in any column
+- Done status ≠ column location
+
+Example:
+Task in "Review" column can be:
+- Not done (awaiting review)
+- Done (review complete, just not moved to Done column yet)
+
+Used For:
+- Milestone progress calculation
+- Progress tracking
+- Filtering done tasks
 - Visual indicator on card face
 
+Best Practice:
+Mark done when work is truly complete and accepted
+```
+
+---
+
 **Category:**
-- Single category assignment
-- Dropdown selection
-- Organizational grouping
-- Visual badge
+
+```
+Purpose: Organizational grouping by type/theme
+
+Field: [Documentation ▼] (dropdown)
+
+Single Category Assignment:
+- One category per card
+- Choose from board categories
+- Or select "None"
+
+Visual Badge:
+- Shows on card face
+- Category color and icon
+- Quick identification
+
+Example Categories:
+📄 Documentation
+💻 Technical
+👥 HR
+🔧 Configuration
+📊 Reporting
+🔒 Security
+
+Use Cases:
+- Department-specific views (filter by HR)
+- Task type (Documentation vs Technical)
+- Priority (Urgent vs Routine)
+- Workflow stage (Planning vs Execution)
+```
+
+---
 
 **Milestone:**
-- Link to milestone
-- Dropdown selection
-- Progress tracking
-- Visual badge
+
+```
+Purpose: Link to time-based or goal-based phase
+
+Field: [Sprint 1 ▼] (dropdown)
+
+Options:
+- All board milestones
+- None (unlink)
+
+Progress Tracking:
+- Milestone calculates progress from linked cards
+- Mark card done → Milestone progress increases
+
+Visual Badge:
+- Shows on card face
+- Milestone name
+- 🎯 icon
+
+Example:
+Card: "Draft MFA Policy"
+Milestone: "Sprint 1"
+
+Sprint 1 progress:
+- 20 cards linked
+- 12 cards done
+- 60% complete
+
+This card contributes to that 60%
+
+Filter by Milestone:
+Click milestone badge → Board filters to show only Sprint 1 cards
+```
+
+---
 
 **Due Date:**
-- Calendar date picker
-- Optional field
-- Color coding:
-  - Red: Overdue
-  - Orange: Due soon (< 3 days)
-  - Normal: Future dates
+
+```
+Purpose: Deadline tracking
+
+Field: [2024-02-15] 📅 (date picker)
+
+Calendar Picker:
+┌─────────────────────────┐
+│   February 2024         │
+├─────────────────────────┤
+│ Su Mo Tu We Th Fr Sa    │
+│        1  2  3          │
+│  4  5  6  7  8  9 10    │
+│ 11 12 13 14[15]16 17    │
+│ 18 19 20 21 22 23 24    │
+│ 25 26 27 28 29          │
+└─────────────────────────┘
+
+Click date to set
+Click [×] to clear due date
+
+Color Coding:
+
+Overdue:
+📅 Feb 10 🔴
+(Task due Feb 10, today is Feb 12)
+
+Due Soon (< 3 days):
+📅 Feb 13 🟠
+(Today is Feb 11, due in 2 days)
+
+Future:
+📅 Feb 20
+(Due in 9 days, normal color)
+
+Purpose:
+- Deadline awareness
+- Task prioritization
+- Schedule management
+- Overdue identification
+```
+
+---
 
 **Effort:**
-- Estimated hours
-- Actual hours
-- Numeric input
-- Planning tool
+
+```
+Purpose: Time tracking and capacity planning
+
+Fields:
+- Estimated: [8____] hours
+- Actual: [6____] hours (optional)
+
+Numeric Input:
+- Enter hours as number
+- Decimal allowed (e.g., 2.5 hours)
+- Optional field
+
+Displays on Card Face:
+⏱️ 8h est
+Or:
+⏱️ 8h / 6h act
+
+Use Cases:
+- Sprint planning (total estimated hours vs team capacity)
+- Time tracking (actual vs estimated)
+- Workload distribution
+- Project estimation
+
+Example:
+Sprint 1 capacity: 120 hours
+Total estimated effort: 95 hours
+Remaining capacity: 25 hours
+
+Can add 3 more small tasks (8h each)
+```
+
+---
 
 **Assignments:**
-- Multiple people
-- Four roles: Executor, Approver, Follower, Supervisor
-- Avatar display
-- Team collaboration
+
+```
+Purpose: Team collaboration and role clarity
+
+Multiple People:
+- Can assign multiple members
+- Each with specific role
+- All see task in "My Tasks" view
+
+Four Roles:
+
+1. Executor 🛠️
+   - Does the work
+   - Primary responsible party
+   - "Owner" of task
+
+2. Approver ✅
+   - Reviews and approves
+   - Quality gate
+   - Final say on completion
+
+3. Follower 👁️
+   - Stays informed
+   - Receives notifications
+   - Not actively involved
+   - Interested party
+
+4. Supervisor 👔
+   - Oversees work
+   - Provides guidance
+   - Escalation point
+   - Management oversight
+
+Assignment Example:
+┌─────────────────────────────────────┐
+│ Assignments:                        │
+│                                     │
+│ 👤 Sarah Johnson (Executor) 🛠️     │
+│ 👤 Mike Chen (Approver) ✅          │
+│ 👤 Lisa Park (Follower) 👁️         │
+│ 👤 John Smith (Supervisor) 👔       │
+│                                     │
+│ [+ Add Assignment]                  │
+└─────────────────────────────────────┘
+
+Avatar Display:
+Card face shows assignee avatars
+Hover to see name and role
+
+Team Collaboration:
+- Clear responsibilities
+- No confusion on who does what
+- Proper oversight
+- Informed stakeholders
+```
+
+---
 
 **Groups:**
-- Multiple group membership
+
+```
+Purpose: Cross-cutting organization, bulk operations
+
+Multiple Group Membership:
+- Card can belong to multiple groups
 - Checkbox selection
-- Cross-cutting organization
-- Bulk operation targets
+- Not exclusive (unlike category)
+
+Selection:
+┌─────────────────────────────────────┐
+│ Groups:                             │
+│                                     │
+│ ☑ MFA Implementation               │
+│ ☐ Encryption Project               │
+│ ☑ Q1 Initiatives                   │
+│ ☐ Technical Debt                   │
+└─────────────────────────────────────┘
+
+Check boxes for groups this card belongs to
+
+Cross-Cutting Organization:
+- One card in multiple groups
+- Flexible categorization
+- Multi-dimensional organization
+
+Example:
+Card: "Configure MFA in Azure AD"
+Groups:
+- MFA Implementation (project group)
+- Q1 Initiatives (timeline group)
+- Azure Changes (technical group)
+
+Belongs to all three
+
+Bulk Operation Targets:
+Select group → Perform action on all cards in group:
+- Change milestone
+- Change category
+- Add label
+- Bulk update
+
+Group Progress:
+Group card shows progress across all member cards
+Useful for sub-project tracking
+```
+
+---
 
 **Linked References:**
-- Links to reference column cards
+
+```
+Purpose: Traceability to compliance requirements
+
+Links to Reference Column Cards:
 - Multiple links possible
-- Traceability to requirements
-- Filter activation
+- Shows which requirements this task addresses
 
-**5.6 Deleting Cards**
-- Delete button in modal
-- Confirmation required
+Linkage:
+┌─────────────────────────────────────┐
+│ Linked References:                  │
+│                                     │
+│ 🔗 ISO 27001 A.9.4.3: MFA Req      │
+│ 🔗 NIST CSF PR.AC-7: Access Control│
+│                                     │
+│ [+ Link Reference]                  │
+└─────────────────────────────────────┘
+
+Traceability:
+- Requirement → Task linkage
+- Audit trail
+- Coverage tracking
+- Compliance demonstration
+
+Filter Activation:
+Click linked reference:
+- Board filters to show this requirement
+- And all tasks addressing it
+- See full requirement implementation
+
+Example:
+Reference: "A.9.4.3: Multi-Factor Authentication"
+Linked Tasks:
+├─ "Research MFA solutions"
+├─ "Purchase MFA licenses"
+├─ "Configure Azure AD MFA"
+├─ "Test MFA for all scenarios"
+└─ "Train users on MFA"
+
+Complete requirement coverage visible
+```
+
+---
+
+### 5.6 Deleting Cards
+
+**When to Delete:**
+
+```
+Delete cards when:
+✓ Task no longer needed
+✓ Duplicate created by mistake
+✓ Requirements changed
+✓ Task obsolete
+
+Don't delete:
+✗ Completed tasks (keep for history)
+✗ Tasks just "on hold" (mark as such instead)
+```
+
+**Delete Button in Modal:**
+
+```
+Location: Bottom of card details modal
+
+[Delete Task] button (red)
+
+Click to delete:
+┌─────────────────────────────────────┐
+│  Delete Task?                    [×]│
+├─────────────────────────────────────┤
+│                                     │
+│  Delete "Draft MFA Policy"?         │
+│                                     │
+│  ⚠️ This action cannot be undone    │
+│                                     │
+│  This will permanently delete:      │
+│  • Task details                     │
+│  • All comments (3)                 │
+│  • All attachments (5)              │
+│  • Activity history                 │
+│                                     │
+│  Linked references will be unlinked│
+│  Milestone/group membership removed │
+│                                     │
+│       [Cancel]  [Delete Forever]    │
+└─────────────────────────────────────┘
+```
+
+**Confirmation Required:**
+
+```
+Safety Measures:
+- Must click through confirmation
+- Shows what will be deleted
+- Counts comments/attachments
+- Warns about permanence
+- Admin permission may be required
+
+Prevents accidental deletion
+```
+
+**Permanent Removal:**
+
+```
+After deletion:
+✗ Card removed from board
+✗ All comments deleted
+✗ All attachments deleted
+✗ Activity history deleted
+✗ Cannot be undone or recovered
+
+✓ Milestone/group/category unaffected (other cards remain)
+✓ Linked references remain (just unlinked from this card)
+
+Alternative to Deletion:
+- Archive card (if feature available)
+- Move to "Cancelled" or "Archived" column
+- Mark with "Obsolete" label
+- Keep history while removing from active view
+```
+
+---
+
+---
+
+## CHAPTER 6: ATTACHMENTS AND ACTIVITY
+
+Enhance cards with additional context, documentation, and collaboration features.
+
+### 6.1 Comments
+
+**Purpose:** Team communication and discussion
+
+**Add Via Card Modal:**
+
+```
+In card details modal, scroll to Comments section:
+
+┌─────────────────────────────────────┐
+│ Comments (3)                        │
+├─────────────────────────────────────┤
+│                                     │
+│ [Add a comment________________]     │
+│                                     │
+│ Sarah Johnson - 2 hours ago         │
+│ MFA policy draft is ready for       │
+│ legal review. @Mike can you         │
+│ take a look?                        │
+│   [Edit] [Delete]                   │
+│                                     │
+│ Mike Chen - 5 hours ago             │
+│ Working on Azure AD configuration.  │
+│ Should be done by EOD.              │
+│   [Edit] [Delete]                   │
+│                                     │
+│ Lisa Park - Yesterday, 3:00 PM      │
+│ Created task for Q1 compliance      │
+│ initiative                          │
+│   [Edit] [Delete]                   │
+└─────────────────────────────────────┘
+
+Type comment and press Enter to post
+```
+
+**Plain Text:**
+
+```
+Format:
+- Plain text only
+- No rich formatting
+- No bold, italic, etc.
+- URLs auto-linked
+
+Example:
+See policy at https://company.com/policies/mfa
+         ↑
+    (Automatically becomes clickable link)
+
+Keep simple and fast
+```
+
+**Discussion Threads:**
+
+```
+Use comments for:
+✓ Questions and answers
+✓ Status updates
+✓ Blockers and issues
+✓ Coordination
+✓ @ mentions for notifications
+
+Example Thread:
+┌─────────────────────────────────────┐
+│ Sarah: "Need legal approval"        │
+│   ↓                                 │
+│ Mike: "@John can you review?"       │
+│   ↓                                 │
+│ John: "Approved! Looks good"        │
+│   ↓                                 │
+│ Sarah: "Thanks! Publishing now"     │
+└─────────────────────────────────────┘
+
+Conversation history preserved
+```
+
+**Newest First:**
+
+```
+Comment order:
+- Most recent at top
+- Oldest at bottom
+- Scroll down for history
+- Easy to see latest updates
+
+Rationale:
+Users care most about recent activity
+Don't need to scroll to see latest
+```
+
+**Edit and Delete Own:**
+
+```
+Your own comments:
+[Edit] [Delete] buttons visible
+
+Others' comments:
+No edit/delete buttons (read-only)
+
+Edit:
+- Click [Edit]
+- Modify text
+- Press Enter to save
+- Or Cancel to discard
+
+Delete:
+- Click [Delete]
+- Confirmation prompt
 - Permanent removal
-- All data deleted
+- Others still see "Comment deleted"
+```
+
+**Count Shown on Card Face:**
+
+```
+Card Display:
+💬 3
+
+Indicates 3 comments on this task
+
+Updates in real-time:
+- Add comment → count increases
+- Delete comment → count decreases
+
+Visual indicator of discussion activity
+```
 
 ---
 
-### CHAPTER 6: ATTACHMENTS AND ACTIVITY
+### 6.2 Notes
 
-**6.1 Comments**
-- Add via card modal
-- Plain text
-- Discussion threads
-- Newest first
-- Edit and delete own
-- Count shown on card face
+**Purpose:** Detailed documentation and implementation guidance
 
-**6.2 Notes**
-- Rich text editor (Quill)
-- Formatted content
-- Bold, italic, lists, links
-- Standalone documentation
-- Count shown on card face
+**Rich Text Editor (Quill):**
 
-**6.3 Links**
-- External URLs
-- Reference materials
-- Policy documents
-- Evidence locations
-- Count shown on card face
-- Click to open in new tab
+```
+Notes section in card modal:
 
-**6.4 Images**
-- External image URLs
-- Screenshots
-- Diagrams
-- Visual documentation
-- Thumbnail preview
-- Click to enlarge
+┌─────────────────────────────────────┐
+│ Notes (2)                    [+ Add]│
+├─────────────────────────────────────┤
+│                                     │
+│ 📝 Implementation Steps             │
+│ ┌─────────────────────────────────┐│
+│ │ [B] [I] [U] [•] [1] [🔗]      ││
+│ ├─────────────────────────────────┤│
+│ │ **Configuration Requirements:** ││
+│ │                                 ││
+│ │ 1. Enable MFA in Azure AD       ││
+│ │ 2. Configure authentication app ││
+│ │ 3. Set grace period to 7 days   ││
+│ │                                 ││
+│ │ *Important:* Test with pilot    ││
+│ │ group first                     ││
+│ └─────────────────────────────────┘│
+│   [Edit] [Delete]                   │
+│                                     │
+│ 📝 Vendor Requirements              │
+│   ...                               │
+└─────────────────────────────────────┘
 
-**6.5 Checklists**
-- Subtask items
-- Checkbox completion
-- Add new items
-- Delete items
-- Progress indicator
-- Completion percentage
+Toolbar: Bold, Italic, Underline, Bullets, Numbers, Links
+```
 
-**6.6 Activity Log**
-- Board-level activity
-- 100 most recent events
-- User actions
-- Timestamps
-- Filterable by type
-- View from board menu
+**Formatted Content:**
+
+```
+Supported Formatting:
+✓ **Bold** text
+✓ *Italic* text
+✓ __Underline__
+✓ Bullet lists (•)
+✓ Numbered lists (1. 2. 3.)
+✓ Hyperlinks
+✓ Headings (H1, H2, H3)
+
+Example:
+**Prerequisites:**
+1. Azure AD admin access
+2. License for MFA feature
+3. Test user accounts
+
+See [Azure MFA docs](https://link.com)
+```
+
+**Standalone Documentation:**
+
+```
+Use notes for:
+✓ Implementation steps
+✓ Configuration details
+✓ Technical specifications
+✓ Policy excerpts
+✓ Reference documentation
+✓ How-to guides
+
+Unlike comments (conversation):
+Notes are formal documentation
+Structured information
+Permanent reference
+
+Example Notes:
+├─ "Configuration Steps"
+├─ "Testing Procedures"
+├─ "Rollback Plan"
+└─ "Vendor Contact Info"
+```
+
+**Count Shown on Card Face:**
+
+```
+Included in attachment count:
+📎 5 (2 links + 1 image + 2 notes)
+        ↑
+    2 notes contribute to total
+
+Click card to see all notes
+```
 
 ---
 
-### CHAPTER 7: MILESTONES
+### 6.3 Links
 
-**7.1 Understanding Milestones**
-- Time-based or goal-based phases
-- Link multiple cards
-- Auto-track progress
-- Visual organization
-- Examples: Sprints, quarters, deliverables
+**Purpose:** Reference external resources
 
-**7.2 Creating Milestones**
-- "+" button in carousel
-- Name (required)
-- Description (optional)
-- Color picker
-- Creates immediately
+**External URLs:**
 
-**7.3 Milestone Properties**
-- Name (editable)
-- Description (editable)
-- Color (editable)
-- Linked cards (auto-count)
-- Progress (auto-calculated)
-- Status: In Progress or Completed
+```
+Links section in card modal:
 
-**7.4 Status Calculation**
-**Completed:**
-- ALL linked cards marked done
-- Green indicator
-- 100% progress
+┌─────────────────────────────────────┐
+│ Links (2)                    [+ Add]│
+├─────────────────────────────────────┤
+│                                     │
+│ 🔗 MFA Policy Guidelines            │
+│    https://company.com/policies/mfa │
+│    [Edit] [Delete] [Open ↗]         │
+│                                     │
+│ 🔗 Azure MFA Documentation          │
+│    https://docs.microsoft.com/...   │
+│    [Edit] [Delete] [Open ↗]         │
+└─────────────────────────────────────┘
 
-**In Progress:**
-- ANY linked card not done
-- Blue indicator
-- Percentage shown (e.g., "3/5")
+Each link has title and URL
+```
 
-**7.5 Linking Cards to Milestones**
-- Card details modal
-- Milestone dropdown
-- Select from list
-- Can change later
-- Can unlink (select "None")
+**Add Link Dialog:**
 
-**7.6 Viewing Milestone Details**
-- Click milestone card
-- Modal shows all linked cards
-- Organized by column
-- Card titles and status
-- Quick access to cards
+```
+Click [+ Add] in Links section:
 
-**7.7 Editing and Deleting**
-- Edit button: Modify properties
-- Delete button: Remove milestone
-- Deletes milestone only
-- Cards remain (unlinked)
+┌─────────────────────────────────────┐
+│  Add Link                        [×]│
+├─────────────────────────────────────┤
+│                                     │
+│  Title:                             │
+│  [MFA Policy Guidelines_________]   │
+│                                     │
+│  URL:                               │
+│  [https://company.com/policies/mfa_]│
+│                                     │
+│       [Cancel]  [Add Link]          │
+└─────────────────────────────────────┘
 
-**7.8 Use Cases**
+Title: Descriptive name
+URL: Full web address
+```
+
+**Reference Materials:**
+
+```
+Link to:
+✓ Company policies
+✓ Official documentation
+✓ Vendor resources
+✓ Regulatory text
+✓ Internal wikis
+✓ SharePoint documents
+✓ Confluence pages
+✓ External websites
+
+Centralized access to all relevant resources
+```
+
+**Policy Documents:**
+
+```
+Compliance Use Case:
+Task: "Implement GDPR Article 32"
+
+Links:
+🔗 GDPR Article 32 Official Text
+🔗 Company Data Security Policy
+🔗 Implementation Checklist
+🔗 DPA Guidance on Security Measures
+
+All reference materials in one place
+Quick access during implementation
+```
+
+**Evidence Locations:**
+
+```
+Link to evidence repositories:
+🔗 SharePoint Evidence Folder
+🔗 Google Drive - Audit Evidence
+🔗 Confluence - Technical Docs
+🔗 JIRA - Related Tickets
+
+Auditor can trace:
+Requirement → Task → Evidence
+All from board
+```
+
+**Count Shown on Card Face:**
+
+```
+Included in attachment count:
+📎 5 (2 links + 1 image + 2 notes)
+    ↑
+2 links contribute to total
+```
+
+**Click to Open in New Tab:**
+
+```
+Click [Open ↗] or click link title:
+- Opens URL in new browser tab
+- Original board stays open
+- Easy reference while working
+```
+
+---
+
+### 6.4 Images
+
+**Purpose:** Visual documentation
+
+**External Image URLs:**
+
+```
+Images section in card modal:
+
+┌─────────────────────────────────────┐
+│ Images (2)                   [+ Add]│
+├─────────────────────────────────────┤
+│                                     │
+│ 🖼️ MFA Configuration Diagram        │
+│    ┌─────────────────────┐          │
+│    │  [Preview Image]    │          │
+│    │                     │          │
+│    └─────────────────────┘          │
+│    https://company.com/.../mfa.png  │
+│    [Edit] [Delete] [View Full]      │
+│                                     │
+│ 🖼️ Azure AD Settings Screenshot     │
+│    ┌─────────────────────┐          │
+│    │  [Preview Image]    │          │
+│    └─────────────────────┘          │
+│    [Edit] [Delete] [View Full]      │
+└─────────────────────────────────────┘
+
+Thumbnail previews in modal
+```
+
+**Add Image Dialog:**
+
+```
+Click [+ Add] in Images section:
+
+┌─────────────────────────────────────┐
+│  Add Image                       [×]│
+├─────────────────────────────────────┤
+│                                     │
+│  Title:                             │
+│  [MFA Configuration Diagram_____]   │
+│                                     │
+│  Image URL:                         │
+│  [https://company.com/.../mfa.png_] │
+│                                     │
+│  ┌─────────────────────┐            │
+│  │  [Image Preview]    │            │
+│  │  (loads after URL)  │            │
+│  └─────────────────────┘            │
+│                                     │
+│       [Cancel]  [Add Image]         │
+└─────────────────────────────────────┘
+
+Enter external image URL
+Preview loads automatically
+```
+
+**Screenshots:**
+
+```
+Use for:
+✓ Configuration screens
+✓ Settings documentation
+✓ Before/after comparisons
+✓ Error messages
+✓ UI mockups
+✓ Test results
+
+Example:
+Task: "Configure MFA in Azure AD"
+Image: Screenshot of Azure AD MFA settings page
+Value: Visual guide for implementation
+```
+
+**Diagrams:**
+
+```
+Use for:
+✓ Architecture diagrams
+✓ Workflow illustrations
+✓ Network topologies
+✓ Data flow diagrams
+✓ Process maps
+✓ Mind maps
+
+Example:
+Task: "Design authentication flow"
+Image: MFA authentication sequence diagram
+Value: Visual understanding of process
+```
+
+**Visual Documentation:**
+
+```
+"A picture is worth a thousand words"
+
+Instead of writing:
+"Navigate to Azure AD > Security > MFA > Settings > 
+Enable for all users > Set grace period to 7 days"
+
+Show:
+🖼️ Screenshot with settings highlighted
+
+Faster to understand
+Reduces ambiguity
+```
+
+**Thumbnail Preview:**
+
+```
+In card modal:
+- Small preview (200x150px approx)
+- Maintains aspect ratio
+- Loads from URL
+
+Hover: Slight zoom
+Click: Full-size view
+```
+
+**Click to Enlarge:**
+
+```
+Click image or [View Full]:
+┌─────────────────────────────────────┐
+│  MFA Configuration Diagram       [×]│
+├─────────────────────────────────────┤
+│                                     │
+│   ┌─────────────────────────────┐  │
+│   │                             │  │
+│   │   [Full-Size Image]         │  │
+│   │                             │  │
+│   │                             │  │
+│   │                             │  │
+│   └─────────────────────────────┘  │
+│                                     │
+│   https://company.com/.../mfa.png   │
+│                                     │
+│           [Close]  [Download]       │
+└─────────────────────────────────────┘
+
+Full-size modal overlay
+Download option
+```
+
+---
+
+### 6.5 Checklists
+
+**Purpose:** Break tasks into subtasks
+
+**Subtask Items:**
+
+```
+Checklist section in card modal:
+
+┌─────────────────────────────────────┐
+│ Checklist (4/7 completed)           │
+├─────────────────────────────────────┤
+│                                     │
+│ ☑ Review existing MFA policies      │
+│ ☑ Draft policy document             │
+│ ☑ Submit for legal review           │
+│ ☑ Incorporate legal feedback        │
+│ ☐ Get management approval           │
+│ ☐ Publish to company intranet       │
+│ ☐ Communicate to all staff          │
+│                                     │
+│ [+ Add Item]                        │
+└─────────────────────────────────────┘
+
+☑ = Done
+☐ = Not done
+```
+
+**Checkbox Completion:**
+
+```
+Click checkbox to toggle:
+☐ → ☑ (mark done)
+☑ → ☐ (unmark)
+
+Immediate visual feedback
+Progress updates automatically
+```
+
+**Add New Items:**
+
+```
+Click [+ Add Item]:
+┌─────────────────────────────┐
+│ [New checklist item_______] │
+│ [Add]                       │
+└─────────────────────────────┘
+
+Type item text
+Press Enter to add
+Appears at bottom of checklist
+
+Or:
+
+Type and press Enter repeatedly for batch entry
+```
+
+**Delete Items:**
+
+```
+Hover over checklist item:
+☑ Review existing policies [×]
+                            ↑
+                      Delete button
+
+Click [×] to remove item
+Confirmation prompt
+Permanent removal
+```
+
+**Progress Indicator:**
+
+```
+Header shows progress:
+Checklist (4/7 completed)
+          ↑   ↑
+        Done Total
+
+Updates in real-time:
+- Check item → Done count increases
+- Uncheck item → Done count decreases
+- Add item → Total increases
+- Delete item → Total decreases
+```
+
+**Completion Percentage:**
+
+```
+Some implementations show percentage:
+
+Checklist 57% (4/7)
+          ↑
+    4÷7 = 57.14% → 57%
+
+Visual progress bar (optional):
+████████░░░░░░ 57%
+
+Motivates completion
+```
+
+**Use Cases:**
+
+```
+Break large tasks into steps:
+
+Task: "Implement MFA"
+Checklist:
+☑ 1. Research MFA solutions
+☑ 2. Select vendor
+☑ 3. Purchase licenses
+☐ 4. Configure Azure AD
+☐ 5. Test with pilot group
+☐ 6. Roll out company-wide
+☐ 7. Provide user training
+
+Granular progress tracking
+Clear next steps
+```
+
+---
+
+### 6.6 Activity Log
+
+**Purpose:** Audit trail and history
+
+**Board-Level Activity:**
+
+```
+Access from board header:
+Click [Activity 📊] button
+
+Activity Log Modal:
+┌─────────────────────────────────────┐
+│  Board Activity Log              [×]│
+├─────────────────────────────────────┤
+│                                     │
+│  Filter: [All ▼] [Today ▼]         │
+│                                     │
+│  Today, 2:30 PM                     │
+│  👤 Sarah moved "Draft Policy" from │
+│     "In Progress" to "Done"         │
+│                                     │
+│  Today, 11:15 AM                    │
+│  👤 Mike added comment to           │
+│     "Configure MFA"                 │
+│                                     │
+│  Today, 9:00 AM                     │
+│  👤 Lisa created milestone          │
+│     "Sprint 1"                      │
+│                                     │
+│  Yesterday, 4:45 PM                 │
+│  👤 John created task               │
+│     "Review Access Logs"            │
+│                                     │
+│  ... (scroll for more)              │
+└─────────────────────────────────────┘
+
+All board changes logged
+```
+
+**100 Most Recent Events:**
+
+```
+Performance optimization:
+- Keeps last 100 events
+- Older events archived
+- Sufficient for most use cases
+- Fast loading
+
+For full history:
+- Export to file (if available)
+- Database query (admin)
+- Compliance audit logs (separate system)
+```
+
+**User Actions:**
+
+```
+Tracked Events:
+✓ Card created
+✓ Card moved
+✓ Card deleted
+✓ Card updated (title, description, etc.)
+✓ Comment added
+✓ Attachment added/removed
+✓ Milestone created/updated/deleted
+✓ Category created/updated/deleted
+✓ Group created/updated/deleted
+✓ Column added/renamed/deleted
+✓ Member added/removed
+✓ Board settings changed
+
+Comprehensive audit trail
+```
+
+**Timestamps:**
+
+```
+Format:
+Recent: "2 hours ago", "15 minutes ago"
+Today: "Today, 2:30 PM"
+This Week: "Yesterday, 4:45 PM", "Monday, 10:00 AM"
+Older: "Jan 15, 2024, 3:00 PM"
+
+Relative for recent, absolute for older
+Easy to understand recency
+```
+
+**Filterable by Type:**
+
+```
+Filter Options:
+
+All Events (default)
+Card Changes
+Comments
+Attachments
+Milestones
+Categories
+Groups
+Columns
+Members
+Settings
+
+Example Filter:
+"Show only: Comments"
+→ See all comment activity
+→ Track team discussions
+```
+
+**View from Board Menu:**
+
+```
+Access Points:
+1. Header: [Activity 📊] button
+2. Board menu: Activity Log option
+3. Keyboard: ? (help) → Activity shortcut
+
+Always accessible
+Quick reference
+```
+
+**Use Cases:**
+
+```
+Audit Trail:
+"Who moved this task to Done?"
+→ Check activity log
+→ See: Sarah at 2:30 PM
+
+Troubleshooting:
+"Why did progress drop?"
+→ Check activity log
+→ See: Mike deleted 3 completed tasks
+
+Team Coordination:
+"What happened while I was away?"
+→ Check activity log
+→ See: 15 events in last 2 days
+
+Compliance:
+"Demonstrate change control"
+→ Export activity log
+→ Show all changes with timestamps and users
+```
+
+---
+
+---
+
+## CHAPTER 7: MILESTONES
+
+Organize tasks into time-based or goal-based phases for better tracking and reporting.
+
+### 7.1 Understanding Milestones
+
+**What are Milestones:**
+
+Milestones are containers that group related cards together and automatically track their collective progress.
+
+**Time-Based or Goal-Based Phases:**
+
+```
+Time-Based Examples:
+├─ Sprint 1 (2 weeks, Jan 1-14)
+├─ Sprint 2 (2 weeks, Jan 15-28)
+├─ Q1 2024 (3 months, Jan-Mar)
+└─ Phase 1: Discovery (1 month)
+
+Goal-Based Examples:
+├─ ISO 27001 Certification
+├─ Product Launch v2.0
+├─ Security Improvements
+└─ Technical Debt Cleanup
+
+Flexible:
+- Define by timeframe
+- Define by objective
+- Hybrid (timeframe AND objective)
+```
+
+**Link Multiple Cards:**
+
+```
+One milestone → Many cards
+
+Example:
+Milestone: "Sprint 1"
+Linked Cards:
+├─ "Draft MFA policy" (To Do)
+├─ "Configure Azure AD" (In Progress)
+├─ "Test MFA" (In Progress)
+├─ "Deploy MFA" (Review)
+└─ "Train users" (Done)
+
+5 cards linked to one milestone
+```
+
+**Auto-Track Progress:**
+
+```
+No manual updates needed!
+
+Progress calculates automatically:
+- 1 of 5 cards done = 20%
+- 2 of 5 cards done = 40%
+- 5 of 5 cards done = 100% (Completed)
+
+Real-time:
+- Mark card done → Progress increases
+- Unmark card → Progress decreases
+
+Always accurate
+```
+
+**Visual Organization:**
+
+```
+Milestone Carousel (top of board):
+
+[Sprint 1 | Sprint 2 | Sprint 3 | Q1 Goals]
+   60%        20%        0%         45%
+    ↑
+Click to filter board
+
+Filter Active:
+Board shows only Sprint 1 cards
+Other cards hidden
+Clear filter to see all
+
+Visual focus on current milestone
+```
+
+**Examples:**
+
+```
+Software Development:
+├─ Sprint 1, Sprint 2, Sprint 3...
+├─ Alpha Release, Beta Release, GA
+└─ Q1 Goals, Q2 Goals, Q3 Goals
+
+Compliance:
+├─ ISO 27001 Certification
+├─ GDPR Implementation
+├─ SOC 2 Type 2 Audit
+└─ Annual Compliance Review
+
+Project Management:
+├─ Discovery Phase
+├─ Design Phase
+├─ Implementation Phase
+├─ Testing Phase
+└─ Launch Phase
+
+Manufacturing:
+├─ Prototype Build
+├─ Production Setup
+├─ Quality Testing
+└─ Market Launch
+```
+
+---
+
+### 7.2 Creating Milestones
+
+**"+" Button in Carousel:**
+
+```
+Location: Milestones carousel (below board header)
+
+Milestones
+[Sprint 1] [Sprint 2] [+ Add]
+                       ↑
+                 Click here
+
+Create Milestone modal opens
+```
+
+**Create Milestone Form:**
+
+```
+┌─────────────────────────────────────┐
+│  Create Milestone                [×]│
+├─────────────────────────────────────┤
+│                                     │
+│  Name: (required)                   │
+│  [Sprint 1____________________]     │
+│                                     │
+│  Description: (optional)            │
+│  [Two-week sprint for MFA______]   │
+│  [implementation and testing___]    │
+│                                     │
+│  Due Date: (optional)               │
+│  [2024-01-15] 📅                    │
+│                                     │
+│  Color:                             │
+│  🔵 🟢 🟡 🔴 🟣 🟤              │
+│                                     │
+│       [Cancel]  [Create Milestone]  │
+└─────────────────────────────────────┘
+```
+
+**Name (Required):**
+
+```
+Best Practices:
+✓ Clear and concise
+✓ Include timeframe or goal
+✓ Meaningful to team
+
+Examples:
+✓ "Sprint 1 (Jan 1-14)"
+✓ "Q1 2024 Compliance"
+✓ "ISO 27001 Certification"
+✓ "Product Launch v2.0"
+
+Avoid:
+✗ "Milestone 1" (too vague)
+✗ "Tasks" (not descriptive)
+✗ "M1" (unclear abbreviation)
+```
+
+**Description (Optional):**
+
+```
+What to include:
+- Milestone objective
+- Timeframe (if not in name)
+- Key deliverables
+- Success criteria
+
+Example:
+"Two-week sprint focused on implementing MFA 
+across all user authentication points. Includes 
+Azure AD configuration, testing with pilot group, 
+and initial rollout to IT department."
+
+Provides context for team members
+```
+
+**Color Picker:**
+
+```
+Choose color for visual distinction:
+🔵 Blue (default)
+🟢 Green
+🟡 Yellow
+🔴 Red
+🟣 Purple
+🟤 Brown
+
+Use color strategically:
+- Blue: Regular sprints
+- Green: Completed milestones
+- Yellow: In progress, attention needed
+- Red: Urgent/critical milestones
+- Purple: Special projects
+
+Helps quick visual identification
+```
+
+**Creates Immediately:**
+
+```
+Click [Create Milestone]:
+- Milestone created
+- Appears in carousel
+- Progress: 0% (no cards linked yet)
+- Status: In Progress
+- Ready to link cards
+
+No separate save step
+Instant availability
+```
+
+---
+
+### 7.3 Milestone Properties
+
+**Editable Properties:**
+
+**Name (Editable):**
+
+```
+Change milestone name:
+1. Click milestone card in carousel
+2. Milestone details modal opens
+3. Click [Edit] button
+4. Update name
+5. Click [Save]
+
+Or:
+
+Right-click milestone → Rename
+```
+
+**Description (Editable):**
+
+```
+Update description:
+- Same process as name edit
+- Modify in milestone details modal
+- Saves immediately
+```
+
+**Color (Editable):**
+
+```
+Change color:
+- Milestone details modal
+- Click color picker
+- Select new color
+- Milestone badge updates
+
+Use case:
+Change from Blue to Green when milestone 100% complete
+Visual celebration of achievement
+```
+
+**Linked Cards (Auto-Count):**
+
+```
+Displays automatically:
+
+Milestone Card:
+┌────────────────┐
+│  Sprint 1      │
+│  ██████░░░░ 60%│
+│  12 / 20 cards │ ← Auto-count
+│  Due: Jan 15   │
+└────────────────┘
+
+12 cards done / 20 total cards linked
+
+Real-time updates:
+- Link card → Total increases
+- Unlink card → Total decreases
+- No manual counting needed
+```
+
+**Progress (Auto-Calculated):**
+
+```
+Formula:
+Progress = (Done cards / Total linked cards) × 100%
+
+Example:
+Sprint 1:
+- 20 cards linked
+- 12 cards marked done
+- Progress: 12/20 = 60%
+
+Display: ██████░░░░ 60%
+
+Automatic calculation
+Always accurate
+```
+
+**Status: In Progress or Completed:**
+
+```
+Two status states:
+
+In Progress (Blue):
+- Some cards not done
+- Progress < 100%
+- Ongoing work
+
+Completed (Green):
+- ALL cards done
+- Progress = 100%
+- Milestone achieved
+
+Status auto-updates:
+- Last card marked done → Status: Completed
+- Any card unmarked → Status: In Progress
+
+No manual status management needed
+```
+
+---
+
+### 7.4 Status Calculation
+
+**Completed Status:**
+
+**ALL Linked Cards Marked Done:**
+
+```
+Requirement:
+Every single linked card must be checked ☑ Done
+
+Example:
+Milestone: "Sprint 1"
+Linked cards:
+☑ Task 1 (Done)
+☑ Task 2 (Done)
+☑ Task 3 (Done)
+☑ Task 4 (Done)
+☑ Task 5 (Done)
+
+All 5 done → Status: Completed
+```
+
+**Green Indicator:**
+
+```
+Completed Milestone Display:
+
+┌────────────────┐
+│ ✓ Sprint 1     │ ← Green checkmark
+│ ██████████ 100%│ ← Full green progress bar
+│ 5 / 5 cards    │
+│ Completed!     │ ← Status text
+└────────────────┘
+
+Visual celebration
+Clear achievement signal
+```
+
+**100% Progress:**
+
+```
+Progress bar filled:
+██████████ 100%
+
+All tasks accomplished
+Milestone objective achieved
+```
+
+---
+
+**In Progress Status:**
+
+**ANY Linked Card Not Done:**
+
+```
+Requirement:
+At least one card is unchecked ☐ Not done
+
+Example:
+Milestone: "Sprint 1"
+Linked cards:
+☑ Task 1 (Done)
+☑ Task 2 (Done)
+☑ Task 3 (Done)
+☐ Task 4 (Not done)
+☐ Task 5 (Not done)
+
+2 not done → Status: In Progress
+```
+
+**Blue Indicator:**
+
+```
+In Progress Milestone Display:
+
+┌────────────────┐
+│  Sprint 1      │ ← Blue (default)
+│  ██████░░░░ 60%│ ← Partial progress bar
+│  3 / 5 cards   │
+│  In Progress   │ ← Status text
+└────────────────┘
+
+Work ongoing
+Partial completion visible
+```
+
+**Percentage Shown (e.g., "3/5"):**
+
+```
+Format: Done / Total
+
+Examples:
+3 / 5 cards (60%)
+12 / 20 cards (60%)
+1 / 10 cards (10%)
+9 / 10 cards (90%)
+
+Numerator: Done count
+Denominator: Total count
+Percentage: Calculated and displayed
+```
+
+---
+
+### 7.5 Linking Cards to Milestones
+
+**Card Details Modal:**
+
+```
+Open any card → Card details modal
+
+Scroll to Organization section:
+
+┌─────────────────────────────────────┐
+│ Organization                        │
+├─────────────────────────────────────┤
+│                                     │
+│ Milestone: [Sprint 1 ▼]             │
+│            ↑                        │
+│        Dropdown                     │
+│                                     │
+│ Category: [Documentation ▼]         │
+│                                     │
+│ Groups:                             │
+│ ☑ MFA Implementation               │
+│ ☐ Q1 Initiatives                   │
+└─────────────────────────────────────┘
+```
+
+**Milestone Dropdown:**
+
+```
+Click dropdown → List of milestones:
+
+┌─────────────────────────┐
+│ None                    │ ← Unlink option
+│ ─────────────────       │
+│ Sprint 1                │
+│ Sprint 2                │
+│ Sprint 3                │
+│ Q1 Goals                │
+│ ISO 27001 Certification │
+└─────────────────────────┘
+
+Select milestone to link
+```
+
+**Select from List:**
+
+```
+Click desired milestone:
+- Card immediately linked
+- Milestone progress updates
+- Card shows milestone badge
+- Auto-saves
+
+No additional steps needed
+```
+
+**Can Change Later:**
+
+```
+To change milestone:
+1. Open card details modal
+2. Click milestone dropdown
+3. Select different milestone
+4. Card unlinks from old, links to new
+5. Both milestones' progress updates
+
+Flexible reassignment
+```
+
+**Can Unlink (Select "None"):**
+
+```
+To unlink from milestone:
+1. Open card details modal
+2. Click milestone dropdown
+3. Select "None"
+4. Card unlinks
+5. Milestone progress updates (card removed from count)
+
+Card no longer associated with any milestone
+```
+
+---
+
+### 7.6 Viewing Milestone Details
+
+**Click Milestone Card:**
+
+```
+In milestone carousel, click any milestone:
+
+[Sprint 1] ← Click here
+   60%
+
+Milestone details modal opens
+```
+
+**Modal Shows All Linked Cards:**
+
+```
+┌─────────────────────────────────────────────┐
+│  Sprint 1                                [×]│
+│  Progress: 12 / 20 cards (60%)              │
+├─────────────────────────────────────────────┤
+│                                             │
+│ To Do (3 cards)                             │
+│ ├─ ☐ Draft MFA policy                      │
+│ ├─ ☐ Research encryption options           │
+│ └─ ☐ Schedule security training            │
+│                                             │
+│ In Progress (5 cards)                       │
+│ ├─ ☐ Configure Azure AD MFA                │
+│ ├─ ☐ Set up authenticator app              │
+│ ├─ ☐ Test with pilot group                 │
+│ ├─ ☐ Document configuration                │
+│ └─ ☐ Create user guide                     │
+│                                             │
+│ Review (0 cards)                            │
+│                                             │
+│ Done (12 cards)                             │
+│ ├─ ☑ Review existing policies              │
+│ ├─ ☑ Get management approval               │
+│ ├─ ☑ Purchase licenses                     │
+│ └─ ... (9 more)                             │
+│                                             │
+│          [Edit Milestone]  [Delete]         │
+└─────────────────────────────────────────────┘
+```
+
+**Organized by Column:**
+
+```
+Cards grouped by their column:
+- To Do: 3 cards
+- In Progress: 5 cards
+- Review: 0 cards
+- Done: 12 cards
+
+Quickly see distribution
+Identify bottlenecks
+```
+
+**Card Titles and Status:**
+
+```
+Each card shows:
+☐ or ☑ (done status)
+Card title
+Column location
+
+Click card title:
+→ Opens card details
+→ Quick access to edit
+```
+
+**Quick Access to Cards:**
+
+```
+From milestone modal:
+1. See all linked cards
+2. Click any card title
+3. Card details open
+4. Make changes
+5. Return to milestone view
+
+Efficient navigation
+```
+
+---
+
+### 7.7 Editing and Deleting
+
+**Edit Button: Modify Properties:**
+
+```
+In milestone details modal:
+Click [Edit Milestone]
+
+Edit form opens:
+┌─────────────────────────────────────┐
+│  Edit Milestone                  [×]│
+├─────────────────────────────────────┤
+│                                     │
+│  Name:                              │
+│  [Sprint 1 (Extended)__________]    │
+│                                     │
+│  Description:                       │
+│  [Two-week sprint extended by___]   │
+│  [3 days due to holidays_______]    │
+│                                     │
+│  Due Date:                          │
+│  [2024-01-18] 📅 (changed)          │
+│                                     │
+│  Color:                             │
+│  🔵 🟢 🟡 🔴 🟣 🟤              │
+│                                     │
+│       [Cancel]  [Save Changes]      │
+└─────────────────────────────────────┘
+
+Modify any field
+Save updates
+```
+
+**Delete Button: Remove Milestone:**
+
+```
+In milestone details modal:
+Click [Delete] button (red)
+
+Confirmation:
+┌─────────────────────────────────────┐
+│  Delete Milestone?               [×]│
+├─────────────────────────────────────┤
+│                                     │
+│  Delete "Sprint 1"?                 │
+│                                     │
+│  This milestone has 20 linked cards.│
+│                                     │
+│  ⚠️ Milestone will be deleted       │
+│  ✓ Cards will be preserved          │
+│  ✓ Cards will be unlinked           │
+│                                     │
+│       [Cancel]  [Delete Milestone]  │
+└─────────────────────────────────────┘
+```
+
+**Deletes Milestone Only:**
+
+```
+After deletion:
+✗ Milestone removed from carousel
+✗ Milestone name removed from cards
+✗ Milestone data deleted
+
+What's preserved:
+✓ All cards remain on board
+✓ Cards keep all other properties
+✓ Cards simply unlinked from milestone
+```
+
+**Cards Remain (Unlinked):**
+
+```
+Before Delete:
+20 cards linked to Sprint 1
+Cards show: 🎯 Sprint 1
+
+After Delete:
+20 cards remain on board
+Cards show: (no milestone badge)
+Cards available to link to new milestone
+
+No card data lost
+```
+
+---
+
+### 7.8 Use Cases
+
 **Sprint Planning:**
-- Milestone per sprint
-- Link sprint tasks
-- Track sprint progress
-- Sprint review basis
+
+**Milestone Per Sprint:**
+
+```
+Create milestones:
+├─ Sprint 1 (Jan 1-14)
+├─ Sprint 2 (Jan 15-28)
+├─ Sprint 3 (Jan 29-Feb 11)
+└─ ...
+
+Agile methodology alignment
+```
+
+**Link Sprint Tasks:**
+
+```
+Sprint planning meeting:
+1. Create Sprint 1 milestone
+2. Select 20 tasks for sprint
+3. Link each task to Sprint 1
+4. Total: 20 tasks for 2-week sprint
+
+Sprint scope defined
+```
+
+**Track Sprint Progress:**
+
+```
+Daily updates:
+- Team marks tasks done
+- Sprint progress auto-updates
+- 5 done / 20 total = 25%
+- Track toward sprint goal
+
+Visual burndown
+```
+
+**Sprint Review Basis:**
+
+```
+End of sprint:
+- Open Sprint 1 milestone
+- Review all 20 tasks
+- See which are done (16/20 = 80%)
+- Discuss incomplete tasks
+- Move to Sprint 2
+
+Structured retrospective
+```
+
+---
 
 **Quarterly Goals:**
-- Milestone per quarter
-- Link quarter initiatives
-- Track quarterly completion
-- Executive reporting
 
-**Project Phases:**
-- Milestone per phase
-- Link phase deliverables
-- Track phase progress
-- Phase gate criteria
+**Milestone Per Quarter:**
+
+```
+Create milestones:
+├─ Q1 2024 (Jan-Mar)
+├─ Q2 2024 (Apr-Jun)
+├─ Q3 2024 (Jul-Sep)
+└─ Q4 2024 (Oct-Dec)
+
+Annual planning structure
+```
+
+**Link Quarter Initiatives:**
+
+```
+Q1 Goals:
+├─ ISO 27001 certification
+├─ GDPR implementation
+├─ SOC 2 audit
+└─ Security training program
+
+Strategic objectives grouped
+```
+
+**Track Quarterly Completion:**
+
+```
+Throughout quarter:
+- Monitor Q1 2024 progress
+- 45 cards linked
+- 23 done = 51% complete
+- On track for quarter-end
+
+Strategic visibility
+```
+
+**Executive Reporting:**
+
+```
+Board meeting:
+- Show Q1 2024 milestone
+- Progress: 51%
+- Highlight key achievements
+- Identify risks
+
+High-level status communication
+```
 
 ---
 
-### CHAPTER 8: CATEGORIES
+**Project Phases:**
 
-**8.1 Understanding Categories**
-- Organizational buckets
-- Single category per card
-- Department alignment
-- Work type classification
-- Examples: Frontend, Backend, Design, Testing, Security
+**Milestone Per Phase:**
 
-**8.2 Creating Categories**
-- "+" button in carousel
-- Name (required)
-- Color picker
-- Creates immediately
+```
+Project lifecycle:
+├─ Phase 1: Discovery
+├─ Phase 2: Design
+├─ Phase 3: Implementation
+├─ Phase 4: Testing
+└─ Phase 5: Launch
 
-**8.3 Category Properties**
-- Name (editable)
-- Color (editable)
-- Linked cards (auto-count)
-- Visual badge on cards
+Sequential project structure
+```
 
-**8.4 Assigning Cards to Categories**
-- Card details modal
-- Category dropdown
-- Select one category
-- Can change later
-- Can unassign (select "None")
+**Link Phase Deliverables:**
 
-**8.5 Filtering by Category**
-- Click category in carousel
-- Board shows only category cards
-- Visual filter banner
-- Clear filter button
-- Maintains column layout
+```
+Phase 1: Discovery
+├─ Stakeholder interviews
+├─ Requirements gathering
+├─ Feasibility study
+└─ Project charter
 
-**8.6 Viewing Category Details**
-- Click category card
-- Modal shows all cards
-- Organized by column
-- Card titles and status
-- Quick navigation
+All discovery tasks grouped
+```
 
-**8.7 Use Cases**
-**Department Organization:**
-- Category per department
-- Filter by department
-- Department progress tracking
-- Resource allocation
+**Track Phase Progress:**
+
+```
+Current phase monitoring:
+- Phase 1: Discovery (100% ✓ Complete)
+- Phase 2: Design (75% In Progress)
+- Phase 3: Implementation (0% Not Started)
+
+Phase-by-phase visibility
+```
+
+**Phase Gate Criteria:**
+
+```
+Before moving to next phase:
+- Phase 1 must be 100% complete
+- All deliverables approved
+- Sign-off from stakeholders
+- Phase gate meeting
+
+Milestone = gate checkpoint
+```
+
+---
+
+---
+
+## CHAPTER 8: CATEGORIES
+
+Classify tasks by type, department, or priority for better organization and filtering.
+
+### 8.1 Understanding Categories
+
+**What are Categories:**
+
+Categories are organizational buckets that classify cards by type, department, or other single-dimension grouping.
+
+**Organizational Buckets:**
+
+```
+Think of categories as colored labels or tags:
+- One category per card
+- Mutually exclusive (can't be in both "Frontend" AND "Backend")
+- Color-coded for visual distinction
+- Filterable
+
+Example Categories:
+├─ Frontend 🔵
+├─ Backend 🟢
+├─ Database 🟡
+└─ DevOps 🔴
+
+Each card belongs to zero or one category
+```
+
+**Single Category Per Card:**
+
+```
+Unlike Groups (multiple):
+- Card can be in Group A AND Group B (flexible)
+
+Categories (single):
+- Card in Frontend OR Backend (exclusive)
+- Choose one or none
+
+Constraint:
+Encourages clear classification
+Forces decision on primary type
+```
+
+**Department Alignment:**
+
+```
+Organize by department:
+
+Categories:
+├─ 📄 Documentation (Legal/Compliance team)
+├─ 💻 Technical (IT team)
+├─ 👥 HR (Human Resources team)
+├─ 📊 Finance (Accounting team)
+└─ 🔧 Operations (Ops team)
+
+Use Case:
+Filter board by "Technical" → See only IT team's tasks
+Department-specific views
+Resource tracking
+```
 
 **Work Type Classification:**
-- Frontend, Backend, Database, etc.
-- Filter by technology
-- Skill allocation
-- Technical planning
+
+```
+Organize by work type:
+
+Software Development:
+├─ Frontend (React, Vue)
+├─ Backend (Node.js, Python)
+├─ Database (SQL, migrations)
+├─ Infrastructure (AWS, Docker)
+└─ QA/Testing
+
+Manufacturing:
+├─ Design
+├─ Prototyping
+├─ Production
+├─ Quality Control
+└─ Packaging
+
+Each task clearly typed
+```
+
+**Examples:**
+
+```
+By Technology:
+├─ Frontend
+├─ Backend
+├─ Mobile
+├─ Database
+└─ DevOps
+
+By Priority:
+├─ Critical (red)
+├─ High (orange)
+├─ Medium (yellow)
+└─ Low (green)
+
+By Document Type:
+├─ Policy
+├─ Procedure
+├─ Guideline
+├─ Template
+└─ Checklist
+
+By Compliance Domain:
+├─ Security
+├─ Privacy
+├─ Financial
+├─ Operational
+└─ Legal
+
+Flexible to your needs
+```
+
+---
+
+### 8.2 Creating Categories
+
+**"+" Button in Carousel:**
+
+```
+Location: Categories carousel (below milestones)
+
+Categories
+[Documentation] [Technical] [HR] [+ Add]
+                                   ↑
+                              Click here
+
+Create Category modal opens
+```
+
+**Create Category Form:**
+
+```
+┌─────────────────────────────────────┐
+│  Create Category                 [×]│
+├─────────────────────────────────────┤
+│                                     │
+│  Name: (required)                   │
+│  [Documentation_______________]     │
+│                                     │
+│  Color:                             │
+│  🔴 🟡 🟢 🔵 🟣 🟤 ⚫ ⚪         │
+│                                     │
+│  Icon: (optional)                   │
+│  📄 📊 💻 👥 🔧 🏢 ...            │
+│                                     │
+│       [Cancel]  [Create Category]   │
+└─────────────────────────────────────┘
+```
+
+**Name (Required):**
+
+```
+Best Practices:
+✓ Clear and descriptive
+✓ Singular or plural (be consistent)
+✓ Meaningful to team
+
+Examples:
+✓ "Documentation"
+✓ "Technical Implementation"
+✓ "High Priority"
+✓ "Backend Development"
+
+Avoid:
+✗ "Cat1" (unclear abbreviation)
+✗ "Stuff" (too vague)
+✗ "Other" (catch-all, not useful)
+```
+
+**Color Picker:**
+
+```
+Choose color for visual distinction:
+🔴 Red (urgent, critical)
+🟡 Yellow (medium priority)
+🟢 Green (routine, approved)
+🔵 Blue (informational)
+🟣 Purple (special projects)
+🟤 Brown (maintenance)
+⚫ Black (blocked)
+⚪ White/Light (not started)
+
+Color Strategy:
+- Use color meaningfully
+- Consistent color meanings across categories
+- High contrast for accessibility
+
+Example:
+Critical → 🔴 Red
+High → 🟠 Orange
+Medium → 🟡 Yellow
+Low → 🟢 Green
+
+Visual priority at a glance
+```
+
+**Icon (Optional):**
+
+```
+Add visual icon:
+📄 Document-related
+💻 Technical work
+👥 People/HR
+🔧 Configuration/Ops
+📊 Reporting/Analytics
+🏢 Business/Executive
+🔒 Security/Privacy
+💰 Financial
+
+Icon + Color = Strong visual identity
+
+Example:
+Category: "Documentation"
+Color: 🔵 Blue
+Icon: 📄
+
+Display: 📄 Documentation (blue background)
+```
+
+**Creates Immediately:**
+
+```
+Click [Create Category]:
+- Category created
+- Appears in carousel
+- Count: 0 cards
+- Available in card category dropdown
+
+No separate save step
+Instant availability
+```
+
+---
+
+### 8.3 Category Properties
+
+**Name (Editable):**
+
+```
+Change category name:
+1. Click category tag in carousel
+2. Category details modal opens
+3. Click [Edit] button
+4. Update name
+5. Click [Save]
+
+Or:
+
+Right-click category → Rename
+```
+
+**Color (Editable):**
+
+```
+Change color:
+- Category details modal
+- Click color picker
+- Select new color
+- All card badges update immediately
+
+Use case:
+Change "In Progress" category from Blue to Green when work stabilizes
+Visual indication of status change
+```
+
+**Linked Cards (Auto-Count):**
+
+```
+Displays automatically:
+
+Category Tag:
+🔴 Urgent (5)
+          ↑
+    5 cards with this category
+
+Real-time updates:
+- Assign category to card → Count increases
+- Unassign category → Count decreases
+- Delete card → Count decreases
+
+No manual counting needed
+```
+
+**Visual Badge on Cards:**
+
+```
+Card Display:
+
+┌───────────────────────────────────────┐
+│ 🔴 📄 🟢                               │ ← Labels
+│                                       │
+│ Draft Multi-Factor Authentication     │
+│ Policy                                │
+│                                       │
+│ 📂 Documentation                      │ ← Category badge
+│   ↑                                   │
+│ Icon + name + color background        │
+└───────────────────────────────────────┘
+
+Prominent display
+Quick visual identification
+```
+
+---
+
+### 8.4 Assigning Cards to Categories
+
+**Card Details Modal:**
+
+```
+Open any card → Card details modal
+
+Scroll to Organization section:
+
+┌─────────────────────────────────────┐
+│ Organization                        │
+├─────────────────────────────────────┤
+│                                     │
+│ Milestone: [Sprint 1 ▼]             │
+│                                     │
+│ Category: [Documentation ▼]         │
+│           ↑                         │
+│       Dropdown                      │
+│                                     │
+│ Groups:                             │
+│ ☑ MFA Implementation               │
+└─────────────────────────────────────┘
+```
+
+**Category Dropdown:**
+
+```
+Click dropdown → List of categories:
+
+┌─────────────────────────┐
+│ None                    │ ← No category
+│ ─────────────────       │
+│ 📄 Documentation        │
+│ 💻 Technical            │
+│ 👥 HR                   │
+│ 🔧 Configuration        │
+│ 📊 Reporting            │
+└─────────────────────────┘
+
+Select one category
+```
+
+**Select One Category:**
+
+```
+Single selection (radio behavior):
+- Click category → Assigned
+- Click different category → Switches
+- Click "None" → Unassigned
+
+Only one active at a time
+
+Example:
+Card starts: (No category)
+Select: Documentation
+Card now: 📂 Documentation
+Select: Technical
+Card now: 💻 Technical (Documentation removed)
+
+Mutually exclusive
+```
+
+**Can Change Later:**
+
+```
+To change category:
+1. Open card details modal
+2. Click category dropdown
+3. Select different category
+4. Card switches immediately
+5. Both categories' counts update
+
+Flexible reassignment
+No restrictions on changing
+```
+
+**Can Unassign (Select "None"):**
+
+```
+To remove category:
+1. Open card details modal
+2. Click category dropdown
+3. Select "None"
+4. Category badge disappears
+5. Category count decreases
+
+Card has no category
+```
+
+---
+
+### 8.5 Filtering by Category
+
+**Click Category in Carousel:**
+
+```
+Categories carousel:
+[📄 Documentation (12)] [💻 Technical (8)] [👥 HR (5)]
+        ↑
+    Click here
+
+Board filters to show only Documentation cards
+```
+
+**Board Shows Only Category Cards:**
+
+```
+Filter Active:
+
+┌─────────────────────────────────────────────────────┐
+│  Board: ISO 27001 Implementation                    │
+│  Filter: 📄 Documentation [×]                       │ ← Banner
+│  Showing 12 of 45 tasks                             │
+├─────────────────────────────────────────────────────┤
+│                                                     │
+│ [To Do]      [In Progress]    [Review]    [Done]   │
+│                                                     │
+│ Only cards with "Documentation" category shown     │
+│ Other 33 cards hidden                              │
+│                                                     │
+└─────────────────────────────────────────────────────┘
+```
+
+**Visual Filter Banner:**
+
+```
+Top of board:
+┌─────────────────────────────────────┐
+│ Filter: 📄 Documentation [×]        │
+│ Showing 12 of 45 tasks              │
+└─────────────────────────────────────┘
+      ↑                        ↑
+   Active filter          Clear button
+
+Clear indication filter is active
+Shows how many cards visible vs total
+```
+
+**Clear Filter Button:**
+
+```
+Click [×] in filter banner:
+- Filter removed
+- All 45 cards visible again
+- Board returns to normal view
+
+Or:
+
+Click same category again in carousel:
+- Toggles filter off
+- All cards visible
+```
+
+**Maintains Column Layout:**
+
+```
+Filter doesn't change columns:
+
+[To Do]  [In Progress]  [Review]  [Done]
+   ↑            ↑           ↑         ↑
+All columns remain, just showing filtered cards
+
+Example:
+To Do: 3 Documentation cards (out of 10 total)
+In Progress: 5 Documentation cards (out of 15 total)
+Review: 2 Documentation cards (out of 5 total)
+Done: 2 Documentation cards (out of 15 total)
+
+Column structure preserved
+```
+
+---
+
+### 8.6 Viewing Category Details
+
+**Click Category Card:**
+
+```
+In category carousel, click any category:
+
+[📄 Documentation (12)] ← Click here
+
+Category details modal opens
+```
+
+**Modal Shows All Cards:**
+
+```
+┌─────────────────────────────────────────────┐
+│  📄 Documentation                        [×]│
+│  12 cards                                   │
+├─────────────────────────────────────────────┤
+│                                             │
+│ To Do (3 cards)                             │
+│ ├─ ☐ Draft MFA policy                      │
+│ ├─ ☐ Write user guide                      │
+│ └─ ☐ Create checklist                      │
+│                                             │
+│ In Progress (5 cards)                       │
+│ ├─ ☐ Update security policy                │
+│ ├─ ☐ Document configuration                │
+│ ├─ ☐ Write testing procedures              │
+│ ├─ ☐ Create training materials             │
+│ └─ ☐ Draft FAQ document                    │
+│                                             │
+│ Review (2 cards)                            │
+│ ├─ ☐ InfoSec Policy v2.0                   │
+│ └─ ☐ MFA Implementation Guide              │
+│                                             │
+│ Done (2 cards)                              │
+│ ├─ ☑ Company security policy               │
+│ └─ ☑ Employee handbook update              │
+│                                             │
+│          [Edit Category]  [Delete]          │
+└─────────────────────────────────────────────┘
+```
+
+**Organized by Column:**
+
+```
+Cards grouped by column:
+- To Do: 3 cards
+- In Progress: 5 cards
+- Review: 2 cards
+- Done: 2 cards
+
+See distribution across workflow
+Identify where work is concentrated
+```
+
+**Card Titles and Status:**
+
+```
+Each card shows:
+☐ or ☑ (done status)
+Card title
+Implicit column (by grouping)
+
+Click card title:
+→ Opens card details
+→ Quick access
+```
+
+**Quick Navigation:**
+
+```
+From category modal:
+1. See all cards with this category
+2. Click any card title
+3. Card details open
+4. Make changes
+5. Return to category view
+
+Efficient workflow
+```
+
+---
+
+### 8.7 Use Cases
+
+**Department Organization:**
+
+**Category Per Department:**
+
+```
+Create categories:
+├─ 📄 Documentation (Legal/Compliance)
+├─ 💻 Technical (IT)
+├─ 👥 HR (Human Resources)
+├─ 📊 Finance (Accounting)
+└─ 🔧 Operations
+
+Each team has their category
+```
+
+**Filter by Department:**
+
+```
+Department meeting:
+- IT team: Click "💻 Technical"
+- Board shows only IT's 23 tasks
+- Review IT's workload
+- Plan IT's priorities
+
+Focused team view
+```
+
+**Department Progress Tracking:**
+
+```
+Progress by department:
+
+📄 Documentation: 12 cards, 8 done (67%)
+💻 Technical: 23 cards, 15 done (65%)
+👥 HR: 8 cards, 6 done (75%)
+📊 Finance: 2 cards, 1 done (50%)
+
+Track departmental completion
+Identify lagging departments
+Allocate resources
+```
+
+**Resource Allocation:**
+
+```
+Workload visibility:
+
+📄 Documentation: 12 tasks (needs 2 people)
+💻 Technical: 23 tasks (needs 4 people)
+👥 HR: 8 tasks (needs 1 person)
+
+Balance workload
+Hire or reallocate resources
+```
+
+---
+
+**Work Type Classification:**
+
+**Frontend, Backend, Database, etc.:**
+
+```
+Technology categories:
+
+├─ 🎨 Frontend (React, Vue, CSS)
+├─ ⚙️ Backend (Node.js, Python, APIs)
+├─ 🗄️ Database (SQL, migrations, indexes)
+├─ 🔧 Infrastructure (AWS, Docker, CI/CD)
+└─ 🧪 Testing (Unit, Integration, E2E)
+
+Clear technical domain separation
+```
+
+**Filter by Technology:**
+
+```
+Tech lead review:
+- Frontend lead: Filter by "🎨 Frontend"
+- Review 15 frontend tasks
+- Assign to frontend developers
+- Track frontend progress
+
+Domain-specific management
+```
+
+**Skill Allocation:**
+
+```
+Match skills to tasks:
+
+Frontend tasks (15) → Frontend developers (3)
+Backend tasks (20) → Backend developers (4)
+Database tasks (5) → Database admin (1)
+
+Assign based on expertise
+```
+
+**Technical Planning:**
+
+```
+Technology roadmap:
+
+Q1: Focus on Frontend (15 tasks)
+Q2: Focus on Backend (20 tasks)
+Q3: Focus on Infrastructure (10 tasks)
+
+Category-based planning
+Phased execution
+```
+
+---
 
 **Priority Levels:**
-- Critical, High, Medium, Low
-- Filter by priority
-- Focus high-priority first
-- Risk management
+
+**Critical, High, Medium, Low:**
+
+```
+Priority categories:
+
+├─ 🔴 Critical (blockers, security issues)
+├─ 🟠 High (important, time-sensitive)
+├─ 🟡 Medium (standard work)
+└─ 🟢 Low (nice-to-have, future)
+
+Visual priority system
+```
+
+**Filter by Priority:**
+
+```
+Daily standup:
+- Filter by "🔴 Critical"
+- Review 5 critical tasks
+- Ensure all addressed
+- No blockers ignored
+
+Priority-driven workflow
+```
+
+**Focus High-Priority First:**
+
+```
+Work prioritization:
+
+1. Complete all 🔴 Critical tasks (5)
+2. Then work on 🟠 High tasks (12)
+3. Then tackle 🟡 Medium tasks (20)
+4. Finally 🟢 Low tasks (8)
+
+Clear execution order
+No ambiguity
+```
+
+**Risk Management:**
+
+```
+Risk visibility:
+
+🔴 Critical: 5 tasks (URGENT attention)
+🟠 High: 12 tasks (Important)
+🟡 Medium: 20 tasks (Normal)
+🟢 Low: 8 tasks (Defer if needed)
+
+Dashboard view:
+If Critical > 0 → Alert management
+If High > 20 → Consider resource increase
+
+Proactive risk management
+```
+
+---
 
 ---
 
