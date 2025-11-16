@@ -778,7 +778,26 @@ document.addEventListener('DOMContentLoaded', () => {
     const render = () => {
         const flow = getCurrentFlow();
         if (!flow) {
-            workflowRoot.innerHTML = '<div class="loading-state">Select or create a workflow</div>';
+            workflowRoot.innerHTML = `
+                <div class="empty-state-container">
+                    <div class="empty-state-icon">
+                        <i class="fa-solid fa-diagram-project"></i>
+                    </div>
+                    <h2 class="empty-state-title">No Workflow Selected</h2>
+                    <p class="empty-state-description">
+                        Get started by creating your first workflow to organize and track your work.
+                    </p>
+                    <div class="empty-state-actions">
+                        <button class="btn-primary" onclick="document.getElementById('flow-new-btn').click()">
+                            <i class="fa-solid fa-plus"></i> Create Your First Workflow
+                        </button>
+                    </div>
+                    <div class="empty-state-hint">
+                        <i class="fa-solid fa-lightbulb"></i>
+                        <span>Tip: Press <kbd>Ctrl+N</kbd> to quickly create a new workflow</span>
+                    </div>
+                </div>
+            `;
             return;
         }
 
@@ -795,10 +814,31 @@ document.addEventListener('DOMContentLoaded', () => {
         const unitsHtml = renderUnits(flow.data, template, 0);
         
         const contentHtml = unitsHtml || `
-            <div class="empty-state">
-                <i class="fa-solid fa-folder-open" style="font-size: 3rem; color: var(--text-tertiary); margin-bottom: 1rem;"></i>
-                <h3>No ${template.levels[0].pluralName} Yet</h3>
-                <p>Click the button below to add your first ${template.levels[0].singularName.toLowerCase()}</p>
+            <div class="empty-state-container" style="margin-top: 3rem;">
+                <div class="empty-state-icon">
+                    <i class="fa-solid fa-folder-open"></i>
+                </div>
+                <h2 class="empty-state-title">No ${template.levels[0].pluralName} Yet</h2>
+                <p class="empty-state-description">
+                    Start building your workflow by adding your first ${template.levels[0].singularName.toLowerCase()}.
+                    ${appState.currentMode === 'creation' ? 'You can add items, organize them hierarchically, and customize properties.' : 'Switch to creation mode to add items.'}
+                </p>
+                ${appState.currentMode === 'creation' ? `
+                    <div class="empty-state-actions">
+                        <button class="btn-primary" onclick="document.getElementById('add-category-btn').click()">
+                            <i class="fa-solid fa-plus"></i> Add First ${template.levels[0].singularName}
+                        </button>
+                    </div>
+                    <div class="empty-state-hint">
+                        <i class="fa-solid fa-lightbulb"></i>
+                        <span>Tip: Press <kbd>Ctrl+A</kbd> to quickly add a new item</span>
+                    </div>
+                ` : `
+                    <div class="empty-state-hint">
+                        <i class="fa-solid fa-info-circle"></i>
+                        <span>Switch to creation mode to start adding items</span>
+                    </div>
+                `}
             </div>
         `;
         
@@ -1969,6 +2009,44 @@ document.addEventListener('DOMContentLoaded', () => {
                     exportTagToBoard(appState.activeTag);
                 }
             });
+        }
+
+        // Register additional keyboard shortcuts
+        if (window.KeyboardNav) {
+            // New workflow
+            KeyboardNav.register('Ctrl+n', (e) => {
+                if (flowNewBtn) {
+                    flowNewBtn.click();
+                }
+            }, 'Create new workflow');
+
+            // Toggle mode
+            KeyboardNav.register('Ctrl+e', (e) => {
+                if (modeSwitch) {
+                    modeSwitch.checked = !modeSwitch.checked;
+                    modeSwitch.dispatchEvent(new Event('change'));
+                    const mode = modeSwitch.checked ? 'execution' : 'creation';
+                    Toast.info(`Switched to ${mode} mode`);
+                }
+            }, 'Toggle creation/execution mode');
+
+            // Focus on workflow selector
+            KeyboardNav.register('Ctrl+f', (e) => {
+                if (flowSelect) {
+                    flowSelect.focus();
+                    Toast.info('Focus on workflow selector');
+                }
+            }, 'Focus workflow selector');
+
+            // Add root item
+            KeyboardNav.register('Ctrl+a', (e) => {
+                if (appState.currentMode === 'creation') {
+                    const addBtn = document.getElementById('add-category-btn');
+                    if (addBtn) {
+                        addBtn.click();
+                    }
+                }
+            }, 'Add new root item (creation mode)');
         }
     };
 

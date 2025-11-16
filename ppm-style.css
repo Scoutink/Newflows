@@ -364,6 +364,27 @@ body.dark-theme .board-column-locked {
     border-radius: var(--radius-md);
 }
 
+.column-empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem;
+    text-align: center;
+    color: var(--text-tertiary);
+    opacity: 0.6;
+}
+
+.column-empty-state i {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.column-empty-state p {
+    font-size: 0.875rem;
+    margin: 0;
+}
+
 .add-card-btn {
     background: transparent;
     color: var(--text-secondary);

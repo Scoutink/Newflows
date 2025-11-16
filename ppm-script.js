@@ -1030,7 +1030,15 @@ const PPM = (() => {
         const isOverLimit = limit && cards.length > limit;
         const lockedClass = column.locked ? ' board-column-locked' : '';
         const lockIcon = column.locked ? '<i class="fa-solid fa-lock" title="Locked column"></i> ' : '';
-        
+
+        // Empty state for columns with no cards
+        const emptyStateHtml = cards.length === 0 ? `
+            <div class="column-empty-state">
+                <i class="fa-solid fa-inbox"></i>
+                <p>No cards yet</p>
+            </div>
+        ` : '';
+
         return `
             <div class="board-column${lockedClass}" data-column-id="${column.id}">
                 <div class="column-header">
@@ -1041,6 +1049,7 @@ const PPM = (() => {
                     </button>
                 </div>
                 <div class="column-cards" data-column-id="${column.id}">
+                    ${emptyStateHtml}
                     ${cards.map(card => renderCard(board, card)).join('')}
                 </div>
             </div>

@@ -563,7 +563,7 @@ const KeyboardNav = {
     },
 
     /**
-     * Show all registered shortcuts
+     * Show all registered shortcuts in a modal
      */
     showHelp() {
         const shortcuts = Array.from(this.shortcuts.entries())
@@ -572,8 +572,129 @@ const KeyboardNav = {
                 description: handler.description || 'No description'
             }));
 
-        console.table(shortcuts);
-        Toast.info('Keyboard shortcuts logged to console. Press F12 to view.');
+        // Group shortcuts by category (based on description keywords)
+        const grouped = {
+            'General': [],
+            'Workflow': [],
+            'Board': [],
+            'Other': []
+        };
+
+        shortcuts.forEach(shortcut => {
+            const desc = shortcut.description.toLowerCase();
+            if (desc.includes('workflow') || desc.includes('structure') || desc.includes('execution')) {
+                grouped['Workflow'].push(shortcut);
+            } else if (desc.includes('board') || desc.includes('column') || desc.includes('card')) {
+                grouped['Board'].push(shortcut);
+            } else if (desc.includes('save') || desc.includes('close') || desc.includes('help') || desc.includes('search')) {
+                grouped['General'].push(shortcut);
+            } else {
+                grouped['Other'].push(shortcut);
+            }
+        });
+
+        // Build HTML
+        let html = '<div class="keyboard-shortcuts-help">';
+        html += '<p style="margin-bottom: 1.5rem; color: var(--text-secondary);">Use these keyboard shortcuts to navigate and perform actions quickly.</p>';
+
+        for (const [category, items] of Object.entries(grouped)) {
+            if (items.length === 0) continue;
+
+            html += `<div class="shortcut-category">`;
+            html += `<h3 style="font-size: 0.875rem; font-weight: 600; color: var(--text-secondary); text-transform: uppercase; margin-bottom: 0.75rem;">${category}</h3>`;
+            html += '<div class="shortcuts-list">';
+
+            items.forEach(shortcut => {
+                // Format key combination
+                const keys = shortcut.key.split('+').map(k => {
+                    // Capitalize first letter
+                    return k.charAt(0).toUpperCase() + k.slice(1);
+                });
+
+                html += '<div class="shortcut-item">';
+                html += '<div class="shortcut-keys">';
+                keys.forEach((key, idx) => {
+                    if (idx > 0) html += '<span class="shortcut-separator">+</span>';
+                    html += `<kbd class="shortcut-key">${key}</kbd>`;
+                });
+                html += '</div>';
+                html += `<div class="shortcut-description">${shortcut.description}</div>`;
+                html += '</div>';
+            });
+
+            html += '</div></div>';
+        }
+
+        html += '</div>';
+
+        // Add styles
+        const styles = `
+            <style>
+                .keyboard-shortcuts-help {
+                    max-height: 70vh;
+                    overflow-y: auto;
+                }
+                .shortcut-category {
+                    margin-bottom: 2rem;
+                }
+                .shortcut-category:last-child {
+                    margin-bottom: 0;
+                }
+                .shortcuts-list {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 0.75rem;
+                }
+                .shortcut-item {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    padding: 0.75rem;
+                    background: var(--bg-secondary);
+                    border-radius: var(--radius-md);
+                    gap: 1rem;
+                }
+                .shortcut-keys {
+                    display: flex;
+                    align-items: center;
+                    gap: 0.25rem;
+                    flex-shrink: 0;
+                }
+                .shortcut-key {
+                    display: inline-block;
+                    padding: 0.25rem 0.5rem;
+                    background: var(--bg-primary);
+                    border: 1px solid var(--border-primary);
+                    border-radius: var(--radius-sm);
+                    font-family: ui-monospace, monospace;
+                    font-size: 0.875rem;
+                    font-weight: 600;
+                    color: var(--text-primary);
+                    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+                    min-width: 2rem;
+                    text-align: center;
+                }
+                .shortcut-separator {
+                    color: var(--text-tertiary);
+                    font-size: 0.75rem;
+                    font-weight: 600;
+                }
+                .shortcut-description {
+                    flex: 1;
+                    color: var(--text-secondary);
+                    font-size: 0.875rem;
+                }
+            </style>
+        `;
+
+        // Show modal
+        if (window.openModal) {
+            window.openModal('Keyboard Shortcuts', styles + html);
+        } else {
+            // Fallback if modal system not available
+            console.table(shortcuts);
+            Toast.info('Keyboard shortcuts: Press ? to view help');
+        }
     }
 };
 
