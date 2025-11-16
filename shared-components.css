@@ -334,11 +334,14 @@ input[type="radio"] {
 }
 
 /* =============================================================================
-   MODAL COMPONENTS
+   MODAL COMPONENTS (Workflow Page Only - Boards use ppm-style.css modals)
+
+   Note: These styles are namespaced to avoid conflicts with board modals.
+   Use .workflow-modal-backdrop for workflow page modals.
    ========================================================================== */
 
-/* Modal Backdrop */
-.modal-backdrop {
+/* Workflow Modal Backdrop */
+.workflow-modal-backdrop {
     position: fixed;
     top: 0;
     left: 0;
@@ -355,13 +358,13 @@ input[type="radio"] {
     pointer-events: none;
 }
 
-.modal-backdrop.active {
+.workflow-modal-backdrop.active {
     opacity: 1;
     pointer-events: all;
 }
 
-/* Modal Container */
-.modal {
+/* Workflow Modal Container */
+.workflow-modal {
     background: var(--bg-primary);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-xl);
@@ -374,12 +377,12 @@ input[type="radio"] {
     transition: transform var(--transition-base);
 }
 
-.modal-backdrop.active .modal {
+.workflow-modal-backdrop.active .workflow-modal {
     transform: scale(1) translateY(0);
 }
 
-/* Modal Header */
-.modal-header {
+/* Workflow Modal Header */
+.workflow-modal-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -387,14 +390,14 @@ input[type="radio"] {
     border-bottom: 1px solid var(--border-color);
 }
 
-.modal-title {
+.workflow-modal-title {
     font-size: var(--font-size-xl);
     font-weight: var(--font-weight-semibold);
     color: var(--text-primary);
     margin: 0;
 }
 
-.modal-close {
+.workflow-modal-close {
     background: transparent;
     border: none;
     color: var(--text-secondary);
@@ -410,20 +413,20 @@ input[type="radio"] {
     height: 32px;
 }
 
-.modal-close:hover {
+.workflow-modal-close:hover {
     background-color: var(--bg-hover);
     color: var(--text-primary);
 }
 
-/* Modal Body */
-.modal-body {
+/* Workflow Modal Body */
+.workflow-modal-body {
     padding: var(--space-6);
     overflow-y: auto;
     flex: 1;
 }
 
-/* Modal Footer */
-.modal-footer {
+/* Workflow Modal Footer */
+.workflow-modal-footer {
     display: flex;
     align-items: center;
     justify-content: flex-end;
@@ -432,20 +435,20 @@ input[type="radio"] {
     border-top: 1px solid var(--border-color);
 }
 
-/* Modal Sizes */
-.modal-sm {
+/* Workflow Modal Sizes */
+.workflow-modal-sm {
     max-width: 400px;
 }
 
-.modal-lg {
+.workflow-modal-lg {
     max-width: 800px;
 }
 
-.modal-xl {
+.workflow-modal-xl {
     max-width: 1200px;
 }
 
-.modal-full {
+.workflow-modal-full {
     max-width: 95vw;
     max-height: 95vh;
 }
